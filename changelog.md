@@ -1,6 +1,7 @@
 # Changelog - Hermes SMS Forward
 
 ## [1.3.0] - 2025-07-25
+
 - ✅ Task 4: SMS Receiver Implementation tamamlandı
   - SmsReceiver.java BroadcastReceiver sınıfı oluşturuldu
   - Gelen SMS'leri yakalama ve parsing implementasyonu
@@ -12,6 +13,7 @@
   - APK build başarılı olarak tamamlandı
 
 ## [1.2.0] - 2025-07-25
+
 - ✅ Task 3: Ana Aktivite (MainActivity) geliştirildi
   - Kullanıcı dostu arayüz tasarımı oluşturuldu
   - Hedef telefon numarası girme alanı eklendi
@@ -23,6 +25,7 @@
   - APK build başarılı olarak tamamlandı
 
 ## [1.1.0] - 2025-07-25
+
 - ✅ Task 2: Manifest ve SMS izinleri eklendi
   - RECEIVE_SMS izni eklendi
   - SEND_SMS izni eklendi  
@@ -31,6 +34,7 @@
   - APK build başarılı olarak tamamlandı
 
 ## [1.0.0] - 2025-07-25
+
 - ✅ Task 1: Temel proje yapısı oluşturuldu
   - Android Gradle projesi yapılandırıldı
   - Gradle wrapper dosyaları oluşturuldu
