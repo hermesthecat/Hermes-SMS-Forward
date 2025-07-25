@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+    namespace 'com.keremgok.sms'
     compileSdk 34
 
     defaultConfig {
