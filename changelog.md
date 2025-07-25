@@ -1,5 +1,20 @@
 # Changelog - Hermes SMS Forward
 
+## [2.1.0] - 2025-07-25
+
+- ✅ Task 12: Dark Mode Support tamamlandı
+  - **Material Design 3 Dark Theme:** values-night/themes.xml ile kapsamlı dark theme implementasyonu
+  - **Dark Color Palette:** Accessibility compliant dark mode renk paleti oluşturuldu
+  - **Automatic Theme Switching:** DayNight parent theme ile sistem ayarına göre otomatik tema değişimi
+  - **Layout Compatibility:** activity_main.xml hardcoded renkler theme-aware renklere dönüştürüldü
+  - **System Integration:** Android sistem dark mode ayarı ile tam entegrasyon
+  - **Theme Resources:** Light ve dark tema için ayrı resource dosyaları (colors.xml, themes.xml)
+  - **Status Bar & Navigation:** Dark mode'da status bar ve navigation bar uyumluluğu
+  - **Accessibility Ready:** High contrast dark theme with proper color ratios
+  - **Build Test Successful:** Dark mode implementasyonu test edildi ve APK build başarılı
+  - **Version 2.1.0:** Dark mode desteği ile UX iyileştirmesi
+  - **APK build başarılı olarak tamamlandı**
+
 ## [2.0.0] - 2025-07-25 🎉 MAJOR RELEASE
 
 - ✅ Task 11: Play Store Preparation ve Documentation tamamlandı

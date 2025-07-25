@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- Base Hermes Dark Theme -->
+    <style name="Theme.HermesSmsForward" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <!-- Primary brand color -->
+        <item name="colorPrimary">@color/hermes_primary</item>
+        <item name="colorPrimaryDark">@color/hermes_primary_dark</item>
+        <item name="colorAccent">@color/hermes_accent</item>
+        
+        <!-- Background colors -->
+        <item name="android:windowBackground">@color/hermes_background</item>
+        <item name="android:colorBackground">@color/hermes_background</item>
+        
+        <!-- Text colors -->
+        <item name="android:textColorPrimary">@color/hermes_text_primary</item>
+        <item name="android:textColorSecondary">@color/hermes_text_secondary</item>
+        <item name="android:textColorHint">@color/hermes_text_hint</item>
+        
+        <!-- Surface and card colors -->
+        <item name="colorSurface">@color/hermes_surface</item>
+        <item name="colorOnSurface">@color/hermes_text_primary</item>
+        
+        <!-- Status bar and navigation bar -->
+        <item name="android:statusBarColor">@color/hermes_background</item>
+        <item name="android:navigationBarColor">@color/hermes_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        
+        <!-- Action bar customization -->
+        <item name="actionBarStyle">@style/Hermes.ActionBar.Dark</item>
+        <item name="android:actionBarStyle">@style/Hermes.ActionBar.Dark</item>
+        
+        <!-- Dialog theme -->
+        <item name="alertDialogTheme">@style/Hermes.AlertDialog.Dark</item>
+        
+        <!-- EditText styling -->
+        <item name="editTextStyle">@style/Hermes.EditText.Dark</item>
+        
+        <!-- Button styling -->
+        <item name="buttonStyle">@style/Hermes.Button.Dark</item>
+    </style>
+    
+    <!-- Splash Screen Dark Theme -->
+    <style name="Theme.HermesSmsForward.Splash" parent="Theme.HermesSmsForward">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:statusBarColor">@color/hermes_background</item>
+        <item name="android:navigationBarColor">@color/hermes_background</item>
+    </style>
+    
+    <!-- No Action Bar Dark Theme -->
+    <style name="Theme.HermesSmsForward.NoActionBar" parent="Theme.HermesSmsForward">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+    
+    <!-- Custom Dark Action Bar Style -->
+    <style name="Hermes.ActionBar.Dark" parent="Widget.AppCompat.ActionBar.Solid">
+        <item name="android:background">@color/hermes_surface</item>
+        <item name="background">@color/hermes_surface</item>
+        <item name="android:titleTextStyle">@style/Hermes.ActionBar.Title.Dark</item>
+        <item name="titleTextStyle">@style/Hermes.ActionBar.Title.Dark</item>
+        <item name="elevation">4dp</item>
+    </style>
+    
+    <!-- Dark Action Bar Title Style -->
+    <style name="Hermes.ActionBar.Title.Dark" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/hermes_text_primary</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <!-- Dark Alert Dialog Style -->
+    <style name="Hermes.AlertDialog.Dark" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:windowBackground">@color/hermes_surface</item>
+        <item name="android:textColorPrimary">@color/hermes_text_primary</item>
+        <item name="android:textColorSecondary">@color/hermes_text_secondary</item>
+        <item name="colorAccent">@color/hermes_accent</item>
+    </style>
+    
+    <!-- Dark EditText Style -->
+    <style name="Hermes.EditText.Dark" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">@color/hermes_text_primary</item>
+        <item name="android:textColorHint">@color/hermes_text_hint</item>
+        <item name="android:background">@color/hermes_surface</item>
+        <item name="colorAccent">@color/hermes_accent</item>
+        <item name="colorControlNormal">@color/hermes_text_secondary</item>
+        <item name="colorControlActivated">@color/hermes_accent</item>
+    </style>
+    
+    <!-- Dark Button Style -->
+    <style name="Hermes.Button.Dark" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@color/hermes_text_on_primary</item>
+        <item name="android:background">@color/hermes_primary</item>
+        <item name="colorButtonNormal">@color/hermes_primary</item>
+        <item name="android:elevation">2dp</item>
+    </style>
+    
+</resources>
