@@ -688,7 +688,7 @@ Her task için **ZORUNLU** işlemler:
 
 ### Task başlangıç formatı
 
-```
+```text
 TASK X BAŞLADI: [Task Adı]
 Yapacaklarım:
 - [Detaylı adım listesi]
@@ -696,7 +696,7 @@ Yapacaklarım:
 
 ### Task tamamlama formatı
 
-```
+```text
 ✅ TASK X TAMAMLANDI!
 Tamamlanan işlemler:
 - ✅ [Her adım için onay]

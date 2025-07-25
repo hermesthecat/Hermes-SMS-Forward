@@ -1,5 +1,23 @@
 # Changelog - Hermes SMS Forward
 
+## [2.0.0] - 2025-07-25 🎉 MAJOR RELEASE
+
+- ✅ Task 11: Play Store Preparation ve Documentation tamamlandı
+  - **Play Store Metadata:** Türkçe ve İngilizce app description'ları oluşturuldu
+  - **Comprehensive Privacy Policy:** GDPR, CCPA, KVKK uyumlu gizlilik politikası
+  - **Permissions Documentation:** Detaylı izin açıklamaları ve güvenlik rehberi
+  - **Data Handling Disclosure:** Tam şeffaflık ile veri işleme açıklaması
+  - **Target Audience Definition:** 18+ yaş sınırı ve hedef kitle analizi
+  - **Complete README.md:** 500+ satır kapsamlı proje dokümantasyonu
+  - **Installation Guide:** Adım adım kurulum rehberi (APK, source build, enterprise)
+  - **User Manual:** Detaylı kullanım kılavuzu (setup, troubleshooting, best practices)
+  - **Final Release Tests:** Tüm unit testler geçti, release APK/AAB başarılı
+  - **Version 2.0.0:** Major release - production ready Play Store deployment
+  - **Documentation Coverage:** Privacy Policy, Permissions, Data Handling, Target Audience
+  - **Legal Compliance:** International privacy regulations (GDPR, CCPA, KVKK)
+  - **Professional Documentation:** Installation, user manual, technical specifications
+  - **Play Store Ready:** Metadata, graphics, screenshots hazırlık tamamlandı
+
 ## [1.9.0] - 2025-07-25
 
 - ✅ Task 10: Release Build Configuration tamamlandı
