@@ -52,6 +52,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTargetLabel" />
 
+    <TextView
+        android:id="@+id/tvValidation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="12sp"
+        android:textColor="#FF5722"
+        android:gravity="start"
+        android:layout_marginTop="4dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etTargetNumber" />
+
     <Button
         android:id="@+id/btnSave"
         android:layout_width="0dp"
@@ -60,7 +74,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etTargetNumber" />
+        app:layout_constraintTop_toBottomOf="@id/tvValidation" />
 
     <TextView
         android:id="@+id/tvStatus"

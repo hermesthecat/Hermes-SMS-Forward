@@ -1,10 +1,13 @@
 package com.keremgok.sms;
 
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.text.TextUtils;
@@ -17,6 +20,12 @@ public class SmsReceiver extends BroadcastReceiver {
     private static final String KEY_TARGET_NUMBER = "target_number";
     // Debug flag - set to false for production builds
     private static final boolean DEBUG = true;
+    
+    // SMS Retry Configuration
+    private static final int MAX_RETRY_COUNT = 3;
+    private static final long INITIAL_RETRY_DELAY_MS = 2000; // 2 seconds
+    private static final String ACTION_SMS_SENT = "SMS_SENT";
+    private static final String ACTION_SMS_DELIVERED = "SMS_DELIVERED";
     
     /**
      * Masks phone number for secure logging
@@ -145,23 +154,90 @@ public class SmsReceiver extends BroadcastReceiver {
     }
     
     private void sendSingleSms(String message, String targetNumber) {
+        sendSingleSmsWithRetry(message, targetNumber, 0);
+    }
+    
+    private void sendSingleSmsWithRetry(String message, String targetNumber, int retryCount) {
         try {
             SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(targetNumber, null, message, null, null);
-            logDebug("Single SMS sent successfully");
+            
+            // Create PendingIntents for delivery confirmation
+            PendingIntent sentPI = createSentPendingIntent(message, targetNumber, retryCount, false);
+            
+            smsManager.sendTextMessage(targetNumber, null, message, sentPI, null);
+            logDebug("Single SMS send attempt " + (retryCount + 1) + "/" + MAX_RETRY_COUNT);
+            
         } catch (Exception e) {
-            Log.e(TAG, "Failed to send single SMS: " + e.getMessage(), e);
+            Log.e(TAG, "Failed to send single SMS (attempt " + (retryCount + 1) + "): " + e.getMessage(), e);
+            handleSmsFailure(message, targetNumber, retryCount, false, e);
         }
     }
     
     private void sendLongSms(String message, String targetNumber) {
+        sendLongSmsWithRetry(message, targetNumber, 0);
+    }
+    
+    private void sendLongSmsWithRetry(String message, String targetNumber, int retryCount) {
         try {
             SmsManager smsManager = SmsManager.getDefault();
             java.util.ArrayList<String> parts = smsManager.divideMessage(message);
-            smsManager.sendMultipartTextMessage(targetNumber, null, parts, null, null);
-            logDebug("Multipart SMS sent successfully (" + parts.size() + " parts)");
+            
+            // Create PendingIntents for delivery confirmation
+            PendingIntent sentPI = createSentPendingIntent(message, targetNumber, retryCount, true);
+            
+            // Create ArrayList of PendingIntents for each part
+            java.util.ArrayList<PendingIntent> sentPIs = new java.util.ArrayList<>();
+            for (int i = 0; i < parts.size(); i++) {
+                sentPIs.add(sentPI);
+            }
+            
+            smsManager.sendMultipartTextMessage(targetNumber, null, parts, sentPIs, null);
+            logDebug("Multipart SMS send attempt " + (retryCount + 1) + "/" + MAX_RETRY_COUNT + 
+                    " (" + parts.size() + " parts)");
+            
         } catch (Exception e) {
-            Log.e(TAG, "Failed to send multipart SMS: " + e.getMessage(), e);
+            Log.e(TAG, "Failed to send multipart SMS (attempt " + (retryCount + 1) + "): " + e.getMessage(), e);
+            handleSmsFailure(message, targetNumber, retryCount, true, e);
         }
+    }
+    
+    private PendingIntent createSentPendingIntent(String message, String targetNumber, int retryCount, boolean isMultipart) {
+        Intent intent = new Intent(ACTION_SMS_SENT);
+        intent.putExtra("message", message);
+        intent.putExtra("targetNumber", targetNumber);
+        intent.putExtra("retryCount", retryCount);
+        intent.putExtra("isMultipart", isMultipart);
+        
+        return PendingIntent.getBroadcast(null, 0, intent, 
+            PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+    }
+    
+    private void handleSmsFailure(String message, String targetNumber, int retryCount, boolean isMultipart, Exception exception) {
+        if (retryCount < MAX_RETRY_COUNT - 1) {
+            // Schedule retry with exponential backoff
+            long delay = INITIAL_RETRY_DELAY_MS * (long) Math.pow(2, retryCount);
+            scheduleRetry(message, targetNumber, retryCount + 1, isMultipart, delay);
+            logDebug("SMS failed, scheduling retry " + (retryCount + 2) + "/" + MAX_RETRY_COUNT + 
+                    " in " + delay + "ms");
+        } else {
+            // Max retries reached, log final failure
+            Log.e(TAG, "SMS sending failed permanently after " + MAX_RETRY_COUNT + 
+                    " attempts to " + maskPhoneNumber(targetNumber));
+            logDebug("Final SMS failure: " + exception.getMessage());
+        }
+    }
+    
+    private void scheduleRetry(String message, String targetNumber, int retryCount, boolean isMultipart, long delay) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (isMultipart) {
+                    sendLongSmsWithRetry(message, targetNumber, retryCount);
+                } else {
+                    sendSingleSmsWithRetry(message, targetNumber, retryCount);
+                }
+            }
+        }, delay);
     }
 }

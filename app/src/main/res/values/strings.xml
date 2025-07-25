@@ -10,4 +10,18 @@
     <string name="permissions_granted">İzinler verildi</string>
     <string name="error_empty_number">Lütfen geçerli bir telefon numarası girin</string>
     <string name="success_saved">Ayarlar kaydedildi!</string>
+    
+    <!-- Phone Number Validation Errors -->
+    <string name="validation_empty_number">Telefon numarası boş olamaz</string>
+    <string name="validation_missing_country_code">Ülke kodu eksik (örn: +90)</string>
+    <string name="validation_too_short">Telefon numarası çok kısa</string>
+    <string name="validation_too_long">Telefon numarası çok uzun</string>
+    <string name="validation_invalid_format">Geçersiz telefon numarası formatı</string>
+    <string name="validation_success">Geçerli telefon numarası</string>
+    
+    <!-- SMS Error Handling -->
+    <string name="sms_send_failed">SMS gönderimi başarısız</string>
+    <string name="sms_send_retry">SMS tekrar gönderiliyor</string>
+    <string name="sms_send_final_failure">SMS gönderimi kalıcı olarak başarısız</string>
+    <string name="sms_service_unavailable">SMS servisi kullanılamıyor</string>
 </resources>

@@ -1,5 +1,18 @@
 # Changelog - Hermes SMS Forward
 
+## [1.5.0] - 2025-07-25
+
+- ✅ Task 6: Input Validation ve Error Handling tamamlandı
+  - PhoneNumberValidator.java utility sınıfı oluşturuldu
+  - International phone number format kontrolü (Türkiye +90 özel desteği)
+  - MainActivity'ye real-time validation entegrasyonu (TextWatcher)
+  - Validation feedback UI eklendi (renk kodlu mesajlar)
+  - Save button enable/disable logic eklendi
+  - SmsReceiver'a retry mechanism eklendi (3 deneme, exponential backoff)
+  - SMS gönderim başarı/başarısızlık tracking (PendingIntent)
+  - Gelişmiş error handling ve secure logging
+  - APK build başarılı olarak tamamlandı
+
 ## [1.4.0] - 2025-07-25
 
 - ✅ Task 5: Güvenlik Logging Düzeltmeleri tamamlandı

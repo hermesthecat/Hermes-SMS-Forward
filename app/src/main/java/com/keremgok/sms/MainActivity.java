@@ -7,7 +7,9 @@ import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnSave;
     private TextView tvStatus;
     private TextView tvPermissions;
+    private TextView tvValidation;
     private SharedPreferences prefs;
 
     @Override
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         
         initViews();
         setupPreferences();
+        setupValidation();
         checkPermissions();
         loadSavedNumber();
         updateUI();
@@ -50,10 +54,80 @@ public class MainActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btnSave);
         tvStatus = findViewById(R.id.tvStatus);
         tvPermissions = findViewById(R.id.tvPermissions);
+        tvValidation = findViewById(R.id.tvValidation);
     }
     
     private void setupPreferences() {
         prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+    }
+    
+    private void setupValidation() {
+        etTargetNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Not used
+            }
+            
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Not used
+            }
+            
+            @Override
+            public void afterTextChanged(Editable s) {
+                validatePhoneNumber();
+            }
+        });
+    }
+    
+    private void validatePhoneNumber() {
+        String phoneNumber = etTargetNumber.getText().toString().trim();
+        PhoneNumberValidator.ValidationResult result = PhoneNumberValidator.validate(phoneNumber);
+        
+        updateValidationUI(result);
+        updateSaveButtonState(result);
+    }
+    
+    private void updateValidationUI(PhoneNumberValidator.ValidationResult result) {
+        if (TextUtils.isEmpty(etTargetNumber.getText().toString().trim())) {
+            // Don't show validation message for empty input
+            tvValidation.setVisibility(View.GONE);
+            return;
+        }
+        
+        if (result.isValid()) {
+            tvValidation.setText(R.string.validation_success);
+            tvValidation.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+            tvValidation.setVisibility(View.VISIBLE);
+        } else {
+            String errorMessage = getValidationMessage(result.getErrorCode());
+            tvValidation.setText(errorMessage);
+            tvValidation.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+            tvValidation.setVisibility(View.VISIBLE);
+        }
+    }
+    
+    private void updateSaveButtonState(PhoneNumberValidator.ValidationResult result) {
+        btnSave.setEnabled(result.isValid() && hasRequiredPermissions());
+    }
+    
+    private String getValidationMessage(String errorCode) {
+        if (errorCode == null) return "";
+        
+        switch (errorCode) {
+            case "EMPTY_NUMBER":
+                return getString(R.string.validation_empty_number);
+            case "MISSING_COUNTRY_CODE":
+                return getString(R.string.validation_missing_country_code);
+            case "TOO_SHORT":
+                return getString(R.string.validation_too_short);
+            case "TOO_LONG":
+                return getString(R.string.validation_too_long);
+            case "INVALID_FORMAT":
+                return getString(R.string.validation_invalid_format);
+            default:
+                return getString(R.string.validation_invalid_format);
+        }
     }
     
     private void loadSavedNumber() {
@@ -64,8 +138,12 @@ public class MainActivity extends AppCompatActivity {
     private void saveTargetNumber() {
         String targetNumber = etTargetNumber.getText().toString().trim();
         
-        if (TextUtils.isEmpty(targetNumber)) {
-            Toast.makeText(this, R.string.error_empty_number, Toast.LENGTH_SHORT).show();
+        // Validate phone number using PhoneNumberValidator
+        PhoneNumberValidator.ValidationResult result = PhoneNumberValidator.validate(targetNumber);
+        
+        if (!result.isValid()) {
+            String errorMessage = getValidationMessage(result.getErrorCode());
+            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
             return;
         }
         
@@ -74,8 +152,12 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         
+        // Use formatted number if available (for domestic Turkey numbers)
+        String numberToSave = result.getFormattedNumber() != null ? 
+                              result.getFormattedNumber() : targetNumber;
+        
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(KEY_TARGET_NUMBER, targetNumber);
+        editor.putString(KEY_TARGET_NUMBER, numberToSave);
         editor.apply();
         
         Toast.makeText(this, R.string.success_saved, Toast.LENGTH_SHORT).show();
