@@ -1,5 +1,18 @@
 # Changelog - Hermes SMS Forward
 
+## [1.8.0] - 2025-07-25
+
+- ✅ Task 9: UI/Integration Tests tamamlandı
+  - androidTest klasör yapısı oluşturuldu (app/src/androidTest/java/)
+  - MainActivity Espresso UI testleri implementasyonu (8 test cases)
+  - End-to-end integration test scenarios oluşturuldu
+  - Permission flow ve SharedPreferences persistence testleri
+  - Form interaction, validation, save button testleri
+  - Turkish phone number validation UI testleri
+  - Test automation script hazırlandı (connectedAndroidTest)
+  - All test files compiled successfully (100% build success)
+  - APK build başarılı olarak tamamlandı
+
 ## [1.7.0] - 2025-07-25
 
 - ✅ Task 8: Unit Test Infrastructure tamamlandı
