@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- Base Hermes Theme -->
+    <style name="Theme.HermesSmsForward" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Primary brand color -->
+        <item name="colorPrimary">@color/hermes_primary</item>
+        <item name="colorPrimaryDark">@color/hermes_primary_dark</item>
+        <item name="colorAccent">@color/hermes_accent</item>
+        
+        <!-- Background colors -->
+        <item name="android:windowBackground">@color/hermes_background</item>
+        <item name="android:colorBackground">@color/hermes_background</item>
+        
+        <!-- Text colors -->
+        <item name="android:textColorPrimary">@color/hermes_text_primary</item>
+        <item name="android:textColorSecondary">@color/hermes_text_secondary</item>
+        <item name="android:textColorHint">@color/hermes_text_hint</item>
+        
+        <!-- Action bar customization -->
+        <item name="actionBarStyle">@style/Hermes.ActionBar</item>
+        <item name="android:actionBarStyle">@style/Hermes.ActionBar</item>
+    </style>
+    
+    <!-- Splash Screen Theme -->
+    <style name="Theme.HermesSmsForward.Splash" parent="Theme.HermesSmsForward">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
+    
+    <!-- No Action Bar Theme -->
+    <style name="Theme.HermesSmsForward.NoActionBar" parent="Theme.HermesSmsForward">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+    
+    <!-- Custom Action Bar Style -->
+    <style name="Hermes.ActionBar" parent="Widget.AppCompat.ActionBar.Solid">
+        <item name="android:background">@color/hermes_primary</item>
+        <item name="background">@color/hermes_primary</item>
+        <item name="android:titleTextStyle">@style/Hermes.ActionBar.Title</item>
+        <item name="titleTextStyle">@style/Hermes.ActionBar.Title</item>
+    </style>
+    
+    <!-- Action Bar Title Style -->
+    <style name="Hermes.ActionBar.Title" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/hermes_text_on_primary</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+</resources>

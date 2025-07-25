@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- SMS Bubble 1 (Source) -->
+    <path
+        android:pathData="M25,35 Q25,30 30,30 L50,30 Q55,30 55,35 L55,45 Q55,50 50,50 L35,50 L30,55 L30,50 Q25,50 25,45 Z"
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.9" />
+    
+    <!-- SMS Content Lines -->
+    <path
+        android:pathData="M30,37 L50,37"
+        android:strokeColor="#2196F3"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M30,42 L45,42"
+        android:strokeColor="#2196F3"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round" />
+    
+    <!-- Forward Arrow -->
+    <path
+        android:pathData="M60,40 L70,40"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M67,37 L70,40 L67,43"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:fillType="nonZero" />
+    
+    <!-- SMS Bubble 2 (Target) -->
+    <path
+        android:pathData="M75,50 Q75,45 80,45 L100,45 Q105,45 105,50 L105,60 Q105,65 100,65 L85,65 L80,70 L80,65 Q75,65 75,60 Z"
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.9" />
+    
+    <!-- Target SMS Content Lines -->
+    <path
+        android:pathData="M80,52 L100,52"
+        android:strokeColor="#4CAF50"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M80,57 L95,57"
+        android:strokeColor="#4CAF50"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round" />
+    
+    <!-- Hermes Wings (Subtle) -->
+    <path
+        android:pathData="M45,25 Q50,20 55,25 Q50,30 45,25"
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.3" />
+    <path
+        android:pathData="M50,25 Q55,20 60,25 Q55,30 50,25"
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.2" />
+    
+    <!-- Central H for Hermes -->
+    <path
+        android:pathData="M50,75 L50,85 M54,75 L54,85 M50,80 L54,80"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"
+        android:strokeLineCap="round" />
+    
+</vector>

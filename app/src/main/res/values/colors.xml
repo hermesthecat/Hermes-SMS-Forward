@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Hermes SMS Forward Brand Colors -->
+    
+    <!-- Primary Colors -->
+    <color name="hermes_primary">#2196F3</color>
+    <color name="hermes_primary_dark">#1976D2</color>
+    <color name="hermes_primary_light">#BBDEFB</color>
+    
+    <!-- Accent Colors -->
+    <color name="hermes_accent">#4CAF50</color>
+    <color name="hermes_accent_dark">#388E3C</color>
+    <color name="hermes_accent_light">#C8E6C9</color>
+    
+    <!-- Secondary Colors -->
+    <color name="hermes_secondary">#009688</color>
+    <color name="hermes_secondary_dark">#00695C</color>
+    <color name="hermes_secondary_light">#B2DFDB</color>
+    
+    <!-- Background Colors -->
+    <color name="hermes_background">#FAFAFA</color>
+    <color name="hermes_surface">#FFFFFF</color>
+    <color name="hermes_card">#FFFFFF</color>
+    
+    <!-- Text Colors -->
+    <color name="hermes_text_primary">#212121</color>
+    <color name="hermes_text_secondary">#757575</color>
+    <color name="hermes_text_hint">#BDBDBD</color>
+    <color name="hermes_text_on_primary">#FFFFFF</color>
+    
+    <!-- Status Colors -->
+    <color name="hermes_success">#4CAF50</color>
+    <color name="hermes_warning">#FF9800</color>
+    <color name="hermes_error">#F44336</color>
+    <color name="hermes_info">#2196F3</color>
+    
+    <!-- SMS Specific Colors -->
+    <color name="hermes_sms_sent">#4CAF50</color>
+    <color name="hermes_sms_received">#2196F3</color>
+    <color name="hermes_sms_pending">#FF9800</color>
+    <color name="hermes_sms_failed">#F44336</color>
+    
+    <!-- Legacy Android Colors (for compatibility) -->
+    <color name="colorPrimary">@color/hermes_primary</color>
+    <color name="colorPrimaryDark">@color/hermes_primary_dark</color>
+    <color name="colorAccent">@color/hermes_accent</color>
+    
+</resources>

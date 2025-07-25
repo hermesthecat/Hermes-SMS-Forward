@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Background Gradient -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:startColor="@color/hermes_primary"
+                android:centerColor="@color/hermes_secondary"
+                android:endColor="@color/hermes_primary_dark"
+                android:angle="135" />
+        </shape>
+    </item>
+    
+    <!-- Center Logo -->
+    <item
+        android:gravity="center"
+        android:width="120dp"
+        android:height="120dp">
+        <shape android:shape="oval">
+            <solid android:color="#FFFFFF" />
+            <size
+                android:width="120dp"
+                android:height="120dp" />
+        </shape>
+    </item>
+    
+    <!-- Logo Icon -->
+    <item
+        android:gravity="center"
+        android:width="80dp"
+        android:height="80dp">
+        <vector 
+            android:width="80dp"
+            android:height="80dp"
+            android:viewportWidth="80"
+            android:viewportHeight="80">
+            
+            <!-- SMS Bubble -->
+            <path
+                android:pathData="M20,25 Q20,20 25,20 L45,20 Q50,20 50,25 L50,35 Q50,40 45,40 L30,40 L25,45 L25,40 Q20,40 20,35 Z"
+                android:fillColor="@color/hermes_primary" />
+            
+            <!-- SMS Lines -->
+            <path
+                android:pathData="M25,27 L45,27 M25,32 L40,32"
+                android:strokeColor="#FFFFFF"
+                android:strokeWidth="2"
+                android:strokeLineCap="round" />
+            
+            <!-- Forward Arrow -->
+            <path
+                android:pathData="M52,32 L62,32 M59,29 L62,32 L59,35"
+                android:strokeColor="@color/hermes_accent"
+                android:strokeWidth="3"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round" />
+            
+            <!-- Hermes Wings -->
+            <path
+                android:pathData="M35,15 Q40,10 45,15 Q40,20 35,15"
+                android:fillColor="@color/hermes_accent"
+                android:fillAlpha="0.7" />
+            <path
+                android:pathData="M40,15 Q45,10 50,15 Q45,20 40,15"
+                android:fillColor="@color/hermes_accent"
+                android:fillAlpha="0.5" />
+            
+        </vector>
+    </item>
+    
+    <!-- App Name Text (This will be handled in code, but we can add a placeholder) -->
+    <item
+        android:gravity="center|bottom"
+        android:bottom="120dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent" />
+            <size android:height="40dp" />
+        </shape>
+    </item>
+    
+</layer-list>

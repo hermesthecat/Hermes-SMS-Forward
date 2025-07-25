@@ -1,5 +1,19 @@
 # Changelog - Hermes SMS Forward
 
+## [1.6.0] - 2025-07-25
+
+- ✅ Task 7: Custom App Icon ve Branding tamamlandı
+  - Hermes temalı custom app icon tasarımı (SMS + yönlendirme sembolü)
+  - Adaptive icon oluşturuldu (Android 8.0+ uyumlu)
+  - Multiple density support (mdpi, hdpi, xhdpi, xxhdpi, xxxhdpi)
+  - Vector drawable foreground ve background implementasyonu
+  - AndroidManifest.xml icon referansları güncellendi
+  - Kapsamlı brand color palette eklendi (hermes_primary, accent, secondary)
+  - Custom theme oluşturuldu (Theme.HermesSmsForward)
+  - Splash screen background tasarımı eklendi
+  - Legacy Android uyumluluğu sağlandı
+  - APK build başarılı olarak tamamlandı
+
 ## [1.5.0] - 2025-07-25
 
 - ✅ Task 6: Input Validation ve Error Handling tamamlandı
