@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(dir:*)",
+      "Bash(flutter create:*)",
+      "Bash(flutter build:*)",
+      "Bash(flutter:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(rm:*)",
+      "Bash(mkdir:*)",
+      "Bash(./gradlew:*)",
+      "Bash(sed:*)",
+      "Bash(echo $PATH)",
+      "Bash(where flutter)",
+      "Bash(\"S:/Download/flutter_windows_3.32.7-stable/flutter/bin/flutter.bat\" --version)",
+      "Bash(FLUTTER_ROOT=\"S:/Download/flutter_windows_3.32.7-stable/flutter\" ./gradlew assembleDebug)",
+      "Bash(dart:*)",
+      "Bash(cmd /c:*)",
+      "Bash(timeout 300 flutter build apk --debug --verbose)"
+    ],
+    "deny": []
+  }
+}
