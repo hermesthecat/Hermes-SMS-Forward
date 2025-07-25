@@ -1,5 +1,17 @@
 # Changelog - Hermes SMS Forward
 
+## [1.7.0] - 2025-07-25
+
+- ✅ Task 8: Unit Test Infrastructure tamamlandı
+  - Unit test klasör yapısı oluşturuldu (app/src/test/java/)
+  - Test dependencies eklendi (JUnit, Mockito, Robolectric, Truth)
+  - PhoneNumberValidator comprehensive unit tests (11 test cases)
+  - SimplePhoneNumberValidatorTest ile core validation logic testi
+  - TextUtils dependency kaldırılarak unit test uyumluluğu sağlandı
+  - Test coverage: Phone number validation logic, edge cases, format conversion
+  - All tests passing (11/11 - 100% success rate)
+  - APK build başarılı olarak tamamlandı
+
 ## [1.6.0] - 2025-07-25
 
 - ✅ Task 7: Custom App Icon ve Branding tamamlandı

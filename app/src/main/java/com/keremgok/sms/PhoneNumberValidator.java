@@ -1,6 +1,6 @@
 package com.keremgok.sms;
 
-import android.text.TextUtils;
+// import android.text.TextUtils; // Removed for unit test compatibility
 import java.util.regex.Pattern;
 
 /**
@@ -24,7 +24,7 @@ public class PhoneNumberValidator {
      * @return ValidationResult containing validation status and error message
      */
     public static ValidationResult validate(String phoneNumber) {
-        if (TextUtils.isEmpty(phoneNumber)) {
+        if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
             return new ValidationResult(false, "EMPTY_NUMBER");
         }
         
@@ -90,7 +90,7 @@ public class PhoneNumberValidator {
      * @return true if valid Turkey number
      */
     public static boolean isValidTurkeyNumber(String phoneNumber) {
-        if (TextUtils.isEmpty(phoneNumber)) {
+        if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
             return false;
         }
         
