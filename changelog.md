@@ -1,5 +1,28 @@
 # Changelog - Hermes SMS Forward
 
+## [2.3.0] - 2025-07-25
+
+- ✅ Task 14: SMS History View tamamlandı
+  - **Room Database Implementation:** SQLite veritabanı ile SMS geçmişi saklama sistemi
+  - **SmsHistory Entity:** Gönderen, hedef, mesaj, timestamp, durum ve hata bilgilerini saklayan veri modeli
+  - **SmsHistoryDao:** Kapsamlı veritabanı işlemleri (CRUD, arama, filtreleme, temizleme)
+  - **HistoryActivity:** Modern SMS geçmiş görüntüleme ekranı
+  - **RecyclerView Implementation:** SMS öğelerini liste halinde gösterme
+  - **Date-based Grouping:** Tarih bazlı gruplandırma (Bugün, Dün, tarih)
+  - **Search Functionality:** Gönderen numarası ve mesaj içeriğinde arama
+  - **Filter Options:** Başarılı, başarısız veya tüm SMS'ler filtreleme
+  - **SwipeRefreshLayout:** Çekerek yenileme özelliği
+  - **Database Integration:** SmsReceiver'da otomatik geçmiş kaydetme
+  - **Phone Number Masking:** Gizlilik için telefon numarası maskeleme (örn: +9055***4567)
+  - **Menu Integration:** Ana ekransan geçmiş erişimi
+  - **Auto Cleanup:** 30 günden eski kayıtları otomatik temizleme
+  - **Material Design:** Dark mode uyumlu modern tasarım
+  - **Comprehensive Error Handling:** Hata durumları için detaylı bilgi gösterimi
+  - **Empty State:** Geçmiş yokken kullanıcı dostu boş durum ekranı
+  - **Clear History:** Tüm geçmişi temizleme seçeneği (onay ile)
+  - **Version 2.3.0:** SMS geçmişi ve veritabanı özelliği
+  - **APK build başarılı olarak tamamlandı**
+
 ## [2.2.0] - 2025-07-25
 
 - ✅ Task 13: Settings Screen tamamlandı

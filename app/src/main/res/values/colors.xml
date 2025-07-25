@@ -40,6 +40,12 @@
     <color name="hermes_sms_pending">#FF9800</color>
     <color name="hermes_sms_failed">#F44336</color>
     
+    <!-- History Screen Specific Colors -->
+    <color name="success_color">@color/hermes_success</color>
+    <color name="error_color">@color/hermes_error</color>
+    <color name="success_text">@color/hermes_success</color>
+    <color name="error_text">@color/hermes_error</color>
+    
     <!-- Legacy Android Colors (for compatibility) -->
     <color name="colorPrimary">@color/hermes_primary</color>
     <color name="colorPrimaryDark">@color/hermes_primary_dark</color>

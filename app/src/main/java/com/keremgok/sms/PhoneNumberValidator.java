@@ -100,6 +100,23 @@ public class PhoneNumberValidator {
     }
     
     /**
+     * Masks phone number for secure logging
+     * Example: +905551234567 -> +9055***4567
+     * @param phoneNumber The phone number to mask
+     * @return Masked phone number string
+     */
+    public static String maskPhoneNumber(String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.trim().isEmpty() || phoneNumber.length() < 8) {
+            return "***";
+        }
+        
+        String cleanNumber = phoneNumber.trim();
+        String prefix = cleanNumber.substring(0, Math.min(5, cleanNumber.length() - 4));
+        String suffix = cleanNumber.substring(cleanNumber.length() - 4);
+        return prefix + "***" + suffix;
+    }
+    
+    /**
      * Result class for validation operations
      */
     public static class ValidationResult {

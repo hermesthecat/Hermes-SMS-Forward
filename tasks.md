@@ -326,9 +326,9 @@
 
 ---
 
-### TASK 13: Settings Screen
+### ✅ TASK 13: Settings Screen
 
-**Durum:** Pending  
+**Durum:** Completed  
 **Süre:** 4-5 saat  
 **Versiyon:** 2.1.0 → 2.2.0
 

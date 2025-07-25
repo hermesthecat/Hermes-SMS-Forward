@@ -237,7 +237,14 @@ public class MainActivity extends AppCompatActivity {
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_settings) {
+        int itemId = item.getItemId();
+        
+        if (itemId == R.id.action_history) {
+            // Launch History Activity
+            Intent historyIntent = new Intent(this, HistoryActivity.class);
+            startActivity(historyIntent);
+            return true;
+        } else if (itemId == R.id.action_settings) {
             // Launch Settings Activity
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
             startActivity(settingsIntent);

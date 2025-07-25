@@ -63,7 +63,7 @@
     
     <!-- About Section -->
     <string name="settings_version_title">Uygulama Sürümü</string>
-    <string name="settings_version_summary">Hermes SMS Forward v2.2.0</string>
+    <string name="settings_version_summary">Hermes SMS Forward v2.3.0</string>
     <string name="settings_developer_title">Geliştirici</string>
     <string name="settings_developer_summary">KeremGok Development</string>
     <string name="settings_privacy_title">Gizlilik Politikası</string>
@@ -102,5 +102,48 @@
         <item>info</item>
         <item>debug</item>
     </string-array>
+    
+    <!-- History Screen -->
+    <string name="history_title">SMS Geçmişi</string>
+    <string name="history_menu_title">Geçmiş</string>
+    <string name="history_empty_title">Henüz SMS geçmişi yok</string>
+    <string name="history_empty_message">SMS yönlendirme başladığında geçmiş burada görünecek</string>
+    <string name="history_empty_icon_description">Boş geçmiş simgesi</string>
+    <string name="history_refresh_button">Yenile</string>
+    <string name="history_scroll_to_top">Başa git</string>
+    
+    <!-- History Search -->
+    <string name="history_search_hint">Gönderen veya mesaj içeriğinde arama...</string>
+    <string name="history_search_no_results">Arama sonucu bulunamadı</string>
+    <string name="history_search_error">Arama sırasında hata oluştu</string>
+    
+    <!-- History Filter Messages -->
+    <string name="history_showing_successful">Sadece başarılı yönlendirmeler gösteriliyor</string>
+    <string name="history_showing_failed">Sadece başarısız yönlendirmeler gösteriliyor</string>
+    <string name="history_filter_error">Filtreleme sırasında hata oluştu</string>
+    
+    <!-- History Loading Messages -->
+    <string name="history_load_error">Geçmiş yüklenirken hata oluştu</string>
+    <string name="history_no_records_message">SMS geçmişi bulunamadı</string>
+    
+    <!-- History Clear Operations -->
+    <string name="history_clear_title">Geçmişi Temizle</string>
+    <string name="history_clear_message">Tüm SMS geçmişini silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.</string>
+    <string name="history_clear_confirm">Sil</string>
+    <string name="history_cleared_success">SMS geçmişi başarıyla temizlendi</string>
+    <string name="history_clear_error">Geçmiş temizlenirken hata oluştu</string>
+    <string name="cancel">İptal</string>
+    
+    <!-- History Item Display -->
+    <string name="history_original_message_label">Orijinal Mesaj:</string>
+    <string name="history_target_label">Hedef:</string>
+    <string name="history_error_label">Hata:</string>
+    <string name="history_status_success">Başarılı</string>
+    <string name="history_status_failed">Başarısız</string>
+    <string name="history_status_icon_description">Durum simgesi</string>
+    
+    <!-- History Date Grouping -->
+    <string name="history_date_today">Bugün</string>
+    <string name="history_date_yesterday">Dün</string>
     
 </resources>
