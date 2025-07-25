@@ -146,12 +146,14 @@
    - International number format testleri
 
 5. **Test dependencies güncelleme:**
+
    ```gradle
    testImplementation 'org.mockito:mockito-core:4.6.1'
    testImplementation 'org.robolectric:robolectric:4.10.3'
    testImplementation 'com.google.truth:truth:1.1.4'
    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
    ```
+
    - MockK veya Mockito ekleme
    - Robolectric Android test framework
    - Truth assertion library
@@ -368,11 +370,13 @@
 **Yapılacaklar:**
 
 1. **Database setup:**
+
    ```gradle
    implementation 'androidx.room:room-runtime:2.5.0'
    annotationProcessor 'androidx.room:room-compiler:2.5.0'
    implementation 'androidx.room:room-ktx:2.5.0'
    ```
+
    - Room database implementation
    - SMS history entity tanımı
    - DAO (Data Access Object) oluşturma
