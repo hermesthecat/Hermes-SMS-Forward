@@ -8,20 +8,6 @@
 **Süre:** 2-3 saat  
 **Versiyon:** 1.3.0 → 1.4.0
 
-# Development Process
-
-- Git version control system is used
-- Complete one task at a time
-- Never move to the next task without user saying "okay" or "continue"
-
-- After each task completion:
-  1. Build APK if APK build fail, fix error and warning
-  2. Each completed task gets a green tick (✅)
-  3. Update version (pubspec.yaml)
-  4. Write changes to changelog.md file
-  5. Git commit
-  6. Git push
-
 **Yapılacaklar:**
 
 1. **SmsReceiver.java güvenlik düzeltmeleri:**
@@ -51,7 +37,7 @@
 ### TASK 6: Input Validation ve Error Handling
 
 **Durum:** Pending  
-**Süre:** 3-4 saat  
+**Süre:** 4-5 saat  
 **Versiyon:** 1.4.0 → 1.5.0
 
 **Yapılacaklar:**
@@ -160,6 +146,12 @@
    - International number format testleri
 
 5. **Test dependencies güncelleme:**
+   ```gradle
+   testImplementation 'org.mockito:mockito-core:4.6.1'
+   testImplementation 'org.robolectric:robolectric:4.10.3'
+   testImplementation 'com.google.truth:truth:1.1.4'
+   androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+   ```
    - MockK veya Mockito ekleme
    - Robolectric Android test framework
    - Truth assertion library
@@ -260,7 +252,7 @@
 ### TASK 11: Play Store Hazırlık
 
 **Durum:** Pending  
-**Süre:** 4-5 saat  
+**Süre:** 5-6 saat  
 **Versiyon:** 1.9.0 → 2.0.0
 
 **Yapılacaklar:**
@@ -376,6 +368,11 @@
 **Yapılacaklar:**
 
 1. **Database setup:**
+   ```gradle
+   implementation 'androidx.room:room-runtime:2.5.0'
+   annotationProcessor 'androidx.room:room-compiler:2.5.0'
+   implementation 'androidx.room:room-ktx:2.5.0'
+   ```
    - Room database implementation
    - SMS history entity tanımı
    - DAO (Data Access Object) oluşturma
@@ -443,7 +440,7 @@
 ### TASK 16: Multiple Target Numbers
 
 **Durum:** Pending  
-**Süre:** 6-7 saat  
+**Süre:** 7-8 saat  
 **Versiyon:** 2.4.0 → 2.5.0
 
 **Yapılacaklar:**
@@ -621,7 +618,7 @@
 
 **Durum:** Pending  
 **Süre:** 4-5 saat  
-**Versiyon:** 2.9.0 → 3.0.0
+**Versiyon:** 2.9.0 → 2.10.0
 
 **Yapılacaklar:**
 
@@ -645,11 +642,11 @@
 - Accessibility audit
 - Multi-language test
 - APK build test
-- Version güncelleme: 3.0.0 (versionCode: 21) - MAJOR RELEASE
+- Version güncelleme: 2.10.0 (versionCode: 21)
 - changelog.md güncelleme
-- Git commit: "Task 21: Accessibility and internationalization - Major release 3.0.0"
+- Git commit: "Task 21: Accessibility and internationalization"
 - Git push
-- Git tag: "v3.0.0" oluşturma
+- Git tag: "v2.10.0" oluşturma
 
 ---
 
