@@ -1,4 +1,4 @@
-## Development Environment
+# Development Environment
 
 - OS: Windows 10.0.26100
 - Shell: Git Bash
