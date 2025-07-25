@@ -1,5 +1,15 @@
 # Changelog - Hermes SMS Forward
 
+## [1.4.0] - 2025-07-25
+
+- ✅ Task 5: Güvenlik Logging Düzeltmeleri tamamlandı
+  - Phone number masking fonksiyonu eklendi (örn: +9055***4567)
+  - Production build'de hassas log'ları kapatma (DEBUG flag kontrolü)
+  - SMS içeriği log'unu kaldırma ve güvenli hale getirme
+  - Secure debug/info logging fonksiyonları implementasyonu
+  - Tüm kritik güvenlik log'ları maskelendi ve koşullu hale getirildi
+  - APK build başarılı olarak tamamlandı
+
 ## [1.3.0] - 2025-07-25
 
 - ✅ Task 4: SMS Receiver Implementation tamamlandı

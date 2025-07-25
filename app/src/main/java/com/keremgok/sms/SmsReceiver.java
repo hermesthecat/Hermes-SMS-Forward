@@ -15,10 +15,44 @@ public class SmsReceiver extends BroadcastReceiver {
     private static final String TAG = "HermesSmsReceiver";
     private static final String PREFS_NAME = "HermesPrefs";
     private static final String KEY_TARGET_NUMBER = "target_number";
+    // Debug flag - set to false for production builds
+    private static final boolean DEBUG = true;
+    
+    /**
+     * Masks phone number for secure logging
+     * Example: +905551234567 -> +9055***4567
+     */
+    private String maskPhoneNumber(String phoneNumber) {
+        if (TextUtils.isEmpty(phoneNumber) || phoneNumber.length() < 8) {
+            return "***";
+        }
+        
+        String prefix = phoneNumber.substring(0, Math.min(5, phoneNumber.length() - 4));
+        String suffix = phoneNumber.substring(phoneNumber.length() - 4);
+        return prefix + "***" + suffix;
+    }
+    
+    /**
+     * Secure debug logging - only logs in debug builds
+     */
+    private void logDebug(String message) {
+        if (DEBUG) {
+            Log.d(TAG, message);
+        }
+    }
+    
+    /**
+     * Secure info logging - only logs in debug builds  
+     */
+    private void logInfo(String message) {
+        if (DEBUG) {
+            Log.i(TAG, message);
+        }
+    }
     
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, "SMS received");
+        logDebug("SMS received");
         
         if (intent.getAction() == null || !intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")) {
             return;
@@ -29,7 +63,7 @@ public class SmsReceiver extends BroadcastReceiver {
         String targetNumber = prefs.getString(KEY_TARGET_NUMBER, "");
         
         if (TextUtils.isEmpty(targetNumber)) {
-            Log.w(TAG, "No target number configured, SMS forwarding disabled");
+            logDebug("No target number configured, SMS forwarding disabled");
             return;
         }
         
@@ -74,10 +108,10 @@ public class SmsReceiver extends BroadcastReceiver {
             String finalMessage = messageBody.toString();
             
             if (!TextUtils.isEmpty(finalMessage) && !TextUtils.isEmpty(senderNumber)) {
-                Log.d(TAG, "SMS from: " + senderNumber + ", forwarding to: " + targetNumber);
+                logDebug("SMS from: " + maskPhoneNumber(senderNumber) + ", forwarding to: " + maskPhoneNumber(targetNumber));
                 forwardSms(context, senderNumber, finalMessage, targetNumber, timestamp);
             } else {
-                Log.e(TAG, "Invalid SMS data - sender: " + senderNumber + ", message: " + finalMessage);
+                Log.e(TAG, "Invalid SMS data - sender: " + maskPhoneNumber(senderNumber));
             }
             
         } catch (Exception e) {
@@ -103,7 +137,7 @@ public class SmsReceiver extends BroadcastReceiver {
                 sendSingleSms(forwardedMessage, targetNumber);
             }
             
-            Log.i(TAG, "SMS successfully forwarded to: " + targetNumber);
+            logInfo("SMS successfully forwarded to: " + maskPhoneNumber(targetNumber));
             
         } catch (Exception e) {
             Log.e(TAG, "Failed to forward SMS: " + e.getMessage(), e);
@@ -114,7 +148,7 @@ public class SmsReceiver extends BroadcastReceiver {
         try {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(targetNumber, null, message, null, null);
-            Log.d(TAG, "Single SMS sent successfully");
+            logDebug("Single SMS sent successfully");
         } catch (Exception e) {
             Log.e(TAG, "Failed to send single SMS: " + e.getMessage(), e);
         }
@@ -125,7 +159,7 @@ public class SmsReceiver extends BroadcastReceiver {
             SmsManager smsManager = SmsManager.getDefault();
             java.util.ArrayList<String> parts = smsManager.divideMessage(message);
             smsManager.sendMultipartTextMessage(targetNumber, null, parts, null, null);
-            Log.d(TAG, "Multipart SMS sent successfully (" + parts.size() + " parts)");
+            logDebug("Multipart SMS sent successfully (" + parts.size() + " parts)");
         } catch (Exception e) {
             Log.e(TAG, "Failed to send multipart SMS: " + e.getMessage(), e);
         }
