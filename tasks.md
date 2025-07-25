@@ -633,7 +633,6 @@
 
 2. **Internationalization:**
    - English language support
-   - Arabic language support (RTL)
    - Date/time localization
 
 3. **Final testing:**
