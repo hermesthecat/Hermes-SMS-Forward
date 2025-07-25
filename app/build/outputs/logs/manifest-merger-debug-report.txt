@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:2:1-20:12
-INJECTED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:2:1-20:12
-INJECTED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:2:1-20:12
-INJECTED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:2:1-20:12
+ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:2:1-31:12
 MERGED from [com.google.android.material:material:1.9.0] C:\Users\kerem\.gradle\caches\8.14.1\transforms\e1761da1182b442fc422329813a35ff2\transformed\material-1.9.0\AndroidManifest.xml:17:1-26:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\kerem\.gradle\caches\8.14.1\transforms\e7d3c27d44af8a6a5a38c404c3e4aea2\transformed\constraintlayout-2.1.4\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\kerem\.gradle\caches\8.14.1\transforms\7d41c7152f2f65fb2000737827108f9c\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
@@ -45,7 +45,6 @@ MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\User
 MERGED from [androidx.print:print:1.0.0] C:\Users\kerem\.gradle\caches\8.14.1\transforms\f61304c1fbcea7c1953c67cd8830cd08\transformed\print-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.annotation:annotation-experimental:1.3.0] C:\Users\kerem\.gradle\caches\8.14.1\transforms\c19efae73ca9f474691f6ed38b4eb737\transformed\annotation-experimental-1.3.0\AndroidManifest.xml:17:1-22:12
 	package
-		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:3:5-31
 		INJECTED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml
@@ -53,9 +52,17 @@ MERGED from [androidx.annotation:annotation-experimental:1.3.0] C:\Users\kerem\.
 		INJECTED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.RECEIVE_SMS
+ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:4:5-70
+	android:name
+		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:4:22-67
+uses-permission#android.permission.SEND_SMS
+ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:5:5-67
+	android:name
+		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:5:22-64
 application
-ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:5:5-18:19
-INJECTED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:5:5-18:19
+ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:7:5-29:19
+INJECTED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:7:5-29:19
 MERGED from [com.google.android.material:material:1.9.0] C:\Users\kerem\.gradle\caches\8.14.1\transforms\e1761da1182b442fc422329813a35ff2\transformed\material-1.9.0\AndroidManifest.xml:24:5-20
 MERGED from [com.google.android.material:material:1.9.0] C:\Users\kerem\.gradle\caches\8.14.1\transforms\e1761da1182b442fc422329813a35ff2\transformed\material-1.9.0\AndroidManifest.xml:24:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\kerem\.gradle\caches\8.14.1\transforms\e7d3c27d44af8a6a5a38c404c3e4aea2\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
@@ -75,29 +82,43 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\ke
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.9.0] C:\Users\kerem\.gradle\caches\8.14.1\transforms\3f008182c769c501e746e201e4b174eb\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
 	android:label
-		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:8:9-41
+		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:10:9-41
 	android:icon
-		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:7:9-57
+		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:9:9-57
 	android:allowBackup
-		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:6:9-35
+		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:8:9-35
 	android:theme
-		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:9:9-67
+		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:11:9-67
 activity#com.keremgok.sms.MainActivity
-ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:10:9-17:20
+ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:12:9-19:20
 	android:exported
-		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:12:13-36
+		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:14:13-36
 	android:name
-		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:11:13-41
+		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:13:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:13:13-16:29
+ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:15:13-18:29
 action#android.intent.action.MAIN
-ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:14:17-69
+ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:16:17-69
 	android:name
-		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:14:25-66
+		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:16:25-66
 category#android.intent.category.LAUNCHER
-ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:15:17-77
+ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:17:17-77
 	android:name
-		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:15:27-74
+		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:17:27-74
+receiver#com.keremgok.sms.SmsReceiver
+ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:22:9-28:20
+	android:exported
+		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:24:13-36
+	android:name
+		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:23:13-40
+intent-filter#action:name:android.provider.Telephony.SMS_RECEIVED
+ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:25:13-27:29
+	android:priority
+		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:25:28-51
+action#android.provider.Telephony.SMS_RECEIVED
+ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:26:17-82
+	android:name
+		ADDED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml:26:25-79
 uses-sdk
 INJECTED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from Y:\GIT-Proje\sms-forward-android\app\src\main\AndroidManifest.xml
