@@ -293,9 +293,9 @@
 
 ## 🎨 PHASE 4: UX İYİLEŞTİRMELERİ (Öncelik: ORTA)
 
-### TASK 12: Dark Mode Support
+### ✅ TASK 12: Dark Mode Support
 
-**Durum:** Pending  
+**Durum:** Completed  
 **Süre:** 3-4 saat  
 **Versiyon:** 2.0.0 → 2.1.0
 

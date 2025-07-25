@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Main Forwarding Settings Category -->
+    <PreferenceCategory
+        android:title="@string/settings_category_forwarding"
+        android:key="category_forwarding">
+
+        <!-- Enable/Disable SMS Forwarding Toggle -->
+        <SwitchPreferenceCompat
+            android:key="pref_forwarding_enabled"
+            android:title="@string/settings_forwarding_enabled_title"
+            android:summary="@string/settings_forwarding_enabled_summary"
+            android:defaultValue="true" />
+
+        <!-- Target Phone Number (Read-only, redirect to main activity) -->
+        <Preference
+            android:key="pref_target_number"
+            android:title="@string/settings_target_number_title"
+            android:summary="@string/settings_target_number_summary" />
+
+        <!-- SMS Format Customization -->
+        <ListPreference
+            android:key="pref_sms_format"
+            android:title="@string/settings_sms_format_title"
+            android:summary="@string/settings_sms_format_summary"
+            android:entries="@array/sms_format_entries"
+            android:entryValues="@array/sms_format_values"
+            android:defaultValue="standard" />
+
+        <!-- Forwarding Delay -->
+        <SeekBarPreference
+            android:key="pref_forwarding_delay"
+            android:title="@string/settings_forwarding_delay_title"
+            android:summary="@string/settings_forwarding_delay_summary"
+            android:max="10"
+            android:defaultValue="0" />
+
+    </PreferenceCategory>
+
+    <!-- Notification Settings Category -->
+    <PreferenceCategory
+        android:title="@string/settings_category_notifications"
+        android:key="category_notifications">
+
+        <!-- Show Notifications -->
+        <SwitchPreferenceCompat
+            android:key="pref_show_notifications"
+            android:title="@string/settings_notifications_enabled_title"
+            android:summary="@string/settings_notifications_enabled_summary"
+            android:defaultValue="true" />
+
+        <!-- Notification Sound -->
+        <SwitchPreferenceCompat
+            android:key="pref_notification_sound"
+            android:title="@string/settings_notification_sound_title"
+            android:summary="@string/settings_notification_sound_summary"
+            android:defaultValue="false"
+            android:dependency="pref_show_notifications" />
+
+        <!-- Notification Vibration -->
+        <SwitchPreferenceCompat
+            android:key="pref_notification_vibration"
+            android:title="@string/settings_notification_vibration_title"
+            android:summary="@string/settings_notification_vibration_summary"
+            android:defaultValue="false"
+            android:dependency="pref_show_notifications" />
+
+    </PreferenceCategory>
+
+    <!-- Advanced Settings Category -->
+    <PreferenceCategory
+        android:title="@string/settings_category_advanced"
+        android:key="category_advanced">
+
+        <!-- Log Level Selection -->
+        <ListPreference
+            android:key="pref_log_level"
+            android:title="@string/settings_log_level_title"
+            android:summary="@string/settings_log_level_summary"
+            android:entries="@array/log_level_entries"
+            android:entryValues="@array/log_level_values"
+            android:defaultValue="error" />
+
+        <!-- Backup Settings -->
+        <Preference
+            android:key="pref_backup_settings"
+            android:title="@string/settings_backup_title"
+            android:summary="@string/settings_backup_summary" />
+
+        <!-- Restore Settings -->
+        <Preference
+            android:key="pref_restore_settings"
+            android:title="@string/settings_restore_title"
+            android:summary="@string/settings_restore_summary" />
+
+    </PreferenceCategory>
+
+    <!-- About Section Category -->
+    <PreferenceCategory
+        android:title="@string/settings_category_about"
+        android:key="category_about">
+
+        <!-- App Version -->
+        <Preference
+            android:key="pref_app_version"
+            android:title="@string/settings_version_title"
+            android:summary="@string/settings_version_summary"
+            android:selectable="false" />
+
+        <!-- Developer Info -->
+        <Preference
+            android:key="pref_developer_info"
+            android:title="@string/settings_developer_title"
+            android:summary="@string/settings_developer_summary" />
+
+        <!-- Privacy Policy -->
+        <Preference
+            android:key="pref_privacy_policy"
+            android:title="@string/settings_privacy_title"
+            android:summary="@string/settings_privacy_summary" />
+
+        <!-- GitHub Repository -->
+        <Preference
+            android:key="pref_github_repo"
+            android:title="@string/settings_github_title"
+            android:summary="@string/settings_github_summary" />
+
+        <!-- Send Feedback -->
+        <Preference
+            android:key="pref_send_feedback"
+            android:title="@string/settings_feedback_title"
+            android:summary="@string/settings_feedback_summary" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

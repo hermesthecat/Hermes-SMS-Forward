@@ -24,4 +24,83 @@
     <string name="sms_send_retry">SMS tekrar gönderiliyor</string>
     <string name="sms_send_final_failure">SMS gönderimi kalıcı olarak başarısız</string>
     <string name="sms_service_unavailable">SMS servisi kullanılamıyor</string>
+    
+    <!-- Settings Screen -->
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_menu_title">Ayarlar</string>
+    
+    <!-- Settings Categories -->
+    <string name="settings_category_forwarding">SMS Yönlendirme</string>
+    <string name="settings_category_notifications">Bildirimler</string>
+    <string name="settings_category_advanced">Gelişmiş Ayarlar</string>
+    <string name="settings_category_about">Hakkında</string>
+    
+    <!-- Forwarding Settings -->
+    <string name="settings_forwarding_enabled_title">SMS Yönlendirmeyi Etkinleştir</string>
+    <string name="settings_forwarding_enabled_summary">Gelen SMS\'lerin otomatik olarak yönlendirilmesini aktif eder</string>
+    <string name="settings_target_number_title">Hedef Telefon Numarası</string>
+    <string name="settings_target_number_summary">SMS\'lerin yönlendirileceği numara - Ana ekranda değiştirilebilir</string>
+    <string name="settings_sms_format_title">SMS Format Stili</string>
+    <string name="settings_sms_format_summary">Yönlendirilen SMS\'lerin nasıl formatlanacağını seçin</string>
+    <string name="settings_forwarding_delay_title">Yönlendirme Gecikmesi</string>
+    <string name="settings_forwarding_delay_summary">SMS yönlendirmeden önce beklenecek süre (saniye)</string>
+    
+    <!-- Notification Settings -->
+    <string name="settings_notifications_enabled_title">Bildirimleri Göster</string>
+    <string name="settings_notifications_enabled_summary">SMS yönlendirme işlemleri için bildirim göster</string>
+    <string name="settings_notification_sound_title">Bildirim Sesi</string>
+    <string name="settings_notification_sound_summary">Yönlendirme bildirimlerinde ses çıkar</string>
+    <string name="settings_notification_vibration_title">Titreşim</string>
+    <string name="settings_notification_vibration_summary">Yönlendirme bildirimlerinde titreşim yap</string>
+    
+    <!-- Advanced Settings -->
+    <string name="settings_log_level_title">Log Seviyesi</string>
+    <string name="settings_log_level_summary">Hangi seviyede log kayıtlarının tutulacağını seçin</string>
+    <string name="settings_backup_title">Ayarları Yedekle</string>
+    <string name="settings_backup_summary">Mevcut ayarları dosyaya kaydet</string>
+    <string name="settings_restore_title">Ayarları Geri Yükle</string>
+    <string name="settings_restore_summary">Daha önce kaydedilmiş ayarları geri yükle</string>
+    
+    <!-- About Section -->
+    <string name="settings_version_title">Uygulama Sürümü</string>
+    <string name="settings_version_summary">Hermes SMS Forward v2.2.0</string>
+    <string name="settings_developer_title">Geliştirici</string>
+    <string name="settings_developer_summary">KeremGok Development</string>
+    <string name="settings_privacy_title">Gizlilik Politikası</string>
+    <string name="settings_privacy_summary">Veri işleme ve gizlilik politikamızı görüntüle</string>
+    <string name="settings_github_title">Kaynak Kod</string>
+    <string name="settings_github_summary">GitHub\'da proje deposunu görüntüle</string>
+    <string name="settings_feedback_title">Geri Bildirim Gönder</string>
+    <string name="settings_feedback_summary">Önerilerinizi ve sorunlarınızı bizimle paylaşın</string>
+    
+    <!-- SMS Format Options -->
+    <string-array name="sms_format_entries">
+        <item>Standart Format</item>
+        <item>Kompakt Format</item>
+        <item>Detaylı Format</item>
+        <item>Özel Format</item>
+    </string-array>
+    
+    <string-array name="sms_format_values">
+        <item>standard</item>
+        <item>compact</item>
+        <item>detailed</item>
+        <item>custom</item>
+    </string-array>
+    
+    <!-- Log Level Options -->
+    <string-array name="log_level_entries">
+        <item>Sadece Hatalar</item>
+        <item>Hata ve Uyarılar</item>
+        <item>Tüm Aktiviteler</item>
+        <item>Debug Bilgileri</item>
+    </string-array>
+    
+    <string-array name="log_level_values">
+        <item>error</item>
+        <item>warning</item>
+        <item>info</item>
+        <item>debug</item>
+    </string-array>
+    
 </resources>

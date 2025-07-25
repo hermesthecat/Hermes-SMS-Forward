@@ -1,5 +1,24 @@
 # Changelog - Hermes SMS Forward
 
+## [2.2.0] - 2025-07-25
+
+- ✅ Task 13: Settings Screen tamamlandı
+  - **SettingsActivity Implementation:** PreferenceFragmentCompat ile modern ayarlar ekranı
+  - **Comprehensive Settings Categories:** SMS Yönlendirme, Bildirimler, Gelişmiş Ayarlar, Hakkında
+  - **Main Settings:** SMS yönlendirme enable/disable toggle, hedef numara yönetimi
+  - **SMS Format Options:** Standart, kompakt, detaylı ve özel format seçenekleri
+  - **Forwarding Controls:** Yönlendirme gecikmesi ayarı (0-10 saniye)
+  - **Notification Settings:** Bildirim gösterme, ses ve titreşim kontrolleri
+  - **Advanced Options:** Log seviyesi seçimi (error, warning, info, debug)
+  - **Backup/Restore:** Ayarları yedekleme ve geri yükleme seçenekleri
+  - **About Section:** Uygulama sürümü, geliştirici bilgisi, gizlilik politikası
+  - **GitHub & Feedback:** Kaynak kod erişimi ve geri bildirim gönderme
+  - **MainActivity Navigation:** Ayarlar menüsü ile kolay erişim
+  - **Preference Library:** androidx.preference:1.2.1 entegrasyonu
+  - **Dark Mode Compatible:** Settings screen dark mode desteği
+  - **Version 2.2.0:** Settings screen ile gelişmiş yapılandırma seçenekleri
+  - **APK build başarılı olarak tamamlandı**
+
 ## [2.1.0] - 2025-07-25
 
 - ✅ Task 12: Dark Mode Support tamamlandı
