@@ -1,4 +1,21 @@
 R_DEF: Internal format may change without notice
 local
+id btnSave
+id etTargetNumber
+id tvDescription
+id tvPermissions
+id tvStatus
+id tvTargetLabel
+id tvTitle
 layout activity_main
 string app_name
+string description_text
+string error_empty_number
+string permissions_granted
+string permissions_required
+string save_button
+string status_configured
+string status_not_configured
+string success_saved
+string target_number_hint
+string target_number_label

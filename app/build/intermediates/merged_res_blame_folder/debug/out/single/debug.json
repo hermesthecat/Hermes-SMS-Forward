@@ -1,5 +1,9 @@
 [
     {
+        "merged": "C:\\Users\\kerem\\.gradle\\daemon\\8.14.1\\com.keremgok.sms.app-merged_res-28:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\kerem\\.gradle\\daemon\\8.14.1\\com.keremgok.sms.app-main-30:\\layout\\activity_main.xml"
+    },
+    {
         "merged": "com.keremgok.sms.app-merged_res-28:/layout_activity_main.xml.flat",
         "source": "com.keremgok.sms.app-main-30:/layout/activity_main.xml"
     }

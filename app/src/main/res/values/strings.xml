@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Hermes SMS Forward</string>
+    <string name="description_text">Gelen tüm SMS mesajlarını belirlediğiniz telefon numarasına otomatik olarak yönlendirir.</string>
+    <string name="target_number_label">Hedef Telefon Numarası:</string>
+    <string name="target_number_hint">Örnek: +905551234567</string>
+    <string name="save_button">Kaydet ve Başlat</string>
+    <string name="status_not_configured">Durum: Yapılandırılmamış</string>
+    <string name="status_configured">Durum: Aktif - Yönlendirme çalışıyor</string>
+    <string name="permissions_required">SMS izinleri gerekli</string>
+    <string name="permissions_granted">İzinler verildi</string>
+    <string name="error_empty_number">Lütfen geçerli bir telefon numarası girin</string>
+    <string name="success_saved">Ayarlar kaydedildi!</string>
 </resources>

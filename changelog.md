@@ -1,5 +1,16 @@
 # Changelog - Hermes SMS Forward
 
+## [1.2.0] - 2025-07-25
+- ✅ Task 3: Ana Aktivite (MainActivity) geliştirildi
+  - Kullanıcı dostu arayüz tasarımı oluşturuldu
+  - Hedef telefon numarası girme alanı eklendi
+  - Kaydet ve Başlat butonu eklendi
+  - SharedPreferences ile ayar saklama implementasyonu
+  - Runtime permission handling (RECEIVE_SMS, SEND_SMS)
+  - Uygulama ve izin durumu göstergesi eklendi
+  - Toast mesajları ile kullanıcı geri bildirimi
+  - APK build başarılı olarak tamamlandı
+
 ## [1.1.0] - 2025-07-25
 - ✅ Task 2: Manifest ve SMS izinleri eklendi
   - RECEIVE_SMS izni eklendi

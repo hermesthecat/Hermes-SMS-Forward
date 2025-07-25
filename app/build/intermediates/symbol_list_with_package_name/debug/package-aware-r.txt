@@ -3096,6 +3096,7 @@ id bounce
 id bounceBoth
 id bounceEnd
 id bounceStart
+id btnSave
 id buttonPanel
 id cache_measures
 id callMeasure
@@ -3176,6 +3177,7 @@ id end
 id endToStart
 id enterAlways
 id enterAlwaysCollapsed
+id etTargetNumber
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
@@ -3468,6 +3470,11 @@ id transition_position
 id transition_scene_layoutid_cache
 id transition_transform
 id triangle
+id tvDescription
+id tvPermissions
+id tvStatus
+id tvTargetLabel
+id tvTitle
 id unchecked
 id uniform
 id unlabeled
@@ -3723,7 +3730,9 @@ string character_counter_content_description
 string character_counter_overflowed_content_description
 string character_counter_pattern
 string clear_text_end_icon_content_description
+string description_text
 string error_a11y_label
+string error_empty_number
 string error_icon_content_description
 string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior
@@ -3835,6 +3844,9 @@ string path_password_eye
 string path_password_eye_mask_strike_through
 string path_password_eye_mask_visible
 string path_password_strike_through
+string permissions_granted
+string permissions_required
+string save_button
 string search_menu_title
 string searchbar_scrolling_view_behavior
 string searchview_clear_text_content_description
@@ -3842,6 +3854,11 @@ string searchview_navigation_content_description
 string side_sheet_accessibility_pane_title
 string side_sheet_behavior
 string status_bar_notification_info_overflow
+string status_configured
+string status_not_configured
+string success_saved
+string target_number_hint
+string target_number_label
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
 style Animation_AppCompat_Dialog
