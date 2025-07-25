@@ -1,5 +1,16 @@
 # Changelog - Hermes SMS Forward
 
+## [1.3.0] - 2025-07-25
+- ✅ Task 4: SMS Receiver Implementation tamamlandı
+  - SmsReceiver.java BroadcastReceiver sınıfı oluşturuldu
+  - Gelen SMS'leri yakalama ve parsing implementasyonu
+  - SharedPreferences'dan hedef numara alma entegrasyonu
+  - SMS yönlendirme fonksiyonu implementasyonu
+  - Uzun SMS'ler için multipart destek eklendi
+  - Orijinal gönderen, mesaj ve zaman bilgilerini içeren format
+  - Kapsamlı error handling ve logging implementasyonu
+  - APK build başarılı olarak tamamlandı
+
 ## [1.2.0] - 2025-07-25
 - ✅ Task 3: Ana Aktivite (MainActivity) geliştirildi
   - Kullanıcı dostu arayüz tasarımı oluşturuldu
