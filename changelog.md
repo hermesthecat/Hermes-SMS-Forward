@@ -1,5 +1,21 @@
 # Changelog - Hermes SMS Forward
 
+## [1.9.0] - 2025-07-25
+
+- ✅ Task 10: Release Build Configuration tamamlandı
+  - Production-ready keystore oluşturuldu (RSA 2048-bit, 10,000 gün geçerlilik)
+  - Signing configuration app/build.gradle'a eklendi
+  - keystore.properties dosyası oluşturuldu ve .gitignore'a eklendi
+  - Kapsamlı proguard-rules.pro dosyası oluşturuldu (SMS ve core sınıflar korundu)
+  - Release build type konfigürasyonu tamamlandı (minify, shrink, zipAlign)
+  - ProGuard/R8 optimization etkinleştirildi (63% boyut azalması)
+  - Debug build type ayrı applicationId ile yapılandırıldı (.debug suffix)
+  - Release APK build test başarılı (2.0MB)
+  - App Bundle (AAB) build test başarılı (2.3MB)
+  - Boyut karşılaştırması: Debug 5.4MB → Release 2.0MB
+  - Production deployment hazırlığı tamamlandı
+  - APK build başarılı olarak tamamlandı
+
 ## [1.8.0] - 2025-07-25
 
 - ✅ Task 9: UI/Integration Tests tamamlandı
