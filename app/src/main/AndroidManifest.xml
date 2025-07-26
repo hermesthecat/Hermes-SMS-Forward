@@ -30,6 +30,17 @@
                 android:value=".MainActivity" />
         </activity>
 
+        <!-- Target Numbers Activity -->
+        <activity
+            android:name=".TargetNumbersActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/target_numbers_title">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
         <!-- History Activity -->
         <activity
             android:name=".HistoryActivity"

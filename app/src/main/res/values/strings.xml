@@ -146,4 +146,51 @@
     <string name="history_date_today">Bugün</string>
     <string name="history_date_yesterday">Dün</string>
     
+    <!-- Target Numbers Management -->
+    <string name="target_numbers_title">Hedef Numaralar</string>
+    <string name="target_numbers_menu_title">Hedef Numaralar</string>
+    <string name="target_numbers_description">SMS yönlendirme için birden fazla hedef numara ekleyebilirsiniz</string>
+    <string name="add_new_target">Yeni Hedef Numara Ekle</string>
+    <string name="phone_number_hint">Telefon Numarası</string>
+    <string name="display_name_hint">Görünen İsim (opsiyonel)</string>
+    <string name="set_as_primary">Ana hedef olarak ayarla</string>
+    <string name="enabled">Etkin</string>
+    <string name="add_target_number">Hedef Numara Ekle</string>
+    <string name="existing_targets">Mevcut Hedef Numaralar</string>
+    <string name="no_targets_configured">Henüz hiç hedef numara yapılandırılmamış</string>
+    <string name="sending_mode">Gönderim Modu</string>
+    
+    <!-- Target Number Operations -->
+    <string name="target_edit">Düzenle</string>
+    <string name="target_delete">Sil</string>
+    <string name="target_set_primary">Ana Yap</string>
+    <string name="target_toggle_enabled">Etkinlik Durumunu Değiştir</string>
+    <string name="target_primary_label">ANA</string>
+    <string name="target_disabled_label">DEVRE DIŞI</string>
+    
+    <!-- Target Number Validation -->
+    <string name="target_duplicate_number">Bu telefon numarası zaten mevcut</string>
+    <string name="target_add_success">Hedef numara başarıyla eklendi</string>
+    <string name="target_add_error">Hedef numara eklenirken hata oluştu</string>
+    <string name="target_update_success">Hedef numara güncellendi</string>
+    <string name="target_update_error">Hedef numara güncellenirken hata oluştu</string>
+    <string name="target_delete_success">Hedef numara silindi</string>
+    <string name="target_delete_error">Hedef numara silinirken hata oluştu</string>
+    
+    <!-- Target Number Delete Confirmation -->
+    <string name="target_delete_title">Hedef Numarayı Sil</string>
+    <string name="target_delete_message">Bu hedef numarayı silmek istediğinizden emin misiniz?</string>
+    <string name="target_delete_confirm">Sil</string>
+    
+    <!-- Sending Mode Options -->
+    <string-array name="sending_mode_entries">
+        <item>Sıralı Gönderim (Güvenli)</item>
+        <item>Paralel Gönderim (Hızlı)</item>
+    </string-array>
+    
+    <string-array name="sending_mode_values">
+        <item>sequential</item>
+        <item>parallel</item>
+    </string-array>
+    
 </resources>

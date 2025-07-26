@@ -1,5 +1,27 @@
 # Changelog - Hermes SMS Forward
 
+## [2.5.0] - 2025-07-26
+
+- ✅ Task 16: Multiple Target Numbers tamamlandı
+  - **Database Schema Update:** Room database v2 ile TargetNumber entity ve DAO implementasyonu
+  - **Database Migration:** SharedPreferences'dan database'e sorunsuz geçiş (MIGRATION_1_2)
+  - **TargetNumber Entity:** Phone number, display name, primary designation, enabled status desteği
+  - **TargetNumberDao:** CRUD operations, primary target management, enabled target filtering
+  - **TargetNumbersActivity:** Modern UI ile target number management (Add/Remove/Edit)
+  - **RecyclerView Implementation:** Target numbers list with primary/disabled badges
+  - **Target Number Validation:** Duplicate phone number kontrolü ve real-time validation
+  - **Multiple Target SMS Forwarding:** SmsReceiver multiple targets support
+  - **Parallel vs Sequential Sending:** Configurable sending modes (parallel/sequential)
+  - **Primary Target Priority:** Sequential mode'da primary target öncelikli gönderim
+  - **Individual Target Error Handling:** Her target için ayrı success/failure tracking
+  - **Last Used Timestamp:** Target kullanım geçmişi tracking ve görüntüleme
+  - **SharedPreferences Migration:** Mevcut target number otomatik migration
+  - **UI/UX Improvements:** Material Design 3 cards, badges, action buttons
+  - **Navigation Integration:** MainActivity menu ile Target Numbers erişimi
+  - **Comprehensive Testing:** Database migration, UI validation, error handling testleri
+  - **Version 2.5.0:** Multiple target numbers support ile gelişmiş SMS forwarding
+  - **APK build başarılı olarak tamamlandı**
+
 ## [2.4.0] - 2025-07-26
 
 - ✅ Task 15: Performance Optimization tamamlandı

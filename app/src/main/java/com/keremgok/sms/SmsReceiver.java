@@ -67,12 +67,14 @@ public class SmsReceiver extends BroadcastReceiver {
             return;
         }
         
-        // Get target number from SharedPreferences
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        String targetNumber = prefs.getString(KEY_TARGET_NUMBER, "");
+        // Get enabled target numbers from database
+        AppDatabase database = AppDatabase.getInstance(context);
+        TargetNumberDao targetNumberDao = database.targetNumberDao();
         
-        if (TextUtils.isEmpty(targetNumber)) {
-            logDebug("No target number configured, SMS forwarding disabled");
+        java.util.List<TargetNumber> targetNumbers = targetNumberDao.getEnabledTargetNumbers();
+        
+        if (targetNumbers == null || targetNumbers.isEmpty()) {
+            logDebug("No enabled target numbers configured, SMS forwarding disabled");
             return;
         }
         
@@ -117,8 +119,8 @@ public class SmsReceiver extends BroadcastReceiver {
             String finalMessage = messageBody.toString();
             
             if (!TextUtils.isEmpty(finalMessage) && !TextUtils.isEmpty(senderNumber)) {
-                logDebug("SMS from: " + maskPhoneNumber(senderNumber) + ", queuing for forwarding to: " + maskPhoneNumber(targetNumber));
-                queueSmsForwarding(context, senderNumber, finalMessage, targetNumber, timestamp);
+                logDebug("SMS from: " + maskPhoneNumber(senderNumber) + ", queuing for forwarding to " + targetNumbers.size() + " targets");
+                queueSmsForwardingToMultipleTargets(context, senderNumber, finalMessage, targetNumbers, timestamp);
             } else {
                 Log.e(TAG, "Invalid SMS data - sender: " + maskPhoneNumber(senderNumber));
             }
@@ -129,11 +131,79 @@ public class SmsReceiver extends BroadcastReceiver {
     }
     
     /**
-     * Queue SMS for optimized background forwarding using WorkManager
-     * This replaces the old direct SMS sending approach for better performance
+     * Queue SMS for forwarding to multiple targets with parallel/sequential mode support
+     * This method handles SMS forwarding to multiple target numbers
      */
-    private void queueSmsForwarding(Context context, String originalSender, String message, String targetNumber, long timestamp) {
+    private void queueSmsForwardingToMultipleTargets(Context context, String originalSender, String message, java.util.List<TargetNumber> targetNumbers, long timestamp) {
         try {
+            // Get sending mode preference
+            SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+            String sendingMode = prefs.getString("sending_mode", "sequential");
+            
+            if ("parallel".equals(sendingMode)) {
+                // Parallel sending - queue all targets simultaneously
+                queueParallelForwarding(context, originalSender, message, targetNumbers, timestamp);
+            } else {
+                // Sequential sending - queue targets one by one with delay
+                queueSequentialForwarding(context, originalSender, message, targetNumbers, timestamp);
+            }
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error queuing SMS for multiple targets: " + e.getMessage(), e);
+            // Fallback to direct forwarding for all targets
+            fallbackDirectForwardingToMultipleTargets(context, originalSender, message, targetNumbers, timestamp);
+        }
+    }
+    
+    /**
+     * Queue SMS for parallel forwarding to all targets simultaneously
+     */
+    private void queueParallelForwarding(Context context, String originalSender, String message, java.util.List<TargetNumber> targetNumbers, long timestamp) {
+        logDebug("Using parallel forwarding mode for " + targetNumbers.size() + " targets");
+        
+        for (TargetNumber target : targetNumbers) {
+            queueSmsForwardingToSingleTarget(context, originalSender, message, target, timestamp);
+        }
+    }
+    
+    /**
+     * Queue SMS for sequential forwarding to targets with delays
+     */
+    private void queueSequentialForwarding(Context context, String originalSender, String message, java.util.List<TargetNumber> targetNumbers, long timestamp) {
+        logDebug("Using sequential forwarding mode for " + targetNumbers.size() + " targets");
+        
+        // Process primary target first, then others with increasing delays
+        TargetNumber primaryTarget = null;
+        java.util.List<TargetNumber> otherTargets = new java.util.ArrayList<>();
+        
+        for (TargetNumber target : targetNumbers) {
+            if (target.isPrimary()) {
+                primaryTarget = target;
+            } else {
+                otherTargets.add(target);
+            }
+        }
+        
+        // Send to primary target immediately
+        if (primaryTarget != null) {
+            queueSmsForwardingToSingleTarget(context, originalSender, message, primaryTarget, timestamp);
+        }
+        
+        // Send to other targets with 2-second intervals
+        for (int i = 0; i < otherTargets.size(); i++) {
+            TargetNumber target = otherTargets.get(i);
+            long delay = (i + 1) * 2000; // 2 seconds delay between each target
+            queueSmsForwardingToSingleTargetWithDelay(context, originalSender, message, target, timestamp, delay);
+        }
+    }
+    
+    /**
+     * Queue SMS for forwarding to a single target (original method adapted)
+     */
+    private void queueSmsForwardingToSingleTarget(Context context, String originalSender, String message, TargetNumber targetNumber, long timestamp) {
+        try {
+            String targetPhoneNumber = targetNumber.getPhoneNumber();
+            
             // Get SMS queue manager instance
             SmsQueueManager queueManager = SmsQueueManager.getInstance(context);
             
@@ -144,31 +214,114 @@ public class SmsReceiver extends BroadcastReceiver {
             java.util.UUID workId = null;
             switch (priority) {
                 case SmsQueueWorker.PRIORITY_HIGH:
-                    workId = queueManager.queueHighPrioritySms(originalSender, message, targetNumber, timestamp);
-                    logDebug("SMS queued with HIGH priority");
+                    workId = queueManager.queueHighPrioritySms(originalSender, message, targetPhoneNumber, timestamp);
+                    logDebug("SMS queued with HIGH priority for target: " + maskPhoneNumber(targetPhoneNumber));
                     break;
                 case SmsQueueWorker.PRIORITY_NORMAL:
-                    workId = queueManager.queueNormalPrioritySms(originalSender, message, targetNumber, timestamp);
-                    logDebug("SMS queued with NORMAL priority");
+                    workId = queueManager.queueNormalPrioritySms(originalSender, message, targetPhoneNumber, timestamp);
+                    logDebug("SMS queued with NORMAL priority for target: " + maskPhoneNumber(targetPhoneNumber));
                     break;
                 case SmsQueueWorker.PRIORITY_LOW:
-                    workId = queueManager.queueLowPrioritySms(originalSender, message, targetNumber, timestamp);
-                    logDebug("SMS queued with LOW priority");
+                    workId = queueManager.queueLowPrioritySms(originalSender, message, targetPhoneNumber, timestamp);
+                    logDebug("SMS queued with LOW priority for target: " + maskPhoneNumber(targetPhoneNumber));
                     break;
             }
             
             if (workId != null) {
-                logInfo("SMS successfully queued for forwarding. Work ID: " + workId);
+                logInfo("SMS successfully queued for forwarding to: " + maskPhoneNumber(targetPhoneNumber) + ". Work ID: " + workId);
+                // Update last used timestamp
+                updateTargetLastUsed(context, targetNumber.getId(), timestamp);
             } else {
-                Log.e(TAG, "Failed to queue SMS for forwarding");
+                Log.e(TAG, "Failed to queue SMS for forwarding to: " + maskPhoneNumber(targetPhoneNumber));
                 // Fallback to direct processing if queue fails
-                fallbackDirectForwarding(context, originalSender, message, targetNumber, timestamp);
+                fallbackDirectForwardingToSingleTarget(context, originalSender, message, targetNumber, timestamp);
             }
             
         } catch (Exception e) {
-            Log.e(TAG, "Error queuing SMS for forwarding: " + e.getMessage(), e);
+            Log.e(TAG, "Error queuing SMS for forwarding to target: " + e.getMessage(), e);
             // Fallback to direct processing if queue fails
-            fallbackDirectForwarding(context, originalSender, message, targetNumber, timestamp);
+            fallbackDirectForwardingToSingleTarget(context, originalSender, message, targetNumber, timestamp);
+        }
+    }
+    
+    /**
+     * Queue SMS for forwarding to a single target with delay
+     */
+    private void queueSmsForwardingToSingleTargetWithDelay(Context context, String originalSender, String message, TargetNumber targetNumber, long timestamp, long delay) {
+        // For now, implement as immediate sending with fallback
+        // In a full implementation, this would use WorkManager with scheduled delays
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            queueSmsForwardingToSingleTarget(context, originalSender, message, targetNumber, timestamp);
+        }, delay);
+    }
+    
+    /**
+     * Update target number last used timestamp
+     */
+    private void updateTargetLastUsed(Context context, int targetId, long timestamp) {
+        ThreadManager.getInstance().executeDatabase(() -> {
+            try {
+                AppDatabase database = AppDatabase.getInstance(context);
+                database.targetNumberDao().updateLastUsedTimestamp(targetId, timestamp);
+            } catch (Exception e) {
+                Log.e(TAG, "Error updating target last used timestamp: " + e.getMessage());
+            }
+        });
+    }
+    
+    /**
+     * Fallback direct forwarding for multiple targets when queue system fails
+     */
+    private void fallbackDirectForwardingToMultipleTargets(Context context, String originalSender, String message, java.util.List<TargetNumber> targetNumbers, long timestamp) {
+        logDebug("Using fallback direct forwarding for " + targetNumbers.size() + " targets");
+        
+        for (TargetNumber target : targetNumbers) {
+            fallbackDirectForwardingToSingleTarget(context, originalSender, message, target, timestamp);
+        }
+    }
+    
+    /**
+     * Fallback direct forwarding method for a single target when queue system fails
+     */
+    private void fallbackDirectForwardingToSingleTarget(Context context, String originalSender, String message, TargetNumber targetNumber, long timestamp) {
+        try {
+            String targetPhoneNumber = targetNumber.getPhoneNumber();
+            logDebug("Using fallback direct forwarding for target: " + maskPhoneNumber(targetPhoneNumber));
+            
+            // Format the forwarded message with original sender info
+            String forwardedMessage = String.format(
+                "[Hermes SMS Forward]\nGönderen: %s\nMesaj: %s\nZaman: %s",
+                originalSender,
+                message,
+                new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss", java.util.Locale.getDefault())
+                    .format(new java.util.Date(timestamp))
+            );
+            
+            // Send SMS directly using SmsManager
+            SmsManager smsManager = SmsManager.getDefault();
+            
+            if (forwardedMessage.length() > 160) {
+                // Send multipart SMS
+                java.util.ArrayList<String> parts = smsManager.divideMessage(forwardedMessage);
+                smsManager.sendMultipartTextMessage(targetPhoneNumber, null, parts, null, null);
+                logDebug("Fallback multipart SMS sent to " + maskPhoneNumber(targetPhoneNumber) + " (" + parts.size() + " parts)");
+            } else {
+                // Send single SMS
+                smsManager.sendTextMessage(targetPhoneNumber, null, forwardedMessage, null, null);
+                logDebug("Fallback single SMS sent to " + maskPhoneNumber(targetPhoneNumber));
+            }
+            
+            // Log success to database
+            logSmsHistory(context, originalSender, message, targetPhoneNumber, forwardedMessage, timestamp, true, null);
+            // Update last used timestamp
+            updateTargetLastUsed(context, targetNumber.getId(), timestamp);
+            logInfo("Fallback SMS forwarding completed successfully for target: " + maskPhoneNumber(targetPhoneNumber));
+            
+        } catch (Exception e) {
+            String targetPhoneNumber = targetNumber.getPhoneNumber();
+            Log.e(TAG, "Fallback SMS forwarding failed for target " + maskPhoneNumber(targetPhoneNumber) + ": " + e.getMessage(), e);
+            // Log failure to database
+            logSmsHistory(context, originalSender, message, targetPhoneNumber, "", timestamp, false, "Fallback forwarding failed: " + e.getMessage());
         }
     }
     
@@ -202,47 +355,6 @@ public class SmsReceiver extends BroadcastReceiver {
         return SmsQueueWorker.PRIORITY_NORMAL;
     }
     
-    /**
-     * Fallback direct forwarding method for when queue system fails
-     * Uses simplified approach for reliability
-     */
-    private void fallbackDirectForwarding(Context context, String originalSender, String message, String targetNumber, long timestamp) {
-        try {
-            logDebug("Using fallback direct forwarding");
-            
-            // Format the forwarded message with original sender info
-            String forwardedMessage = String.format(
-                "[Hermes SMS Forward]\nGönderen: %s\nMesaj: %s\nZaman: %s",
-                originalSender,
-                message,
-                new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss", java.util.Locale.getDefault())
-                    .format(new java.util.Date(timestamp))
-            );
-            
-            // Send SMS directly using SmsManager
-            SmsManager smsManager = SmsManager.getDefault();
-            
-            if (forwardedMessage.length() > 160) {
-                // Send multipart SMS
-                java.util.ArrayList<String> parts = smsManager.divideMessage(forwardedMessage);
-                smsManager.sendMultipartTextMessage(targetNumber, null, parts, null, null);
-                logDebug("Fallback multipart SMS sent (" + parts.size() + " parts)");
-            } else {
-                // Send single SMS
-                smsManager.sendTextMessage(targetNumber, null, forwardedMessage, null, null);
-                logDebug("Fallback single SMS sent");
-            }
-            
-            // Log success to database
-            logSmsHistory(context, originalSender, message, targetNumber, forwardedMessage, timestamp, true, null);
-            logInfo("Fallback SMS forwarding completed successfully");
-            
-        } catch (Exception e) {
-            Log.e(TAG, "Fallback SMS forwarding failed: " + e.getMessage(), e);
-            // Log failure to database
-            logSmsHistory(context, originalSender, message, targetNumber, "", timestamp, false, "Fallback forwarding failed: " + e.getMessage());
-        }
-    }
     
     /**
      * Log SMS forwarding history to database

@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_target_numbers"
+        android:title="@string/target_numbers_menu_title"
+        android:orderInCategory="80"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_history"
         android:title="@string/history_menu_title"
         android:orderInCategory="90"

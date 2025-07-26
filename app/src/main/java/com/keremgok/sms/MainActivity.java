@@ -242,7 +242,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         
-        if (itemId == R.id.action_history) {
+        if (itemId == R.id.action_target_numbers) {
+            // Launch Target Numbers Activity
+            Intent targetNumbersIntent = new Intent(this, TargetNumbersActivity.class);
+            startActivity(targetNumbersIntent);
+            return true;
+        } else if (itemId == R.id.action_history) {
             // Launch History Activity
             Intent historyIntent = new Intent(this, HistoryActivity.class);
             startActivity(historyIntent);
