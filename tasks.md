@@ -682,4 +682,106 @@ Tamamlanan işlemler:
 
 ---
 
-**HAZIR:** Task listesi oluşturuldu! Hangi task'tan başlamak istiyorsunuz?
+## 🚀 PHASE 7: YENİ ÖZELLİKLER (Öncelik: YÜKSEK)
+
+### TASK 23: Enhanced Onboarding
+
+**Durum:** Pending  
+**Süre:** 4-5 saat  
+**Versiyon:** 2.10.0 → 2.11.0
+
+**Yapılacaklar:**
+
+1. **OnboardingActivity oluşturma:**
+   - `OnboardingActivity.java` ve ViewPager2 setup
+   - Fragment-based step system
+   - Navigation between steps
+
+2. **Onboarding fragments:**
+   - WelcomeFragment: App tanıtımı ve özellikler
+   - PermissionExplanationFragment: SMS izinleri açıklaması
+   - TargetNumberSetupFragment: İlk hedef numara kurulumu
+   - FilterIntroFragment: Filtering system tanıtımı
+   - CompletionFragment: Setup tamamlama
+
+3. **Visual guides ve animations:**
+   - Lottie animations for permissions explanation
+   - Progress indicator (steps 1/5, 2/5, etc.)
+   - Skip ve Back button functionality
+
+4. **First-time user detection:**
+   - SharedPreferences ile first launch detection
+   - MainActivity'den OnboardingActivity'ye yönlendirme
+   - Onboarding skip option
+
+**Tamamlandıktan sonra:**
+
+- Onboarding flow test (tüm steps)
+- Permission grant/deny scenarios test
+- APK build test - Eğer başarısız olursa hataları düzelt ve uyarıları çöz
+- ✅ Task'ı tamamlandı olarak işaretle (APK başarılı olduktan SONRA)
+- app/build.gradle'da versionCode ve versionName güncelle: 2.11.0 (versionCode: 22)
+- changelog.md güncelleme
+- Git commit: "Task 23: Enhanced onboarding with ViewPager2 guided setup"
+- Git push
+
+---
+
+### TASK 30: Cloud Backup & Sync
+
+**Durum:** Pending  
+**Süre:** 6-7 saat  
+**Versiyon:** 2.11.0 → 2.12.0
+
+**Yapılacaklar:**
+
+1. **Google Drive API integration:**
+   - Google Play Services ve Drive API dependencies
+   - Authentication setup (OAuth 2.0)
+   - Drive API client configuration
+
+2. **Backup Manager sınıfı:**
+   - `CloudBackupManager.java` oluşturma
+   - Settings ve database backup to JSON
+   - Encryption before upload (AES-256)
+   - Automatic backup scheduling
+
+3. **Backup/Restore UI:**
+   - Settings'e backup section ekleme
+   - Manual backup/restore buttons
+   - Backup status indicator
+   - Last backup date display
+
+4. **Data synchronization:**
+   - Target numbers sync across devices
+   - Filter rules synchronization
+   - Settings sync (except device-specific)
+   - Conflict resolution logic
+
+5. **Security implementation:**
+   - Backup encryption with user PIN/password
+   - Secure key storage in Android Keystore
+   - Backup integrity verification
+
+**Dependencies ekleme:**
+```gradle
+implementation 'com.google.android.gms:play-services-auth:20.7.0'
+implementation 'com.google.android.gms:play-services-drive:17.0.0'
+implementation 'com.google.api-client:google-api-client-android:1.23.0'
+```
+
+**Tamamlandıktan sonra:**
+
+- Backup/restore flow test
+- Multi-device sync test
+- Encryption/decryption test
+- APK build test - Eğer başarısız olursa hataları düzelt ve uyarıları çöz
+- ✅ Task'ı tamamlandı olarak işaretle (APK başarılı olduktan SONRA)
+- app/build.gradle'da versionCode ve versionName güncelle: 2.12.0 (versionCode: 23)
+- changelog.md güncelleme
+- Git commit: "Task 30: Cloud backup and sync with Google Drive integration"
+- Git push
+
+---
+
+**HAZIR:** Task listesi güncellendi! Hangi task'tan başlamak istiyorsunuz?
