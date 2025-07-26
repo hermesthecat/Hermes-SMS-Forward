@@ -193,4 +193,85 @@
         <item>parallel</item>
     </string-array>
     
+    <!-- SMS Filter Rules Management -->
+    <string name="filter_rules_title">SMS Filter Rules</string>
+    <string name="filter_rules_menu_title">Filter Rules</string>
+    <string name="filter_rules_description">Create rules to filter incoming SMS messages before forwarding</string>
+    <string name="quick_filters">Quick Filters</string>
+    <string name="add_spam_filter">Add Spam Filter</string>
+    <string name="add_work_hours_filter">Work Hours Filter</string>
+    <string name="add_new_filter">Add New Filter</string>
+    <string name="filter_name_hint">Filter Name</string>
+    <string name="filter_type_label">Filter Type</string>
+    <string name="filter_pattern_hint">Pattern (keyword, phone number, or regex)</string>
+    <string name="filter_action_label">Action</string>
+    <string name="action_allow">Allow</string>
+    <string name="action_block">Block</string>
+    <string name="case_sensitive">Case Sensitive</string>
+    <string name="use_regex">Use Regex</string>
+    <string name="add_filter">Add Filter</string>
+    <string name="existing_filters">Existing Filters</string>
+    <string name="no_filters_configured">No filters configured yet</string>
+    
+    <!-- Filter Types -->
+    <string-array name="filter_type_entries">
+        <item>Keyword Filter</item>
+        <item>Sender Number Filter</item>
+        <item>Time-based Filter</item>
+        <item>Whitelist</item>
+        <item>Blacklist</item>
+        <item>Spam Detection</item>
+    </string-array>
+    
+    <string-array name="filter_type_values">
+        <item>KEYWORD</item>
+        <item>SENDER_NUMBER</item>
+        <item>TIME_BASED</item>
+        <item>WHITELIST</item>
+        <item>BLACKLIST</item>
+        <item>SPAM_DETECTION</item>
+    </string-array>
+    
+    <!-- Filter Operations -->
+    <string name="filter_edit">Edit</string>
+    <string name="filter_delete">Delete</string>
+    <string name="filter_toggle_enabled">Toggle Enabled</string>
+    <string name="filter_test">Test Filter</string>
+    <string name="filter_stats">Statistics</string>
+    <string name="filter_enabled_label">ENABLED</string>
+    <string name="filter_disabled_label">DISABLED</string>
+    <string name="filter_priority_label">Priority:</string>
+    <string name="filter_matches_label">Matches:</string>
+    
+    <!-- Filter Validation -->
+    <string name="filter_name_required">Filter name is required</string>
+    <string name="filter_pattern_required">Filter pattern is required</string>
+    <string name="filter_name_exists">A filter with this name already exists</string>
+    <string name="filter_invalid_regex">Invalid regular expression pattern</string>
+    <string name="filter_add_success">Filter added successfully</string>
+    <string name="filter_add_error">Error adding filter</string>
+    <string name="filter_update_success">Filter updated successfully</string>
+    <string name="filter_update_error">Error updating filter</string>
+    <string name="filter_delete_success">Filter deleted successfully</string>
+    <string name="filter_delete_error">Error deleting filter</string>
+    
+    <!-- Filter Delete Confirmation -->
+    <string name="filter_delete_title">Delete Filter</string>
+    <string name="filter_delete_message">Are you sure you want to delete this filter?</string>
+    <string name="filter_delete_confirm">Delete</string>
+    
+    <!-- Filter Test -->
+    <string name="filter_test_title">Test Filter</string>
+    <string name="filter_test_message_hint">Enter test message</string>
+    <string name="filter_test_sender_hint">Enter test sender number</string>
+    <string name="filter_test_run">Run Test</string>
+    <string name="filter_test_result_match">✅ Filter matches - Action: %s</string>
+    <string name="filter_test_result_no_match">❌ Filter does not match</string>
+    
+    <!-- Default Filter Names -->
+    <string name="default_spam_filter_name">Spam Detection</string>
+    <string name="default_work_hours_filter_name">Work Hours Only</string>
+    <string name="default_spam_pattern">spam|advertisement|promotion|winner|prize|free|urgent|limited time</string>
+    <string name="default_work_hours_pattern">09:00-18:00</string>
+    
 </resources>

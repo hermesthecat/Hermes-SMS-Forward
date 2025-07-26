@@ -9,6 +9,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_filter_rules"
+        android:title="@string/filter_rules_menu_title"
+        android:orderInCategory="85"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_history"
         android:title="@string/history_menu_title"
         android:orderInCategory="90"

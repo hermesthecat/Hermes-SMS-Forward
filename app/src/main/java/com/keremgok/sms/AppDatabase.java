@@ -14,8 +14,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
  * Contains SMS history tracking and target numbers management
  */
 @Database(
-    entities = {SmsHistory.class, TargetNumber.class},
-    version = 2,
+    entities = {SmsHistory.class, TargetNumber.class, SmsFilter.class},
+    version = 3,
     exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
@@ -36,6 +36,12 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract TargetNumberDao targetNumberDao();
     
     /**
+     * Get the SmsFilterDao for database operations
+     * @return SmsFilterDao instance
+     */
+    public abstract SmsFilterDao smsFilterDao();
+    
+    /**
      * Migration from version 1 to 2: Add target_numbers table and migrate SharedPreferences
      */
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
@@ -50,6 +56,33 @@ public abstract class AppDatabase extends RoomDatabase {
                 "`is_enabled` INTEGER NOT NULL, " +
                 "`created_timestamp` INTEGER NOT NULL, " +
                 "`last_used_timestamp` INTEGER NOT NULL)");
+        }
+    };
+    
+    /**
+     * Migration from version 2 to 3: Add sms_filters table for SMS filtering system
+     */
+    static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            // Create sms_filters table
+            database.execSQL("CREATE TABLE IF NOT EXISTS `sms_filters` (" +
+                "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "`filter_name` TEXT, " +
+                "`filter_type` TEXT, " +
+                "`pattern` TEXT, " +
+                "`action` TEXT, " +
+                "`is_enabled` INTEGER NOT NULL, " +
+                "`is_case_sensitive` INTEGER NOT NULL, " +
+                "`is_regex` INTEGER NOT NULL, " +
+                "`priority` INTEGER NOT NULL, " +
+                "`time_start` TEXT, " +
+                "`time_end` TEXT, " +
+                "`days_of_week` TEXT, " +
+                "`match_count` INTEGER NOT NULL, " +
+                "`last_matched` INTEGER NOT NULL, " +
+                "`created_timestamp` INTEGER NOT NULL, " +
+                "`modified_timestamp` INTEGER NOT NULL)");
         }
     };
     
@@ -69,7 +102,7 @@ public abstract class AppDatabase extends RoomDatabase {
                         DATABASE_NAME
                     )
                     .allowMainThreadQueries() // For simple operations only
-                    .addMigrations(MIGRATION_1_2)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                     .addCallback(new RoomDatabase.Callback() {
                         @Override
                         public void onCreate(@NonNull SupportSQLiteDatabase db) {

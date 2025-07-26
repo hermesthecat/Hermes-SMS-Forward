@@ -1,5 +1,27 @@
 # Changelog - Hermes SMS Forward
 
+## [2.6.0] - 2025-07-26
+
+- ✅ Task 17: SMS Filtering System tamamlandı
+  - **SmsFilter Entity & DAO:** Kapsamlı SMS filter rules database implementasyonu
+  - **FilterEngine Class:** Keyword, sender number, time-based filtering logic
+  - **Advanced Filtering:** Whitelist/blacklist management, regex pattern support
+  - **Spam Detection:** Basic spam detection with content analysis and heuristics
+  - **Time-based Filtering:** Work hours filtering with day of week support
+  - **FilterRulesActivity:** Modern UI for filter management (Add/Edit/Delete/Test)
+  - **Filter Testing:** Real-time filter testing with sample SMS messages
+  - **Quick Filters:** Pre-configured spam detection and work hours filters
+  - **Case Sensitivity & Regex:** Flexible pattern matching options
+  - **Priority System:** Filter priority ordering for rule processing
+  - **Match Statistics:** Filter usage tracking and last matched timestamps
+  - **SmsReceiver Integration:** Filter engine integration before SMS forwarding
+  - **Blocked SMS Logging:** Blocked messages logged to history with filter reason
+  - **Database Migration v3:** Seamless upgrade with filter rules table
+  - **MainActivity Navigation:** Filter Rules menu integration
+  - **Comprehensive Validation:** Input validation with regex pattern checking
+  - **Version 2.6.0:** Advanced SMS filtering system with pattern matching
+  - **APK build başarılı olarak tamamlandı**
+
 ## [2.5.0] - 2025-07-26
 
 - ✅ Task 16: Multiple Target Numbers tamamlandı

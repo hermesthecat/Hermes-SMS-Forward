@@ -247,6 +247,11 @@ public class MainActivity extends AppCompatActivity {
             Intent targetNumbersIntent = new Intent(this, TargetNumbersActivity.class);
             startActivity(targetNumbersIntent);
             return true;
+        } else if (itemId == R.id.action_filter_rules) {
+            // Launch Filter Rules Activity
+            Intent filterRulesIntent = new Intent(this, FilterRulesActivity.class);
+            startActivity(filterRulesIntent);
+            return true;
         } else if (itemId == R.id.action_history) {
             // Launch History Activity
             Intent historyIntent = new Intent(this, HistoryActivity.class);

@@ -499,7 +499,6 @@
 1. **Filter engine:**
    - Keyword-based filtering
    - Sender number filtering
-   - Time-based filtering (work hours)
 
 2. **Filter UI:**
    - Filter rules management screen

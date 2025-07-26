@@ -41,6 +41,17 @@
                 android:value=".MainActivity" />
         </activity>
 
+        <!-- Filter Rules Activity -->
+        <activity
+            android:name=".FilterRulesActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/filter_rules_title">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
         <!-- History Activity -->
         <activity
             android:name=".HistoryActivity"

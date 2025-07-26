@@ -119,8 +119,23 @@ public class SmsReceiver extends BroadcastReceiver {
             String finalMessage = messageBody.toString();
             
             if (!TextUtils.isEmpty(finalMessage) && !TextUtils.isEmpty(senderNumber)) {
-                logDebug("SMS from: " + maskPhoneNumber(senderNumber) + ", queuing for forwarding to " + targetNumbers.size() + " targets");
-                queueSmsForwardingToMultipleTargets(context, senderNumber, finalMessage, targetNumbers, timestamp);
+                logDebug("SMS from: " + maskPhoneNumber(senderNumber) + ", applying filters before forwarding to " + targetNumbers.size() + " targets");
+                
+                // Apply SMS filters before forwarding
+                FilterEngine filterEngine = new FilterEngine(context);
+                FilterEngine.FilterResult filterResult = filterEngine.applyFilters(senderNumber, finalMessage, timestamp);
+                
+                if (filterResult.shouldForward()) {
+                    logDebug("SMS passed filters: " + filterResult.getReason() + " - forwarding to targets");
+                    queueSmsForwardingToMultipleTargets(context, senderNumber, finalMessage, targetNumbers, timestamp);
+                } else {
+                    logDebug("SMS blocked by filter: " + filterResult.getReason() + " - not forwarding");
+                    // Log blocked SMS to history with filter reason
+                    for (TargetNumber target : targetNumbers) {
+                        logSmsHistory(context, senderNumber, finalMessage, target.getPhoneNumber(), 
+                                     "", timestamp, false, "Blocked by filter: " + filterResult.getReason());
+                    }
+                }
             } else {
                 Log.e(TAG, "Invalid SMS data - sender: " + maskPhoneNumber(senderNumber));
             }
