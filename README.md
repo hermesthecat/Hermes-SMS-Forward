@@ -387,7 +387,6 @@ cd Hermes-SMS-Forward
 
 ### Getting Help
 
-- **Email**: <support@hermessms.com>
 - **Issues**: [GitHub Issues](https://github.com/hermesthecat/Hermes-SMS-Forward/issues)
 - **Documentation**: Check this README and other documentation files
 
