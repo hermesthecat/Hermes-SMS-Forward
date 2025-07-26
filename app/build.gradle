@@ -10,8 +10,8 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace 'com.keremgok.sms'
-    compileSdk 34
+    namespace = 'com.keremgok.sms'
+    compileSdk = 34
 
     signingConfigs {
         release {
@@ -26,8 +26,8 @@ android {
 
     defaultConfig {
         applicationId "com.keremgok.sms"
-        minSdk 21
-        targetSdk 34
+        minSdk = 21
+        targetSdk = 34
         versionCode 21
         versionName "2.10.0"
 
@@ -37,10 +37,10 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            shrinkResources true
+            shrinkResources = true
             debuggable false
             zipAlignEnabled true
-            signingConfig signingConfigs.release
+            signingConfig = signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -75,7 +75,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime:2.6.2'
     implementation 'androidx.lifecycle:lifecycle-process:2.6.2'
     
-    // Kotlin stdlib resolution to fix conflicts
+    // Kotlin stdlib to resolve conflicts
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
     
     testImplementation 'junit:junit:4.13.2'
@@ -87,12 +87,12 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
 
-// Resolve Kotlin stdlib conflicts
+// Force specific Kotlin stdlib version to avoid conflicts
 configurations.all {
-    resolutionStrategy {
-        force 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
-        force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.10'
-        force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10'
-        force 'org.jetbrains.kotlin:kotlin-stdlib-common:1.8.10'
+    resolutionStrategy.eachDependency { details ->
+        if (details.requested.group == 'org.jetbrains.kotlin' && 
+            (details.requested.name.startsWith('kotlin-stdlib'))) {
+            details.useVersion '1.8.10'
+        }
     }
 }
