@@ -274,6 +274,7 @@ sms-forward-android/
 ├── PERMISSIONS.md                   # Detailed permissions explanation
 ├── DATA_HANDLING_DISCLOSURE.md     # Data handling transparency
 ├── TARGET_AUDIENCE.md               # Target audience definition
+├── PLAY_STORE_PUBLISHING_GUIDE.md  # Complete Play Store publishing guide
 ├── changelog.md                     # Version history and changes
 ├── tasks.md                         # Development task tracking
 └── README.md                        # This file
