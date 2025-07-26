@@ -523,42 +523,6 @@
 
 ---
 
-### TASK 18: Notification System
-
-**Durum:** Pending  
-**Süre:** 3-4 saat  
-**Versiyon:** 2.6.0 → 2.7.0
-
-**Yapılacaklar:**
-
-1. **Notification channels:**
-   - Forward success notifications
-   - Error notifications
-   - Service status notifications
-
-2. **Rich notifications:**
-   - Big text style for long messages
-   - Action buttons (Stop/Pause forwarding)
-   - Progress notifications for multiple sends
-
-3. **Notification settings:**
-   - User preference controls
-   - Sound and vibration options
-   - Do not disturb integration
-
-**Tamamlandıktan sonra:**
-
-- Notification display test
-- Channel management test
-- APK build test - Eğer başarısız olursa hataları düzelt ve uyarıları çöz
-- ✅ Task'ı tamamlandı olarak işaretle (APK başarılı olduktan SONRA)
-- app/build.gradle'da versionCode ve versionName güncelle: 2.7.0 (versionCode: 18)
-- changelog.md güncelleme
-- Git commit: "Task 18: Comprehensive notification system"
-- Git push
-
----
-
 ### TASK 19: Backup & Restore
 
 **Durum:** Pending  
@@ -572,12 +536,7 @@
    - Target numbers backup
    - Filter rules backup
 
-2. **Cloud backup (optional):**
-   - Google Drive integration
-   - Encrypted backup files
-   - Automatic backup scheduling
-
-3. **Restore functionality:**
+2. **Restore functionality:**
    - Import validation
    - Merge vs replace options
    - Backup verification
