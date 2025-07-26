@@ -31,9 +31,11 @@ Automatically forward incoming SMS messages to your designated phone number
 - Automatic retry mechanism (3 attempts)
 - Intelligent error management and user feedback
 
-🎨 **Modern Design**
+🎨 **Modern Design & User Experience**
 
-- Material Design compliant interface
+- Material Design 3 compliant interface
+- 5-step guided onboarding process
+- Interactive setup flow for easy configuration
 - Custom Hermes-themed app icon
 - Adaptive icon support (Android 8.0+)
 - User-friendly and intuitive experience
@@ -64,9 +66,14 @@ Automatically forward incoming SMS messages to your designated phone number
 ### 🛠️ Installation & Setup
 
 1. Download and install the app
-2. Grant SMS permissions (required)
-3. Enter your target phone number
-4. Tap "Save and Start" button
+2. Follow the 5-step onboarding process:
+   - Welcome screen and feature introduction
+   - SMS permissions explanation and security information
+   - Target phone number setup
+   - Filter system introduction
+   - Setup completion and next steps
+3. Grant SMS permissions (required)
+4. Enter your target phone number
 5. Incoming SMS will now be automatically forwarded!
 
 ### 🔒 Privacy & Security

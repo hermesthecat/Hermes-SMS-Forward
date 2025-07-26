@@ -1,6 +1,6 @@
 # 📱 Hermes SMS Forward
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/hermesthecat/Hermes-SMS-Forward)
+[![Version](https://img.shields.io/badge/version-2.11.0-blue.svg)](https://github.com/hermesthecat/Hermes-SMS-Forward)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Android](https://img.shields.io/badge/platform-Android%205.0%2B-brightgreen.svg)](https://android.com)
 [![Build Status](https://img.shields.io/badge/build-passing-success.svg)](https://github.com/hermesthecat/Hermes-SMS-Forward)
@@ -36,7 +36,8 @@ Hermes SMS Forward automatically forwards incoming SMS messages to your designat
 
 ### 🎨 Modern Design
 
-- **Material Design**: Clean, intuitive interface following Android guidelines
+- **Material Design 3**: Clean, intuitive interface with latest design guidelines
+- **Guided Onboarding**: 5-step interactive setup process for new users
 - **Custom Branding**: Hermes-themed adaptive icon with multiple densities
 - **Accessibility Ready**: Screen reader support and high contrast compatibility
 - **Responsive UI**: Optimized for different screen sizes and orientations
@@ -89,31 +90,40 @@ cd Hermes-SMS-Forward
 
 ### Setup
 
-1. **Launch the app** and grant SMS permissions when prompted
-2. **Enter target number** in international format (e.g., +905551234567)
-3. **Verify validation** - green checkmark indicates valid number
-4. **Tap "Save and Start"** to begin SMS forwarding
-5. **Test forwarding** by sending a test SMS to your device
+1. **Launch the app** - New users will see 5-step guided onboarding
+2. **Follow onboarding flow**: Welcome → Permissions → Target Setup → Filter Intro → Completion
+3. **Grant SMS permissions** when prompted during onboarding
+4. **Enter target number** in international format (e.g., +905551234567)
+5. **Complete setup** and begin SMS forwarding automatically
+6. **Test forwarding** by sending a test SMS to your device
 
 ## 📋 Detailed Usage
 
 ### First Time Setup
 
-1. **Permission Requests**
+1. **Guided Onboarding Experience**
+   - Welcome screen introduces app features and benefits
+   - Permission explanation with visual guides and security information
+   - Interactive target number setup with real-time validation
+   - Filter system introduction with practical examples
+   - Completion screen with next steps guidance
+
+2. **Permission Requests**
    - `RECEIVE_SMS`: Required to intercept incoming SMS
    - `SEND_SMS`: Required to forward SMS to target number
    - Both permissions are mandatory for functionality
+   - Clear explanations provided during onboarding
 
-2. **Phone Number Configuration**
+3. **Phone Number Configuration**
    - Enter target number in international format (+country_code_number)
    - Real-time validation provides immediate feedback
    - Supports Turkish (+90) numbers with special validation
    - Number is saved securely on your device only
 
-3. **Activation**
-   - Toggle forwarding on/off via the main interface
+4. **Activation**
+   - Automatic activation after successful onboarding completion
    - Status indicator shows current forwarding state
-   - Automatic activation after successful setup
+   - Skip option available for advanced users
 
 ### SMS Forwarding Process
 
@@ -241,8 +251,15 @@ sms-forward-android/
 ├── app/
 │   ├── src/main/java/com/keremgok/sms/
 │   │   ├── MainActivity.java           # Main UI and configuration
+│   │   ├── OnboardingActivity.java     # 5-step guided setup flow
 │   │   ├── SmsReceiver.java           # SMS interception and forwarding
-│   │   └── PhoneNumberValidator.java  # Input validation logic
+│   │   ├── PhoneNumberValidator.java  # Input validation logic
+│   │   └── onboarding/                # Onboarding fragment package
+│   │       ├── WelcomeFragment.java
+│   │       ├── PermissionExplanationFragment.java
+│   │       ├── TargetNumberSetupFragment.java
+│   │       ├── FilterIntroFragment.java
+│   │       └── CompletionFragment.java
 │   ├── src/main/res/
 │   │   ├── layout/                    # UI layouts
 │   │   ├── values/                    # Strings, colors, themes
@@ -473,23 +490,24 @@ SOFTWARE.
 
 ## 🔮 Roadmap
 
-### Version 2.1.0 (Planned)
+### ✅ Version 2.11.0 (Completed)
+
+- 🎯 **Enhanced Onboarding**: 5-step guided setup flow with ViewPager2
+- 📱 **Modern UI**: Material Design 3 components and theming
+- 🎨 **Interactive Setup**: Progressive onboarding with visual guides
+- 🛡️ **Permission Guidance**: Detailed permission explanations
+
+### Version 2.12.0 (Planned)
+
+- ☁️ **Cloud Backup & Sync**: Google Drive integration for settings backup
+- 🔐 **Encrypted Backups**: AES-256 encryption for cloud storage
+- 🔄 **Cross-device Sync**: Synchronize settings across multiple devices
+
+### Version 2.13.0 (Future)
 
 - 🌙 **Dark Mode Support**: System-aware theme switching
 - 🌐 **English Localization**: Full English language support
-- ⚙️ **Settings Screen**: Advanced configuration options
-
-### Version 2.2.0 (Planned)
-
-- 📊 **SMS History**: View forwarded message history
-- 🗄️ **Database Integration**: Room database for history tracking
-- 🔍 **Search Functionality**: Search through forwarded messages
-
-### Version 2.3.0 (Future)
-
-- 📱 **Multiple Target Numbers**: Forward to multiple recipients
-- 🎯 **SMS Filtering**: Filter messages by sender or content
-- 🔔 **Smart Notifications**: Enhanced notification system
+- ⚙️ **Advanced Settings**: More configuration options
 
 ### Long-term Goals
 

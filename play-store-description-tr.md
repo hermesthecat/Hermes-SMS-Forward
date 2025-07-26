@@ -31,9 +31,11 @@ Gelen SMS'leri otomatik olarak belirlediğiniz numaraya yönlendirin
 - Otomatik yeniden deneme mekanizması (3 deneme)
 - Akıllı hata yönetimi ve kullanıcı geri bildirimi
 
-🎨 **Modern Tasarım**
+🎨 **Modern Tasarım & Kullanıcı Deneyimi**
 
-- Material Design prensiplerine uygun arayüz
+- Material Design 3 prensiplerine uygun arayüz
+- 5 adımlı rehberli kurulum süreci (Onboarding)
+- Etkileşimli setup flow ile kolay yapılandırma
 - Özel Hermes temalı app icon
 - Adaptive icon desteği (Android 8.0+)
 - Kullanıcı dostu ve sezgisel deneyim
@@ -64,9 +66,14 @@ Gelen SMS'leri otomatik olarak belirlediğiniz numaraya yönlendirin
 ### 🛠️ Kurulum & Yapılandırma
 
 1. Uygulamayı indirin ve kurun
-2. SMS izinlerini verin (zorunlu)
-3. Hedef telefon numarasını girin
-4. "Kaydet ve Başlat" butonuna tıklayın
+2. 5 adımlı onboarding sürecini takip edin:
+   - Hoş geldin ekranı ve özellik tanıtımı
+   - SMS izinleri açıklaması ve güvenlik bilgisi
+   - Hedef telefon numarası setup'ı
+   - Filtre sistemi tanıtımı
+   - Kurulum tamamlama ve sonraki adımlar
+3. SMS izinlerini verin (zorunlu)
+4. Hedef telefon numarasını girin
 5. Artık gelen SMS'ler otomatik olarak yönlendirilecek!
 
 ### 🔒 Gizlilik & Güvenlik
