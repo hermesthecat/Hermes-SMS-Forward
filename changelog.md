@@ -1,5 +1,33 @@
 # Changelog - Hermes SMS Forward
 
+## [2.9.0] - 2025-07-26
+
+- ✅ Task 20: Analytics & Monitoring tamamlandı
+  - **Privacy-First Analytics System:** Comprehensive local analytics with no external data transmission
+  - **AnalyticsEvent Entity & DAO:** Event tracking database with Room implementation for data persistence
+  - **StatisticsSummary Entity & DAO:** Daily, weekly, and monthly aggregated statistics storage
+  - **StatisticsManager Class:** Singleton analytics manager with privacy-first design and session management
+  - **Performance Monitoring:** SMS processing time tracking and performance metrics collection
+  - **Event Tracking:** App opens, SMS forwards, errors, filter applications, and permission requests
+  - **AnalyticsActivity Dashboard:** Modern UI with comprehensive statistics visualization
+  - **Real-time Statistics:** Overall success rates, error counts, and average processing times
+  - **Period Statistics:** Today, weekly, and monthly statistics cards with detailed breakdowns
+  - **CSV Export Functionality:** Complete statistics export with data portability
+  - **Anonymous Session Tracking:** UUID-based session identification with no personal data
+  - **Automatic Data Cleanup:** 90-day analytics retention with 30-day SMS history cleanup
+  - **Database Migration v4:** Seamless upgrade with analytics and statistics tables
+  - **Error Analysis:** Most common error tracking and categorized error reporting
+  - **Daily Summary Generation:** Automated daily statistics aggregation and storage
+  - **Progress Indicators:** Success rate progress bars and visual statistics display
+  - **Thread-Safe Implementation:** Background analytics processing with ThreadManager integration
+  - **FilterEngine Integration:** Filter application tracking with analytics recording
+  - **SmsReceiver Analytics:** Performance monitoring and event tracking in SMS processing
+  - **MainActivity Menu Integration:** Analytics Dashboard accessible from main menu
+  - **GDPR Compliance:** Local-only analytics with no third-party data sharing
+  - **Memory Optimization:** Efficient database queries and background processing
+  - **Version 2.9.0:** Privacy-first analytics and monitoring system for comprehensive app insights
+  - **APK build başarılı olarak tamamlandı**
+
 ## [2.8.0] - 2025-07-26
 
 - ✅ Task 19: Backup & Restore functionality tamamlandı

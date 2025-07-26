@@ -61,11 +61,18 @@ public class SmsReceiver extends BroadcastReceiver {
     
     @Override
     public void onReceive(Context context, Intent intent) {
+        long processingStartTime = System.currentTimeMillis(); // Start performance tracking
         logDebug("SMS received");
+        
+        // Get StatisticsManager instance for analytics
+        StatisticsManager statsManager = StatisticsManager.getInstance(context);
         
         if (intent.getAction() == null || !intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")) {
             return;
         }
+        
+        // Record SMS received event
+        statsManager.recordSmsReceived();
         
         // Get enabled target numbers from database
         AppDatabase database = AppDatabase.getInstance(context);
@@ -128,8 +135,17 @@ public class SmsReceiver extends BroadcastReceiver {
                 if (filterResult.shouldForward()) {
                     logDebug("SMS passed filters: " + filterResult.getReason() + " - forwarding to targets");
                     queueSmsForwardingToMultipleTargets(context, senderNumber, finalMessage, targetNumbers, timestamp);
+                    
+                    // Record performance metrics
+                    long processingTime = System.currentTimeMillis() - processingStartTime;
+                    statsManager.recordPerformanceMetric("sms_processing_time", processingTime, "ms");
+                    statsManager.recordSmsForwardSuccess(processingTime);
                 } else {
                     logDebug("SMS blocked by filter: " + filterResult.getReason() + " - not forwarding");
+                    
+                    // Record filter application
+                    statsManager.recordFilterApplication(filterResult.getFilterType(), StatisticsManager.EventAction.FILTERED);
+                    
                     // Log blocked SMS to history with filter reason
                     for (TargetNumber target : targetNumbers) {
                         logSmsHistory(context, senderNumber, finalMessage, target.getPhoneNumber(), 
@@ -142,6 +158,10 @@ public class SmsReceiver extends BroadcastReceiver {
             
         } catch (Exception e) {
             Log.e(TAG, "Error processing SMS: " + e.getMessage(), e);
+            
+            // Record error in statistics
+            statsManager.recordSmsForwardFailure(StatisticsManager.ErrorCode.UNKNOWN_ERROR, e.getMessage());
+            statsManager.recordPerformanceMetric("sms_processing_error", 1, "count");
         }
     }
     

@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
+        // Initialize StatisticsManager for analytics tracking
+        StatisticsManager statsManager = StatisticsManager.getInstance(this);
+        
         initViews();
         setupPreferences();
         setupValidation();
@@ -213,11 +216,17 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         
         if (requestCode == SMS_PERMISSION_REQUEST_CODE) {
+            StatisticsManager statsManager = StatisticsManager.getInstance(this);
+            
             boolean allPermissionsGranted = true;
-            for (int result : grantResults) {
-                if (result != PackageManager.PERMISSION_GRANTED) {
+            for (int i = 0; i < permissions.length; i++) {
+                boolean granted = i < grantResults.length && grantResults[i] == PackageManager.PERMISSION_GRANTED;
+                
+                // Record each permission result
+                statsManager.recordPermissionRequest(permissions[i], granted);
+                
+                if (!granted) {
                     allPermissionsGranted = false;
-                    break;
                 }
             }
             
@@ -257,6 +266,11 @@ public class MainActivity extends AppCompatActivity {
             Intent historyIntent = new Intent(this, HistoryActivity.class);
             startActivity(historyIntent);
             return true;
+        } else if (itemId == R.id.action_analytics) {
+            // Launch Analytics Activity
+            Intent analyticsIntent = new Intent(this, AnalyticsActivity.class);
+            startActivity(analyticsIntent);
+            return true;
         } else if (itemId == R.id.action_settings) {
             // Launch Settings Activity
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
@@ -264,6 +278,15 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        
+        // Clean up StatisticsManager when app is destroyed
+        StatisticsManager statsManager = StatisticsManager.getInstance(this);
+        statsManager.endSession();
     }
     
     /**

@@ -21,6 +21,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_analytics"
+        android:title="Analytics Dashboard"
+        android:orderInCategory="95"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_settings"
         android:title="@string/settings_menu_title"
         android:orderInCategory="100"

@@ -47,6 +47,10 @@ public class FilterEngine {
         public SmsFilter getMatchedFilter() {
             return matchedFilter;
         }
+        
+        public String getFilterType() {
+            return matchedFilter != null ? matchedFilter.getFilterType() : "UNKNOWN";
+        }
     }
     
     public FilterEngine(Context context) {

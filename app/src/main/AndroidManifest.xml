@@ -63,6 +63,17 @@
                 android:value=".MainActivity" />
         </activity>
 
+        <!-- Analytics Activity -->
+        <activity
+            android:name=".AnalyticsActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:label="Analytics Dashboard">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
         <!-- SMS Receiver for incoming SMS messages -->
         <receiver 
             android:name=".SmsReceiver"
@@ -81,6 +92,18 @@
                 <action android:name="SMS_DELIVERED" />
             </intent-filter>
         </receiver>
+
+        <!-- FileProvider for sharing exported analytics files -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>

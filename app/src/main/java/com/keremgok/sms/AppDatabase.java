@@ -14,8 +14,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
  * Contains SMS history tracking and target numbers management
  */
 @Database(
-    entities = {SmsHistory.class, TargetNumber.class, SmsFilter.class},
-    version = 3,
+    entities = {SmsHistory.class, TargetNumber.class, SmsFilter.class, AnalyticsEvent.class, StatisticsSummary.class},
+    version = 4,
     exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
@@ -40,6 +40,18 @@ public abstract class AppDatabase extends RoomDatabase {
      * @return SmsFilterDao instance
      */
     public abstract SmsFilterDao smsFilterDao();
+    
+    /**
+     * Get the AnalyticsEventDao for database operations
+     * @return AnalyticsEventDao instance
+     */
+    public abstract AnalyticsEventDao analyticsEventDao();
+    
+    /**
+     * Get the StatisticsSummaryDao for database operations
+     * @return StatisticsSummaryDao instance
+     */
+    public abstract StatisticsSummaryDao statisticsSummaryDao();
     
     /**
      * Migration from version 1 to 2: Add target_numbers table and migrate SharedPreferences
@@ -87,6 +99,46 @@ public abstract class AppDatabase extends RoomDatabase {
     };
     
     /**
+     * Migration from version 3 to 4: Add analytics and statistics tables
+     */
+    static final Migration MIGRATION_3_4 = new Migration(3, 4) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            // Create analytics_events table
+            database.execSQL("CREATE TABLE IF NOT EXISTS `analytics_events` (" +
+                "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "`event_type` TEXT, " +
+                "`event_category` TEXT, " +
+                "`event_action` TEXT, " +
+                "`timestamp` INTEGER NOT NULL, " +
+                "`duration_ms` INTEGER NOT NULL, " +
+                "`error_code` TEXT, " +
+                "`metadata` TEXT, " +
+                "`app_version` TEXT, " +
+                "`session_id` TEXT)");
+            
+            // Create statistics_summary table
+            database.execSQL("CREATE TABLE IF NOT EXISTS `statistics_summary` (" +
+                "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "`date` TEXT, " +
+                "`summary_type` TEXT, " +
+                "`total_sms_received` INTEGER NOT NULL, " +
+                "`total_sms_forwarded` INTEGER NOT NULL, " +
+                "`successful_forwards` INTEGER NOT NULL, " +
+                "`failed_forwards` INTEGER NOT NULL, " +
+                "`success_rate` REAL NOT NULL, " +
+                "`avg_processing_time_ms` REAL NOT NULL, " +
+                "`error_count` INTEGER NOT NULL, " +
+                "`most_common_error` TEXT, " +
+                "`app_opens` INTEGER NOT NULL, " +
+                "`session_duration_total_ms` INTEGER NOT NULL, " +
+                "`avg_session_duration_ms` REAL NOT NULL, " +
+                "`created_timestamp` INTEGER NOT NULL, " +
+                "`last_updated` INTEGER NOT NULL)");
+        }
+    };
+    
+    /**
      * Get singleton instance of the database
      * Thread-safe implementation with double-checked locking
      * @param context Application context
@@ -102,7 +154,7 @@ public abstract class AppDatabase extends RoomDatabase {
                         DATABASE_NAME
                     )
                     .allowMainThreadQueries() // For simple operations only
-                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
                     .addCallback(new RoomDatabase.Callback() {
                         @Override
                         public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -139,10 +191,19 @@ public abstract class AppDatabase extends RoomDatabase {
         ThreadManager.getInstance().executeBackground(() -> {
             AppDatabase db = getInstance(context);
             long thirtyDaysAgo = System.currentTimeMillis() - (30L * 24 * 60 * 60 * 1000); // 30 days in milliseconds
-            int deletedCount = db.smsHistoryDao().deleteOldRecords(thirtyDaysAgo);
             
-            if (deletedCount > 0) {
-                android.util.Log.i("AppDatabase", "Auto cleanup: Deleted " + deletedCount + " old SMS history records");
+            // Clean up SMS history
+            int deletedSmsCount = db.smsHistoryDao().deleteOldRecords(thirtyDaysAgo);
+            
+            // Clean up analytics events (keep 90 days for analytics)
+            long ninetyDaysAgo = System.currentTimeMillis() - (90L * 24 * 60 * 60 * 1000);
+            int deletedAnalyticsCount = db.analyticsEventDao().deleteOldEvents(ninetyDaysAgo);
+            
+            if (deletedSmsCount > 0) {
+                android.util.Log.i("AppDatabase", "Auto cleanup: Deleted " + deletedSmsCount + " old SMS history records");
+            }
+            if (deletedAnalyticsCount > 0) {
+                android.util.Log.i("AppDatabase", "Auto cleanup: Deleted " + deletedAnalyticsCount + " old analytics events");
             }
         });
     }
