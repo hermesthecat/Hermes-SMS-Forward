@@ -14,7 +14,8 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="?android:attr/textColorPrimary"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/target_numbers_title" />
 
     <TextView
         android:layout_width="match_parent"
@@ -22,13 +23,16 @@
         android:text="@string/target_numbers_description"
         android:textSize="14sp"
         android:textColor="?android:attr/textColorSecondary"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/target_numbers_description" />
 
     <!-- Add New Target Section -->
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:contentDescription="@string/cd_statistics_card"
+        android:importantForAccessibility="yes"
         app:cardCornerRadius="8dp"
         app:cardElevation="2dp">
 
@@ -58,7 +62,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:contentDescription="@string/cd_target_number_input"
+                    android:importantForAccessibility="yes" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,7 +80,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:contentDescription="@string/cd_info_icon"
+                    android:importantForAccessibility="yes" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,7 +97,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/set_as_primary" />
+                    android:text="@string/set_as_primary"
+                    android:contentDescription="@string/cd_toggle_button"
+                    android:importantForAccessibility="yes" />
 
                 <CheckBox
                     android:id="@+id/cbEnabled"
@@ -97,7 +107,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/enabled"
-                    android:checked="true" />
+                    android:checked="true"
+                    android:contentDescription="@string/cd_toggle_button"
+                    android:importantForAccessibility="yes" />
 
             </LinearLayout>
 
@@ -107,14 +119,18 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:layout_marginBottom="8dp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:contentDescription="@string/cd_validation_message"
+                android:importantForAccessibility="yes" />
 
             <Button
                 android:id="@+id/btnAddTarget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/add_target_number"
-                android:enabled="false" />
+                android:enabled="false"
+                android:contentDescription="@string/cd_add_button"
+                android:importantForAccessibility="yes" />
 
         </LinearLayout>
 
@@ -139,7 +155,8 @@
         android:gravity="center"
         android:padding="24dp"
         android:layout_marginBottom="8dp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:contentDescription="@string/no_targets_configured" />
 
     <!-- RecyclerView for Target Numbers -->
     <androidx.recyclerview.widget.RecyclerView
@@ -147,7 +164,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        android:contentDescription="@string/target_numbers_title"
+        android:importantForAccessibility="yes" />
 
     <!-- Settings Section -->
     <LinearLayout
@@ -168,7 +187,9 @@
             android:id="@+id/spinnerSendingMode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="8dp"
+            android:contentDescription="@string/sending_mode"
+            android:importantForAccessibility="yes" />
 
     </LinearLayout>
 

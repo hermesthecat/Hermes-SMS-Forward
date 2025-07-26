@@ -16,7 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:contentDescription="@string/filter_test_sender_hint"
+            android:importantForAccessibility="yes" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -31,7 +33,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
-            android:maxLines="3" />
+            android:maxLines="3"
+            android:contentDescription="@string/filter_test_message_hint"
+            android:importantForAccessibility="yes" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -40,7 +44,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/filter_test_run"
-        android:layout_marginBottom="12dp" />
+        android:layout_marginBottom="12dp"
+        android:contentDescription="@string/filter_test_run"
+        android:importantForAccessibility="yes" />
 
     <TextView
         android:id="@+id/tvTestResult"
@@ -49,6 +55,8 @@
         android:textSize="14sp"
         android:padding="8dp"
         android:background="?attr/colorSurfaceVariant"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:contentDescription="@string/cd_info_icon"
+        android:importantForAccessibility="yes" />
 
 </LinearLayout>

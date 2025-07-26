@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
+    android:contentDescription="@string/cd_statistics_card"
+    android:importantForAccessibility="yes"
     app:cardCornerRadius="8dp"
     app:cardElevation="2dp"
     app:strokeWidth="1dp"
@@ -31,6 +33,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="?android:attr/textColorPrimary"
+                android:contentDescription="@string/cd_info_icon"
                 android:text="Filter Name" />
 
             <!-- Enabled badge -->
@@ -46,7 +49,8 @@
                 android:background="@drawable/badge_primary"
                 android:paddingHorizontal="6dp"
                 android:paddingVertical="2dp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:contentDescription="@string/filter_enabled_label" />
 
             <!-- Disabled badge -->
             <TextView
@@ -60,7 +64,8 @@
                 android:background="@drawable/badge_disabled"
                 android:paddingHorizontal="6dp"
                 android:paddingVertical="2dp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:contentDescription="@string/filter_disabled_label" />
 
         </LinearLayout>
 
@@ -78,6 +83,7 @@
                 android:layout_weight="1"
                 android:textSize="14sp"
                 android:textColor="?android:attr/textColorSecondary"
+                android:contentDescription="@string/filter_type_label"
                 android:text="KEYWORD" />
 
             <TextView
@@ -90,7 +96,8 @@
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="2dp"
                 android:background="@drawable/filter_action_bg"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:contentDescription="@string/filter_action_label" />
 
         </LinearLayout>
 
@@ -103,7 +110,8 @@
             android:textColor="?android:attr/textColorSecondary"
             android:layout_marginBottom="8dp"
             android:text="Pattern: spam|advertisement"
-            android:fontFamily="monospace" />
+            android:fontFamily="monospace"
+            android:contentDescription="@string/filter_pattern_hint" />
 
         <!-- Statistics -->
         <LinearLayout
@@ -126,7 +134,8 @@
                 android:text="0"
                 android:textSize="12sp"
                 android:textColor="?android:attr/textColorTertiary"
-                android:layout_marginEnd="16dp" />
+                android:layout_marginEnd="16dp"
+                android:contentDescription="@string/filter_priority_label" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -141,7 +150,8 @@
                 android:layout_height="wrap_content"
                 android:text="0"
                 android:textSize="12sp"
-                android:textColor="?android:attr/textColorTertiary" />
+                android:textColor="?android:attr/textColorTertiary"
+                android:contentDescription="@string/filter_matches_label" />
 
             <TextView
                 android:id="@+id/tvLastMatched"
@@ -151,7 +161,8 @@
                 android:gravity="end"
                 android:textSize="12sp"
                 android:textColor="?android:attr/textColorTertiary"
-                android:text="Last: Never" />
+                android:text="Last: Never"
+                android:contentDescription="@string/cd_info_icon" />
 
         </LinearLayout>
 
@@ -169,7 +180,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/filter_test"
                 android:textSize="12sp"
-                android:layout_marginEnd="8dp" />
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/filter_test"
+                android:importantForAccessibility="yes" />
 
             <Button
                 android:id="@+id/btnToggleEnabled"
@@ -178,7 +191,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/filter_toggle_enabled"
                 android:textSize="12sp"
-                android:layout_marginEnd="8dp" />
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/cd_toggle_button"
+                android:importantForAccessibility="yes" />
 
             <Button
                 android:id="@+id/btnEditFilter"
@@ -187,7 +202,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/filter_edit"
                 android:textSize="12sp"
-                android:layout_marginEnd="8dp" />
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/cd_edit_button"
+                android:importantForAccessibility="yes" />
 
             <Button
                 android:id="@+id/btnDeleteFilter"
@@ -196,7 +213,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/filter_delete"
                 android:textSize="12sp"
-                android:textColor="?attr/colorError" />
+                android:textColor="?attr/colorError"
+                android:contentDescription="@string/cd_delete_button"
+                android:importantForAccessibility="yes" />
 
         </LinearLayout>
 

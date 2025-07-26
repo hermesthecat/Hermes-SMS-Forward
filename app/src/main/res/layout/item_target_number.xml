@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
+    android:contentDescription="@string/cd_statistics_card"
+    android:importantForAccessibility="yes"
     app:cardCornerRadius="8dp"
     app:cardElevation="2dp"
     app:strokeWidth="1dp"
@@ -31,6 +33,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="?android:attr/textColorPrimary"
+                android:contentDescription="@string/cd_info_icon"
                 android:text="Display Name" />
 
             <!-- Primary badge -->
@@ -46,7 +49,8 @@
                 android:background="@drawable/badge_primary"
                 android:paddingHorizontal="6dp"
                 android:paddingVertical="2dp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:contentDescription="@string/target_primary_label" />
 
             <!-- Disabled badge -->
             <TextView
@@ -60,7 +64,8 @@
                 android:background="@drawable/badge_disabled"
                 android:paddingHorizontal="6dp"
                 android:paddingVertical="2dp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:contentDescription="@string/target_disabled_label" />
 
         </LinearLayout>
 
@@ -72,6 +77,7 @@
             android:textSize="14sp"
             android:textColor="?android:attr/textColorSecondary"
             android:layout_marginBottom="8dp"
+            android:contentDescription="@string/cd_target_number_input"
             android:text="+905551234567" />
 
         <!-- Last used info -->
@@ -82,6 +88,7 @@
             android:textSize="12sp"
             android:textColor="?android:attr/textColorTertiary"
             android:layout_marginBottom="12dp"
+            android:contentDescription="@string/cd_info_icon"
             android:text="Son kullanım: 2 saat önce" />
 
         <!-- Action buttons -->
@@ -98,7 +105,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/target_set_primary"
                 android:textSize="12sp"
-                android:layout_marginEnd="8dp" />
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/cd_edit_button"
+                android:importantForAccessibility="yes" />
 
             <Button
                 android:id="@+id/btnToggleEnabled"
@@ -107,7 +116,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/target_toggle_enabled"
                 android:textSize="12sp"
-                android:layout_marginEnd="8dp" />
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/cd_toggle_button"
+                android:importantForAccessibility="yes" />
 
             <Button
                 android:id="@+id/btnDelete"
@@ -116,7 +127,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/target_delete"
                 android:textSize="12sp"
-                android:textColor="?attr/colorError" />
+                android:textColor="?attr/colorError"
+                android:contentDescription="@string/cd_delete_button"
+                android:importantForAccessibility="yes" />
 
         </LinearLayout>
 

@@ -28,7 +28,9 @@
                 android:text="Analytics Dashboard"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:textColor="@color/hermes_text_primary" />
+                android:textColor="@color/hermes_text_primary"
+                android:contentDescription="@string/cd_app_logo"
+                android:accessibilityHeading="true" />
 
             <Button
                 android:id="@+id/btnRefresh"
@@ -36,6 +38,8 @@
                 android:layout_height="wrap_content"
                 android:text="Refresh"
                 android:layout_marginEnd="8dp"
+                android:contentDescription="@string/cd_refresh_button"
+                android:importantForAccessibility="yes"
                 style="@style/Widget.AppCompat.Button.Colored" />
 
             <Button
@@ -43,6 +47,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Export"
+                android:contentDescription="@string/cd_export_button"
+                android:importantForAccessibility="yes"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored" />
 
         </LinearLayout>
@@ -56,13 +62,17 @@
             android:textSize="12sp"
             android:textColor="@color/hermes_text_secondary"
             android:layout_marginBottom="16dp"
-            android:gravity="center" />
+            android:gravity="center"
+            android:contentDescription="@string/cd_info_icon"
+            android:accessibilityLiveRegion="polite" />
 
         <!-- Overall Statistics Card -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            android:contentDescription="@string/cd_statistics_card"
+            android:importantForAccessibility="yes"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp">
 
@@ -79,7 +89,8 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/hermes_text_primary"
-                    android:layout_marginBottom="12dp" />
+                    android:layout_marginBottom="12dp"
+                    android:accessibilityHeading="true" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -100,7 +111,8 @@
                             android:text="0"
                             android:textSize="24sp"
                             android:textStyle="bold"
-                            android:textColor="@color/colorPrimary" />
+                            android:textColor="@color/colorPrimary"
+                            android:contentDescription="@string/cd_statistics_card" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -125,7 +137,8 @@
                             android:text="0"
                             android:textSize="24sp"
                             android:textStyle="bold"
-                            android:textColor="@color/colorAccent" />
+                            android:textColor="@color/colorAccent"
+                            android:contentDescription="@string/cd_statistics_card" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -150,7 +163,8 @@
                             android:text="0"
                             android:textSize="24sp"
                             android:textStyle="bold"
-                            android:textColor="@android:color/holo_red_dark" />
+                            android:textColor="@android:color/holo_red_dark"
+                            android:contentDescription="@string/cd_error_icon" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -191,7 +205,8 @@
                             android:text="0%"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:textColor="@android:color/holo_green_dark" />
+                            android:textColor="@android:color/holo_green_dark"
+                            android:contentDescription="@string/cd_success_icon" />
 
                     </LinearLayout>
 
@@ -200,6 +215,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:contentDescription="@string/cd_progress_bar"
+                        android:importantForAccessibility="yes"
                         style="?android:attr/progressBarStyleHorizontal"
                         android:max="100"
                         android:progress="0" />
@@ -233,7 +250,8 @@
                             android:text="0 ms"
                             android:textSize="14sp"
                             android:textStyle="bold"
-                            android:textColor="@color/hermes_text_primary" />
+                            android:textColor="@color/hermes_text_primary"
+                            android:contentDescription="@string/cd_statistics_card" />
 
                     </LinearLayout>
 
@@ -257,7 +275,8 @@
                             android:text="0"
                             android:textSize="14sp"
                             android:textStyle="bold"
-                            android:textColor="@color/hermes_text_primary" />
+                            android:textColor="@color/hermes_text_primary"
+                            android:contentDescription="@string/cd_statistics_card" />
 
                     </LinearLayout>
 
@@ -284,7 +303,8 @@
                         android:text="None"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        android:textColor="@color/hermes_text_primary" />
+                        android:textColor="@color/hermes_text_primary"
+                        android:contentDescription="@string/cd_error_icon" />
 
                 </LinearLayout>
 
@@ -300,7 +320,8 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/hermes_text_primary"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="12dp"
+            android:accessibilityHeading="true" />
 
         <!-- Today's Statistics -->
         <androidx.cardview.widget.CardView
@@ -308,6 +329,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:contentDescription="@string/cd_statistics_card"
+            android:importantForAccessibility="yes"
             app:cardCornerRadius="8dp"
             app:cardElevation="2dp"
             android:clickable="true"
@@ -327,7 +350,8 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
-                    android:layout_marginBottom="8dp" />
+                    android:layout_marginBottom="8dp"
+                    android:accessibilityHeading="true" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -442,6 +466,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:contentDescription="@string/cd_statistics_card"
+            android:importantForAccessibility="yes"
             app:cardCornerRadius="8dp"
             app:cardElevation="2dp"
             android:clickable="true"
@@ -461,7 +487,8 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorAccent"
-                    android:layout_marginBottom="8dp" />
+                    android:layout_marginBottom="8dp"
+                    android:accessibilityHeading="true" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -576,6 +603,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            android:contentDescription="@string/cd_statistics_card"
+            android:importantForAccessibility="yes"
             app:cardCornerRadius="8dp"
             app:cardElevation="2dp"
             android:clickable="true"
@@ -595,7 +624,8 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@android:color/holo_purple"
-                    android:layout_marginBottom="8dp" />
+                    android:layout_marginBottom="8dp"
+                    android:accessibilityHeading="true" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

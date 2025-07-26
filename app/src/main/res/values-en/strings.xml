@@ -1,0 +1,332 @@
+<resources>
+    <string name="app_name">Hermes SMS Forward</string>
+    <string name="description_text">Automatically forwards all incoming SMS messages to your specified phone number.</string>
+    <string name="target_number_label">Target Phone Number:</string>
+    <string name="target_number_hint">Example: +905551234567</string>
+    <string name="save_button">Save and Start</string>
+    <string name="status_not_configured">Status: Not Configured</string>
+    <string name="status_configured">Status: Active - Forwarding is working</string>
+    <string name="permissions_required">SMS permissions required</string>
+    <string name="permissions_granted">Permissions granted</string>
+    <string name="error_empty_number">Please enter a valid phone number</string>
+    <string name="success_saved">Settings saved!</string>
+    
+    <!-- Phone Number Validation Errors -->
+    <string name="validation_empty_number">Phone number cannot be empty</string>
+    <string name="validation_missing_country_code">Country code missing (e.g: +90)</string>
+    <string name="validation_too_short">Phone number too short</string>
+    <string name="validation_too_long">Phone number too long</string>
+    <string name="validation_invalid_format">Invalid phone number format</string>
+    <string name="validation_success">Valid phone number</string>
+    
+    <!-- SMS Error Handling -->
+    <string name="sms_send_failed">SMS send failed</string>
+    <string name="sms_send_retry">Retrying SMS send</string>
+    <string name="sms_send_final_failure">SMS send permanently failed</string>
+    <string name="sms_service_unavailable">SMS service unavailable</string>
+    
+    <!-- Settings Screen -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_menu_title">Settings</string>
+    
+    <!-- Settings Categories -->
+    <string name="settings_category_forwarding">SMS Forwarding</string>
+    <string name="settings_category_notifications">Notifications</string>
+    <string name="settings_category_advanced">Advanced Settings</string>
+    <string name="settings_category_about">About</string>
+    
+    <!-- Forwarding Settings -->
+    <string name="settings_forwarding_enabled_title">Enable SMS Forwarding</string>
+    <string name="settings_forwarding_enabled_summary">Activates automatic forwarding of incoming SMS messages</string>
+    <string name="settings_target_number_title">Target Phone Number</string>
+    <string name="settings_target_number_summary">Number to forward SMS to - Can be changed on main screen</string>
+    <string name="settings_sms_format_title">SMS Format Style</string>
+    <string name="settings_sms_format_summary">Choose how forwarded SMS messages will be formatted</string>
+    <string name="settings_forwarding_delay_title">Forwarding Delay</string>
+    <string name="settings_forwarding_delay_summary">Time to wait before forwarding SMS (seconds)</string>
+    
+    <!-- Notification Settings -->
+    <string name="settings_notifications_enabled_title">Show Notifications</string>
+    <string name="settings_notifications_enabled_summary">Display notifications for SMS forwarding operations</string>
+    <string name="settings_notification_sound_title">Notification Sound</string>
+    <string name="settings_notification_sound_summary">Play sound for forwarding notifications</string>
+    <string name="settings_notification_vibration_title">Vibration</string>
+    <string name="settings_notification_vibration_summary">Vibrate for forwarding notifications</string>
+    
+    <!-- Advanced Settings -->
+    <string name="settings_log_level_title">Log Level</string>
+    <string name="settings_log_level_summary">Select which level of log records to keep</string>
+    <string name="settings_backup_title">Backup Settings</string>
+    <string name="settings_backup_summary">Save current settings to file</string>
+    <string name="settings_restore_title">Restore Settings</string>
+    <string name="settings_restore_summary">Restore previously saved settings</string>
+    
+    <!-- About Section -->
+    <string name="settings_version_title">App Version</string>
+    <string name="settings_version_summary">Hermes SMS Forward v2.9.0</string>
+    <string name="settings_developer_title">Developer</string>
+    <string name="settings_developer_summary">KeremGok Development</string>
+    <string name="settings_privacy_title">Privacy Policy</string>
+    <string name="settings_privacy_summary">View our data processing and privacy policy</string>
+    <string name="settings_github_title">Source Code</string>
+    <string name="settings_github_summary">View project repository on GitHub</string>
+    <string name="settings_feedback_title">Send Feedback</string>
+    <string name="settings_feedback_summary">Share your suggestions and issues with us</string>
+    
+    <!-- SMS Format Options -->
+    <string-array name="sms_format_entries">
+        <item>Standard Format</item>
+        <item>Compact Format</item>
+        <item>Detailed Format</item>
+        <item>Custom Format</item>
+    </string-array>
+    
+    <string-array name="sms_format_values">
+        <item>standard</item>
+        <item>compact</item>
+        <item>detailed</item>
+        <item>custom</item>
+    </string-array>
+    
+    <!-- Log Level Options -->
+    <string-array name="log_level_entries">
+        <item>Errors Only</item>
+        <item>Errors and Warnings</item>
+        <item>All Activities</item>
+        <item>Debug Information</item>
+    </string-array>
+    
+    <string-array name="log_level_values">
+        <item>error</item>
+        <item>warning</item>
+        <item>info</item>
+        <item>debug</item>
+    </string-array>
+    
+    <!-- History Screen -->
+    <string name="history_title">SMS History</string>
+    <string name="history_menu_title">History</string>
+    <string name="history_empty_title">No SMS history yet</string>
+    <string name="history_empty_message">History will appear here when SMS forwarding starts</string>
+    <string name="history_empty_icon_description">Empty history icon</string>
+    <string name="history_refresh_button">Refresh</string>
+    <string name="history_scroll_to_top">Go to top</string>
+    
+    <!-- History Search -->
+    <string name="history_search_hint">Search sender or message content...</string>
+    <string name="history_search_no_results">No search results found</string>
+    <string name="history_search_error">Error occurred during search</string>
+    
+    <!-- History Filter Messages -->
+    <string name="history_showing_successful">Showing only successful forwards</string>
+    <string name="history_showing_failed">Showing only failed forwards</string>
+    <string name="history_filter_error">Error occurred during filtering</string>
+    
+    <!-- History Loading Messages -->
+    <string name="history_load_error">Error loading history</string>
+    <string name="history_no_records_message">No SMS history found</string>
+    
+    <!-- History Clear Operations -->
+    <string name="history_clear_title">Clear History</string>
+    <string name="history_clear_message">Are you sure you want to delete all SMS history? This action cannot be undone.</string>
+    <string name="history_clear_confirm">Delete</string>
+    <string name="history_cleared_success">SMS history cleared successfully</string>
+    <string name="history_clear_error">Error clearing history</string>
+    <string name="cancel">Cancel</string>
+    
+    <!-- History Item Display -->
+    <string name="history_original_message_label">Original Message:</string>
+    <string name="history_target_label">Target:</string>
+    <string name="history_error_label">Error:</string>
+    <string name="history_status_success">Successful</string>
+    <string name="history_status_failed">Failed</string>
+    <string name="history_status_icon_description">Status icon</string>
+    
+    <!-- History Date Grouping -->
+    <string name="history_date_today">Today</string>
+    <string name="history_date_yesterday">Yesterday</string>
+    
+    <!-- Target Numbers Management -->
+    <string name="target_numbers_title">Target Numbers</string>
+    <string name="target_numbers_menu_title">Target Numbers</string>
+    <string name="target_numbers_description">You can add multiple target numbers for SMS forwarding</string>
+    <string name="add_new_target">Add New Target Number</string>
+    <string name="phone_number_hint">Phone Number</string>
+    <string name="display_name_hint">Display Name (optional)</string>
+    <string name="set_as_primary">Set as primary target</string>
+    <string name="enabled">Enabled</string>
+    <string name="add_target_number">Add Target Number</string>
+    <string name="existing_targets">Existing Target Numbers</string>
+    <string name="no_targets_configured">No target numbers configured yet</string>
+    <string name="sending_mode">Sending Mode</string>
+    
+    <!-- Target Number Operations -->
+    <string name="target_edit">Edit</string>
+    <string name="target_delete">Delete</string>
+    <string name="target_set_primary">Set Primary</string>
+    <string name="target_toggle_enabled">Toggle Enabled</string>
+    <string name="target_primary_label">PRIMARY</string>
+    <string name="target_disabled_label">DISABLED</string>
+    
+    <!-- Target Number Validation -->
+    <string name="target_duplicate_number">This phone number already exists</string>
+    <string name="target_add_success">Target number added successfully</string>
+    <string name="target_add_error">Error adding target number</string>
+    <string name="target_update_success">Target number updated</string>
+    <string name="target_update_error">Error updating target number</string>
+    <string name="target_delete_success">Target number deleted</string>
+    <string name="target_delete_error">Error deleting target number</string>
+    
+    <!-- Target Number Delete Confirmation -->
+    <string name="target_delete_title">Delete Target Number</string>
+    <string name="target_delete_message">Are you sure you want to delete this target number?</string>
+    <string name="target_delete_confirm">Delete</string>
+    
+    <!-- Sending Mode Options -->
+    <string-array name="sending_mode_entries">
+        <item>Sequential Sending (Safe)</item>
+        <item>Parallel Sending (Fast)</item>
+    </string-array>
+    
+    <string-array name="sending_mode_values">
+        <item>sequential</item>
+        <item>parallel</item>
+    </string-array>
+    
+    <!-- SMS Filter Rules Management -->
+    <string name="filter_rules_title">SMS Filter Rules</string>
+    <string name="filter_rules_menu_title">Filter Rules</string>
+    <string name="filter_rules_description">Create rules to filter incoming SMS messages before forwarding</string>
+    <string name="quick_filters">Quick Filters</string>
+    <string name="add_spam_filter">Add Spam Filter</string>
+    <string name="add_work_hours_filter">Work Hours Filter</string>
+    <string name="add_new_filter">Add New Filter</string>
+    <string name="filter_name_hint">Filter Name</string>
+    <string name="filter_type_label">Filter Type</string>
+    <string name="filter_pattern_hint">Pattern (keyword, phone number, or regex)</string>
+    <string name="filter_action_label">Action</string>
+    <string name="action_allow">Allow</string>
+    <string name="action_block">Block</string>
+    <string name="case_sensitive">Case Sensitive</string>
+    <string name="use_regex">Use Regex</string>
+    <string name="add_filter">Add Filter</string>
+    <string name="existing_filters">Existing Filters</string>
+    <string name="no_filters_configured">No filters configured yet</string>
+    
+    <!-- Filter Types -->
+    <string-array name="filter_type_entries">
+        <item>Keyword Filter</item>
+        <item>Sender Number Filter</item>
+        <item>Time-based Filter</item>
+        <item>Whitelist</item>
+        <item>Blacklist</item>
+        <item>Spam Detection</item>
+    </string-array>
+    
+    <string-array name="filter_type_values">
+        <item>KEYWORD</item>
+        <item>SENDER_NUMBER</item>
+        <item>TIME_BASED</item>
+        <item>WHITELIST</item>
+        <item>BLACKLIST</item>
+        <item>SPAM_DETECTION</item>
+    </string-array>
+    
+    <!-- Filter Operations -->
+    <string name="filter_edit">Edit</string>
+    <string name="filter_delete">Delete</string>
+    <string name="filter_toggle_enabled">Toggle Enabled</string>
+    <string name="filter_test">Test Filter</string>
+    <string name="filter_stats">Statistics</string>
+    <string name="filter_enabled_label">ENABLED</string>
+    <string name="filter_disabled_label">DISABLED</string>
+    <string name="filter_priority_label">Priority:</string>
+    <string name="filter_matches_label">Matches:</string>
+    
+    <!-- Filter Validation -->
+    <string name="filter_name_required">Filter name is required</string>
+    <string name="filter_pattern_required">Filter pattern is required</string>
+    <string name="filter_name_exists">A filter with this name already exists</string>
+    <string name="filter_invalid_regex">Invalid regular expression pattern</string>
+    <string name="filter_add_success">Filter added successfully</string>
+    <string name="filter_add_error">Error adding filter</string>
+    <string name="filter_update_success">Filter updated successfully</string>
+    <string name="filter_update_error">Error updating filter</string>
+    <string name="filter_delete_success">Filter deleted successfully</string>
+    <string name="filter_delete_error">Error deleting filter</string>
+    
+    <!-- Filter Delete Confirmation -->
+    <string name="filter_delete_title">Delete Filter</string>
+    <string name="filter_delete_message">Are you sure you want to delete this filter?</string>
+    <string name="filter_delete_confirm">Delete</string>
+    
+    <!-- Filter Test -->
+    <string name="filter_test_title">Test Filter</string>
+    <string name="filter_test_message_hint">Enter test message</string>
+    <string name="filter_test_sender_hint">Enter test sender number</string>
+    <string name="filter_test_run">Run Test</string>
+    <string name="filter_test_result_match">✅ Filter matches - Action: %s</string>
+    <string name="filter_test_result_no_match">❌ Filter does not match</string>
+    
+    <!-- Default Filter Names -->
+    <string name="default_spam_filter_name">Spam Detection</string>
+    <string name="default_work_hours_filter_name">Work Hours Only</string>
+    <string name="default_spam_pattern">spam|advertisement|promotion|winner|prize|free|urgent|limited time</string>
+    <string name="default_work_hours_pattern">09:00-18:00</string>
+    
+    <!-- Backup & Restore -->
+    <string name="backup_create_title">Backup Settings</string>
+    <string name="backup_create_message">Do you want to backup all your app settings, target numbers, and filter rules?</string>
+    <string name="backup_include_history">Include SMS history</string>
+    <string name="backup_create_confirm">Backup</string>
+    <string name="backup_creating">Creating backup...</string>
+    <string name="backup_success">Backup created successfully</string>
+    <string name="backup_success_path">Backup file: %s</string>
+    <string name="backup_error">Error creating backup</string>
+    
+    <string name="restore_select_title">Restore Backup</string>
+    <string name="restore_select_message">Select the backup file you want to restore:</string>
+    <string name="restore_no_backups">No backup files found yet</string>
+    <string name="restore_mode_title">Restore Mode</string>
+    <string name="restore_mode_message">How should existing data be handled?</string>
+    <string name="restore_mode_replace">Replace (Existing data will be deleted)</string>
+    <string name="restore_mode_merge">Merge (Existing data will be preserved)</string>
+    <string name="restore_confirm_title">Confirm Restore</string>
+    <string name="restore_confirm_message">This operation may affect your current settings. Are you sure you want to continue?</string>
+    <string name="restore_confirm">Restore</string>
+    <string name="restore_restoring">Restoring settings...</string>
+    <string name="restore_success">Settings restored successfully</string>
+    <string name="restore_error">Error during restore</string>
+    <string name="restore_validation_error">Invalid backup file: %s</string>
+    
+    <string name="backup_file_browser_title">Select Backup File</string>
+    <string name="backup_file_not_found">File not found</string>
+    <string name="backup_permission_error">File permission error</string>
+    
+    <!-- Accessibility Content Descriptions -->
+    <string name="cd_app_logo">Hermes SMS Forward application logo</string>
+    <string name="cd_target_number_input">Target phone number input field</string>
+    <string name="cd_save_button">Save settings and start forwarding</string>
+    <string name="cd_menu_button">Open main menu</string>
+    <string name="cd_back_button">Go back to previous screen</string>
+    <string name="cd_refresh_button">Refresh current content</string>
+    <string name="cd_search_button">Search content</string>
+    <string name="cd_filter_button">Filter content</string>
+    <string name="cd_add_button">Add new item</string>
+    <string name="cd_edit_button">Edit this item</string>
+    <string name="cd_delete_button">Delete this item</string>
+    <string name="cd_toggle_button">Toggle this option</string>
+    <string name="cd_export_button">Export data</string>
+    <string name="cd_import_button">Import data</string>
+    <string name="cd_status_indicator">Current status indicator</string>
+    <string name="cd_permission_indicator">Permission status indicator</string>
+    <string name="cd_validation_message">Input validation message</string>
+    <string name="cd_progress_bar">Operation progress indicator</string>
+    <string name="cd_success_icon">Success status icon</string>
+    <string name="cd_error_icon">Error status icon</string>
+    <string name="cd_warning_icon">Warning status icon</string>
+    <string name="cd_info_icon">Information icon</string>
+    <string name="cd_analytics_chart">Analytics data chart</string>
+    <string name="cd_statistics_card">Statistics information card</string>
+    
+</resources>

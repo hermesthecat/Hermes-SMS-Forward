@@ -15,6 +15,8 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginTop="32dp"
+        android:contentDescription="@string/cd_app_logo"
+        android:accessibilityHeading="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -48,6 +50,9 @@
         android:hint="@string/target_number_hint"
         android:inputType="phone"
         android:layout_marginTop="8dp"
+        android:contentDescription="@string/cd_target_number_input"
+        android:importantForAccessibility="yes"
+        android:accessibilityTraversalAfter="@id/tvTargetLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTargetLabel" />
@@ -62,6 +67,10 @@
         android:gravity="start"
         android:layout_marginTop="4dp"
         android:visibility="gone"
+        android:contentDescription="@string/cd_validation_message"
+        android:importantForAccessibility="yes"
+        android:accessibilityLiveRegion="polite"
+        android:accessibilityTraversalAfter="@id/etTargetNumber"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etTargetNumber" />
@@ -72,6 +81,9 @@
         android:layout_height="wrap_content"
         android:text="@string/save_button"
         android:layout_marginTop="16dp"
+        android:contentDescription="@string/cd_save_button"
+        android:importantForAccessibility="yes"
+        android:accessibilityTraversalAfter="@id/etTargetNumber"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvValidation" />
@@ -84,6 +96,10 @@
         android:textSize="14sp"
         android:gravity="center"
         android:layout_marginTop="24dp"
+        android:contentDescription="@string/cd_status_indicator"
+        android:importantForAccessibility="yes"
+        android:accessibilityLiveRegion="polite"
+        android:accessibilityTraversalAfter="@id/btnSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnSave" />
@@ -97,6 +113,10 @@
         android:textColor="@color/hermes_warning"
         android:gravity="center"
         android:layout_marginTop="16dp"
+        android:contentDescription="@string/cd_permission_indicator"
+        android:importantForAccessibility="yes"
+        android:accessibilityLiveRegion="polite"
+        android:accessibilityTraversalAfter="@id/tvStatus"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvStatus" />

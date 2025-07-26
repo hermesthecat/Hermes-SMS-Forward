@@ -1,5 +1,31 @@
 # Changelog - Hermes SMS Forward
 
+## [2.10.0] - 2025-07-26
+
+- ✅ Task 21: Accessibility & Internationalization tamamlandı
+  - **Complete Accessibility Support:** ContentDescription attributes added to all UI elements across 10 layout files
+  - **TalkBack Screen Reader Optimization:** Accessibility headings, live regions, and traversal order for screen readers
+  - **English Language Support:** Full internationalization with complete English strings.xml (330+ strings)
+  - **Multilingual ContentDescription:** Accessibility descriptions in both Turkish and English
+  - **Accessibility Headings:** Proper heading structure for screen reader navigation
+  - **Live Regions:** Dynamic content announcements for validation messages and status updates
+  - **Focus Traversal Order:** Logical navigation flow for keyboard and screen reader users
+  - **Interactive Element Accessibility:** All buttons, inputs, and cards properly labeled for accessibility
+  - **Statistics Card Accessibility:** Analytics dashboard fully accessible with proper descriptions
+  - **Form Input Accessibility:** Phone number inputs, validation messages, and buttons accessible
+  - **Navigation Accessibility:** Toolbar, menu items, and navigation elements properly labeled
+  - **Error Message Accessibility:** Validation errors and status messages with live region support
+  - **Visual Accessibility Enhancements:** Important elements marked for accessibility services
+  - **Filter Management Accessibility:** Filter rules interface fully accessible with proper labeling
+  - **Target Numbers Accessibility:** Target number management with complete accessibility support
+  - **History View Accessibility:** SMS history interface accessible with proper content descriptions
+  - **Dialog Accessibility:** Filter test dialogs and other dialogs properly accessible
+  - **Card View Accessibility:** All card-based UI elements accessible for screen readers
+  - **WCAG 2.1 Compliance:** Accessibility improvements following WCAG guidelines
+  - **Cross-Platform Accessibility:** Works with TalkBack, Voice Access, and other Android accessibility services
+  - **Version 2.10.0:** Complete accessibility and internationalization support
+  - **APK build başarılı olarak tamamlandı**
+
 ## [2.9.0] - 2025-07-26
 
 - ✅ Task 20: Analytics & Monitoring tamamlandı

@@ -14,7 +14,8 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="?android:attr/textColorPrimary"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/filter_rules_title" />
 
     <TextView
         android:layout_width="match_parent"
@@ -22,13 +23,16 @@
         android:text="@string/filter_rules_description"
         android:textSize="14sp"
         android:textColor="?android:attr/textColorSecondary"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/filter_rules_description" />
 
     <!-- Quick Filters Section -->
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:contentDescription="@string/cd_statistics_card"
+        android:importantForAccessibility="yes"
         app:cardCornerRadius="8dp"
         app:cardElevation="2dp">
 
@@ -59,7 +63,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/add_spam_filter"
-                    android:layout_marginEnd="4dp" />
+                    android:layout_marginEnd="4dp"
+                    android:contentDescription="@string/cd_add_button"
+                    android:importantForAccessibility="yes" />
 
                 <Button
                     android:id="@+id/btnAddWorkHoursFilter"
@@ -68,7 +74,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/add_work_hours_filter"
-                    android:layout_marginStart="4dp" />
+                    android:layout_marginStart="4dp"
+                    android:contentDescription="@string/cd_add_button"
+                    android:importantForAccessibility="yes" />
 
             </LinearLayout>
 
@@ -81,6 +89,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:contentDescription="@string/cd_statistics_card"
+        android:importantForAccessibility="yes"
         app:cardCornerRadius="8dp"
         app:cardElevation="2dp">
 
@@ -109,7 +119,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:contentDescription="@string/cd_info_icon"
+                    android:importantForAccessibility="yes" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -124,7 +136,9 @@
                 android:id="@+id/spinnerFilterType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="8dp"
+                android:contentDescription="@string/filter_type_label"
+                android:importantForAccessibility="yes" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -137,7 +151,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:maxLines="3" />
+                    android:maxLines="3"
+                    android:contentDescription="@string/filter_pattern_hint"
+                    android:importantForAccessibility="yes" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -161,14 +177,18 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/action_allow"
-                    android:checked="true" />
+                    android:checked="true"
+                    android:contentDescription="@string/action_allow"
+                    android:importantForAccessibility="yes" />
 
                 <RadioButton
                     android:id="@+id/rbActionBlock"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/action_block" />
+                    android:text="@string/action_block"
+                    android:contentDescription="@string/action_block"
+                    android:importantForAccessibility="yes" />
 
             </RadioGroup>
 
@@ -183,14 +203,18 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/case_sensitive" />
+                    android:text="@string/case_sensitive"
+                    android:contentDescription="@string/cd_toggle_button"
+                    android:importantForAccessibility="yes" />
 
                 <CheckBox
                     android:id="@+id/cbRegex"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/use_regex" />
+                    android:text="@string/use_regex"
+                    android:contentDescription="@string/cd_toggle_button"
+                    android:importantForAccessibility="yes" />
 
                 <CheckBox
                     android:id="@+id/cbEnabled"
@@ -198,7 +222,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/enabled"
-                    android:checked="true" />
+                    android:checked="true"
+                    android:contentDescription="@string/cd_toggle_button"
+                    android:importantForAccessibility="yes" />
 
             </LinearLayout>
 
@@ -208,14 +234,18 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:layout_marginBottom="8dp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:contentDescription="@string/cd_validation_message"
+                android:importantForAccessibility="yes" />
 
             <Button
                 android:id="@+id/btnAddFilter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/add_filter"
-                android:enabled="false" />
+                android:enabled="false"
+                android:contentDescription="@string/cd_add_button"
+                android:importantForAccessibility="yes" />
 
         </LinearLayout>
 
@@ -240,7 +270,8 @@
         android:gravity="center"
         android:padding="24dp"
         android:layout_marginBottom="8dp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:contentDescription="@string/no_filters_configured" />
 
     <!-- RecyclerView for Filter Rules -->
     <androidx.recyclerview.widget.RecyclerView
@@ -248,6 +279,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        android:contentDescription="@string/filter_rules_title"
+        android:importantForAccessibility="yes" />
 
 </LinearLayout>

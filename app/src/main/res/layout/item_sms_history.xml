@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
+    android:contentDescription="@string/cd_statistics_card"
+    android:importantForAccessibility="yes"
     app:cardCornerRadius="8dp"
     app:cardElevation="2dp"
     app:cardUseCompatPadding="true"
@@ -44,6 +46,7 @@
                 android:textColor="?attr/colorOnSurface"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:contentDescription="@string/cd_info_icon"
                 tools:text="+90 555 123 4567" />
 
             <!-- Timestamp -->
@@ -53,6 +56,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:textColor="?attr/colorOnSurfaceVariant"
+                android:contentDescription="@string/cd_info_icon"
                 tools:text="14:30" />
 
         </LinearLayout>
@@ -83,6 +87,8 @@
                 android:padding="8dp"
                 android:maxLines="3"
                 android:ellipsize="end"
+                android:contentDescription="@string/history_original_message_label"
+                android:importantForAccessibility="yes"
                 tools:text="Bu bir test mesajıdır. SMS yönlendirme sistemi çalışıyor." />
 
         </LinearLayout>
@@ -118,6 +124,7 @@
                     android:textColor="?attr/colorOnSurfaceVariant"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    android:contentDescription="@string/history_target_label"
                     tools:text="+90 555 987 6543" />
 
             </LinearLayout>
@@ -131,6 +138,8 @@
                 android:textStyle="bold"
                 android:padding="4dp"
                 android:background="@drawable/rounded_status_background"
+                android:contentDescription="@string/cd_status_indicator"
+                android:importantForAccessibility="yes"
                 tools:text="@string/history_status_success" />
 
         </LinearLayout>
@@ -161,6 +170,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:textColor="@color/error_text"
+                android:contentDescription="@string/cd_error_icon"
+                android:importantForAccessibility="yes"
                 tools:text="SMS gönderimi başarısız: Ağ hatası" />
 
         </LinearLayout>
@@ -191,6 +202,7 @@
                 android:textColor="?attr/colorOnSurfaceVariant"
                 android:textStyle="bold"
                 android:padding="4dp"
+                android:contentDescription="@string/cd_info_icon"
                 tools:text="Bugün" />
 
             <View
