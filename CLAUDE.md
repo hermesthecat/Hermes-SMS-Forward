@@ -66,6 +66,7 @@ This is a comprehensive Android SMS forwarding application that automatically fo
 
 ## Feature Activities
 
+- **OnboardingActivity**: ViewPager2-based guided setup flow for new users (5-step process)
 - **TargetNumbersActivity**: Manages multiple destination phone numbers
 - **FilterRulesActivity**: Manages SMS filtering rules (include/exclude patterns)
 - **HistoryActivity**: Displays comprehensive log of forwarded messages
@@ -79,21 +80,30 @@ This is a comprehensive Android SMS forwarding application that automatically fo
 - **SmsFilter**: Rules for message filtering
 - **AnalyticsEvent** & **StatisticsSummary**: Local analytics data
 
+## Onboarding System Architecture
+
+- **OnboardingActivity**: Manages ViewPager2 with 5 fragments
+- **Fragment Flow**: Welcome → Permissions → Target Setup → Filter Intro → Completion
+- **State Management**: SharedPreferences tracks onboarding completion (`onboarding_completed`)
+- **Navigation Controls**: Progress indicator, skip/back/next buttons with adaptive UI
+- **Auto-Launch**: MainActivity checks completion status and redirects new users
+
 ## Data Flow
 
-1. User configures multiple target numbers and filtering rules
-2. SmsReceiver intercepts incoming SMS via SMS_RECEIVED broadcast (priority 1000)
-3. Messages are filtered based on configured rules
-4. Qualifying messages are queued for forwarding via SmsQueueManager
-5. WorkManager ensures reliable delivery with retry logic
-6. All events are logged locally for analytics and history
+1. **First Launch**: OnboardingActivity detects new users and guides through 5-step setup
+2. User configures multiple target numbers and filtering rules
+3. SmsReceiver intercepts incoming SMS via SMS_RECEIVED broadcast (priority 1000)
+4. Messages are filtered based on configured rules
+5. Qualifying messages are queued for forwarding via SmsQueueManager
+6. WorkManager ensures reliable delivery with retry logic
+7. All events are logged locally for analytics and history
 
 ## Key Configuration
 
 - **App ID**: `com.keremgok.sms`
 - **Min SDK**: 21 (Android 5.0)
 - **Target SDK**: 34 (Android 14)
-- **Current Version**: 2.3.0 (versionCode 14)
+- **Current Version**: 2.11.0 (versionCode 22)
 - **Permissions**: RECEIVE_SMS, SEND_SMS (both require runtime permission requests)
 - **Build Types**: Debug (with `.debug` suffix) and Release (with ProGuard/R8 obfuscation)
 - **Threading**: Use ThreadManager for all background operations instead of creating raw threads
@@ -115,12 +125,15 @@ Comprehensive testing framework configured with:
 - **Privacy-First**: All analytics and data processing must remain local - no external data transmission
 - **Input Validation**: Use PhoneNumberValidator for all phone number inputs
 - **Error Handling**: Leverage WorkManager's retry logic for reliable SMS forwarding
+- **First-Time Users**: OnboardingActivity automatically launches for new users; use `OnboardingActivity.isOnboardingCompleted()` to check status
+- **Fragment-Based UI**: Onboarding uses ViewPager2 with fragments; follow established patterns for new multi-step flows
 
 ## Key Dependencies
 
 - **Room**: `androidx.room` for database operations
 - **WorkManager**: `androidx.work` for background task reliability
 - **Material Design**: `com.google.android.material` for UI components
+- **ViewPager2**: `androidx.viewpager2` for onboarding flow
 - **Preferences**: `androidx.preference` for settings management
 
 # Important Files
