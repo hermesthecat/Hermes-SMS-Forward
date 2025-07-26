@@ -609,7 +609,6 @@
    - Error frequency analysis
 
 2. **Performance monitoring:**
-   - Crash reporting (Firebase Crashlytics)
    - Performance metrics
    - User experience tracking
 
