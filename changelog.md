@@ -1,5 +1,29 @@
 # Changelog - Hermes SMS Forward
 
+## [2.8.0] - 2025-07-26
+
+- ✅ Task 19: Backup & Restore functionality tamamlandı
+  - **BackupManager Class:** Comprehensive backup/restore functionality with JSON format
+  - **Local Backup System:** Settings, target numbers, and filter rules backup to JSON files
+  - **Data Validation:** Import validation with backup version compatibility checks
+  - **Restore Modes:** Merge vs Replace options for flexible data restoration
+  - **Settings Export:** All SharedPreferences settings (forwarding, notifications, advanced)
+  - **Database Backup:** Target numbers and SMS filters backup with complete metadata
+  - **SMS History Backup:** Optional SMS history inclusion in backup files
+  - **Backup UI Integration:** SettingsActivity integration with user-friendly dialogs
+  - **Progress Dialogs:** Background processing with progress indicators
+  - **File Management:** Automatic backup file naming with timestamp formatting
+  - **Error Handling:** Comprehensive validation and error reporting
+  - **Security Features:** Data integrity checks and backup file validation
+  - **Thread Safety:** Background processing with ThreadManager integration
+  - **User Experience:** Intuitive backup creation and restore workflows
+  - **File Location:** External files directory for easy access and sharing
+  - **Timestamp Format:** Human-readable backup file naming (DD/MM/YYYY HH:MM:SS)
+  - **Data Migration:** Seamless integration with existing database structure
+  - **Settings Refresh:** Automatic preferences screen refresh after restore
+  - **Version 2.8.0:** Complete backup and restore system for data portability
+  - **APK build başarılı olarak tamamlandı**
+
 ## [2.6.0] - 2025-07-26
 
 - ✅ Task 17: SMS Filtering System tamamlandı

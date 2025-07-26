@@ -75,6 +75,14 @@ public interface SmsFilterDao {
     boolean isFilterNameExists(String filterName);
     
     /**
+     * Get filter by name
+     * @param filterName The name of the filter
+     * @return The filter with the specified name, or null if not found
+     */
+    @Query("SELECT * FROM sms_filters WHERE filter_name = :filterName LIMIT 1")
+    SmsFilter getFilterByName(String filterName);
+    
+    /**
      * Get whitelist filters (ALLOW action)
      * @return List of whitelist filters
      */

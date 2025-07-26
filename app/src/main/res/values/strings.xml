@@ -274,4 +274,33 @@
     <string name="default_spam_pattern">spam|advertisement|promotion|winner|prize|free|urgent|limited time</string>
     <string name="default_work_hours_pattern">09:00-18:00</string>
     
+    <!-- Backup & Restore -->
+    <string name="backup_create_title">Ayarları Yedekle</string>
+    <string name="backup_create_message">Tüm uygulama ayarlarınızı, hedef numaralarınızı ve filter kurallarınızı yedeklemek istiyor musunuz?</string>
+    <string name="backup_include_history">SMS geçmişini de dahil et</string>
+    <string name="backup_create_confirm">Yedekle</string>
+    <string name="backup_creating">Yedek oluşturuluyor...</string>
+    <string name="backup_success">Yedek başarıyla oluşturuldu</string>
+    <string name="backup_success_path">Yedek dosyası: %s</string>
+    <string name="backup_error">Yedek oluşturulurken hata oluştu</string>
+    
+    <string name="restore_select_title">Yedeği Geri Yükle</string>
+    <string name="restore_select_message">Geri yüklemek istediğiniz yedek dosyasını seçin:</string>
+    <string name="restore_no_backups">Henüz hiç yedek dosyası bulunamadı</string>
+    <string name="restore_mode_title">Geri Yükleme Modu</string>
+    <string name="restore_mode_message">Mevcut verilerle nasıl işlem yapılsın?</string>
+    <string name="restore_mode_replace">Değiştir (Mevcut veriler silinir)</string>
+    <string name="restore_mode_merge">Birleştir (Mevcut veriler korunur)</string>
+    <string name="restore_confirm_title">Geri Yüklemeyi Onayla</string>
+    <string name="restore_confirm_message">Bu işlem mevcut ayarlarınızı etkileyebilir. Devam etmek istediğinizden emin misiniz?</string>
+    <string name="restore_confirm">Geri Yükle</string>
+    <string name="restore_restoring">Ayarlar geri yükleniyor...</string>
+    <string name="restore_success">Ayarlar başarıyla geri yüklendi</string>
+    <string name="restore_error">Geri yükleme sırasında hata oluştu</string>
+    <string name="restore_validation_error">Yedek dosyası geçersiz: %s</string>
+    
+    <string name="backup_file_browser_title">Yedek Dosyası Seç</string>
+    <string name="backup_file_not_found">Dosya bulunamadı</string>
+    <string name="backup_permission_error">Dosya izinleri hatası</string>
+    
 </resources>
