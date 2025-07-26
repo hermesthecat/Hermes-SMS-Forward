@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         loadSavedNumber();
         updateUI();
         
+        // Initialize performance monitoring for Task 15 optimization testing
+        initializePerformanceMonitoring();
+        
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -251,5 +254,41 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    /**
+     * Initialize performance monitoring for Task 15 optimization testing
+     * This method runs performance tests to validate our optimizations
+     */
+    private void initializePerformanceMonitoring() {
+        if (!PerformanceMonitor.isMonitoringEnabled()) {
+            return;
+        }
+        
+        PerformanceMonitor monitor = PerformanceMonitor.getInstance();
+        monitor.reset();
+        monitor.logCurrentStatus(this, "App Start");
+        
+        // Run performance test in background thread to avoid blocking UI
+        ThreadManager.getInstance().executeBackground(() -> {
+            try {
+                // Wait a bit for app to fully initialize
+                Thread.sleep(2000);
+                
+                // Run comprehensive performance test
+                monitor.runPerformanceTest(this);
+                
+                // Check for memory leaks
+                monitor.checkMemoryLeaks(this);
+                
+                // Log final status
+                monitor.logCurrentStatus(this, "Performance Test Complete");
+                
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            } catch (Exception e) {
+                android.util.Log.e("MainActivity", "Performance monitoring error: " + e.getMessage());
+            }
+        });
     }
 }

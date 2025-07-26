@@ -1,6 +1,7 @@
 package com.keremgok.sms;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +10,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * RecyclerView Adapter for SMS History
@@ -26,12 +30,54 @@ public class SmsHistoryAdapter extends RecyclerView.Adapter<SmsHistoryAdapter.Hi
     private List<SmsHistory> historyList;
     private SimpleDateFormat timeFormat;
     private SimpleDateFormat dateFormat;
+    private SimpleDateFormat dateComparisonFormat;
+    
+    // Performance optimization: Cached resources and objects
+    private Drawable successIconDrawable;
+    private Drawable errorIconDrawable;
+    private int successColor;
+    private int errorColor;
+    private String successStatusText;
+    private String failedStatusText;
+    private String todayText;
+    private String yesterdayText;
+    
+    // Phone number masking cache
+    private Map<String, String> phoneNumberCache;
+    
+    // Date formatting cache
+    private Map<Long, String> dateStringCache;
+    private Map<Long, String> dateGroupTextCache;
     
     public SmsHistoryAdapter(Context context, List<SmsHistory> historyList) {
         this.context = context;
         this.historyList = historyList;
         this.timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
         this.dateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
+        this.dateComparisonFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        
+        // Initialize performance optimization caches
+        initializeCaches();
+    }
+    
+    /**
+     * Initialize performance optimization caches
+     */
+    private void initializeCaches() {
+        // Cache frequently used resources
+        successIconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_check_circle);
+        errorIconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_error_circle);
+        successColor = ContextCompat.getColor(context, R.color.success_color);
+        errorColor = ContextCompat.getColor(context, R.color.error_color);
+        successStatusText = context.getString(R.string.history_status_success);
+        failedStatusText = context.getString(R.string.history_status_failed);
+        todayText = context.getString(R.string.history_date_today);
+        yesterdayText = context.getString(R.string.history_date_yesterday);
+        
+        // Initialize caches with reasonable initial capacity
+        phoneNumberCache = new HashMap<>(50);
+        dateStringCache = new HashMap<>(30);
+        dateGroupTextCache = new HashMap<>(10);
     }
     
     @NonNull
@@ -56,52 +102,76 @@ public class SmsHistoryAdapter extends RecyclerView.Adapter<SmsHistoryAdapter.Hi
     }
     
     /**
-     * Bind SMS history data to view holder
+     * Bind SMS history data to view holder (optimized with caching)
      */
     private void bindHistoryData(HistoryViewHolder holder, SmsHistory history) {
-        // Set sender number (masked for privacy)
-        String maskedSender = PhoneNumberValidator.maskPhoneNumber(history.getSenderNumber());
+        // Set sender number (masked for privacy) - use cache
+        String maskedSender = getCachedMaskedPhoneNumber(history.getSenderNumber());
         holder.tvSenderNumber.setText(maskedSender);
         
-        // Set timestamp
-        Date timestamp = new Date(history.getTimestamp());
-        holder.tvTimestamp.setText(timeFormat.format(timestamp));
+        // Set timestamp - optimize date formatting
+        holder.tvTimestamp.setText(timeFormat.format(history.getTimestamp()));
         
         // Set original message
         holder.tvOriginalMessage.setText(history.getOriginalMessage());
         
-        // Set target number (masked for privacy)
-        String maskedTarget = PhoneNumberValidator.maskPhoneNumber(history.getTargetNumber());
+        // Set target number (masked for privacy) - use cache
+        String maskedTarget = getCachedMaskedPhoneNumber(history.getTargetNumber());
         holder.tvTargetNumber.setText(maskedTarget);
         
-        // Set status icon and text based on success/failure
+        // Set status icon and text based on success/failure - use cached resources
         if (history.isSuccess()) {
-            // Success status
-            holder.ivStatusIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_check_circle));
-            holder.ivStatusIcon.setColorFilter(ContextCompat.getColor(context, R.color.success_color));
-            holder.tvStatusText.setText(context.getString(R.string.history_status_success));
-            holder.tvStatusText.setTextColor(ContextCompat.getColor(context, R.color.success_color));
+            // Success status - use cached resources
+            holder.ivStatusIcon.setImageDrawable(successIconDrawable);
+            holder.ivStatusIcon.setColorFilter(successColor);
+            holder.tvStatusText.setText(successStatusText);
+            holder.tvStatusText.setTextColor(successColor);
             holder.tvStatusText.setBackgroundResource(R.drawable.success_status_background);
             
             // Hide error container
             holder.llErrorContainer.setVisibility(View.GONE);
             
         } else {
-            // Failed status
-            holder.ivStatusIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_error_circle));
-            holder.ivStatusIcon.setColorFilter(ContextCompat.getColor(context, R.color.error_color));
-            holder.tvStatusText.setText(context.getString(R.string.history_status_failed));
-            holder.tvStatusText.setTextColor(ContextCompat.getColor(context, R.color.error_color));
+            // Failed status - use cached resources
+            holder.ivStatusIcon.setImageDrawable(errorIconDrawable);
+            holder.ivStatusIcon.setColorFilter(errorColor);
+            holder.tvStatusText.setText(failedStatusText);
+            holder.tvStatusText.setTextColor(errorColor);
             holder.tvStatusText.setBackgroundResource(R.drawable.error_status_background);
             
             // Show error message if available
-            if (history.getErrorMessage() != null && !history.getErrorMessage().trim().isEmpty()) {
+            String errorMessage = history.getErrorMessage();
+            if (errorMessage != null && !errorMessage.trim().isEmpty()) {
                 holder.llErrorContainer.setVisibility(View.VISIBLE);
-                holder.tvErrorMessage.setText(history.getErrorMessage());
+                holder.tvErrorMessage.setText(errorMessage);
             } else {
                 holder.llErrorContainer.setVisibility(View.GONE);
             }
         }
+    }
+    
+    /**
+     * Get cached masked phone number for performance optimization
+     */
+    private String getCachedMaskedPhoneNumber(String phoneNumber) {
+        if (phoneNumber == null) {
+            return "***";
+        }
+        
+        String cached = phoneNumberCache.get(phoneNumber);
+        if (cached != null) {
+            return cached;
+        }
+        
+        String masked = PhoneNumberValidator.maskPhoneNumber(phoneNumber);
+        phoneNumberCache.put(phoneNumber, masked);
+        
+        // Prevent cache from growing too large
+        if (phoneNumberCache.size() > 100) {
+            phoneNumberCache.clear();
+        }
+        
+        return masked;
     }
     
     /**
@@ -114,16 +184,16 @@ public class SmsHistoryAdapter extends RecyclerView.Adapter<SmsHistoryAdapter.Hi
         if (position == 0) {
             // Always show date divider for first item
             showDateDivider = true;
-            dateText = getDateGroupText(history.getTimestamp());
+            dateText = getCachedDateGroupText(history.getTimestamp());
         } else {
             // Show date divider if this item is from a different date than previous item
             SmsHistory previousHistory = historyList.get(position - 1);
-            String currentDate = getDateString(history.getTimestamp());
-            String previousDate = getDateString(previousHistory.getTimestamp());
+            String currentDate = getCachedDateString(history.getTimestamp());
+            String previousDate = getCachedDateString(previousHistory.getTimestamp());
             
             if (!currentDate.equals(previousDate)) {
                 showDateDivider = true;
-                dateText = getDateGroupText(history.getTimestamp());
+                dateText = getCachedDateGroupText(history.getTimestamp());
             }
         }
         
@@ -136,11 +206,52 @@ public class SmsHistoryAdapter extends RecyclerView.Adapter<SmsHistoryAdapter.Hi
     }
     
     /**
+     * Get cached date string for comparison (YYYY-MM-DD format) - optimized
+     */
+    private String getCachedDateString(long timestamp) {
+        Long key = timestamp;
+        String cached = dateStringCache.get(key);
+        if (cached != null) {
+            return cached;
+        }
+        
+        String dateString = dateComparisonFormat.format(new Date(timestamp));
+        dateStringCache.put(key, dateString);
+        
+        // Prevent cache from growing too large
+        if (dateStringCache.size() > 50) {
+            dateStringCache.clear();
+        }
+        
+        return dateString;
+    }
+    
+    /**
+     * Get cached user-friendly date group text (Today, Yesterday, or formatted date) - optimized
+     */
+    private String getCachedDateGroupText(long timestamp) {
+        Long key = timestamp;
+        String cached = dateGroupTextCache.get(key);
+        if (cached != null) {
+            return cached;
+        }
+        
+        String dateGroupText = getDateGroupText(timestamp);
+        dateGroupTextCache.put(key, dateGroupText);
+        
+        // Prevent cache from growing too large
+        if (dateGroupTextCache.size() > 20) {
+            dateGroupTextCache.clear();
+        }
+        
+        return dateGroupText;
+    }
+    
+    /**
      * Get date string for comparison (YYYY-MM-DD format)
      */
     private String getDateString(long timestamp) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        return dateFormat.format(new Date(timestamp));
+        return dateComparisonFormat.format(new Date(timestamp));
     }
     
     /**
@@ -155,9 +266,9 @@ public class SmsHistoryAdapter extends RecyclerView.Adapter<SmsHistoryAdapter.Hi
         yesterday.add(Calendar.DAY_OF_YEAR, -1);
         
         if (isSameDay(calendar, today)) {
-            return context.getString(R.string.history_date_today);
+            return todayText;
         } else if (isSameDay(calendar, yesterday)) {
-            return context.getString(R.string.history_date_yesterday);
+            return yesterdayText;
         } else {
             return dateFormat.format(new Date(timestamp));
         }

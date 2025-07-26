@@ -254,10 +254,10 @@ public class SmsCallbackReceiver extends BroadcastReceiver {
     
     /**
      * Log SMS forwarding history to database
-     * Runs in background thread to avoid blocking main thread
+     * Runs in optimized background thread to avoid blocking main thread
      */
     private void logSmsHistory(Context context, String senderNumber, String originalMessage, String targetNumber, String forwardedMessage, long timestamp, boolean success, String errorMessage) {
-        new Thread(() -> {
+        ThreadManager.getInstance().executeDatabase(() -> {
             try {
                 AppDatabase database = AppDatabase.getInstance(context);
                 SmsHistory history = new SmsHistory(
@@ -280,7 +280,7 @@ public class SmsCallbackReceiver extends BroadcastReceiver {
             } catch (Exception e) {
                 Log.e(TAG, "Failed to log SMS history: " + e.getMessage(), e);
             }
-        }).start();
+        });
     }
     
     /**

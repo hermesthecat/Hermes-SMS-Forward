@@ -58,11 +58,11 @@ public abstract class AppDatabase extends RoomDatabase {
     
     /**
      * Perform automatic cleanup of old records (30+ days old)
-     * Should be called periodically in background
+     * Should be called periodically in optimized background thread
      * @param context Application context
      */
     public static void performAutoCleanup(Context context) {
-        new Thread(() -> {
+        ThreadManager.getInstance().executeBackground(() -> {
             AppDatabase db = getInstance(context);
             long thirtyDaysAgo = System.currentTimeMillis() - (30L * 24 * 60 * 60 * 1000); // 30 days in milliseconds
             int deletedCount = db.smsHistoryDao().deleteOldRecords(thirtyDaysAgo);
@@ -70,6 +70,6 @@ public abstract class AppDatabase extends RoomDatabase {
             if (deletedCount > 0) {
                 android.util.Log.i("AppDatabase", "Auto cleanup: Deleted " + deletedCount + " old SMS history records");
             }
-        }).start();
+        });
     }
 }

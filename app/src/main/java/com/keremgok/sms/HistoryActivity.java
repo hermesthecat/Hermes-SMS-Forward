@@ -89,16 +89,16 @@ public class HistoryActivity extends AppCompatActivity {
     }
     
     /**
-     * Load SMS history data from database in background thread
+     * Load SMS history data from database in optimized background thread
      */
     private void loadHistoryData() {
         swipeRefreshLayout.setRefreshing(true);
         
-        new Thread(() -> {
+        ThreadManager.getInstance().executeDatabase(() -> {
             try {
                 List<SmsHistory> history = database.smsHistoryDao().getAllHistory();
                 
-                runOnUiThread(() -> {
+                ThreadManager.getInstance().executeOnMainThread(() -> {
                     allHistory.clear();
                     allHistory.addAll(history);
                     
@@ -114,12 +114,12 @@ public class HistoryActivity extends AppCompatActivity {
                 });
                 
             } catch (Exception e) {
-                runOnUiThread(() -> {
+                ThreadManager.getInstance().executeOnMainThread(() -> {
                     swipeRefreshLayout.setRefreshing(false);
                     Toast.makeText(this, getString(R.string.history_load_error), Toast.LENGTH_SHORT).show();
                 });
             }
-        }).start();
+        });
     }
     
     /**
@@ -132,12 +132,12 @@ public class HistoryActivity extends AppCompatActivity {
             filteredHistory.clear();
             filteredHistory.addAll(allHistory);
         } else {
-            // Filter history based on query
-            new Thread(() -> {
+            // Filter history based on query using optimized background thread
+            ThreadManager.getInstance().executeDatabase(() -> {
                 try {
                     List<SmsHistory> searchResults = database.smsHistoryDao().searchHistory(query.trim());
                     
-                    runOnUiThread(() -> {
+                    ThreadManager.getInstance().executeOnMainThread(() -> {
                         filteredHistory.clear();
                         filteredHistory.addAll(searchResults);
                         adapter.notifyDataSetChanged();
@@ -148,11 +148,11 @@ public class HistoryActivity extends AppCompatActivity {
                     });
                     
                 } catch (Exception e) {
-                    runOnUiThread(() -> {
+                    ThreadManager.getInstance().executeOnMainThread(() -> {
                         Toast.makeText(this, getString(R.string.history_search_error), Toast.LENGTH_SHORT).show();
                     });
                 }
-            }).start();
+            });
         }
     }
     
@@ -236,11 +236,11 @@ public class HistoryActivity extends AppCompatActivity {
      * Show only successful forwarded SMS
      */
     private void showSuccessfulHistory() {
-        new Thread(() -> {
+        ThreadManager.getInstance().executeDatabase(() -> {
             try {
                 List<SmsHistory> successHistory = database.smsHistoryDao().getSuccessfulHistory();
                 
-                runOnUiThread(() -> {
+                ThreadManager.getInstance().executeOnMainThread(() -> {
                     filteredHistory.clear();
                     filteredHistory.addAll(successHistory);
                     adapter.notifyDataSetChanged();
@@ -249,22 +249,22 @@ public class HistoryActivity extends AppCompatActivity {
                 });
                 
             } catch (Exception e) {
-                runOnUiThread(() -> {
+                ThreadManager.getInstance().executeOnMainThread(() -> {
                     Toast.makeText(this, getString(R.string.history_filter_error), Toast.LENGTH_SHORT).show();
                 });
             }
-        }).start();
+        });
     }
     
     /**
      * Show only failed forwarded SMS
      */
     private void showFailedHistory() {
-        new Thread(() -> {
+        ThreadManager.getInstance().executeDatabase(() -> {
             try {
                 List<SmsHistory> failedHistory = database.smsHistoryDao().getFailedHistory();
                 
-                runOnUiThread(() -> {
+                ThreadManager.getInstance().executeOnMainThread(() -> {
                     filteredHistory.clear();
                     filteredHistory.addAll(failedHistory);
                     adapter.notifyDataSetChanged();
@@ -273,11 +273,11 @@ public class HistoryActivity extends AppCompatActivity {
                 });
                 
             } catch (Exception e) {
-                runOnUiThread(() -> {
+                ThreadManager.getInstance().executeOnMainThread(() -> {
                     Toast.makeText(this, getString(R.string.history_filter_error), Toast.LENGTH_SHORT).show();
                 });
             }
-        }).start();
+        });
     }
     
     /**
@@ -296,11 +296,11 @@ public class HistoryActivity extends AppCompatActivity {
      * Clear all SMS history from database
      */
     private void clearAllHistory() {
-        new Thread(() -> {
+        ThreadManager.getInstance().executeDatabase(() -> {
             try {
                 database.smsHistoryDao().deleteAllHistory();
                 
-                runOnUiThread(() -> {
+                ThreadManager.getInstance().executeOnMainThread(() -> {
                     allHistory.clear();
                     filteredHistory.clear();
                     adapter.notifyDataSetChanged();
@@ -309,11 +309,11 @@ public class HistoryActivity extends AppCompatActivity {
                 });
                 
             } catch (Exception e) {
-                runOnUiThread(() -> {
+                ThreadManager.getInstance().executeOnMainThread(() -> {
                     Toast.makeText(this, getString(R.string.history_clear_error), Toast.LENGTH_SHORT).show();
                 });
             }
-        }).start();
+        });
     }
     
     @Override

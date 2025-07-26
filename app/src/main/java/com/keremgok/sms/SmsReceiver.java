@@ -117,8 +117,8 @@ public class SmsReceiver extends BroadcastReceiver {
             String finalMessage = messageBody.toString();
             
             if (!TextUtils.isEmpty(finalMessage) && !TextUtils.isEmpty(senderNumber)) {
-                logDebug("SMS from: " + maskPhoneNumber(senderNumber) + ", forwarding to: " + maskPhoneNumber(targetNumber));
-                forwardSms(context, senderNumber, finalMessage, targetNumber, timestamp);
+                logDebug("SMS from: " + maskPhoneNumber(senderNumber) + ", queuing for forwarding to: " + maskPhoneNumber(targetNumber));
+                queueSmsForwarding(context, senderNumber, finalMessage, targetNumber, timestamp);
             } else {
                 Log.e(TAG, "Invalid SMS data - sender: " + maskPhoneNumber(senderNumber));
             }
@@ -128,8 +128,88 @@ public class SmsReceiver extends BroadcastReceiver {
         }
     }
     
-    private void forwardSms(Context context, String originalSender, String message, String targetNumber, long timestamp) {
+    /**
+     * Queue SMS for optimized background forwarding using WorkManager
+     * This replaces the old direct SMS sending approach for better performance
+     */
+    private void queueSmsForwarding(Context context, String originalSender, String message, String targetNumber, long timestamp) {
         try {
+            // Get SMS queue manager instance
+            SmsQueueManager queueManager = SmsQueueManager.getInstance(context);
+            
+            // Determine priority based on SMS characteristics
+            int priority = determineSmsPriority(originalSender, message);
+            
+            // Queue the SMS for background processing
+            java.util.UUID workId = null;
+            switch (priority) {
+                case SmsQueueWorker.PRIORITY_HIGH:
+                    workId = queueManager.queueHighPrioritySms(originalSender, message, targetNumber, timestamp);
+                    logDebug("SMS queued with HIGH priority");
+                    break;
+                case SmsQueueWorker.PRIORITY_NORMAL:
+                    workId = queueManager.queueNormalPrioritySms(originalSender, message, targetNumber, timestamp);
+                    logDebug("SMS queued with NORMAL priority");
+                    break;
+                case SmsQueueWorker.PRIORITY_LOW:
+                    workId = queueManager.queueLowPrioritySms(originalSender, message, targetNumber, timestamp);
+                    logDebug("SMS queued with LOW priority");
+                    break;
+            }
+            
+            if (workId != null) {
+                logInfo("SMS successfully queued for forwarding. Work ID: " + workId);
+            } else {
+                Log.e(TAG, "Failed to queue SMS for forwarding");
+                // Fallback to direct processing if queue fails
+                fallbackDirectForwarding(context, originalSender, message, targetNumber, timestamp);
+            }
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error queuing SMS for forwarding: " + e.getMessage(), e);
+            // Fallback to direct processing if queue fails
+            fallbackDirectForwarding(context, originalSender, message, targetNumber, timestamp);
+        }
+    }
+    
+    /**
+     * Determine SMS priority based on sender and content analysis
+     */
+    private int determineSmsPriority(String originalSender, String message) {
+        // High priority for emergency-like keywords
+        String messageLower = message.toLowerCase();
+        if (messageLower.contains("acil") || messageLower.contains("emergency") || 
+            messageLower.contains("urgent") || messageLower.contains("önemli")) {
+            return SmsQueueWorker.PRIORITY_HIGH;
+        }
+        
+        // High priority for specific sender patterns (banks, government, etc.)
+        if (originalSender != null) {
+            String senderLower = originalSender.toLowerCase();
+            if (senderLower.contains("bank") || senderLower.matches("\\d{4}") || // 4-digit short codes
+                senderLower.contains("gov") || senderLower.contains("official")) {
+                return SmsQueueWorker.PRIORITY_HIGH;
+            }
+        }
+        
+        // Low priority for promotional/marketing messages
+        if (messageLower.contains("kampanya") || messageLower.contains("indirim") || 
+            messageLower.contains("reklam") || messageLower.contains("promotion")) {
+            return SmsQueueWorker.PRIORITY_LOW;
+        }
+        
+        // Default to normal priority
+        return SmsQueueWorker.PRIORITY_NORMAL;
+    }
+    
+    /**
+     * Fallback direct forwarding method for when queue system fails
+     * Uses simplified approach for reliability
+     */
+    private void fallbackDirectForwarding(Context context, String originalSender, String message, String targetNumber, long timestamp) {
+        try {
+            logDebug("Using fallback direct forwarding");
+            
             // Format the forwarded message with original sender info
             String forwardedMessage = String.format(
                 "[Hermes SMS Forward]\nGönderen: %s\nMesaj: %s\nZaman: %s",
@@ -139,121 +219,37 @@ public class SmsReceiver extends BroadcastReceiver {
                     .format(new java.util.Date(timestamp))
             );
             
-            // Check if message is too long and split if necessary
+            // Send SMS directly using SmsManager
+            SmsManager smsManager = SmsManager.getDefault();
+            
             if (forwardedMessage.length() > 160) {
-                sendLongSms(context, originalSender, message, forwardedMessage, targetNumber, timestamp);
+                // Send multipart SMS
+                java.util.ArrayList<String> parts = smsManager.divideMessage(forwardedMessage);
+                smsManager.sendMultipartTextMessage(targetNumber, null, parts, null, null);
+                logDebug("Fallback multipart SMS sent (" + parts.size() + " parts)");
             } else {
-                sendSingleSms(context, originalSender, message, forwardedMessage, targetNumber, timestamp);
+                // Send single SMS
+                smsManager.sendTextMessage(targetNumber, null, forwardedMessage, null, null);
+                logDebug("Fallback single SMS sent");
             }
             
-            logInfo("SMS successfully forwarded to: " + maskPhoneNumber(targetNumber));
+            // Log success to database
+            logSmsHistory(context, originalSender, message, targetNumber, forwardedMessage, timestamp, true, null);
+            logInfo("Fallback SMS forwarding completed successfully");
             
         } catch (Exception e) {
-            Log.e(TAG, "Failed to forward SMS: " + e.getMessage(), e);
-            // Log the failure to database
-            logSmsHistory(context, originalSender, message, targetNumber, "", timestamp, false, e.getMessage());
+            Log.e(TAG, "Fallback SMS forwarding failed: " + e.getMessage(), e);
+            // Log failure to database
+            logSmsHistory(context, originalSender, message, targetNumber, "", timestamp, false, "Fallback forwarding failed: " + e.getMessage());
         }
-    }
-    
-    private void sendSingleSms(Context context, String originalSender, String originalMessage, String forwardedMessage, String targetNumber, long timestamp) {
-        sendSingleSmsWithRetry(context, originalSender, originalMessage, forwardedMessage, targetNumber, timestamp, 0);
-    }
-    
-    private void sendSingleSmsWithRetry(Context context, String originalSender, String originalMessage, String forwardedMessage, String targetNumber, long timestamp, int retryCount) {
-        try {
-            SmsManager smsManager = SmsManager.getDefault();
-            
-            // Create PendingIntents for delivery confirmation
-            PendingIntent sentPI = createSentPendingIntent(context, originalSender, originalMessage, forwardedMessage, targetNumber, timestamp, retryCount, false);
-            
-            smsManager.sendTextMessage(targetNumber, null, forwardedMessage, sentPI, null);
-            logDebug("Single SMS send attempt " + (retryCount + 1) + "/" + MAX_RETRY_COUNT);
-            
-        } catch (Exception e) {
-            Log.e(TAG, "Failed to send single SMS (attempt " + (retryCount + 1) + "): " + e.getMessage(), e);
-            handleSmsFailure(context, originalSender, originalMessage, forwardedMessage, targetNumber, timestamp, retryCount, false, e);
-        }
-    }
-    
-    private void sendLongSms(Context context, String originalSender, String originalMessage, String forwardedMessage, String targetNumber, long timestamp) {
-        sendLongSmsWithRetry(context, originalSender, originalMessage, forwardedMessage, targetNumber, timestamp, 0);
-    }
-    
-    private void sendLongSmsWithRetry(Context context, String originalSender, String originalMessage, String forwardedMessage, String targetNumber, long timestamp, int retryCount) {
-        try {
-            SmsManager smsManager = SmsManager.getDefault();
-            java.util.ArrayList<String> parts = smsManager.divideMessage(forwardedMessage);
-            
-            // Create PendingIntents for delivery confirmation
-            PendingIntent sentPI = createSentPendingIntent(context, originalSender, originalMessage, forwardedMessage, targetNumber, timestamp, retryCount, true);
-            
-            // Create ArrayList of PendingIntents for each part
-            java.util.ArrayList<PendingIntent> sentPIs = new java.util.ArrayList<>();
-            for (int i = 0; i < parts.size(); i++) {
-                sentPIs.add(sentPI);
-            }
-            
-            smsManager.sendMultipartTextMessage(targetNumber, null, parts, sentPIs, null);
-            logDebug("Multipart SMS send attempt " + (retryCount + 1) + "/" + MAX_RETRY_COUNT + 
-                    " (" + parts.size() + " parts)");
-            
-        } catch (Exception e) {
-            Log.e(TAG, "Failed to send multipart SMS (attempt " + (retryCount + 1) + "): " + e.getMessage(), e);
-            handleSmsFailure(context, originalSender, originalMessage, forwardedMessage, targetNumber, timestamp, retryCount, true, e);
-        }
-    }
-    
-    private PendingIntent createSentPendingIntent(Context context, String originalSender, String originalMessage, String forwardedMessage, String targetNumber, long timestamp, int retryCount, boolean isMultipart) {
-        Intent intent = new Intent(ACTION_SMS_SENT);
-        intent.putExtra("originalSender", originalSender);
-        intent.putExtra("originalMessage", originalMessage);
-        intent.putExtra("forwardedMessage", forwardedMessage);
-        intent.putExtra("targetNumber", targetNumber);
-        intent.putExtra("timestamp", timestamp);
-        intent.putExtra("retryCount", retryCount);
-        intent.putExtra("isMultipart", isMultipart);
-        
-        return PendingIntent.getBroadcast(context, 0, intent, 
-            PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-    }
-    
-    private void handleSmsFailure(Context context, String originalSender, String originalMessage, String forwardedMessage, String targetNumber, long timestamp, int retryCount, boolean isMultipart, Exception exception) {
-        if (retryCount < MAX_RETRY_COUNT - 1) {
-            // Schedule retry with exponential backoff
-            long delay = INITIAL_RETRY_DELAY_MS * (long) Math.pow(2, retryCount);
-            scheduleRetry(context, originalSender, originalMessage, forwardedMessage, targetNumber, timestamp, retryCount + 1, isMultipart, delay);
-            logDebug("SMS failed, scheduling retry " + (retryCount + 2) + "/" + MAX_RETRY_COUNT + 
-                    " in " + delay + "ms");
-        } else {
-            // Max retries reached, log final failure
-            Log.e(TAG, "SMS sending failed permanently after " + MAX_RETRY_COUNT + 
-                    " attempts to " + maskPhoneNumber(targetNumber));
-            logDebug("Final SMS failure: " + exception.getMessage());
-            // Log the permanent failure to database
-            logSmsHistory(context, originalSender, originalMessage, targetNumber, forwardedMessage, timestamp, false, "Max retries exceeded: " + exception.getMessage());
-        }
-    }
-    
-    private void scheduleRetry(Context context, String originalSender, String originalMessage, String forwardedMessage, String targetNumber, long timestamp, int retryCount, boolean isMultipart, long delay) {
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (isMultipart) {
-                    sendLongSmsWithRetry(context, originalSender, originalMessage, forwardedMessage, targetNumber, timestamp, retryCount);
-                } else {
-                    sendSingleSmsWithRetry(context, originalSender, originalMessage, forwardedMessage, targetNumber, timestamp, retryCount);
-                }
-            }
-        }, delay);
     }
     
     /**
      * Log SMS forwarding history to database
-     * Runs in background thread to avoid blocking main thread
+     * Runs in optimized background thread to avoid blocking main thread
      */
     private void logSmsHistory(Context context, String senderNumber, String originalMessage, String targetNumber, String forwardedMessage, long timestamp, boolean success, String errorMessage) {
-        new Thread(() -> {
+        ThreadManager.getInstance().executeDatabase(() -> {
             try {
                 AppDatabase database = AppDatabase.getInstance(context);
                 SmsHistory history = new SmsHistory(
@@ -276,6 +272,6 @@ public class SmsReceiver extends BroadcastReceiver {
             } catch (Exception e) {
                 Log.e(TAG, "Failed to log SMS history: " + e.getMessage(), e);
             }
-        }).start();
+        });
     }
 }
