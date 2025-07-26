@@ -21,9 +21,9 @@ This is an Android SMS forwarding application that automatically forwards incomi
 - Never move to the next task without user saying "okay" or "continue"
 
 - After each task completion:
-  1. Build APK if APK build fail, fix error and warning
-  2. Each completed task gets a green tick (✅)
-  3. Update version (pubspec.yaml)
+  1. Build APK - if APK build fail, fix errors and warnings
+  2. Each completed task gets a green tick (✅) (AFTER APK build succeeds)
+  3. Update version in app/build.gradle (versionCode and versionName)
   4. Write changes to changelog.md file
   5. Git commit
   6. Git push
@@ -74,7 +74,7 @@ This is an Android SMS forwarding application that automatically forwards incomi
 - **App ID**: `com.keremgok.sms`
 - **Min SDK**: 21 (Android 5.0)
 - **Target SDK**: 34 (Android 14)
-- **Current Version**: 1.3.0 (versionCode 4)
+- **Current Version**: 2.3.0 (versionCode 14)
 - **Permissions**: RECEIVE_SMS, SEND_SMS (both require runtime permission requests)
 
 # Testing
