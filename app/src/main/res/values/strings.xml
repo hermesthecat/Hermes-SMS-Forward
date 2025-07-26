@@ -329,4 +329,52 @@
     <string name="cd_analytics_chart">Analitik veri grafiği</string>
     <string name="cd_statistics_card">İstatistik bilgi kartı</string>
     
+    <!-- Onboarding Strings -->
+    <string name="step_indicator">%1$d / %2$d</string>
+    <string name="skip">Atla</string>
+    <string name="back">Geri</string>
+    <string name="next">İleri</string>
+    <string name="get_started">Başlayalım</string>
+    
+    <!-- Welcome Fragment -->
+    <string name="welcome_title">Hermes SMS Forward\'a Hoş Geldiniz!</string>
+    <string name="welcome_subtitle">SMS mesajlarınızı güvenle yönlendirin. Kurulum sadece birkaç adım.</string>
+    <string name="feature_automatic_forwarding">Otomatik SMS yönlendirme</string>
+    <string name="feature_smart_filtering">Akıllı filtreleme sistemi</string>
+    <string name="feature_privacy_first">Gizlilik odaklı tasarım</string>
+    
+    <!-- Permission Explanation Fragment -->
+    <string name="permissions_title">İzinler Hakkında</string>
+    <string name="permissions_description">Uygulamanın çalışması için aşağıdaki izinlere ihtiyacımız var:</string>
+    <string name="sms_permission_title">SMS Okuma İzni</string>
+    <string name="sms_permission_description">Gelen SMS mesajlarını algılamak için gerekli</string>
+    <string name="send_sms_permission_title">SMS Gönderme İzni</string>
+    <string name="send_sms_permission_description">Mesajları hedef numaralara yönlendirmek için gerekli</string>
+    <string name="privacy_note">Tüm verileriniz sadece cihazınızda saklanır. Hiçbir bilgi dışarı gönderilmez.</string>
+    
+    <!-- Target Number Setup Fragment -->
+    <string name="target_setup_title">Hedef Numara</string>
+    <string name="target_setup_description">SMS mesajlarının yönlendirileceği telefon numarasını girin.</string>
+    <string name="onboarding_target_number_hint">Telefon numarası</string>
+    <string name="target_number_helper">Örnek: +90 555 123 45 67</string>
+    <string name="target_setup_info">Daha sonra birden fazla hedef numara ekleyebilirsiniz.</string>
+    
+    <!-- Filter Intro Fragment -->
+    <string name="filter_intro_title">Akıllı Filtreler</string>
+    <string name="filter_intro_description">Hangi mesajların yönlendirileceğini belirlemek için filtreler kullanabilirsiniz.</string>
+    <string name="filter_example_bank">Banka Mesajları</string>
+    <string name="filter_example_bank_desc">Sadece banka SMS\'lerini yönlendir</string>
+    <string name="filter_example_spam">Spam Engelleme</string>
+    <string name="filter_example_spam_desc">İstenmeyen mesajları engelle</string>
+    <string name="filter_intro_tip">Filtreleri daha sonra ayarlar menüsünden yapılandırabilirsiniz.</string>
+    
+    <!-- Completion Fragment -->
+    <string name="completion_title">Tebrikler!</string>
+    <string name="completion_subtitle">Hermes SMS Forward başarıyla kuruldu ve kullanıma hazır.</string>
+    <string name="whats_next_title">Sıradaki Adımlar:</string>
+    <string name="completion_step_1">Ayarlar menüsünden ileri düzey özellikler keşfedin</string>
+    <string name="completion_step_2">Filter kuralları oluşturarak yönlendirmeyi özelleştirin</string>
+    <string name="completion_step_3">Mesaj geçmişini takip etmek için geçmiş sekmesini kullanın</string>
+    <string name="completion_support">Yardıma mı ihtiyacınız var? Ayarlar > Hakkında bölümünden destek alabilirsiniz.</string>
+    
 </resources>

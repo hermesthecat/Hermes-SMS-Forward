@@ -1,5 +1,19 @@
 # Changelog - Hermes SMS Forward
 
+## [2.11.0] - 2025-07-26
+
+- ✅ Task 23: Enhanced Onboarding tamamlandı
+  - **ViewPager2 Guided Setup Flow:** 5-step onboarding process with smooth navigation
+  - **Welcome Fragment:** App introduction with feature highlights and visual guides
+  - **Permission Explanation Fragment:** Detailed SMS permissions explanation with security cards
+  - **Target Number Setup Fragment:** Interactive first target number configuration
+  - **Filter Introduction Fragment:** Smart filtering system preview with examples
+  - **Completion Fragment:** Setup completion with next steps guidance
+  - **First-time User Detection:** Automatic onboarding flow for new users
+  - **Progress Indicators:** Step-by-step progress tracking with visual feedback
+  - **Skip & Navigation:** Flexible onboarding with skip option and back/forward controls
+  - **Material Design 3:** Modern UI components with proper theming
+
 ## [2.10.0] - 2025-07-26
 
 - ✅ Task 21: Accessibility & Internationalization tamamlandı

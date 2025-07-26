@@ -35,6 +35,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // Check if onboarding is completed
+        if (!OnboardingActivity.isOnboardingCompleted(this)) {
+            Intent onboardingIntent = new Intent(this, OnboardingActivity.class);
+            startActivity(onboardingIntent);
+            finish();
+            return;
+        }
+        
         setContentView(R.layout.activity_main);
         
         // Initialize StatisticsManager for analytics tracking

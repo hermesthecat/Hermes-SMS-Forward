@@ -21,7 +21,8 @@
       "Bash(dart:*)",
       "Bash(cmd /c:*)",
       "Bash(timeout 300 flutter build apk --debug --verbose)",
-      "Bash(gemini:*)"
+      "Bash(gemini:*)",
+      "Bash(grep:*)"
     ],
     "deny": []
   }

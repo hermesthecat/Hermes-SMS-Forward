@@ -19,6 +19,13 @@
             </intent-filter>
         </activity>
 
+        <!-- Onboarding Activity -->
+        <activity
+            android:name=".OnboardingActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.HermesSmsForward" />
+
         <!-- Settings Activity -->
         <activity
             android:name=".SettingsActivity"
