@@ -16,6 +16,7 @@ Complete user guide for using Hermes SMS Forward effectively and safely.
 ## 🚀 Getting Started
 
 ### What is Hermes SMS Forward?
+
 Hermes SMS Forward is a secure Android application that automatically forwards incoming SMS messages to a phone number you specify. It's perfect for:
 
 - **Business Users**: Forward work SMS to personal phone
@@ -24,6 +25,7 @@ Hermes SMS Forward is a secure Android application that automatically forwards i
 - **Backup**: Ensure important SMS reach multiple devices
 
 ### Key Benefits
+
 - 🔒 **Complete Privacy**: All processing happens on your device
 - ⚡ **Real-time Forwarding**: Instant SMS forwarding
 - 🛡️ **Secure**: No data sent to external servers
@@ -34,7 +36,7 @@ Hermes SMS Forward is a secure Android application that automatically forwards i
 
 ### Application Layout
 
-```
+```text
 ┌─────────────────────────────────────┐
 │ 🏛️ Hermes SMS Forward              │
 ├─────────────────────────────────────┤
@@ -58,6 +60,7 @@ Hermes SMS Forward is a secure Android application that automatically forwards i
 ### Interface Elements
 
 #### 1. Target Phone Number Field
+
 - **Purpose**: Enter the phone number where SMS will be forwarded
 - **Format**: Supports international (+90555123456) and local (05551234567) formats
 - **Validation**: Real-time validation with visual feedback
@@ -67,16 +70,19 @@ Hermes SMS Forward is a secure Android application that automatically forwards i
   - ⚠️ Orange warning: Questionable format
 
 #### 2. Status Indicator
+
 - **Active (Green Dot)**: SMS forwarding is enabled and working
 - **Inactive (Gray Dot)**: SMS forwarding is disabled
 - **Text Description**: Shows current forwarding status
 
 #### 3. Save and Start Button
+
 - **Enabled**: When valid phone number is entered
 - **Disabled**: When number format is invalid
 - **Function**: Saves configuration and starts SMS forwarding
 
 #### 4. Last Activity
+
 - **Purpose**: Shows when the last SMS was forwarded
 - **Format**: Date and time in local timezone
 - **Updates**: Automatically refreshes when SMS is forwarded
@@ -86,6 +92,7 @@ Hermes SMS Forward is a secure Android application that automatically forwards i
 ### Initial Setup Process
 
 #### Step 1: Permission Grant
+
 When you first launch the app:
 
 1. **SMS Permission Dialog** appears
@@ -97,6 +104,7 @@ When you first launch the app:
 **Important**: Both permissions are mandatory for the app to function.
 
 #### Step 2: Phone Number Entry
+
 1. **Tap the phone number field**
 2. **Enter target number** where SMS should be forwarded
 3. **Use proper format**:
@@ -105,6 +113,7 @@ When you first launch the app:
    - Other countries: Include country code
 
 #### Step 3: Number Validation
+
 The app validates your number in real-time:
 
 - **Green Checkmark**: Number is properly formatted
@@ -112,6 +121,7 @@ The app validates your number in real-time:
 - **Orange Warning**: Format might work but is non-standard
 
 #### Step 4: Activation
+
 1. **Ensure green checkmark** is visible
 2. **Tap "Save and Start"** button
 3. **Confirmation message** appears
@@ -120,7 +130,8 @@ The app validates your number in real-time:
 ### Number Format Guide
 
 #### Turkish Numbers
-```
+
+```text
 ✅ Correct Formats:
 +905551234567    (International format)
 05551234567      (Local format)
@@ -134,7 +145,8 @@ The app validates your number in real-time:
 ```
 
 #### International Numbers
-```
+
+```text
 ✅ Correct Formats:
 +1555123456      (US number)
 +442071234567    (UK number)
@@ -149,6 +161,7 @@ The app validates your number in real-time:
 ## 📲 Daily Usage
 
 ### Normal Operation
+
 Once configured, the app works automatically:
 
 1. **Incoming SMS** arrives on your device
@@ -160,27 +173,31 @@ Once configured, the app works automatically:
    - Optional device identifier
 
 ### Forwarded Message Format
+
 Your forwarded SMS will look like this:
 
-```
+```text
 From: +905551234567
 Time: 2025-07-25 14:30:15
 Message: Hello, this is the original message content!
 ```
 
 ### Monitoring Activity
+
 - **Status Indicator**: Shows active/inactive state
 - **Last Activity**: Displays when last SMS was forwarded
 - **No Notifications**: App works silently in background
 
 ### Starting and Stopping
 
-#### To Stop SMS Forwarding:
+#### To Stop SMS Forwarding
+
 1. Open the app
 2. Clear the target phone number field
 3. Tap "Save and Start" (button will change to "Save")
 
-#### To Resume SMS Forwarding:
+#### To Resume SMS Forwarding
+
 1. Open the app
 2. Enter your target phone number
 3. Wait for green checkmark validation
@@ -189,26 +206,31 @@ Message: Hello, this is the original message content!
 ## 🔧 Advanced Features
 
 ### Battery Optimization
+
 For reliable operation, disable battery optimization:
 
-#### Samsung Devices:
+#### Samsung Devices
+
 1. Settings > Device care > Battery
 2. App power management > Hermes SMS Forward
 3. Disable "Put app to sleep"
 
-#### Huawei Devices:
+#### Huawei Devices
+
 1. Settings > Battery > App launch
 2. Find Hermes SMS Forward
 3. Turn off "Manage automatically"
 4. Enable all launch options
 
-#### Stock Android:
+#### Stock Android
+
 1. Settings > Battery > Battery optimization
 2. Select "All apps"
 3. Find Hermes SMS Forward
 4. Select "Don't optimize"
 
 ### Multiple Phone Management
+
 If you have multiple phones:
 
 1. **Install on each device** you want to forward FROM
@@ -217,6 +239,7 @@ If you have multiple phones:
 4. **Identify source** by checking forwarded message format
 
 ### Long Message Handling
+
 The app automatically handles long SMS messages:
 
 - **Multipart SMS**: Long messages split automatically
@@ -282,18 +305,22 @@ The app automatically handles long SMS messages:
 ### Error Messages
 
 #### "Permission Denied"
+
 - **Meaning**: SMS permissions not granted
 - **Solution**: Go to app permissions and enable SMS
 
 #### "Invalid Phone Number"  
+
 - **Meaning**: Target number format is incorrect
 - **Solution**: Use international format (+country_code_number)
 
 #### "SMS Send Failed"
+
 - **Meaning**: Unable to send forwarded SMS
 - **Solution**: Check carrier service, SIM card, and network
 
 #### "App Not Responding"
+
 - **Meaning**: App is overloaded or has crashed
 - **Solution**: Force close and restart app
 
@@ -302,16 +329,19 @@ The app automatically handles long SMS messages:
 ### Security Guidelines
 
 #### 1. Choose Target Numbers Carefully
+
 - Only forward to numbers you control
 - Avoid forwarding to shared or public numbers
 - Regularly review your target number
 
 #### 2. Respect Privacy Laws
+
 - Obtain consent before forwarding others' SMS
 - Comply with local privacy regulations
 - Use responsibly for legitimate purposes only
 
 #### 3. Regular Monitoring
+
 - Check forwarding status periodically
 - Verify forwarded messages are being received
 - Update target number if needed
@@ -319,16 +349,19 @@ The app automatically handles long SMS messages:
 ### Performance Optimization
 
 #### 1. Keep App Updated
+
 - Install updates promptly for bug fixes
 - New versions improve performance and security
 - Check GitHub releases for latest version
 
 #### 2. Device Maintenance
+
 - Keep device storage clean (at least 1GB free)
 - Restart device weekly for optimal performance
 - Update Android OS when available
 
 #### 3. Network Considerations
+
 - SMS forwarding uses cellular network
 - Roaming charges may apply when traveling
 - Wi-Fi doesn't affect SMS forwarding
@@ -336,16 +369,19 @@ The app automatically handles long SMS messages:
 ### Usage Recommendations
 
 #### 1. Business Use
+
 - Set up during business hours first
 - Test with non-critical messages initially
 - Have backup communication method ready
 
 #### 2. Travel Use
+
 - Set up before traveling
 - Verify international SMS charges
 - Consider time zone differences for message timing
 
 #### 3. Family Use
+
 - Explain system to family members
 - Ensure everyone consents to forwarding
 - Respect privacy and only monitor when necessary
@@ -419,12 +455,15 @@ A: Try restarting the app, clearing app cache, or reinstalling the app. Contact 
 ## 📞 Getting Help
 
 ### Support Channels
-- **Email**: support@hermessms.com
+
+- **Email**: <support@hermessms.com>
 - **GitHub Issues**: [Report Problems](https://github.com/hermesthecat/Hermes-SMS-Forward/issues)
 - **Documentation**: README.md and other guides in the repository
 
 ### Before Contacting Support
+
 Please have ready:
+
 - Android version and device model
 - App version (check About section)
 - Target phone number format (masked for privacy)
@@ -432,6 +471,7 @@ Please have ready:
 - Steps you've already tried
 
 ### Response Times
+
 - **Email Support**: Within 24-48 hours
 - **GitHub Issues**: Usually within 24 hours
 - **Critical Security Issues**: Within 24 hours

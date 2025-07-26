@@ -764,6 +764,7 @@ Tamamlanan işlemler:
    - Backup integrity verification
 
 **Dependencies ekleme:**
+
 ```gradle
 implementation 'com.google.android.gms:play-services-auth:20.7.0'
 implementation 'com.google.android.gms:play-services-drive:17.0.0'

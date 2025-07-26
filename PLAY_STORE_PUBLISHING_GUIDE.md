@@ -16,17 +16,20 @@ Complete guide for publishing Hermes SMS Forward to Google Play Store.
 ## 🔧 Prerequisites
 
 ### Developer Account
+
 - Google Play Console developer account ($25 one-time fee)
 - Valid Google account with 2-factor authentication
 - Business/individual identity verification completed
 
 ### Technical Requirements
+
 - Android Studio with latest SDK tools
 - Valid keystore for app signing
 - All project dependencies up to date
 - Clean build environment
 
 ### Legal Documentation
+
 - Privacy Policy (✅ Available: `PRIVACY_POLICY.md`)
 - Data Handling Disclosure (✅ Available: `DATA_HANDLING_DISCLOSURE.md`)
 - Target Audience definition (✅ Available: `TARGET_AUDIENCE.md`)
@@ -49,17 +52,20 @@ Complete guide for publishing Hermes SMS Forward to Google Play Store.
 ```
 
 ### Version Management
+
 - [ ] Update `versionCode` in `app/build.gradle` (current: 22)
 - [ ] Update `versionName` in `app/build.gradle` (current: "2.11.0")
 - [ ] Update `changelog.md` with release notes
 - [ ] Create git tag: `git tag v2.11.0`
 
 ### Signing Configuration
+
 - [ ] Verify `keystore.properties` exists and is properly configured
 - [ ] Test release build signing: `./gradlew assembleRelease`
 - [ ] Verify AAB is signed: `bundletool verify --bundle=app/build/outputs/bundle/release/app-release.aab`
 
 ### App Assets
+
 - [ ] App icon available in all densities (mdpi to xxxhdpi)
 - [ ] Adaptive icon configured (`ic_launcher.xml`)
 - [ ] Feature graphic (1024x500px)
@@ -84,6 +90,7 @@ Complete guide for publishing Hermes SMS Forward to Google Play Store.
 **Tags**: SMS, Forwarding, Communication, Business
 
 **Content Rating Questionnaire**:
+
 - Target age group: 18+ (due to SMS permissions)
 - No violence, sexual content, or inappropriate material
 - Communication app with SMS functionality
@@ -120,6 +127,7 @@ bundletool install-apks --apks=app.apks
 ### Bundle Optimization
 
 Current optimizations in `app/build.gradle`:
+
 ```gradle
 android {
     bundle {
@@ -152,7 +160,8 @@ bundletool get-size total --apks=app.apks
 ### App Information
 
 **Short Description (80 characters):**
-```
+
+```text
 Automatically forward incoming SMS to your designated phone number
 ```
 
@@ -162,11 +171,14 @@ Use content from `play-store-description-en.md` (English) and `play-store-descri
 ### Graphics Requirements
 
 #### App Icon
+
 - [x] **High-res icon**: 512x512px PNG (from `ic_launcher_legacy.xml`)
 - [x] **Adaptive icon**: Available in project
 
 #### Screenshots
+
 Required screenshots (upload 4-8 images):
+
 1. **Main Interface** (1080x1920px or 1080x2340px)
 2. **Onboarding Flow** - 5 step process
 3. **Settings Screen**
@@ -175,6 +187,7 @@ Required screenshots (upload 4-8 images):
 6. **Permission Request Dialog**
 
 #### Feature Graphic
+
 - **Size**: 1024x500px
 - **Content**: App logo + "Secure SMS Forwarding" tagline
 - **Format**: PNG or JPG
@@ -182,11 +195,13 @@ Required screenshots (upload 4-8 images):
 ### Localization
 
 #### Turkish (Primary)
+
 - App name: "Hermes SMS Forward"
 - Description: From `play-store-description-tr.md`
 - Screenshots with Turkish UI
 
 #### English (Secondary)
+
 - App name: "Hermes SMS Forward"
 - Description: From `play-store-description-en.md`
 - Screenshots with English UI
@@ -202,6 +217,7 @@ Required screenshots (upload 4-8 images):
 ```
 
 **Internal Testing Group:**
+
 - Developer account holders
 - 1-2 beta testers
 - Test duration: 1-2 weeks
@@ -209,11 +225,13 @@ Required screenshots (upload 4-8 images):
 ### 2. Closed Testing (Alpha/Beta)
 
 **Alpha Track (Limited):**
+
 - 10-20 users
 - Core functionality testing
 - Performance validation
 
 **Beta Track (Broader):**
+
 - 50-100 users
 - Real-world usage scenarios
 - Feedback collection
@@ -221,7 +239,8 @@ Required screenshots (upload 4-8 images):
 ### 3. Production Release
 
 #### Staged Rollout Strategy
-```
+
+```text
 Day 1:    1% of users   (gradual rollout)
 Day 3:    5% of users   (monitor crash rates)
 Day 7:    20% of users  (performance validation)
@@ -230,6 +249,7 @@ Day 21:   100% of users (full release)
 ```
 
 #### Monitoring Metrics
+
 - **Crash rate**: < 2%
 - **ANR rate**: < 1%
 - **User ratings**: > 4.0
@@ -240,7 +260,8 @@ Day 21:   100% of users (full release)
 ### SMS Permissions Justification
 
 **RECEIVE_SMS Permission:**
-```
+
+```text
 This permission is essential for the app's core functionality. 
 Hermes SMS Forward intercepts incoming SMS messages to forward 
 them to user-designated phone numbers. Without this permission, 
@@ -251,7 +272,8 @@ travelers receiving SMS on secondary devices, backup solutions.
 ```
 
 **SEND_SMS Permission:**
-```
+
+```text
 Required to forward intercepted SMS messages to target phone numbers.
 The app sends SMS containing the original message content, sender
 information, and timestamp to provide complete message forwarding.
@@ -262,12 +284,14 @@ Privacy: All processing is local, no data transmitted to servers.
 ### Policy Compliance
 
 #### Dangerous Permissions
+
 - [x] Clear explanation provided for SMS permissions
 - [x] Permissions used only for declared functionality
 - [x] No background SMS interception without user consent
 - [x] Clear privacy policy regarding SMS handling
 
 #### Content Policy
+
 - [x] App provides legitimate communication functionality
 - [x] No spam or unwanted message generation
 - [x] User controls SMS forwarding behavior
@@ -276,11 +300,13 @@ Privacy: All processing is local, no data transmitted to servers.
 ### Review Process Timeline
 
 **Expected Timeline:**
+
 - **Initial Review**: 1-3 days
 - **Appeals (if rejected)**: 1-2 days
 - **Policy Updates**: Additional 1-2 days
 
 **Common Review Issues:**
+
 1. SMS permissions justification
 2. Privacy policy clarity
 3. Screenshot quality
@@ -291,6 +317,7 @@ Privacy: All processing is local, no data transmitted to servers.
 ### Monitoring Dashboard
 
 Track these metrics in Play Console:
+
 - **Install metrics**: Downloads, install success rate
 - **Performance**: Crashes, ANRs, app start time
 - **User feedback**: Ratings, reviews, user engagement
@@ -299,6 +326,7 @@ Track these metrics in Play Console:
 ### Update Management
 
 #### Regular Updates
+
 ```bash
 # Version bump process
 1. Update versionCode (increment by 1)
@@ -310,6 +338,7 @@ Track these metrics in Play Console:
 ```
 
 #### Hotfix Process
+
 ```bash
 # Critical bug fixes
 1. Create hotfix branch
@@ -322,7 +351,8 @@ Track these metrics in Play Console:
 ### User Communication
 
 #### Release Notes Template
-```
+
+```text
 Version X.X.X - What's New:
 
 🎯 New Features:
@@ -384,24 +414,28 @@ git checkout -b develop/v2.12.0
 ## 📞 Support and Resources
 
 ### Google Play Console Resources
+
 - [Play Console Help Center](https://support.google.com/googleplay/android-developer/)
 - [Android App Bundle Guide](https://developer.android.com/guide/app-bundle)
 - [Play Store Policy Center](https://play.google.com/about/developer-content-policy/)
 
 ### App-Specific Resources
+
 - **Project Repository**: [GitHub](https://github.com/hermesthecat/Hermes-SMS-Forward)
 - **Privacy Policy**: `PRIVACY_POLICY.md`
 - **User Manual**: `USER_MANUAL.md`
 - **Installation Guide**: `INSTALLATION_GUIDE.md`
 
 ### Contact Information
-- **Developer Email**: support@hermessms.com
+
+- **Developer Email**: <support@hermessms.com>
 - **Play Console Account**: [Developer Account Email]
 - **Emergency Contact**: [Backup Email]
 
 ## 🎯 Success Metrics
 
 ### Launch Success Criteria
+
 - [ ] **App approved** without policy violations
 - [ ] **Crash rate** < 2% in first week
 - [ ] **Average rating** > 4.0 stars
@@ -409,6 +443,7 @@ git checkout -b develop/v2.12.0
 - [ ] **User reviews** are generally positive
 
 ### Long-term Goals
+
 - **Organic growth**: 1000+ downloads in first month
 - **User retention**: >70% 7-day retention
 - **Rating maintenance**: >4.2 average rating

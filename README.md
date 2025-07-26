@@ -527,7 +527,5 @@ SOFTWARE.
 
 ## 📧 Contact
 
-- **Developer**: KeremGok Development
-- **Email**: <contact@hermessms.com>
 - **GitHub**: [@hermesthecat](https://github.com/hermesthecat)
 - **Project Repository**: [Hermes-SMS-Forward](https://github.com/hermesthecat/Hermes-SMS-Forward)

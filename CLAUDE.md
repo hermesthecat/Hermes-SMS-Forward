@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-# Development Environment
+## Development Environment
 
 - OS: Windows 10.0.26100
 - Shell: Git Bash
@@ -10,11 +10,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - File system: Case-insensitive
 - Line endings: CRLF (configure Git autocrlf)
 
-# Project Overview
+## Project Overview
 
 This is a comprehensive Android SMS forwarding application that automatically forwards incoming SMS messages to multiple configured target phone numbers. The app features a sophisticated architecture with Room database, WorkManager for reliable background processing, privacy-first local analytics, advanced filtering rules, and comprehensive logging. It uses a BroadcastReceiver to intercept SMS messages and forwards them using Android's SmsManager with retry logic and queue management.
 
-# Development Process
+## Development Process
 
 - Git version control system is used
 - Complete one task at a time
@@ -28,7 +28,7 @@ This is a comprehensive Android SMS forwarding application that automatically fo
   5. Git commit
   6. Git push
 
-# Build Commands
+## Build Commands
 
 ```bash
 # Build debug APK
@@ -53,7 +53,7 @@ This is a comprehensive Android SMS forwarding application that automatically fo
 ./gradlew dependencyUpdates
 ```
 
-# Architecture
+## Architecture
 
 ## Core Components
 
@@ -108,7 +108,7 @@ This is a comprehensive Android SMS forwarding application that automatically fo
 - **Build Types**: Debug (with `.debug` suffix) and Release (with ProGuard/R8 obfuscation)
 - **Threading**: Use ThreadManager for all background operations instead of creating raw threads
 
-# Testing
+## Testing
 
 Comprehensive testing framework configured with:
 
@@ -116,7 +116,7 @@ Comprehensive testing framework configured with:
 - **Integration tests**: `androidx.test.ext:junit`, `espresso-core`, and `truth` for UI and database testing
 - **Test directories**: `app/src/test/` (unit) and `app/src/androidTest/` (instrumentation)
 
-# Development Patterns
+## Development Patterns
 
 ## Essential Practices
 
@@ -136,7 +136,7 @@ Comprehensive testing framework configured with:
 - **ViewPager2**: `androidx.viewpager2` for onboarding flow
 - **Preferences**: `androidx.preference` for settings management
 
-# Important Files
+## Important Files
 
 - `app/build.gradle`: Build configuration with release obfuscation settings
 - `proguard-rules.pro`: Code obfuscation rules for release builds
