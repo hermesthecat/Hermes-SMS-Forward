@@ -49,6 +49,16 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+
+        <!-- SMS Callback Receiver for SMS sent/delivered confirmations -->
+        <receiver 
+            android:name=".SmsCallbackReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="SMS_SENT" />
+                <action android:name="SMS_DELIVERED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

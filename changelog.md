@@ -13,6 +13,8 @@
   - **Filter Options:** Başarılı, başarısız veya tüm SMS'ler filtreleme
   - **SwipeRefreshLayout:** Çekerek yenileme özelliği
   - **Database Integration:** SmsReceiver'da otomatik geçmiş kaydetme
+  - **SmsCallbackReceiver:** SMS gönderim sonucu callback'lerini işleme ve database güncelleme
+  - **Comprehensive Error Handling:** 30+ farklı SMS gönderim hata kodu desteği
   - **Phone Number Masking:** Gizlilik için telefon numarası maskeleme (örn: +9055***4567)
   - **Menu Integration:** Ana ekransan geçmiş erişimi
   - **Auto Cleanup:** 30 günden eski kayıtları otomatik temizleme
