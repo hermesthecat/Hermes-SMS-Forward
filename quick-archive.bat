@@ -4,11 +4,16 @@ echo ========================================
 echo Quick APK Archive
 echo ========================================
 
-REM Extract version from build.gradle - simplified approach
+REM Extract version from build.gradle using PowerShell
 echo Getting version from build.gradle...
-REM Just use the current version directly to avoid parsing issues
-set VERSION=2.12.0
-echo Using current version: !VERSION!
+for /f %%i in ('powershell -ExecutionPolicy Bypass -File get-version.ps1') do set VERSION=%%i
+if "!VERSION!"=="" (
+    echo ❌ Could not extract version from build.gradle
+    echo Please check app\build.gradle format or get-version.ps1 script
+    pause
+    exit /b 1
+)
+echo Found version: !VERSION!
 
 REM Create archive directory
 if not exist "apk_archive" mkdir apk_archive
