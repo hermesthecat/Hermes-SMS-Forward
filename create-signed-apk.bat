@@ -131,6 +131,22 @@ if %BUILD_RESULT%==0 (
         )
     )
     echo.
+    REM Check final BUILD_RESULT status
+    if !BUILD_RESULT!==0 (
+        REM Success - exit cleanly
+        exit /b 0
+    ) else (
+        REM Build actually failed
+        echo ❌ Build failed with error code: !BUILD_RESULT!
+        echo.
+        echo Possible reasons:
+        echo - Keystore password is incorrect
+        echo - Android SDK is not properly configured
+        echo - Build dependencies are missing
+        echo.
+        pause
+        exit /b !BUILD_RESULT!
+    )
 ) else (
     echo.
     echo ❌ Build failed with error code: %BUILD_RESULT%
