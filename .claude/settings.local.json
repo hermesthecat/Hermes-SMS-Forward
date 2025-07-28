@@ -29,7 +29,8 @@
       "Bash(timeout:*)",
       "Bash(cp:*)",
       "Bash(adb:*)",
-      "Bash(powershell:*)"
+      "Bash(powershell:*)",
+      "Bash(./create-signed-apk.bat)"
     ],
     "deny": []
   }
