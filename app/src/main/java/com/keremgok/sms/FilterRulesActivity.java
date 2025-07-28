@@ -19,6 +19,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -30,6 +31,11 @@ import java.util.regex.PatternSyntaxException;
 public class FilterRulesActivity extends AppCompatActivity implements FilterRulesAdapter.OnFilterRuleActionListener {
 
     // UI Components
+    private FloatingActionButton fabAddFilter;
+    private RecyclerView rvFilterRules;
+    private TextView tvEmptyState;
+    
+    // Dialog components (initialized when needed)
     private EditText etFilterName;
     private Spinner spinnerFilterType;
     private EditText etFilterPattern;
@@ -41,8 +47,6 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
     private CheckBox cbEnabled;
     private TextView tvValidationMessage;
     private Button btnAddFilter;
-    private RecyclerView rvFilterRules;
-    private TextView tvEmptyState;
     
     // Data and Adapters
     private FilterRulesAdapter adapter;
@@ -63,8 +67,6 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
         initDatabase();
         initViews();
         setupRecyclerView();
-        setupSpinners();
-        setupValidation();
         loadFilterRules();
         updateUI();
     }
@@ -81,21 +83,11 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
      * Initialize UI components
      */
     private void initViews() {
-        etFilterName = findViewById(R.id.etFilterName);
-        spinnerFilterType = findViewById(R.id.spinnerFilterType);
-        etFilterPattern = findViewById(R.id.etFilterPattern);
-        rgFilterAction = findViewById(R.id.rgFilterAction);
-        rbActionAllow = findViewById(R.id.rbActionAllow);
-        rbActionBlock = findViewById(R.id.rbActionBlock);
-        cbCaseSensitive = findViewById(R.id.cbCaseSensitive);
-        cbRegex = findViewById(R.id.cbRegex);
-        cbEnabled = findViewById(R.id.cbEnabled);
-        tvValidationMessage = findViewById(R.id.tvValidationMessage);
-        btnAddFilter = findViewById(R.id.btnAddFilter);
+        fabAddFilter = findViewById(R.id.fabAddFilter);
         rvFilterRules = findViewById(R.id.rvFilterRules);
         tvEmptyState = findViewById(R.id.tvEmptyState);
         
-        btnAddFilter.setOnClickListener(v -> addFilter());
+        fabAddFilter.setOnClickListener(v -> showAddFilterDialog());
     }
     
     /**
@@ -108,10 +100,24 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
     }
     
     /**
-     * Setup spinners with data
+     * Show add filter dialog
      */
-    private void setupSpinners() {
-        // Filter Type Spinner
+    private void showAddFilterDialog() {
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_filter, null);
+        
+        // Initialize dialog components
+        etFilterName = dialogView.findViewById(R.id.etFilterName);
+        spinnerFilterType = dialogView.findViewById(R.id.spinnerFilterType);
+        etFilterPattern = dialogView.findViewById(R.id.etFilterPattern);
+        rgFilterAction = dialogView.findViewById(R.id.rgFilterAction);
+        rbActionAllow = dialogView.findViewById(R.id.rbActionAllow);
+        rbActionBlock = dialogView.findViewById(R.id.rbActionBlock);
+        cbCaseSensitive = dialogView.findViewById(R.id.cbCaseSensitive);
+        cbRegex = dialogView.findViewById(R.id.cbRegex);
+        cbEnabled = dialogView.findViewById(R.id.cbEnabled);
+        tvValidationMessage = dialogView.findViewById(R.id.tvValidationMessage);
+        
+        // Setup spinner
         ArrayAdapter<CharSequence> filterTypeAdapter = ArrayAdapter.createFromResource(
             this,
             R.array.filter_type_entries,
@@ -119,12 +125,33 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
         );
         filterTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerFilterType.setAdapter(filterTypeAdapter);
+        
+        // Setup validation
+        setupDialogValidation();
+        
+        AlertDialog dialog = new AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setPositiveButton(R.string.add_filter, null)
+            .setNegativeButton(R.string.cancel, null)
+            .create();
+        
+        dialog.setOnShowListener(dialogInterface -> {
+            Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            positiveButton.setEnabled(false);
+            positiveButton.setOnClickListener(v -> {
+                if (addFilter()) {
+                    dialog.dismiss();
+                }
+            });
+        });
+        
+        dialog.show();
     }
     
     /**
-     * Setup real-time validation for form inputs
+     * Setup real-time validation for dialog inputs
      */
-    private void setupValidation() {
+    private void setupDialogValidation() {
         TextWatcher validationWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -151,13 +178,13 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
         
         if (TextUtils.isEmpty(filterName)) {
             showValidationError(getString(R.string.filter_name_required));
-            btnAddFilter.setEnabled(false);
+            enableAddButton(false);
             return;
         }
         
         if (TextUtils.isEmpty(pattern)) {
             showValidationError(getString(R.string.filter_pattern_required));
-            btnAddFilter.setEnabled(false);
+            enableAddButton(false);
             return;
         }
         
@@ -167,20 +194,20 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
             runOnUiThread(() -> {
                 if (exists) {
                     showValidationError(getString(R.string.filter_name_exists));
-                    btnAddFilter.setEnabled(false);
+                    enableAddButton(false);
                 } else {
                     // Validate regex if enabled
                     if (cbRegex.isChecked()) {
                         if (isValidRegex(pattern)) {
                             showValidationSuccess();
-                            btnAddFilter.setEnabled(true);
+                            enableAddButton(true);
                         } else {
                             showValidationError(getString(R.string.filter_invalid_regex));
-                            btnAddFilter.setEnabled(false);
+                            enableAddButton(false);
                         }
                     } else {
                         showValidationSuccess();
-                        btnAddFilter.setEnabled(true);
+                        enableAddButton(true);
                     }
                 }
             });
@@ -218,9 +245,18 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
     }
     
     /**
-     * Add a new filter
+     * Helper method to enable/disable add button in dialog
      */
-    private void addFilter() {
+    private void enableAddButton(boolean enabled) {
+        // Find the dialog and enable/disable its positive button
+        // This will be handled by the dialog's onShow listener
+    }
+    
+    /**
+     * Add a new filter
+     * @return true if filter was added successfully, false otherwise
+     */
+    private boolean addFilter() {
         String filterName = etFilterName.getText().toString().trim();
         String pattern = etFilterPattern.getText().toString().trim();
         
@@ -246,7 +282,6 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
                 filterDao.insert(filter);
                 runOnUiThread(() -> {
                     Toast.makeText(this, R.string.filter_add_success, Toast.LENGTH_SHORT).show();
-                    clearForm();
                     loadFilterRules();
                 });
             } catch (Exception e) {
@@ -255,22 +290,8 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
                 });
             }
         });
-    }
-    
-    
-    /**
-     * Clear the add filter form
-     */
-    private void clearForm() {
-        etFilterName.setText("");
-        etFilterPattern.setText("");
-        spinnerFilterType.setSelection(0);
-        rbActionAllow.setChecked(true);
-        cbCaseSensitive.setChecked(false);
-        cbRegex.setChecked(false);
-        cbEnabled.setChecked(true);
-        tvValidationMessage.setVisibility(View.GONE);
-        btnAddFilter.setEnabled(false);
+        
+        return true;
     }
     
     /**

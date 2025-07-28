@@ -26,115 +26,16 @@
         android:layout_marginBottom="16dp"
         android:contentDescription="@string/target_numbers_description" />
 
-    <!-- Add New Target Section -->
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
+    <!-- Add Target Number Button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddTarget"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="end"
         android:layout_marginBottom="16dp"
-        android:contentDescription="@string/cd_statistics_card"
-        android:importantForAccessibility="yes"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="2dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/add_new_target"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="12dp" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                app:hintEnabled="true"
-                android:hint="@string/phone_number_hint">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etNewPhoneNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="phone"
-                    android:maxLines="1"
-                    android:contentDescription="@string/cd_target_number_input"
-                    android:importantForAccessibility="yes" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                app:hintEnabled="true"
-                android:hint="@string/display_name_hint">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etNewDisplayName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:maxLines="1"
-                    android:contentDescription="@string/cd_info_icon"
-                    android:importantForAccessibility="yes" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="12dp">
-
-                <CheckBox
-                    android:id="@+id/cbSetAsPrimary"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/set_as_primary"
-                    android:contentDescription="@string/cd_toggle_button"
-                    android:importantForAccessibility="yes" />
-
-                <CheckBox
-                    android:id="@+id/cbEnabled"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/enabled"
-                    android:checked="true"
-                    android:contentDescription="@string/cd_toggle_button"
-                    android:importantForAccessibility="yes" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tvValidationMessage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:layout_marginBottom="8dp"
-                android:visibility="gone"
-                android:contentDescription="@string/cd_validation_message"
-                android:importantForAccessibility="yes" />
-
-            <Button
-                android:id="@+id/btnAddTarget"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/add_target_number"
-                android:enabled="false"
-                android:contentDescription="@string/cd_add_button"
-                android:importantForAccessibility="yes" />
-
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
+        android:src="@android:drawable/ic_input_add"
+        android:contentDescription="@string/add_target_number"
+        app:tint="@android:color/white" />
 
     <!-- Target Numbers List Section -->
     <TextView

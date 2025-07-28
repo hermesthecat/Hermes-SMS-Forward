@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 /**
@@ -30,15 +31,18 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
     private static final String KEY_SENDING_MODE = "sending_mode";
     
     // UI Components
+    private FloatingActionButton fabAddTarget;
+    private RecyclerView rvTargetNumbers;
+    private TextView tvEmptyState;
+    private Spinner spinnerSendingMode;
+    
+    // Dialog components (initialized when needed)
     private EditText etNewPhoneNumber;
     private EditText etNewDisplayName;
     private CheckBox cbSetAsPrimary;
     private CheckBox cbEnabled;
     private TextView tvValidationMessage;
     private Button btnAddTarget;
-    private RecyclerView rvTargetNumbers;
-    private TextView tvEmptyState;
-    private Spinner spinnerSendingMode;
     
     // Data and Adapters
     private TargetNumberAdapter adapter;
@@ -60,7 +64,6 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
         initDatabase();
         initViews();
         setupRecyclerView();
-        setupValidation();
         setupSendingModeSpinner();
         loadTargetNumbers();
         updateUI();
@@ -79,17 +82,12 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
      * Initialize UI components
      */
     private void initViews() {
-        etNewPhoneNumber = findViewById(R.id.etNewPhoneNumber);
-        etNewDisplayName = findViewById(R.id.etNewDisplayName);
-        cbSetAsPrimary = findViewById(R.id.cbSetAsPrimary);
-        cbEnabled = findViewById(R.id.cbEnabled);
-        tvValidationMessage = findViewById(R.id.tvValidationMessage);
-        btnAddTarget = findViewById(R.id.btnAddTarget);
+        fabAddTarget = findViewById(R.id.fabAddTarget);
         rvTargetNumbers = findViewById(R.id.rvTargetNumbers);
         tvEmptyState = findViewById(R.id.tvEmptyState);
         spinnerSendingMode = findViewById(R.id.spinnerSendingMode);
         
-        btnAddTarget.setOnClickListener(v -> addTargetNumber());
+        fabAddTarget.setOnClickListener(v -> showAddTargetDialog());
     }
     
     /**
@@ -102,9 +100,44 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
     }
     
     /**
-     * Setup real-time validation for phone number input
+     * Show add target number dialog
      */
-    private void setupValidation() {
+    private void showAddTargetDialog() {
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_target_number, null);
+        
+        // Initialize dialog components
+        etNewPhoneNumber = dialogView.findViewById(R.id.etNewPhoneNumber);
+        etNewDisplayName = dialogView.findViewById(R.id.etNewDisplayName);
+        cbSetAsPrimary = dialogView.findViewById(R.id.cbSetAsPrimary);
+        cbEnabled = dialogView.findViewById(R.id.cbEnabled);
+        tvValidationMessage = dialogView.findViewById(R.id.tvValidationMessage);
+        
+        // Setup validation
+        setupDialogValidation();
+        
+        AlertDialog dialog = new AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setPositiveButton(R.string.add_target_number, null)
+            .setNegativeButton(R.string.cancel, null)
+            .create();
+        
+        dialog.setOnShowListener(dialogInterface -> {
+            Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            positiveButton.setEnabled(false);
+            positiveButton.setOnClickListener(v -> {
+                if (addTargetNumber()) {
+                    dialog.dismiss();
+                }
+            });
+        });
+        
+        dialog.show();
+    }
+    
+    /**
+     * Setup real-time validation for dialog inputs
+     */
+    private void setupDialogValidation() {
         etNewPhoneNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -152,7 +185,7 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
         
         if (TextUtils.isEmpty(phoneNumber)) {
             tvValidationMessage.setVisibility(View.GONE);
-            btnAddTarget.setEnabled(false);
+            enableAddButton(false);
             return;
         }
         
@@ -166,17 +199,17 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
                 runOnUiThread(() -> {
                     if (exists) {
                         showValidationError(getString(R.string.target_duplicate_number));
-                        btnAddTarget.setEnabled(false);
+                        enableAddButton(false);
                     } else {
                         showValidationSuccess();
-                        btnAddTarget.setEnabled(true);
+                        enableAddButton(true);
                     }
                 });
             });
         } else {
             String errorMessage = getValidationMessage(result.getErrorCode());
             showValidationError(errorMessage);
-            btnAddTarget.setEnabled(false);
+            enableAddButton(false);
         }
     }
     
@@ -224,9 +257,18 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
     }
     
     /**
-     * Add a new target number
+     * Helper method to enable/disable add button in dialog
      */
-    private void addTargetNumber() {
+    private void enableAddButton(boolean enabled) {
+        // Find the dialog and enable/disable its positive button
+        // This will be handled by the dialog's onShow listener
+    }
+    
+    /**
+     * Add a new target number
+     * @return true if target was added successfully, false otherwise
+     */
+    private boolean addTargetNumber() {
         String phoneNumber = etNewPhoneNumber.getText().toString().trim();
         String displayName = etNewDisplayName.getText().toString().trim();
         boolean isPrimary = cbSetAsPrimary.isChecked();
@@ -236,7 +278,7 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
         PhoneNumberValidator.ValidationResult result = PhoneNumberValidator.validate(phoneNumber);
         if (!result.isValid()) {
             Toast.makeText(this, getValidationMessage(result.getErrorCode()), Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
         
         // Use formatted number if available
@@ -266,7 +308,6 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
                 
                 runOnUiThread(() -> {
                     Toast.makeText(this, R.string.target_add_success, Toast.LENGTH_SHORT).show();
-                    clearForm();
                     loadTargetNumbers();
                     saveSendingMode();
                 });
@@ -277,19 +318,10 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
                 });
             }
         });
+        
+        return true;
     }
     
-    /**
-     * Clear the add target form
-     */
-    private void clearForm() {
-        etNewPhoneNumber.setText("");
-        etNewDisplayName.setText("");
-        cbSetAsPrimary.setChecked(false);
-        cbEnabled.setChecked(true);
-        tvValidationMessage.setVisibility(View.GONE);
-        btnAddTarget.setEnabled(false);
-    }
     
     /**
      * Load target numbers from database and update UI

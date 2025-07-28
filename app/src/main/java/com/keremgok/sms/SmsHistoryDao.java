@@ -116,4 +116,12 @@ public interface SmsHistoryDao {
      */
     @Query("SELECT * FROM sms_history ORDER BY timestamp DESC LIMIT :limit")
     List<SmsHistory> getLatestHistory(int limit);
+    
+    /**
+     * Delete test data by sender number (used for cleanup)
+     * @param senderNumber The test sender number to remove
+     * @return Number of deleted records
+     */
+    @Query("DELETE FROM sms_history WHERE sender_number = :senderNumber OR target_number = :senderNumber")
+    int deleteTestData(String senderNumber);
 }

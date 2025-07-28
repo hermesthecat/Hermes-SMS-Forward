@@ -66,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
         // Initialize performance monitoring for Task 15 optimization testing
         initializePerformanceMonitoring();
         
+        // Clean up any leftover test data from performance monitoring
+        PerformanceMonitor.cleanupTestData(this);
+        
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

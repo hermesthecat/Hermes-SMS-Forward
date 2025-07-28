@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_new_filter"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"
+        android:gravity="center" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:hint="@string/filter_name_hint"
+        app:boxStrokeColor="?attr/colorPrimary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etFilterName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/filter_type_label"
+        android:textSize="14sp"
+        android:layout_marginBottom="4dp" />
+
+    <Spinner
+        android:id="@+id/spinnerFilterType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:hint="@string/filter_pattern_hint"
+        app:boxStrokeColor="?attr/colorPrimary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etFilterPattern"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="3" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/filter_action_label"
+        android:textSize="14sp"
+        android:layout_marginBottom="4dp" />
+
+    <RadioGroup
+        android:id="@+id/rgFilterAction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp">
+
+        <RadioButton
+            android:id="@+id/rbActionAllow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/action_allow"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/rbActionBlock"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/action_block" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+
+        <CheckBox
+            android:id="@+id/cbCaseSensitive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/case_sensitive" />
+
+        <CheckBox
+            android:id="@+id/cbRegex"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/use_regex" />
+
+        <CheckBox
+            android:id="@+id/cbEnabled"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/enabled"
+            android:checked="true" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvValidationMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone" />
+
+</LinearLayout>

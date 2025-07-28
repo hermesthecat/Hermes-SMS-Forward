@@ -13,7 +13,7 @@ import java.text.DecimalFormat;
 public class PerformanceMonitor {
     
     private static final String TAG = "HermesPerformance";
-    private static final boolean ENABLE_MONITORING = true; // Set to false for production
+    private static final boolean ENABLE_MONITORING = false; // Set to false for production
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
     
     private static PerformanceMonitor instance;
@@ -235,6 +235,27 @@ public class PerformanceMonitor {
         }
         
         logCurrentStatus(context, "After Memory Check");
+    }
+    
+    /**
+     * Clean up any remaining test data from performance tests
+     */
+    public static void cleanupTestData(Context context) {
+        try {
+            AppDatabase database = AppDatabase.getInstance(context);
+            ThreadManager.getInstance().executeDatabase(() -> {
+                try {
+                    // Remove any test data that might have been left behind
+                    database.smsHistoryDao().deleteTestData("TEST_SENDER");
+                    database.smsHistoryDao().deleteTestData("TEST_TARGET");
+                    Log.d(TAG, "Test data cleanup completed");
+                } catch (Exception e) {
+                    Log.e(TAG, "Error during test data cleanup: " + e.getMessage());
+                }
+            });
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to cleanup test data: " + e.getMessage());
+        }
     }
     
     /**
