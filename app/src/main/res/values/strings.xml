@@ -43,7 +43,9 @@
     <string name="settings_sms_format_title">SMS Format Stili</string>
     <string name="settings_sms_format_summary">Yönlendirilen SMS\'lerin nasıl formatlanacağını seçin</string>
     <string name="settings_forwarding_delay_title">Yönlendirme Gecikmesi</string>
-    <string name="settings_forwarding_delay_summary">SMS yönlendirmeden önce beklenecek süre (saniye)</string>
+    <string name="settings_forwarding_delay_summary">SMS yönlendirmeden önce beklenecek süre</string>
+    <string name="settings_forwarding_delay_format">%d saniye gecikme</string>
+    <string name="settings_forwarding_delay_instant">Anında gönder (gecikme yok)</string>
     
     <!-- Notification Settings -->
     <string name="settings_notifications_enabled_title">Bildirimleri Göster</string>
@@ -63,9 +65,9 @@
     
     <!-- About Section -->
     <string name="settings_version_title">Uygulama Sürümü</string>
-    <string name="settings_version_summary">Hermes SMS Forward v2.3.0</string>
+    <string name="settings_version_summary">Hermes SMS Forward v2.11.0</string>
     <string name="settings_developer_title">Geliştirici</string>
-    <string name="settings_developer_summary">KeremGok Development</string>
+    <string name="settings_developer_summary">Kerem GÖK</string>
     <string name="settings_privacy_title">Gizlilik Politikası</string>
     <string name="settings_privacy_summary">Veri işleme ve gizlilik politikamızı görüntüle</string>
     <string name="settings_github_title">Kaynak Kod</string>
@@ -103,6 +105,22 @@
         <item>debug</item>
     </string-array>
     
+    <!-- Language Selection Options -->
+    <string name="settings_language_title">Uygulama Dili</string>
+    <string name="settings_language_summary">Uygulamada kullanılacak dili seçin</string>
+    
+    <string-array name="language_entries">
+        <item>Otomatik (Sistem Dili)</item>
+        <item>Türkçe</item>
+        <item>English</item>
+    </string-array>
+    
+    <string-array name="language_values">
+        <item>auto</item>
+        <item>tr</item>
+        <item>en</item>
+    </string-array>
+    
     <!-- History Screen -->
     <string name="history_title">SMS Geçmişi</string>
     <string name="history_menu_title">Geçmiş</string>
@@ -120,6 +138,7 @@
     <!-- History Filter Messages -->
     <string name="history_showing_successful">Sadece başarılı yönlendirmeler gösteriliyor</string>
     <string name="history_showing_failed">Sadece başarısız yönlendirmeler gösteriliyor</string>
+    <string name="history_show_all">Tümünü Göster</string>
     <string name="history_filter_error">Filtreleme sırasında hata oluştu</string>
     
     <!-- History Loading Messages -->
@@ -194,83 +213,79 @@
     </string-array>
     
     <!-- SMS Filter Rules Management -->
-    <string name="filter_rules_title">SMS Filter Rules</string>
-    <string name="filter_rules_menu_title">Filter Rules</string>
-    <string name="filter_rules_description">Create rules to filter incoming SMS messages before forwarding</string>
-    <string name="quick_filters">Quick Filters</string>
-    <string name="add_spam_filter">Add Spam Filter</string>
-    <string name="add_work_hours_filter">Work Hours Filter</string>
-    <string name="add_new_filter">Add New Filter</string>
-    <string name="filter_name_hint">Filter Name</string>
-    <string name="filter_type_label">Filter Type</string>
-    <string name="filter_pattern_hint">Pattern (keyword, phone number, or regex)</string>
-    <string name="filter_action_label">Action</string>
-    <string name="action_allow">Allow</string>
-    <string name="action_block">Block</string>
-    <string name="case_sensitive">Case Sensitive</string>
-    <string name="use_regex">Use Regex</string>
-    <string name="add_filter">Add Filter</string>
-    <string name="existing_filters">Existing Filters</string>
-    <string name="no_filters_configured">No filters configured yet</string>
+    <string name="filter_rules_title">SMS Filtre Kuralları</string>
+    <string name="filter_rules_menu_title">Filtre Kuralları</string>
+    <string name="filter_rules_description">Gelen SMS mesajlarını yönlendirmeden önce filtrelemek için kurallar oluşturun</string>
+    <string name="quick_filters">Hızlı Filtreler</string>
+    <string name="add_spam_filter">Spam Filtresi Ekle</string>
+    <string name="add_work_hours_filter">Çalışma Saatleri Filtresi</string>
+    <string name="add_new_filter">Yeni Filtre Ekle</string>
+    <string name="filter_name_hint">Filtre Adı</string>
+    <string name="filter_type_label">Filtre Türü</string>
+    <string name="filter_pattern_hint">Desen (anahtar kelime, telefon numarası veya regex)</string>
+    <string name="filter_action_label">Eylem</string>
+    <string name="action_allow">İzin Ver</string>
+    <string name="action_block">Engelle</string>
+    <string name="case_sensitive">Büyük/Küçük Harf Duyarlı</string>
+    <string name="use_regex">Regex Kullan</string>
+    <string name="add_filter">Filtre Ekle</string>
+    <string name="existing_filters">Mevcut Filtreler</string>
+    <string name="no_filters_configured">Henüz hiç filtre yapılandırılmamış</string>
     
     <!-- Filter Types -->
     <string-array name="filter_type_entries">
-        <item>Keyword Filter</item>
-        <item>Sender Number Filter</item>
-        <item>Time-based Filter</item>
-        <item>Whitelist</item>
-        <item>Blacklist</item>
-        <item>Spam Detection</item>
+        <item>Anahtar Kelime Filtresi</item>
+        <item>Gönderen Numara Filtresi</item>
+        <item>Beyaz Liste</item>
+        <item>Kara Liste</item>
     </string-array>
     
     <string-array name="filter_type_values">
         <item>KEYWORD</item>
         <item>SENDER_NUMBER</item>
-        <item>TIME_BASED</item>
         <item>WHITELIST</item>
         <item>BLACKLIST</item>
-        <item>SPAM_DETECTION</item>
     </string-array>
     
     <!-- Filter Operations -->
-    <string name="filter_edit">Edit</string>
-    <string name="filter_delete">Delete</string>
-    <string name="filter_toggle_enabled">Toggle Enabled</string>
-    <string name="filter_test">Test Filter</string>
-    <string name="filter_stats">Statistics</string>
-    <string name="filter_enabled_label">ENABLED</string>
-    <string name="filter_disabled_label">DISABLED</string>
-    <string name="filter_priority_label">Priority:</string>
-    <string name="filter_matches_label">Matches:</string>
+    <string name="filter_edit">Düzenle</string>
+    <string name="filter_delete">Sil</string>
+    <string name="filter_toggle_enabled">Etkinliği Değiştir</string>
+    <string name="filter_test">Filtreyi Test Et</string>
+    <string name="filter_stats">İstatistikler</string>
+    <string name="filter_enabled_label">ETKİN</string>
+    <string name="filter_disabled_label">DEVRE DIŞI</string>
+    <string name="filter_priority_label">Öncelik:</string>
+    <string name="filter_matches_label">Eşleşmeler:</string>
     
     <!-- Filter Validation -->
-    <string name="filter_name_required">Filter name is required</string>
-    <string name="filter_pattern_required">Filter pattern is required</string>
-    <string name="filter_name_exists">A filter with this name already exists</string>
-    <string name="filter_invalid_regex">Invalid regular expression pattern</string>
-    <string name="filter_add_success">Filter added successfully</string>
-    <string name="filter_add_error">Error adding filter</string>
-    <string name="filter_update_success">Filter updated successfully</string>
-    <string name="filter_update_error">Error updating filter</string>
-    <string name="filter_delete_success">Filter deleted successfully</string>
-    <string name="filter_delete_error">Error deleting filter</string>
+    <string name="filter_name_required">Filtre adı gerekli</string>
+    <string name="filter_pattern_required">Filtre deseni gerekli</string>
+    <string name="filter_name_exists">Bu adda bir filtre zaten mevcut</string>
+    <string name="filter_invalid_regex">Geçersiz regular expression deseni</string>
+    <string name="filter_add_success">Filtre başarıyla eklendi</string>
+    <string name="filter_add_error">Filtre ekleme hatası</string>
+    <string name="filter_update_success">Filtre başarıyla güncellendi</string>
+    <string name="filter_update_error">Filtre güncelleme hatası</string>
+    <string name="filter_delete_success">Filtre başarıyla silindi</string>
+    <string name="filter_delete_error">Filtre silme hatası</string>
     
     <!-- Filter Delete Confirmation -->
-    <string name="filter_delete_title">Delete Filter</string>
-    <string name="filter_delete_message">Are you sure you want to delete this filter?</string>
-    <string name="filter_delete_confirm">Delete</string>
+    <string name="filter_delete_title">Filtreyi Sil</string>
+    <string name="filter_delete_message">Bu filtreyi silmek istediğinizden emin misiniz?</string>
+    <string name="filter_delete_confirm">Sil</string>
     
     <!-- Filter Test -->
-    <string name="filter_test_title">Test Filter</string>
-    <string name="filter_test_message_hint">Enter test message</string>
-    <string name="filter_test_sender_hint">Enter test sender number</string>
-    <string name="filter_test_run">Run Test</string>
-    <string name="filter_test_result_match">✅ Filter matches - Action: %s</string>
-    <string name="filter_test_result_no_match">❌ Filter does not match</string>
+    <string name="filter_test_title">Filtreyi Test Et</string>
+    <string name="filter_test_message_hint">Test mesajı girin</string>
+    <string name="filter_test_sender_hint">Test gönderen numarası girin</string>
+    <string name="filter_test_run">Testi Çalıştır</string>
+    <string name="filter_test_result_match">✅ Filtre eşleşti - Eylem: %s</string>
+    <string name="filter_test_result_no_match">❌ Filtre eşleşmedi</string>
     
     <!-- Default Filter Names -->
-    <string name="default_spam_filter_name">Spam Detection</string>
-    <string name="default_work_hours_filter_name">Work Hours Only</string>
+    <string name="default_spam_filter_name">Spam Tespiti</string>
+    <string name="default_work_hours_filter_name">Sadece Çalışma Saatleri</string>
     <string name="default_spam_pattern">spam|advertisement|promotion|winner|prize|free|urgent|limited time</string>
     <string name="default_work_hours_pattern">09:00-18:00</string>
     
@@ -364,9 +379,106 @@
     <string name="filter_intro_description">Hangi mesajların yönlendirileceğini belirlemek için filtreler kullanabilirsiniz.</string>
     <string name="filter_example_bank">Banka Mesajları</string>
     <string name="filter_example_bank_desc">Sadece banka SMS\'lerini yönlendir</string>
-    <string name="filter_example_spam">Spam Engelleme</string>
-    <string name="filter_example_spam_desc">İstenmeyen mesajları engelle</string>
+    <string name="filter_example_work">İş Mesajları</string>
+    <string name="filter_example_work_desc">Sadece iş numaralarından gelen mesajları yönlendir</string>
     <string name="filter_intro_tip">Filtreleri daha sonra ayarlar menüsünden yapılandırabilirsiniz.</string>
+    
+    <!-- Analytics Dashboard -->
+    <string name="analytics_dashboard_title">Analitik Dashboard</string>
+    <string name="analytics_dashboard_menu">Analitik Dashboard</string>
+    <string name="refresh_button">Yenile</string>
+    <string name="export_button">Dışa Aktar</string>
+    <string name="last_updated_placeholder">Son güncelleme: --:--:--</string>
+    <string name="overall_statistics_title">Genel İstatistikler</string>
+    <string name="zero_count">0</string>
+    <string name="received_label">Alınan</string>
+    <string name="forwarded_label">Yönlendirilen</string>
+    <string name="errors_label">Hatalar</string>
+    <string name="success_rate_label">Başarı Oranı</string>
+    <string name="zero_percent">0%</string>
+    <string name="avg_processing_time_label">Ort. İşlem Süresi</string>
+    <string name="zero_milliseconds">0 ms</string>
+    <string name="app_opens_label">Uygulama Açılışları</string>
+    <string name="most_common_error_label">En Yaygın Hata</string>
+    <string name="none_label">Yok</string>
+    <string name="period_statistics_title">Dönem İstatistikleri</string>
+    <string name="today_label">Bugün</string>
+    <string name="this_week_label">Bu Hafta</string>
+    <string name="this_month_label">Bu Ay</string>
+    
+    <!-- Analytics Menu -->
+    <string name="clear_analytics_data_menu">Analitik Verilerini Temizle</string>
+    <string name="settings_menu">Ayarlar</string>
+    
+    <!-- Analytics Toast Messages -->
+    <string name="statistics_refreshed">İstatistikler yenilendi</string>
+    <string name="error_loading_statistics">İstatistikler yüklenirken hata</string>
+    <string name="export_failed">Dışa aktarma başarısız</string>
+    <string name="statistics_exported_successfully">İstatistikler başarıyla dışa aktarıldı</string>
+    <string name="export_completed_sharing_failed">Dışa aktarma tamamlandı ancak paylaşım başarısız</string>
+    <string name="analytics_data_cleared">Analitik verileri temizlendi</string>
+    <string name="error_clearing_data">Veri temizleme hatası</string>
+    
+    <!-- Analytics Dialog -->
+    <string name="clear_analytics_data_title">Analitik Verilerini Temizle</string>
+    <string name="clear_analytics_confirmation_message">Tüm analitik verileri temizlemek istediğinizden emin misiniz? Bu işlem geri alınamaz.</string>
+    <string name="clear_button">Temizle</string>
+    <string name="cancel_button">İptal</string>
+    <string name="last_updated_format">Son güncelleme: %s</string>
+    
+    <!-- Filter Placeholders -->
+    <string name="filter_name_placeholder">Filtre Adı</string>
+    <string name="filter_type_keyword">ANAHTAR KELİME</string>
+    <string name="filter_action_allow">İZİN VER</string>
+    <string name="filter_pattern_placeholder">Desen: spam|reklam</string>
+    
+    <!-- Target Number Placeholders -->
+    <string name="target_display_name_placeholder">Görünür Ad</string>
+    <string name="target_phone_placeholder">+905551234567</string>
+    <string name="target_last_used_placeholder">Son kullanım: 2 saat önce</string>
+    
+    <!-- Target Number Dynamic Text -->
+    <string name="target_last_used_prefix">Son kullanım: </string>
+    <string name="target_not_used_yet">Henüz kullanılmadı</string>
+    <string name="target_enable">Etkinleştir</string>
+    <string name="target_disable">Devre Dışı Bırak</string>
+    <string name="filter_last_never">Son: Hiçbir zaman</string>
+    <string name="no_pattern_specified">Desen belirtilmedi</string>
+    
+    <!-- Filter Adapter Dynamic Text -->
+    <string name="filter_pattern_prefix">Desen: </string>
+    <string name="filter_regex_suffix"> (regex)</string>
+    <string name="filter_case_sensitive_suffix"> (büyük/küçük harf duyarlı)</string>
+    <string name="filter_last_prefix">Son: </string>
+    <string name="filter_last_never_text">Son: Hiçbir zaman</string>
+    <string name="last_matched_format">Son: %s</string>
+    <string name="last_matched_never">Son: Hiçbir zaman</string>
+    <string name="disable_button">Devre Dışı Bırak</string>
+    <string name="enable_button">Etkinleştir</string>
+    
+    <!-- Target Number Placeholders -->
+    <string name="display_name_placeholder">Görünen Ad</string>
+    <string name="phone_number_placeholder">+905551234567</string>
+    <string name="last_used_placeholder">Son kullanım: 2 saat önce</string>
+    <string name="last_used_format">Son kullanım: %s</string>
+    <string name="not_used_yet">Henüz kullanılmadı</string>
+    
+    <!-- Onboarding Placeholders -->
+    <string name="step_number_one">1</string>
+    <string name="step_number_two">2</string>
+    <string name="step_number_three">3</string>
+    <string name="progress_indicator_placeholder">1 / 5</string>
+    
+    <!-- Permission Labels -->
+    <string name="required_permissions_title">Gerekli İzinler:</string>
+    <string name="receive_sms_permission_label">SMS Okuma İzni</string>
+    <string name="send_sms_permission_label">SMS Gönderme İzni</string>
+    
+    <!-- General Messages -->
+    <string name="permissions_granted_message">İzinler verildi. Şimdi hedef numarayı kaydedebilirsiniz.</string>
+    <string name="sms_permissions_required">SMS izinleri gerekli!</string>
+    <string name="edit_functionality_coming_soon">Düzenleme özelliği yakında gelecek</string>
+    <string name="filter_validation_passed">Filtre doğrulama geçti</string>
     
     <!-- Completion Fragment -->
     <string name="completion_title">Tebrikler!</string>

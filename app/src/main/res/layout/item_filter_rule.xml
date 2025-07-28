@@ -34,7 +34,7 @@
                 android:textStyle="bold"
                 android:textColor="?android:attr/textColorPrimary"
                 android:contentDescription="@string/cd_info_icon"
-                android:text="Filter Name" />
+                android:text="@string/filter_name_placeholder" />
 
             <!-- Enabled badge -->
             <TextView
@@ -84,7 +84,7 @@
                 android:textSize="14sp"
                 android:textColor="?android:attr/textColorSecondary"
                 android:contentDescription="@string/filter_type_label"
-                android:text="KEYWORD" />
+                android:text="@string/filter_type_keyword" />
 
             <TextView
                 android:id="@+id/tvFilterAction"
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:text="ALLOW"
+                android:text="@string/filter_action_allow"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="2dp"
                 android:background="@drawable/filter_action_bg"
@@ -109,7 +109,7 @@
             android:textSize="13sp"
             android:textColor="?android:attr/textColorSecondary"
             android:layout_marginBottom="8dp"
-            android:text="Pattern: spam|advertisement"
+            android:text="@string/filter_pattern_placeholder"
             android:fontFamily="monospace"
             android:contentDescription="@string/filter_pattern_hint" />
 
@@ -131,7 +131,7 @@
                 android:id="@+id/tvPriority"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
+                android:text="@string/zero_count"
                 android:textSize="12sp"
                 android:textColor="?android:attr/textColorTertiary"
                 android:layout_marginEnd="16dp"
@@ -148,7 +148,7 @@
                 android:id="@+id/tvMatchCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
+                android:text="@string/zero_count"
                 android:textSize="12sp"
                 android:textColor="?android:attr/textColorTertiary"
                 android:contentDescription="@string/filter_matches_label" />
@@ -161,7 +161,7 @@
                 android:gravity="end"
                 android:textSize="12sp"
                 android:textColor="?android:attr/textColorTertiary"
-                android:text="Last: Never"
+                android:text="@string/filter_last_never"
                 android:contentDescription="@string/cd_info_icon" />
 
         </LinearLayout>

@@ -128,16 +128,16 @@ public class FilterRulesAdapter extends RecyclerView.Adapter<FilterRulesAdapter.
             // Pattern with formatting
             String pattern = filter.getPattern();
             if (!TextUtils.isEmpty(pattern)) {
-                String patternText = "Pattern: " + pattern;
+                String patternText = context.getString(R.string.filter_pattern_prefix) + pattern;
                 if (filter.isRegex()) {
-                    patternText += " (regex)";
+                    patternText += context.getString(R.string.filter_regex_suffix);
                 }
                 if (filter.isCaseSensitive()) {
-                    patternText += " (case-sensitive)";
+                    patternText += context.getString(R.string.filter_case_sensitive_suffix);
                 }
                 tvFilterPattern.setText(patternText);
             } else {
-                tvFilterPattern.setText("No pattern specified");
+                tvFilterPattern.setText(context.getString(R.string.no_pattern_specified));
             }
             
             // Priority
@@ -149,20 +149,20 @@ public class FilterRulesAdapter extends RecyclerView.Adapter<FilterRulesAdapter.
             // Last matched
             if (filter.getLastMatched() > 0) {
                 String lastMatchedText = formatLastMatched(filter.getLastMatched());
-                tvLastMatched.setText("Last: " + lastMatchedText);
+                tvLastMatched.setText(context.getString(R.string.filter_last_prefix) + lastMatchedText);
             } else {
-                tvLastMatched.setText("Last: Never");
+                tvLastMatched.setText(context.getString(R.string.filter_last_never_text));
             }
             
             // Enabled/Disabled badge
             if (filter.isEnabled()) {
                 tvEnabledBadge.setVisibility(View.VISIBLE);
                 tvDisabledBadge.setVisibility(View.GONE);
-                btnToggleEnabled.setText("Disable");
+                btnToggleEnabled.setText(context.getString(R.string.disable_button));
             } else {
                 tvEnabledBadge.setVisibility(View.GONE);
                 tvDisabledBadge.setVisibility(View.VISIBLE);
-                btnToggleEnabled.setText("Enable");
+                btnToggleEnabled.setText(context.getString(R.string.enable_button));
             }
             
             // Button click listeners

@@ -1,6 +1,7 @@
 package com.keremgok.sms;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -15,6 +16,11 @@ import androidx.preference.PreferenceFragmentCompat;
  * Provides comprehensive configuration options for the SMS forwarding app
  */
 public class SettingsActivity extends AppCompatActivity {
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LanguageManager.applyLanguage(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +78,9 @@ public class SettingsActivity extends AppCompatActivity {
             // Initialize forwarding toggle
             initializeForwardingToggle();
             
+            // Initialize forwarding delay
+            initializeForwardingDelay();
+            
             // Initialize about section
             initializeAboutSection();
             
@@ -80,6 +89,9 @@ public class SettingsActivity extends AppCompatActivity {
             
             // Initialize log level settings
             initializeLogLevelSettings();
+            
+            // Initialize language settings
+            initializeLanguageSettings();
             
             // Initialize backup and restore preferences
             initializeBackupRestore();
@@ -90,6 +102,37 @@ public class SettingsActivity extends AppCompatActivity {
          */
         private void initializeForwardingToggle() {
             // Implementation will be added when we create the preferences XML
+        }
+        
+        /**
+         * Initialize forwarding delay SeekBar with dynamic summary
+         */
+        private void initializeForwardingDelay() {
+            androidx.preference.SeekBarPreference delayPref = findPreference("pref_forwarding_delay");
+            if (delayPref != null) {
+                // Set initial summary
+                updateDelayPreferenceSummary(delayPref, delayPref.getValue());
+                
+                // Add listener for value changes
+                delayPref.setOnPreferenceChangeListener((preference, newValue) -> {
+                    int delaySeconds = (Integer) newValue;
+                    updateDelayPreferenceSummary((androidx.preference.SeekBarPreference) preference, delaySeconds);
+                    return true;
+                });
+            }
+        }
+        
+        /**
+         * Update the summary text for forwarding delay preference
+         */
+        private void updateDelayPreferenceSummary(androidx.preference.SeekBarPreference preference, int delaySeconds) {
+            String summary;
+            if (delaySeconds == 0) {
+                summary = getString(R.string.settings_forwarding_delay_instant);
+            } else {
+                summary = getString(R.string.settings_forwarding_delay_format, delaySeconds);
+            }
+            preference.setSummary(summary);
         }
         
         /**
@@ -111,6 +154,43 @@ public class SettingsActivity extends AppCompatActivity {
          */
         private void initializeLogLevelSettings() {
             // Implementation will be added when we create the preferences XML
+        }
+        
+        /**
+         * Initialize language settings
+         */
+        private void initializeLanguageSettings() {
+            androidx.preference.ListPreference languagePref = findPreference("pref_app_language");
+            if (languagePref != null) {
+                languagePref.setOnPreferenceChangeListener((preference, newValue) -> {
+                    String selectedLanguage = (String) newValue;
+                    
+                    // Show restart dialog to apply language change
+                    new AlertDialog.Builder(requireContext())
+                        .setTitle(getString(R.string.settings_language_title))
+                        .setMessage("Dil değişikliğinin uygulanması için uygulama yeniden başlatılacak.\n\nLanguage change will be applied after app restart.")
+                        .setPositiveButton("Tamam / OK", (dialog, which) -> {
+                            // Save the language preference
+                            getPreferenceManager().getSharedPreferences()
+                                .edit()
+                                .putString("pref_app_language", selectedLanguage)
+                                .apply();
+                            
+                            // Restart the app
+                            android.content.Intent restartIntent = requireActivity().getPackageManager()
+                                .getLaunchIntentForPackage(requireActivity().getPackageName());
+                            if (restartIntent != null) {
+                                restartIntent.addFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(restartIntent);
+                                requireActivity().finish();
+                            }
+                        })
+                        .setNegativeButton("İptal / Cancel", null)
+                        .show();
+                    
+                    return false; // Don't update preference immediately
+                });
+            }
         }
         
         /**

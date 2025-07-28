@@ -22,7 +22,7 @@
 
     <item
         android:id="@+id/action_analytics"
-        android:title="Analytics Dashboard"
+        android:title="@string/analytics_dashboard_menu"
         android:orderInCategory="95"
         app:showAsAction="never" />
 

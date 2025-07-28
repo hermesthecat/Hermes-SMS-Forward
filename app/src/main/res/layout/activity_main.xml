@@ -8,30 +8,16 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginTop="32dp"
-        android:contentDescription="@string/cd_app_logo"
-        android:accessibilityHeading="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/tvDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/description_text"
         android:textSize="16sp"
         android:gravity="center"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvTargetLabel"
@@ -104,21 +90,78 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnSave" />
 
-    <TextView
-        android:id="@+id/tvPermissions"
+    <LinearLayout
+        android:id="@+id/llPermissions"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/permissions_required"
-        android:textSize="12sp"
-        android:textColor="@color/hermes_warning"
-        android:gravity="center"
+        android:orientation="vertical"
         android:layout_marginTop="16dp"
-        android:contentDescription="@string/cd_permission_indicator"
-        android:importantForAccessibility="yes"
-        android:accessibilityLiveRegion="polite"
-        android:accessibilityTraversalAfter="@id/tvStatus"
+        android:padding="12dp"
+        android:background="@drawable/rounded_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvStatus" />
+        app:layout_constraintTop_toBottomOf="@id/tvStatus">
+
+        <TextView
+            android:id="@+id/tvPermissionsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/required_permissions_title"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:id="@+id/llReceiveSmsPermission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:id="@+id/tvReceiveSmsStatus"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:text="❌"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tvReceiveSmsLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/receive_sms_permission_label"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llSendSmsPermission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvSendSmsStatus"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:text="❌"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tvSendSmsLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/send_sms_permission_label"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

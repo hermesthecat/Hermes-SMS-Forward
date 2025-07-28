@@ -41,8 +41,6 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
     private CheckBox cbEnabled;
     private TextView tvValidationMessage;
     private Button btnAddFilter;
-    private Button btnAddSpamFilter;
-    private Button btnAddWorkHoursFilter;
     private RecyclerView rvFilterRules;
     private TextView tvEmptyState;
     
@@ -94,14 +92,10 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
         cbEnabled = findViewById(R.id.cbEnabled);
         tvValidationMessage = findViewById(R.id.tvValidationMessage);
         btnAddFilter = findViewById(R.id.btnAddFilter);
-        btnAddSpamFilter = findViewById(R.id.btnAddSpamFilter);
-        btnAddWorkHoursFilter = findViewById(R.id.btnAddWorkHoursFilter);
         rvFilterRules = findViewById(R.id.rvFilterRules);
         tvEmptyState = findViewById(R.id.tvEmptyState);
         
         btnAddFilter.setOnClickListener(v -> addFilter());
-        btnAddSpamFilter.setOnClickListener(v -> addQuickSpamFilter());
-        btnAddWorkHoursFilter.setOnClickListener(v -> addQuickWorkHoursFilter());
     }
     
     /**
@@ -209,7 +203,7 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
      * Show validation success message
      */
     private void showValidationSuccess() {
-        tvValidationMessage.setText("Filter validation passed");
+        tvValidationMessage.setText(getString(R.string.filter_validation_passed));
         tvValidationMessage.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
         tvValidationMessage.setVisibility(View.VISIBLE);
     }
@@ -263,60 +257,6 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
         });
     }
     
-    /**
-     * Add quick spam filter
-     */
-    private void addQuickSpamFilter() {
-        String filterName = getString(R.string.default_spam_filter_name);
-        String pattern = getString(R.string.default_spam_pattern);
-        
-        SmsFilter spamFilter = new SmsFilter(filterName, SmsFilter.TYPE_SPAM_DETECTION, pattern, SmsFilter.ACTION_BLOCK, true);
-        spamFilter.setRegex(true);
-        spamFilter.setCaseSensitive(false);
-        spamFilter.setPriority(10); // High priority for spam detection
-        
-        ThreadManager.getInstance().executeDatabase(() -> {
-            try {
-                filterDao.insert(spamFilter);
-                runOnUiThread(() -> {
-                    Toast.makeText(this, R.string.filter_add_success, Toast.LENGTH_SHORT).show();
-                    loadFilterRules();
-                });
-            } catch (Exception e) {
-                runOnUiThread(() -> {
-                    Toast.makeText(this, R.string.filter_add_error, Toast.LENGTH_SHORT).show();
-                });
-            }
-        });
-    }
-    
-    /**
-     * Add quick work hours filter
-     */
-    private void addQuickWorkHoursFilter() {
-        String filterName = getString(R.string.default_work_hours_filter_name);
-        String pattern = getString(R.string.default_work_hours_pattern);
-        
-        SmsFilter workHoursFilter = new SmsFilter(filterName, SmsFilter.TYPE_TIME_BASED, pattern, SmsFilter.ACTION_ALLOW, true);
-        workHoursFilter.setTimeStart("09:00");
-        workHoursFilter.setTimeEnd("18:00");
-        workHoursFilter.setDaysOfWeek("1,2,3,4,5"); // Monday to Friday
-        workHoursFilter.setPriority(5);
-        
-        ThreadManager.getInstance().executeDatabase(() -> {
-            try {
-                filterDao.insert(workHoursFilter);
-                runOnUiThread(() -> {
-                    Toast.makeText(this, R.string.filter_add_success, Toast.LENGTH_SHORT).show();
-                    loadFilterRules();
-                });
-            } catch (Exception e) {
-                runOnUiThread(() -> {
-                    Toast.makeText(this, R.string.filter_add_error, Toast.LENGTH_SHORT).show();
-                });
-            }
-        });
-    }
     
     /**
      * Clear the add filter form
@@ -339,9 +279,11 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
     private void loadFilterRules() {
         ThreadManager.getInstance().executeDatabase(() -> {
             List<SmsFilter> filters = filterDao.getAllFilters();
+            android.util.Log.d("FilterRulesActivity", "Loaded " + (filters != null ? filters.size() : 0) + " filters from database");
             runOnUiThread(() -> {
                 adapter.updateFilterRules(filters);
                 updateUI();
+                android.util.Log.d("FilterRulesActivity", "Adapter item count: " + adapter.getItemCount());
             });
         });
     }
@@ -383,7 +325,7 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
     @Override
     public void onEditFilter(SmsFilter filter) {
         // For now, just show a toast. Full edit functionality would require a separate dialog/activity
-        Toast.makeText(this, "Edit functionality coming soon", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.edit_functionality_coming_soon), Toast.LENGTH_SHORT).show();
     }
     
     @Override

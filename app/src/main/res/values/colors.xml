@@ -46,6 +46,10 @@
     <color name="success_text">@color/hermes_success</color>
     <color name="error_text">@color/hermes_error</color>
     
+    <!-- UI Element Colors -->
+    <color name="hermes_light_gray">#F5F5F5</color>
+    <color name="hermes_border_gray">#E0E0E0</color>
+    
     <!-- Legacy Android Colors (for compatibility) -->
     <color name="colorPrimary">@color/hermes_primary</color>
     <color name="colorPrimaryDark">@color/hermes_primary_dark</color>

@@ -34,7 +34,7 @@
                 android:textStyle="bold"
                 android:textColor="?android:attr/textColorPrimary"
                 android:contentDescription="@string/cd_info_icon"
-                android:text="Display Name" />
+                android:text="@string/target_display_name_placeholder" />
 
             <!-- Primary badge -->
             <TextView
@@ -78,7 +78,7 @@
             android:textColor="?android:attr/textColorSecondary"
             android:layout_marginBottom="8dp"
             android:contentDescription="@string/cd_target_number_input"
-            android:text="+905551234567" />
+            android:text="@string/target_phone_placeholder" />
 
         <!-- Last used info -->
         <TextView
@@ -89,7 +89,7 @@
             android:textColor="?android:attr/textColorTertiary"
             android:layout_marginBottom="12dp"
             android:contentDescription="@string/cd_info_icon"
-            android:text="Son kullanım: 2 saat önce" />
+            android:text="@string/target_last_used_placeholder" />
 
         <!-- Action buttons -->
         <LinearLayout

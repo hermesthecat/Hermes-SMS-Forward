@@ -25,7 +25,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Analytics Dashboard"
+                android:text="@string/analytics_dashboard_title"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:textColor="@color/hermes_text_primary"
@@ -36,7 +36,7 @@
                 android:id="@+id/btnRefresh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Refresh"
+                android:text="@string/refresh_button"
                 android:layout_marginEnd="8dp"
                 android:contentDescription="@string/cd_refresh_button"
                 android:importantForAccessibility="yes"
@@ -46,7 +46,7 @@
                 android:id="@+id/btnExport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Export"
+                android:text="@string/export_button"
                 android:contentDescription="@string/cd_export_button"
                 android:importantForAccessibility="yes"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored" />
@@ -58,7 +58,7 @@
             android:id="@+id/tvLastUpdateTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Last updated: --:--:--"
+            android:text="@string/last_updated_placeholder"
             android:textSize="12sp"
             android:textColor="@color/hermes_text_secondary"
             android:layout_marginBottom="16dp"
@@ -85,7 +85,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Overall Statistics"
+                    android:text="@string/overall_statistics_title"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/hermes_text_primary"
@@ -108,7 +108,7 @@
                             android:id="@+id/tvTotalReceived"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@string/zero_count"
                             android:textSize="24sp"
                             android:textStyle="bold"
                             android:textColor="@color/colorPrimary"
@@ -117,7 +117,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Received"
+                            android:text="@string/received_label"
                             android:textSize="12sp"
                             android:textColor="@color/hermes_text_secondary" />
 
@@ -134,7 +134,7 @@
                             android:id="@+id/tvTotalForwarded"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@string/zero_count"
                             android:textSize="24sp"
                             android:textStyle="bold"
                             android:textColor="@color/colorAccent"
@@ -143,7 +143,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Forwarded"
+                            android:text="@string/forwarded_label"
                             android:textSize="12sp"
                             android:textColor="@color/hermes_text_secondary" />
 
@@ -160,7 +160,7 @@
                             android:id="@+id/tvTotalErrors"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@string/zero_count"
                             android:textSize="24sp"
                             android:textStyle="bold"
                             android:textColor="@android:color/holo_red_dark"
@@ -169,7 +169,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Errors"
+                            android:text="@string/errors_label"
                             android:textSize="12sp"
                             android:textColor="@color/hermes_text_secondary" />
 
@@ -194,7 +194,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Success Rate"
+                            android:text="@string/success_rate_label"
                             android:textSize="14sp"
                             android:textColor="@color/hermes_text_primary" />
 
@@ -202,7 +202,7 @@
                             android:id="@+id/tvSuccessRate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0%"
+                            android:text="@string/zero_percent"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             android:textColor="@android:color/holo_green_dark"
@@ -239,7 +239,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Avg Processing Time"
+                            android:text="@string/avg_processing_time_label"
                             android:textSize="12sp"
                             android:textColor="@color/hermes_text_secondary" />
 
@@ -247,7 +247,7 @@
                             android:id="@+id/tvAvgProcessingTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0 ms"
+                            android:text="@string/zero_milliseconds"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:textColor="@color/hermes_text_primary"
@@ -264,7 +264,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="App Opens"
+                            android:text="@string/app_opens_label"
                             android:textSize="12sp"
                             android:textColor="@color/hermes_text_secondary" />
 
@@ -272,7 +272,7 @@
                             android:id="@+id/tvAppOpens"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@string/zero_count"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:textColor="@color/hermes_text_primary"
@@ -292,7 +292,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Most Common Error"
+                        android:text="@string/most_common_error_label"
                         android:textSize="12sp"
                         android:textColor="@color/hermes_text_secondary" />
 
@@ -300,7 +300,7 @@
                         android:id="@+id/tvMostCommonError"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="None"
+                        android:text="@string/none_label"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         android:textColor="@color/hermes_text_primary"
@@ -316,7 +316,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Period Statistics"
+            android:text="@string/period_statistics_title"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/hermes_text_primary"
@@ -346,7 +346,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Today"
+                    android:text="@string/today_label"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimary"
@@ -369,14 +369,14 @@
                             android:id="@+id/tvTodayReceived"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@string/zero_count"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Received"
+                            android:text="@string/received_label"
                             android:textSize="10sp"
                             android:textColor="@color/hermes_text_secondary" />
 
@@ -393,14 +393,14 @@
                             android:id="@+id/tvTodayForwarded"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@string/zero_count"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Forwarded"
+                            android:text="@string/forwarded_label"
                             android:textSize="10sp"
                             android:textColor="@color/hermes_text_secondary" />
 
@@ -417,14 +417,14 @@
                             android:id="@+id/tvTodaySuccessRate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0%"
+                            android:text="@string/zero_percent"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Success"
+                            android:text="@string/success_rate_label"
                             android:textSize="10sp"
                             android:textColor="@color/hermes_text_secondary" />
 
@@ -441,14 +441,14 @@
                             android:id="@+id/tvTodayErrors"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@string/zero_count"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Errors"
+                            android:text="@string/errors_label"
                             android:textSize="10sp"
                             android:textColor="@color/hermes_text_secondary" />
 
@@ -483,7 +483,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="This Week"
+                    android:text="@string/this_week_label"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorAccent"
@@ -506,14 +506,14 @@
                             android:id="@+id/tvWeekReceived"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@string/zero_count"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Received"
+                            android:text="@string/received_label"
                             android:textSize="10sp"
                             android:textColor="@color/hermes_text_secondary" />
 
@@ -530,14 +530,14 @@
                             android:id="@+id/tvWeekForwarded"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@string/zero_count"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Forwarded"
+                            android:text="@string/forwarded_label"
                             android:textSize="10sp"
                             android:textColor="@color/hermes_text_secondary" />
 
@@ -554,14 +554,14 @@
                             android:id="@+id/tvWeekSuccessRate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0%"
+                            android:text="@string/zero_percent"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Success"
+                            android:text="@string/success_rate_label"
                             android:textSize="10sp"
                             android:textColor="@color/hermes_text_secondary" />
 
@@ -578,14 +578,14 @@
                             android:id="@+id/tvWeekErrors"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@string/zero_count"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Errors"
+                            android:text="@string/errors_label"
                             android:textSize="10sp"
                             android:textColor="@color/hermes_text_secondary" />
 
@@ -620,7 +620,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="This Month"
+                    android:text="@string/this_month_label"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@android:color/holo_purple"
@@ -643,14 +643,14 @@
                             android:id="@+id/tvMonthReceived"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@string/zero_count"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Received"
+                            android:text="@string/received_label"
                             android:textSize="10sp"
                             android:textColor="@color/hermes_text_secondary" />
 
@@ -667,14 +667,14 @@
                             android:id="@+id/tvMonthForwarded"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@string/zero_count"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Forwarded"
+                            android:text="@string/forwarded_label"
                             android:textSize="10sp"
                             android:textColor="@color/hermes_text_secondary" />
 
@@ -691,14 +691,14 @@
                             android:id="@+id/tvMonthSuccessRate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0%"
+                            android:text="@string/zero_percent"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Success"
+                            android:text="@string/success_rate_label"
                             android:textSize="10sp"
                             android:textColor="@color/hermes_text_secondary" />
 
@@ -715,14 +715,14 @@
                             android:id="@+id/tvMonthErrors"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text="@string/zero_count"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Errors"
+                            android:text="@string/errors_label"
                             android:textSize="10sp"
                             android:textColor="@color/hermes_text_secondary" />
 

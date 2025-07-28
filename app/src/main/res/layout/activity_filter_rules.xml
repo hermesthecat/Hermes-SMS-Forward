@@ -26,63 +26,6 @@
         android:layout_marginBottom="16dp"
         android:contentDescription="@string/filter_rules_description" />
 
-    <!-- Quick Filters Section -->
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="@string/cd_statistics_card"
-        android:importantForAccessibility="yes"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="2dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/quick_filters"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="12dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
-
-                <Button
-                    android:id="@+id/btnAddSpamFilter"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/add_spam_filter"
-                    android:layout_marginEnd="4dp"
-                    android:contentDescription="@string/cd_add_button"
-                    android:importantForAccessibility="yes" />
-
-                <Button
-                    android:id="@+id/btnAddWorkHoursFilter"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/add_work_hours_filter"
-                    android:layout_marginStart="4dp"
-                    android:contentDescription="@string/cd_add_button"
-                    android:importantForAccessibility="yes" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
 
     <!-- Add New Filter Section -->
     <com.google.android.material.card.MaterialCardView

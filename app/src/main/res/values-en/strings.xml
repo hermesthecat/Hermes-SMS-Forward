@@ -43,7 +43,9 @@
     <string name="settings_sms_format_title">SMS Format Style</string>
     <string name="settings_sms_format_summary">Choose how forwarded SMS messages will be formatted</string>
     <string name="settings_forwarding_delay_title">Forwarding Delay</string>
-    <string name="settings_forwarding_delay_summary">Time to wait before forwarding SMS (seconds)</string>
+    <string name="settings_forwarding_delay_summary">Time to wait before forwarding SMS</string>
+    <string name="settings_forwarding_delay_format">%d second delay</string>
+    <string name="settings_forwarding_delay_instant">Send instantly (no delay)</string>
     
     <!-- Notification Settings -->
     <string name="settings_notifications_enabled_title">Show Notifications</string>
@@ -63,9 +65,9 @@
     
     <!-- About Section -->
     <string name="settings_version_title">App Version</string>
-    <string name="settings_version_summary">Hermes SMS Forward v2.9.0</string>
+    <string name="settings_version_summary">Hermes SMS Forward v2.11.0</string>
     <string name="settings_developer_title">Developer</string>
-    <string name="settings_developer_summary">KeremGok Development</string>
+    <string name="settings_developer_summary">Kerem GÖK</string>
     <string name="settings_privacy_title">Privacy Policy</string>
     <string name="settings_privacy_summary">View our data processing and privacy policy</string>
     <string name="settings_github_title">Source Code</string>
@@ -103,6 +105,22 @@
         <item>debug</item>
     </string-array>
     
+    <!-- Language Selection Options -->
+    <string name="settings_language_title">App Language</string>
+    <string name="settings_language_summary">Choose the language for the app</string>
+    
+    <string-array name="language_entries">
+        <item>Automatic (System Language)</item>
+        <item>Türkçe</item>
+        <item>English</item>
+    </string-array>
+    
+    <string-array name="language_values">
+        <item>auto</item>
+        <item>tr</item>
+        <item>en</item>
+    </string-array>
+    
     <!-- History Screen -->
     <string name="history_title">SMS History</string>
     <string name="history_menu_title">History</string>
@@ -120,6 +138,7 @@
     <!-- History Filter Messages -->
     <string name="history_showing_successful">Showing only successful forwards</string>
     <string name="history_showing_failed">Showing only failed forwards</string>
+    <string name="history_show_all">Show All</string>
     <string name="history_filter_error">Error occurred during filtering</string>
     
     <!-- History Loading Messages -->
@@ -217,19 +236,15 @@
     <string-array name="filter_type_entries">
         <item>Keyword Filter</item>
         <item>Sender Number Filter</item>
-        <item>Time-based Filter</item>
         <item>Whitelist</item>
         <item>Blacklist</item>
-        <item>Spam Detection</item>
     </string-array>
     
     <string-array name="filter_type_values">
         <item>KEYWORD</item>
         <item>SENDER_NUMBER</item>
-        <item>TIME_BASED</item>
         <item>WHITELIST</item>
         <item>BLACKLIST</item>
-        <item>SPAM_DETECTION</item>
     </string-array>
     
     <!-- Filter Operations -->
@@ -328,5 +343,151 @@
     <string name="cd_info_icon">Information icon</string>
     <string name="cd_analytics_chart">Analytics data chart</string>
     <string name="cd_statistics_card">Statistics information card</string>
+    
+    <!-- Onboarding System -->
+    <string name="step_indicator">%1$d / %2$d</string>
+    <string name="skip">Skip</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="get_started">Get Started</string>
+    
+    <!-- Welcome Fragment -->
+    <string name="welcome_title">Welcome to Hermes SMS Forward!</string>
+    <string name="welcome_subtitle">Forward your SMS messages securely. Setup takes just a few steps.</string>
+    <string name="feature_automatic_forwarding">Automatic SMS forwarding</string>
+    <string name="feature_smart_filtering">Smart filtering system</string>
+    <string name="feature_privacy_first">Privacy-first design</string>
+    
+    <!-- Permission Explanation Fragment -->
+    <string name="permissions_title">About Permissions</string>
+    <string name="permissions_description">We need the following permissions for the app to work:</string>
+    <string name="sms_permission_title">SMS Reading Permission</string>
+    <string name="sms_permission_description">Required to detect incoming SMS messages</string>
+    <string name="send_sms_permission_title">SMS Sending Permission</string>
+    <string name="send_sms_permission_description">Required to forward messages to target numbers</string>
+    <string name="privacy_note">All your data is stored only on your device. No information is sent outside.</string>
+    
+    <!-- Target Number Setup Fragment -->
+    <string name="target_setup_title">Target Number</string>
+    <string name="target_setup_description">Enter the phone number where SMS messages will be forwarded.</string>
+    <string name="onboarding_target_number_hint">Phone number</string>
+    <string name="target_number_helper">Example: +90 555 123 45 67</string>
+    <string name="target_setup_info">You can add multiple target numbers later.</string>
+    
+    <!-- Filter Intro Fragment -->
+    <string name="filter_intro_title">Smart Filters</string>
+    <string name="filter_intro_description">You can use filters to determine which messages will be forwarded.</string>
+    <string name="filter_example_bank">Bank Messages</string>
+    <string name="filter_example_bank_desc">Forward only bank SMS</string>
+    <string name="filter_example_work">Work Messages</string>
+    <string name="filter_example_work_desc">Forward only messages from work numbers</string>
+    <string name="filter_intro_tip">You can configure filters later from the settings menu.</string>
+    
+    <!-- Completion Fragment -->
+    <string name="completion_title">Congratulations!</string>
+    <string name="completion_subtitle">Hermes SMS Forward has been successfully set up and is ready to use.</string>
+    <string name="whats_next_title">Next Steps:</string>
+    <string name="completion_step_1">Explore advanced features from the settings menu</string>
+    <string name="completion_step_2">Create filter rules to customize forwarding</string>
+    <string name="completion_step_3">Use the history tab to track message history</string>
+    <string name="completion_support">Need help? You can get support from Settings > About section.</string>
+    
+    <!-- Analytics Dashboard -->
+    <string name="analytics_dashboard_title">Analytics Dashboard</string>
+    <string name="analytics_dashboard_menu">Analytics Dashboard</string>
+    <string name="refresh_button">Refresh</string>
+    <string name="export_button">Export</string>
+    <string name="last_updated_placeholder">Last updated: --:--:--</string>
+    <string name="overall_statistics_title">Overall Statistics</string>
+    <string name="zero_count">0</string>
+    <string name="received_label">Received</string>
+    <string name="forwarded_label">Forwarded</string>
+    <string name="errors_label">Errors</string>
+    <string name="success_rate_label">Success Rate</string>
+    <string name="zero_percent">0%</string>
+    <string name="avg_processing_time_label">Avg Processing Time</string>
+    <string name="zero_milliseconds">0 ms</string>
+    <string name="app_opens_label">App Opens</string>
+    <string name="most_common_error_label">Most Common Error</string>
+    <string name="none_label">None</string>
+    <string name="period_statistics_title">Period Statistics</string>
+    <string name="today_label">Today</string>
+    <string name="this_week_label">This Week</string>
+    <string name="this_month_label">This Month</string>
+    
+    <!-- Analytics Menu -->
+    <string name="clear_analytics_data_menu">Clear Analytics Data</string>
+    <string name="settings_menu">Settings</string>
+    
+    <!-- Analytics Toast Messages -->
+    <string name="statistics_refreshed">Statistics refreshed</string>
+    <string name="error_loading_statistics">Error loading statistics</string>
+    <string name="export_failed">Export failed</string>
+    <string name="statistics_exported_successfully">Statistics exported successfully</string>
+    <string name="export_completed_sharing_failed">Export completed but sharing failed</string>
+    <string name="analytics_data_cleared">Analytics data cleared</string>
+    <string name="error_clearing_data">Error clearing data</string>
+    
+    <!-- Analytics Dialog -->
+    <string name="clear_analytics_data_title">Clear Analytics Data</string>
+    <string name="clear_analytics_confirmation_message">Are you sure you want to clear all analytics data? This action cannot be undone.</string>
+    <string name="clear_button">Clear</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="last_updated_format">Last updated: %s</string>
+    
+    <!-- Filter Placeholders -->
+    <string name="filter_name_placeholder">Filter Name</string>
+    <string name="filter_type_keyword">KEYWORD</string>
+    <string name="filter_action_allow">ALLOW</string>
+    <string name="filter_pattern_placeholder">Pattern: spam|advertisement</string>
+    
+    <!-- Target Number Placeholders -->
+    <string name="target_display_name_placeholder">Display Name</string>
+    <string name="target_phone_placeholder">+905551234567</string>
+    <string name="target_last_used_placeholder">Last used: 2 hours ago</string>
+    
+    <!-- Target Number Dynamic Text -->
+    <string name="target_last_used_prefix">Last used: </string>
+    <string name="target_not_used_yet">Not used yet</string>
+    <string name="target_enable">Enable</string>
+    <string name="target_disable">Disable</string>
+    
+    <!-- Filter Adapter Dynamic Text -->
+    <string name="filter_no_pattern_specified">No pattern specified</string>
+    <string name="filter_pattern_prefix">Pattern: </string>
+    <string name="filter_regex_suffix"> (regex)</string>
+    <string name="filter_last_prefix">Last: </string>
+    <string name="filter_last_never_text">Last: Never</string>
+    <string name="filter_case_sensitive_suffix"> (case-sensitive)</string>
+    <string name="filter_last_never">Last: Never</string>
+    <string name="no_pattern_specified">No pattern specified</string>
+    <string name="last_matched_format">Last: %s</string>
+    <string name="last_matched_never">Last: Never</string>
+    <string name="disable_button">Disable</string>
+    <string name="enable_button">Enable</string>
+    
+    <!-- Target Number Placeholders -->
+    <string name="display_name_placeholder">Display Name</string>
+    <string name="phone_number_placeholder">+905551234567</string>
+    <string name="last_used_placeholder">Last used: 2 hours ago</string>
+    <string name="last_used_format">Last used: %s</string>
+    <string name="not_used_yet">Not used yet</string>
+    
+    <!-- Onboarding Placeholders -->
+    <string name="step_number_one">1</string>
+    <string name="step_number_two">2</string>
+    <string name="step_number_three">3</string>
+    <string name="progress_indicator_placeholder">1 / 5</string>
+    
+    <!-- Permission Labels -->
+    <string name="required_permissions_title">Required Permissions:</string>
+    <string name="receive_sms_permission_label">SMS Reading Permission</string>
+    <string name="send_sms_permission_label">SMS Sending Permission</string>
+    
+    <!-- General Messages -->
+    <string name="permissions_granted_message">Permissions granted. You can now save the target number.</string>
+    <string name="sms_permissions_required">SMS permissions required!</string>
+    <string name="edit_functionality_coming_soon">Edit functionality coming soon</string>
+    <string name="filter_validation_passed">Filter validation passed</string>
     
 </resources>

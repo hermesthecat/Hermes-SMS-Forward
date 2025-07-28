@@ -34,7 +34,7 @@
     <!-- Show All -->
     <item
         android:id="@+id/action_show_all"
-        android:title="Tümünü Göster"
+        android:title="@string/history_show_all"
         android:orderInCategory="50"
         app:showAsAction="never" />
 

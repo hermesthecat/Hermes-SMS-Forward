@@ -111,10 +111,10 @@ public class TargetNumberAdapter extends RecyclerView.Adapter<TargetNumberAdapte
             // Last used information
             if (targetNumber.getLastUsedTimestamp() > 0) {
                 String lastUsedText = formatLastUsed(targetNumber.getLastUsedTimestamp());
-                tvLastUsed.setText("Son kullanım: " + lastUsedText);
+                tvLastUsed.setText(context.getString(R.string.target_last_used_prefix) + lastUsedText);
                 tvLastUsed.setVisibility(View.VISIBLE);
             } else {
-                tvLastUsed.setText("Henüz kullanılmadı");
+                tvLastUsed.setText(context.getString(R.string.target_not_used_yet));
                 tvLastUsed.setVisibility(View.VISIBLE);
             }
             
@@ -130,10 +130,10 @@ public class TargetNumberAdapter extends RecyclerView.Adapter<TargetNumberAdapte
             // Disabled badge
             if (!targetNumber.isEnabled()) {
                 tvDisabledBadge.setVisibility(View.VISIBLE);
-                btnToggleEnabled.setText("Etkinleştir");
+                btnToggleEnabled.setText(context.getString(R.string.target_enable));
             } else {
                 tvDisabledBadge.setVisibility(View.GONE);
-                btnToggleEnabled.setText("Devre Dışı Bırak");
+                btnToggleEnabled.setText(context.getString(R.string.target_disable));
             }
             
             // Button click listeners

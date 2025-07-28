@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -28,9 +29,15 @@ public class MainActivity extends AppCompatActivity {
     private EditText etTargetNumber;
     private Button btnSave;
     private TextView tvStatus;
-    private TextView tvPermissions;
+    private TextView tvReceiveSmsStatus;
+    private TextView tvSendSmsStatus;
     private TextView tvValidation;
     private SharedPreferences prefs;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LanguageManager.applyLanguage(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +78,8 @@ public class MainActivity extends AppCompatActivity {
         etTargetNumber = findViewById(R.id.etTargetNumber);
         btnSave = findViewById(R.id.btnSave);
         tvStatus = findViewById(R.id.tvStatus);
-        tvPermissions = findViewById(R.id.tvPermissions);
+        tvReceiveSmsStatus = findViewById(R.id.tvReceiveSmsStatus);
+        tvSendSmsStatus = findViewById(R.id.tvSendSmsStatus);
         tvValidation = findViewById(R.id.tvValidation);
     }
     
@@ -201,17 +209,28 @@ public class MainActivity extends AppCompatActivity {
     
     private void updateUI() {
         String savedNumber = prefs.getString(KEY_TARGET_NUMBER, "");
-        boolean hasPermissions = hasRequiredPermissions();
+        boolean hasReceiveSmsPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED;
+        boolean hasSendSmsPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED;
+        boolean hasAllPermissions = hasReceiveSmsPermission && hasSendSmsPermission;
         
-        if (hasPermissions) {
-            tvPermissions.setText(R.string.permissions_granted);
-            tvPermissions.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+        // Update individual permission status indicators
+        if (hasReceiveSmsPermission) {
+            tvReceiveSmsStatus.setText("✅");
+            tvReceiveSmsStatus.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
         } else {
-            tvPermissions.setText(R.string.permissions_required);
-            tvPermissions.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
+            tvReceiveSmsStatus.setText("❌");
+            tvReceiveSmsStatus.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+        }
+
+        if (hasSendSmsPermission) {
+            tvSendSmsStatus.setText("✅");
+            tvSendSmsStatus.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+        } else {
+            tvSendSmsStatus.setText("❌");
+            tvSendSmsStatus.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
         }
         
-        if (!TextUtils.isEmpty(savedNumber) && hasPermissions) {
+        if (!TextUtils.isEmpty(savedNumber) && hasAllPermissions) {
             tvStatus.setText(R.string.status_configured);
             tvStatus.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
         } else {
@@ -240,10 +259,10 @@ public class MainActivity extends AppCompatActivity {
             }
             
             if (allPermissionsGranted) {
-                Toast.makeText(this, "İzinler verildi. Şimdi hedef numarayı kaydedebilirsiniz.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.permissions_granted_message), Toast.LENGTH_LONG).show();
                 saveTargetNumber();
             } else {
-                Toast.makeText(this, "SMS izinleri gerekli!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.sms_permissions_required), Toast.LENGTH_LONG).show();
             }
             
             updateUI();

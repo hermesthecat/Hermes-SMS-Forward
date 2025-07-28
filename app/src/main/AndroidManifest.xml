@@ -64,7 +64,8 @@
             android:name=".HistoryActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"
-            android:label="@string/history_title">
+            android:label="@string/history_title"
+            android:theme="@style/Theme.HermesSmsForward.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -75,7 +76,7 @@
             android:name=".AnalyticsActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"
-            android:label="Analytics Dashboard">
+            android:label="@string/analytics_dashboard_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />

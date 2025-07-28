@@ -69,7 +69,7 @@ public class AnalyticsActivity extends AppCompatActivity {
         
         // Set up toolbar
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Analytics Dashboard");
+            getSupportActionBar().setTitle(getString(R.string.analytics_dashboard_title));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         
@@ -131,7 +131,7 @@ public class AnalyticsActivity extends AppCompatActivity {
     private void setupClickListeners() {
         btnRefresh.setOnClickListener(v -> {
             loadStatistics();
-            Toast.makeText(this, "Statistics refreshed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.statistics_refreshed), Toast.LENGTH_SHORT).show();
         });
         
         btnExport.setOnClickListener(v -> exportStatistics());
@@ -202,7 +202,7 @@ public class AnalyticsActivity extends AppCompatActivity {
                 
             } catch (Exception e) {
                 android.util.Log.e(TAG, "Error loading statistics: " + e.getMessage(), e);
-                runOnUiThread(() -> Toast.makeText(this, "Error loading statistics", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> Toast.makeText(this, getString(R.string.error_loading_statistics), Toast.LENGTH_SHORT).show());
             }
         });
     }
@@ -374,7 +374,7 @@ public class AnalyticsActivity extends AppCompatActivity {
                 
             } catch (Exception e) {
                 android.util.Log.e(TAG, "Error exporting statistics: " + e.getMessage(), e);
-                runOnUiThread(() -> Toast.makeText(this, "Export failed: " + e.getMessage(), Toast.LENGTH_LONG).show());
+                runOnUiThread(() -> Toast.makeText(this, getString(R.string.export_failed) + ": " + e.getMessage(), Toast.LENGTH_LONG).show());
             }
         });
     }
@@ -397,11 +397,11 @@ public class AnalyticsActivity extends AppCompatActivity {
             
             startActivity(Intent.createChooser(shareIntent, "Share Analytics Export"));
             
-            Toast.makeText(this, "Statistics exported successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.statistics_exported_successfully), Toast.LENGTH_SHORT).show();
             
         } catch (Exception e) {
             android.util.Log.e(TAG, "Error sharing export file: " + e.getMessage(), e);
-            Toast.makeText(this, "Export completed but sharing failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.export_completed_sharing_failed), Toast.LENGTH_SHORT).show();
         }
     }
     
@@ -436,10 +436,10 @@ public class AnalyticsActivity extends AppCompatActivity {
      */
     private void showClearDataConfirmation() {
         new androidx.appcompat.app.AlertDialog.Builder(this)
-            .setTitle("Clear Analytics Data")
-            .setMessage("Are you sure you want to clear all analytics data? This action cannot be undone.")
-            .setPositiveButton("Clear", (dialog, which) -> clearAnalyticsData())
-            .setNegativeButton("Cancel", null)
+            .setTitle(getString(R.string.clear_analytics_data_title))
+            .setMessage(getString(R.string.clear_analytics_confirmation_message))
+            .setPositiveButton(getString(R.string.clear_button), (dialog, which) -> clearAnalyticsData())
+            .setNegativeButton(getString(R.string.cancel_button), null)
             .show();
     }
     
@@ -453,13 +453,13 @@ public class AnalyticsActivity extends AppCompatActivity {
                 database.statisticsSummaryDao().deleteAllSummaries();
                 
                 runOnUiThread(() -> {
-                    Toast.makeText(this, "Analytics data cleared", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.analytics_data_cleared), Toast.LENGTH_SHORT).show();
                     loadStatistics(); // Refresh the display
                 });
                 
             } catch (Exception e) {
                 android.util.Log.e(TAG, "Error clearing analytics data: " + e.getMessage(), e);
-                runOnUiThread(() -> Toast.makeText(this, "Error clearing data", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> Toast.makeText(this, getString(R.string.error_clearing_data), Toast.LENGTH_SHORT).show());
             }
         });
     }

@@ -27,7 +27,8 @@
       "Bash(cmd.exe:*)",
       "Bash(echo:*)",
       "Bash(timeout:*)",
-      "Bash(cp:*)"
+      "Bash(cp:*)",
+      "Bash(adb:*)"
     ],
     "deny": []
   }
