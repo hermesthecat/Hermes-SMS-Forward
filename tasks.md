@@ -1,35 +1,35 @@
 # 📋 HERMES SMS FORWARD - TASK LIST
 
-## 🚨 PHASE 1: KRİTİK GÜVENLİK ve STABILITE (Öncelik: YÜKSEK)
+## 🚨 PHASE 1: CRITICAL SECURITY AND STABILITY (Priority: HIGH)
 
-### ✅ TASK 5: Güvenlik Logging Düzeltmeleri
+### ✅ TASK 5: Security Logging Fixes
 
-**Durum:** Completed  
-**Süre:** 2-3 saat  
-**Versiyon:** 1.3.0 → 1.4.0
+**Status:** Completed  
+**Duration:** 2-3 hours  
+**Version:** 1.3.0 → 1.4.0
 
-**Yapılacaklar:**
+**Tasks:**
 
-1. **SmsReceiver.java güvenlik düzeltmeleri:**
-   - Phone number masking fonksiyonu ekleme (`maskPhoneNumber()`)
-   - Production build'de hassas log'ları kapatma (BuildConfig.DEBUG kontrolü)
-   - SMS içeriği log'unu kaldırma veya masking ekleme
-   - Error log'larını generic hale getirme
+1. **SmsReceiver.java security fixes:**
+   - Add phone number masking function (`maskPhoneNumber()`)
+   - Disable sensitive logs in production builds (BuildConfig.DEBUG control)
+   - Remove or mask SMS content logging
+   - Make error logs generic
 
-2. **MainActivity.java logging iyileştirmeleri:**
-   - SharedPreferences okuma/yazma log'larını kaldırma
-   - Permission result log'larını sanitize etme
+2. **MainActivity.java logging improvements:**
+   - Remove SharedPreferences read/write logs
+   - Sanitize permission result logs
 
-3. **Test ve doğrulama:**
-   - Debug build'de log'ların çalıştığını doğrulama
-   - Release build simulation ile log'ların kapalı olduğunu test etme
+3. **Testing and validation:**
+   - Verify logs work in debug builds
+   - Test that logs are disabled in release build simulation
 
-**Tamamlandıktan sonra:**
+**After completion:**
 
-- APK build test - Eğer başarısız olursa hataları düzelt ve uyarıları çöz
-- ✅ Task'ı tamamlandı olarak işaretle (APK başarılı olduktan SONRA)
-- app/build.gradle'da versionCode ve versionName güncelle: 1.4.0 (versionCode: 5)
-- changelog.md güncelleme
+- APK build test - Fix errors and warnings if build fails
+- ✅ Mark task as completed (AFTER successful APK build)
+- Update versionCode and versionName in app/build.gradle: 1.4.0 (versionCode: 5)
+- Update changelog.md
 - Git commit: "Task 5: Security logging improvements and data masking"
 - Git push
 
@@ -37,11 +37,11 @@
 
 ### ✅ TASK 6: Input Validation ve Error Handling
 
-**Durum:** Completed  
-**Süre:** 4-5 saat  
-**Versiyon:** 1.4.0 → 1.5.0
+**Status:** Completed  
+**Duration:** 4-5 saat  
+**Version:** 1.4.0 → 1.5.0
 
-**Yapılacaklar:**
+**Tasks:**
 
 1. **Phone number validation utility oluşturma:**
    - `PhoneNumberValidator.java` sınıfı oluşturma
@@ -65,7 +65,7 @@
    - Error mesajları için yeni string'ler
    - Validation feedback mesajları
 
-**Tamamlandıktan sonra:**
+**After completion:**
 
 - APK build test - Eğer başarısız olursa hataları düzelt ve uyarıları çöz
 - ✅ Task'ı tamamlandı olarak işaretle (APK başarılı olduktan SONRA)
@@ -78,11 +78,11 @@
 
 ### ✅ TASK 7: Custom App Icon ve Branding
 
-**Durum:** Completed  
-**Süre:** 2-3 saat  
-**Versiyon:** 1.5.0 → 1.6.0
+**Status:** Completed  
+**Duration:** 2-3 saat  
+**Version:** 1.5.0 → 1.6.0
 
-**Yapılacaklar:**
+**Tasks:**
 
 1. **App icon design ve oluşturma:**
    - Hermes temalı icon tasarımı (SMS + yönlendirme sembolü)
@@ -103,7 +103,7 @@
    - Splash screen theme ekleme (Android 12+ uyumlu)
    - Brand color'ları colors.xml'e ekleme
 
-**Tamamlandıktan sonra:**
+**After completion:**
 
 - APK build test ve icon görünürlük kontrolü - Eğer başarısız olursa hataları düzelt
 - ✅ Task'ı tamamlandı olarak işaretle (APK başarılı olduktan SONRA)
@@ -118,11 +118,11 @@
 
 ### ✅ TASK 8: Unit Test Infrastructure
 
-**Durum:** Completed  
-**Süre:** 4-5 saat  
-**Versiyon:** 1.6.0 → 1.7.0
+**Status:** Completed  
+**Duration:** 4-5 saat  
+**Version:** 1.6.0 → 1.7.0
 
-**Yapılacaklar:**
+**Tasks:**
 
 1. **Test klasör yapısı oluşturma:**
    - `app/src/test/java/com/keremgok/sms/` klasörü
@@ -161,7 +161,7 @@
    - Robolectric Android test framework
    - Truth assertion library
 
-**Tamamlandıktan sonra:**
+**After completion:**
 
 - `./gradlew test` komutu ile tüm testleri çalıştırma
 - Test coverage raporu oluşturma
@@ -176,11 +176,11 @@
 
 ### ✅ TASK 9: UI/Integration Tests
 
-**Durum:** Completed  
-**Süre:** 3-4 saat  
-**Versiyon:** 1.7.0 → 1.8.0
+**Status:** Completed  
+**Duration:** 3-4 saat  
+**Version:** 1.7.0 → 1.8.0
 
-**Yapılacaklar:**
+**Tasks:**
 
 1. **Espresso test setup:**
    - `app/src/androidTest/java/com/keremgok/sms/` klasörü
@@ -202,7 +202,7 @@
    - GitHub Actions veya local test script
    - Automated testing pipeline
 
-**Tamamlandıktan sonra:**
+**After completion:**
 
 - `./gradlew connectedAndroidTest` ile UI testleri çalıştırma
 - APK build test - Eğer başarısız olursa hataları düzelt ve uyarıları çöz
@@ -218,11 +218,11 @@
 
 ### ✅ TASK 10: Release Build Configuration
 
-**Durum:** Completed  
-**Süre:** 2-3 saat  
-**Versiyon:** 1.8.0 → 1.9.0
+**Status:** Completed  
+**Duration:** 2-3 saat  
+**Version:** 1.8.0 → 1.9.0
 
-**Yapılacaklar:**
+**Tasks:**
 
 1. **Signing configuration:**
    - Keystore oluşturma (`keytool` ile)
@@ -244,7 +244,7 @@
    - `./gradlew bundleRelease` komutu test
    - Play Store upload format hazırlığı
 
-**Tamamlandıktan sonra:**
+**After completion:**
 
 - Release APK build test (`./gradlew assembleRelease`) - Eğer başarısız olursa hataları düzelt
 - AAB build test (`./gradlew bundleRelease`)
@@ -259,11 +259,11 @@
 
 ### ✅ TASK 11: Play Store Hazırlık
 
-**Durum:** Completed  
-**Süre:** 5-6 saat  
-**Versiyon:** 1.9.0 → 2.0.0
+**Status:** Completed  
+**Duration:** 5-6 saat  
+**Version:** 1.9.0 → 2.0.0
 
-**Yapılacaklar:**
+**Tasks:**
 
 1. **App metadata oluşturma:**
    - Play Store açıklaması (Türkçe/İngilizce)
@@ -286,7 +286,7 @@
    - Installation guide
    - User manual
 
-**Tamamlandıktan sonra:**
+**After completion:**
 
 - Final release build test - Eğer başarısız olursa hataları düzelt ve uyarıları çöz
 - ✅ Task'ı tamamlandı olarak işaretle (APK başarılı olduktan SONRA)
@@ -302,11 +302,11 @@
 
 ### ✅ TASK 12: Dark Mode Support
 
-**Durum:** Completed  
-**Süre:** 3-4 saat  
-**Versiyon:** 2.0.0 → 2.1.0
+**Status:** Completed  
+**Duration:** 3-4 saat  
+**Version:** 2.0.0 → 2.1.0
 
-**Yapılacaklar:**
+**Tasks:**
 
 1. **Theme resources:**
    - `themes.xml` (night) oluşturma
@@ -322,7 +322,7 @@
    - System theme detection
    - Manual theme switching (optional)
 
-**Tamamlandıktan sonra:**
+**After completion:**
 
 - Dark/Light mode test
 - APK build test - Eğer başarısız olursa hataları düzelt ve uyarıları çöz
@@ -336,11 +336,11 @@
 
 ### ✅ TASK 13: Settings Screen
 
-**Durum:** Completed  
-**Süre:** 4-5 saat  
-**Versiyon:** 2.1.0 → 2.2.0
+**Status:** Completed  
+**Duration:** 4-5 saat  
+**Version:** 2.1.0 → 2.2.0
 
-**Yapılacaklar:**
+**Tasks:**
 
 1. **Settings Activity oluşturma:**
    - `SettingsActivity.java` ve `fragment_settings.xml`
@@ -358,7 +358,7 @@
    - Forwarding delay setting
    - Backup/Restore settings
 
-**Tamamlandıktan sonra:**
+**After completion:**
 
 - Settings flow test
 - APK build test - Eğer başarısız olursa hataları düzelt ve uyarıları çöz
@@ -372,11 +372,11 @@
 
 ### ✅ TASK 14: SMS History View
 
-**Durum:** Completed  
-**Süre:** 5-6 saat  
-**Versiyon:** 2.2.0 → 2.3.0
+**Status:** Completed  
+**Duration:** 5-6 saat  
+**Version:** 2.2.0 → 2.3.0
 
-**Yapılacaklar:**
+**Tasks:**
 
 1. **Database setup:**
 
@@ -401,7 +401,7 @@
    - Success/failure status tracking
    - Automatic cleanup (30 gün eski kayıtlar)
 
-**Tamamlandıktan sonra:**
+**After completion:**
 
 - History functionality test
 - Database migration test
@@ -418,11 +418,11 @@
 
 ### ✅ TASK 15: Performance Optimization
 
-**Durum:** Completed  
-**Süre:** 4-5 saat  
-**Versiyon:** 2.3.0 → 2.4.0
+**Status:** Completed  
+**Duration:** 4-5 saat  
+**Version:** 2.3.0 → 2.4.0
 
-**Yapılacaklar:**
+**Tasks:**
 
 1. **Background processing optimization:**
    - WorkManager implementation
@@ -439,7 +439,7 @@
    - Exponential backoff strategy
    - Background thread usage
 
-**Tamamlandıktan sonra:**
+**After completion:**
 
 - Performance profiling
 - Memory usage test
@@ -454,11 +454,11 @@
 
 ### ✅ TASK 16: Multiple Target Numbers
 
-**Durum:** Completed  
-**Süre:** 7-8 saat  
-**Versiyon:** 2.4.0 → 2.5.0
+**Status:** Completed  
+**Duration:** 7-8 saat  
+**Version:** 2.4.0 → 2.5.0
 
-**Yapılacaklar:**
+**Tasks:**
 
 1. **Database schema update:**
    - Target numbers entity
@@ -475,7 +475,7 @@
    - Parallel vs sequential sending option
    - Error handling per target
 
-**Tamamlandıktan sonra:**
+**After completion:**
 
 - Multiple targets test
 - Database migration test
@@ -490,11 +490,11 @@
 
 ### ✅ TASK 17: SMS Filtering System
 
-**Durum:** Completed  
-**Süre:** 5-6 saat  
-**Versiyon:** 2.5.0 → 2.6.0
+**Status:** Completed  
+**Duration:** 5-6 saat  
+**Version:** 2.5.0 → 2.6.0
 
-**Yapılacaklar:**
+**Tasks:**
 
 1. **Filter engine:**
    - Keyword-based filtering
@@ -510,7 +510,7 @@
    - Spam detection (basic)
    - Whitelist/Blacklist management
 
-**Tamamlandıktan sonra:**
+**After completion:**
 
 - Filter rules test
 - Pattern matching test
@@ -525,11 +525,11 @@
 
 ### ✅ TASK 19: Backup & Restore
 
-**Durum:** Completed  
-**Süre:** 4-5 saat  
-**Versiyon:** 2.6.0 → 2.8.0
+**Status:** Completed  
+**Duration:** 4-5 saat  
+**Version:** 2.6.0 → 2.8.0
 
-**Yapılacaklar:**
+**Tasks:**
 
 1. **Local backup:**
    - Settings export to JSON
@@ -541,7 +541,7 @@
    - Merge vs replace options
    - Backup verification
 
-**Tamamlandıktan sonra:**
+**After completion:**
 
 - Backup/restore flow test
 - Data integrity test
@@ -556,11 +556,11 @@
 
 ### ✅ TASK 20: Analytics & Monitoring
 
-**Durum:** Completed  
-**Süre:** 3-4 saat  
-**Versiyon:** 2.8.0 → 2.9.0
+**Status:** Completed  
+**Duration:** 3-4 saat  
+**Version:** 2.8.0 → 2.9.0
 
-**Yapılacaklar:**
+**Tasks:**
 
 1. **Usage analytics (privacy-first):**
    - Local statistics tracking
@@ -576,7 +576,7 @@
    - Charts and graphs
    - Export statistics option
 
-**Tamamlandıktan sonra:**
+**After completion:**
 
 - Analytics data test
 - Privacy compliance check
@@ -593,11 +593,11 @@
 
 ### ✅ TASK 21: Accessibility & Internationalization
 
-**Durum:** Completed  
-**Süre:** 4-5 saat  
-**Versiyon:** 2.9.0 → 2.10.0
+**Status:** Completed  
+**Duration:** 4-5 saat  
+**Version:** 2.9.0 → 2.10.0
 
-**Yapılacaklar:**
+**Tasks:**
 
 1. **Accessibility improvements:**
    - ContentDescription for all UI elements
@@ -614,7 +614,7 @@
    - Multi-language testing
    - RTL layout testing
 
-**Tamamlandıktan sonra:**
+**After completion:**
 
 - Accessibility audit
 - Multi-language test
@@ -686,11 +686,11 @@ Tamamlanan işlemler:
 
 ### ✅ TASK 23: Enhanced Onboarding
 
-**Durum:** Completed  
-**Süre:** 4-5 saat  
-**Versiyon:** 2.10.0 → 2.11.0
+**Status:** Completed  
+**Duration:** 4-5 saat  
+**Version:** 2.10.0 → 2.11.0
 
-**Yapılacaklar:**
+**Tasks:**
 
 1. **OnboardingActivity oluşturma:**
    - `OnboardingActivity.java` ve ViewPager2 setup
@@ -714,7 +714,7 @@ Tamamlanan işlemler:
    - MainActivity'den OnboardingActivity'ye yönlendirme
    - Onboarding skip option
 
-**Tamamlandıktan sonra:**
+**After completion:**
 
 - Onboarding flow test (tüm steps)
 - Permission grant/deny scenarios test
@@ -729,11 +729,11 @@ Tamamlanan işlemler:
 
 ### TASK 30: Cloud Backup & Sync
 
-**Durum:** Pending  
-**Süre:** 6-7 saat  
-**Versiyon:** 2.11.0 → 2.12.0
+**Status:** Pending  
+**Duration:** 6-7 saat  
+**Version:** 2.11.0 → 2.12.0
 
-**Yapılacaklar:**
+**Tasks:**
 
 1. **Google Drive API integration:**
    - Google Play Services ve Drive API dependencies
@@ -771,7 +771,7 @@ implementation 'com.google.android.gms:play-services-drive:17.0.0'
 implementation 'com.google.api-client:google-api-client-android:1.23.0'
 ```
 
-**Tamamlandıktan sonra:**
+**After completion:**
 
 - Backup/restore flow test
 - Multi-device sync test
