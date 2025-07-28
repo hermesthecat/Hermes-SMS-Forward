@@ -1,5 +1,19 @@
 # Changelog - Hermes SMS Forward
 
+## [2.12.0] - 2025-07-28
+
+- ✅ Critical Bug Fix: Target Number Saving Issues
+  - **Onboarding Target Number Setup:** Fixed TargetNumberSetupFragment not saving phone numbers to database
+  - **MainActivity Database Integration:** Updated MainActivity to save/load target numbers from database instead of SharedPreferences only
+  - **Database Consistency:** Ensured all components (Onboarding, MainActivity, SmsReceiver) use the same database system
+  - **Real-time Validation:** Added live phone number validation in onboarding target number setup
+  - **Background Threading:** Proper ThreadManager usage for database operations in both onboarding and main screen
+  - **Backward Compatibility:** Maintained SharedPreferences fallback for existing installations
+  - **Error Handling:** Added comprehensive error handling and user feedback for target number operations
+  - **Data Persistence:** Fixed critical issue where SMS forwarding wouldn't work after onboarding completion
+  - **Primary Target Management:** Proper primary target number handling across onboarding and main app
+  - **User Experience:** Consistent behavior between onboarding setup and main screen target number management
+
 ## [2.11.0] - 2025-07-26
 
 - ✅ Task 23: Enhanced Onboarding tamamlandı

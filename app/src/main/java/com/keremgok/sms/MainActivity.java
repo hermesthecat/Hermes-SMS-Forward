@@ -157,8 +157,36 @@ public class MainActivity extends AppCompatActivity {
     }
     
     private void loadSavedNumber() {
-        String savedNumber = prefs.getString(KEY_TARGET_NUMBER, "");
-        etTargetNumber.setText(savedNumber);
+        // Load from database first, fallback to SharedPreferences for backward compatibility
+        AppDatabase database = AppDatabase.getInstance(this);
+        TargetNumberDao targetNumberDao = database.targetNumberDao();
+        
+        ThreadManager.getInstance().executeDatabase(() -> {
+            try {
+                TargetNumber primaryTarget = targetNumberDao.getPrimaryTargetNumber();
+                String numberToLoad = null;
+                
+                if (primaryTarget != null) {
+                    numberToLoad = primaryTarget.getPhoneNumber();
+                } else {
+                    // Fallback to SharedPreferences for backward compatibility
+                    numberToLoad = prefs.getString(KEY_TARGET_NUMBER, "");
+                }
+                
+                // Update UI on main thread
+                final String finalNumber = numberToLoad != null ? numberToLoad : "";
+                runOnUiThread(() -> {
+                    etTargetNumber.setText(finalNumber);
+                });
+                
+            } catch (Exception e) {
+                // Fallback to SharedPreferences on error
+                runOnUiThread(() -> {
+                    String savedNumber = prefs.getString(KEY_TARGET_NUMBER, "");
+                    etTargetNumber.setText(savedNumber);
+                });
+            }
+        });
     }
     
     private void saveTargetNumber() {
@@ -182,12 +210,50 @@ public class MainActivity extends AppCompatActivity {
         String numberToSave = result.getFormattedNumber() != null ? 
                               result.getFormattedNumber() : targetNumber;
         
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(KEY_TARGET_NUMBER, numberToSave);
-        editor.apply();
+        // Save to database instead of SharedPreferences
+        AppDatabase database = AppDatabase.getInstance(this);
+        TargetNumberDao targetNumberDao = database.targetNumberDao();
         
-        Toast.makeText(this, R.string.success_saved, Toast.LENGTH_SHORT).show();
-        updateUI();
+        // Save to database in background thread
+        ThreadManager.getInstance().executeDatabase(() -> {
+            try {
+                // Check if this number already exists
+                TargetNumber existingNumber = targetNumberDao.getTargetNumberByPhone(numberToSave);
+                
+                if (existingNumber != null) {
+                    // Update existing number - make sure it's enabled and primary
+                    existingNumber.setEnabled(true);
+                    existingNumber.setPrimary(true);
+                    targetNumberDao.update(existingNumber);
+                } else {
+                    // Create new target number as primary
+                    TargetNumber newTargetNumber = new TargetNumber(
+                        numberToSave,
+                        "Main Target", // Display name
+                        true, // isPrimary
+                        true  // isEnabled
+                    );
+                    targetNumberDao.insert(newTargetNumber);
+                }
+                
+                // Also keep SharedPreferences for backward compatibility
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString(KEY_TARGET_NUMBER, numberToSave);
+                editor.apply();
+                
+                // Show success message on UI thread
+                runOnUiThread(() -> {
+                    Toast.makeText(this, R.string.success_saved, Toast.LENGTH_SHORT).show();
+                    updateUI();
+                });
+                
+            } catch (Exception e) {
+                // Handle error on UI thread
+                runOnUiThread(() -> {
+                    Toast.makeText(this, getString(R.string.error_saving_target_number), Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
     }
     
     private boolean hasRequiredPermissions() {

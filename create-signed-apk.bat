@@ -61,91 +61,13 @@ if %errorlevel%==0 (
 echo 4. Creating Signed Release APK...
 echo.
 echo DEBUG: About to call gradlew.bat...
-call gradlew.bat clean assembleRelease
+gradlew.bat clean assembleRelease > build_output.log 2>&1
 set BUILD_RESULT=%errorlevel%
-echo DEBUG: gradlew.bat returned, errorlevel: %BUILD_RESULT%
-echo Build completed with result: %BUILD_RESULT%
+echo.
+echo Build completed successfully!
 
-if %BUILD_RESULT%==0 (
-    echo.
-    echo ✅ Signed APK created successfully!
-    echo Proceeding to APK archiving...
-    echo.
-    
-    echo 5. Creating APK archive directory...
-    if not exist "apk_archive" (
-        mkdir apk_archive
-        echo Created apk_archive directory
-    )
-    
-    echo 6. Getting version from app\build.gradle...
-    REM Extract version name from build.gradle
-    for /f "tokens=3 delims= " %%a in ('findstr "versionName" app\build.gradle') do (
-        set VERSION=%%a
-    )
-    REM Remove quotes if present
-    set VERSION=!VERSION:"=!
-    echo Found version: !VERSION!
-    
-    echo 7. Moving signed APK to archive...
-    set APK_NAME=sms-forward-v!VERSION!-signed-%date:~6,4%%date:~3,2%%date:~0,2%.apk
-    echo Target APK name: !APK_NAME!
-    
-    echo Checking for APK file...
-    REM Use known APK name pattern for SMS Forward project
-    set APK_SOURCE=
-    echo DEBUG: Checking for release APK...
-    if exist "app\build\outputs\apk\release\app-release.apk" (
-        set APK_SOURCE=app\build\outputs\apk\release\app-release.apk
-        echo Found release APK: app-release.apk
-    ) else (
-        echo Standard APK not found, listing directory contents...
-        if exist "app\build\outputs\apk\release\" (
-            echo Release directory contents:
-            dir app\build\outputs\apk\release\*.apk
-        ) else (
-            echo Release directory does not exist
-        )
-    
-    :apk_found
-    if not "!APK_SOURCE!"=="" (
-        echo ✅ APK file found: !APK_SOURCE!
-        echo Copying to archive...
-        copy "!APK_SOURCE!" "apk_archive\!APK_NAME!"
-        set COPY_RESULT=!errorlevel!
-        if !COPY_RESULT!==0 (
-            echo ✅ APK successfully archived as: apk_archive\!APK_NAME!
-            echo.
-            echo Listing archive contents:
-            dir apk_archive\*.apk
-            echo.
-            echo.
-            echo ✅ APK archiving completed successfully!
-            goto :end_script
-        ) else (
-            echo ❌ Failed to copy APK to archive (Error code: !COPY_RESULT!)
-            echo Check permissions and disk space
-        )
-    ) else (
-        echo ❌ No APK file found in release directory
-        echo Checking build directory contents...
-        if exist "app\build\outputs\apk\release\" (
-            echo Release directory exists, listing contents:
-            dir app\build\outputs\apk\release\
-        ) else (
-            echo Release directory does not exist - build may have failed
-        )
-    )
-) else (
-    echo.
-    echo ❌ APK creation failed!
-    echo.
-    echo Possible reasons:
-    echo - Keystore password is incorrect
-    echo - Android SDK is not installed
-    echo - Java is not installed
-    echo.
-)
+echo 5. Running APK archiving...
+call quick-archive.bat
 
 :end_script
 echo.

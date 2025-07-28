@@ -37,11 +37,17 @@ This is a comprehensive Android SMS forwarding application that automatically fo
 # Build release APK  
 ./gradlew assembleRelease
 
+# Build App Bundle for Play Store
+./gradlew bundleRelease
+
 # Install debug APK to connected device
 ./gradlew installDebug
 
 # Run unit tests
 ./gradlew test
+
+# Run specific test class
+./gradlew test --tests "PhoneNumberValidatorTest"
 
 # Run instrumentation tests
 ./gradlew connectedAndroidTest
@@ -49,9 +55,37 @@ This is a comprehensive Android SMS forwarding application that automatically fo
 # Clean build artifacts
 ./gradlew clean
 
+# Clean and build (full rebuild)
+./gradlew clean assembleDebug
+
 # Check for dependency updates
 ./gradlew dependencyUpdates
+
+# Lint check
+./gradlew lint
+
+# Generate lint report
+./gradlew lint --continue
 ```
+
+### Windows Batch Scripts (Alternative)
+
+```bat
+# Quick debug build
+build.bat
+
+# Clean and build
+clean-build.bat
+
+# Create signed release APK
+create-signed-apk.bat
+```
+
+### APK Output Locations
+
+- **Debug APK**: `app/build/outputs/apk/debug/app-debug.apk`
+- **Release APK**: `app/build/outputs/apk/release/app-release.apk`
+- **App Bundle**: `app/build/outputs/bundle/release/app-release.aab`
 
 ## Architecture
 
@@ -103,7 +137,7 @@ This is a comprehensive Android SMS forwarding application that automatically fo
 - **App ID**: `com.keremgok.sms`
 - **Min SDK**: 21 (Android 5.0)
 - **Target SDK**: 34 (Android 14)
-- **Current Version**: 2.11.0 (versionCode 22)
+- **Current Version**: 2.11.0 (versionCode 22) - Update these values when releasing new versions
 - **Permissions**: RECEIVE_SMS, SEND_SMS (both require runtime permission requests)
 - **Build Types**: Debug (with `.debug` suffix) and Release (with ProGuard/R8 obfuscation)
 - **Threading**: Use ThreadManager for all background operations instead of creating raw threads
@@ -140,6 +174,25 @@ Comprehensive testing framework configured with:
 
 - `app/build.gradle`: Build configuration with release obfuscation settings
 - `proguard-rules.pro`: Code obfuscation rules for release builds
-- `keystore.properties`: Release signing configuration
+- `keystore.properties`: Release signing configuration (gitignored)
 - `app/src/main/AndroidManifest.xml`: Component declarations and permissions
 - `app/src/main/res/xml/preferences.xml`: Settings screen configuration
+- `changelog.md`: Version history and release notes
+- `build.bat` / `clean-build.bat`: Windows build scripts for easier development
+
+## Code Quality
+
+```bash
+# Run all quality checks
+./gradlew lint test
+
+# Generate comprehensive reports
+./gradlew lint test --continue
+
+# Check ProGuard/R8 rules
+./gradlew assembleRelease --info
+```
+
+Reports are generated in:
+- **Lint Report**: `app/build/reports/lint-results.html`
+- **Test Report**: `app/build/reports/tests/test/index.html`

@@ -77,6 +77,12 @@ public class OnboardingActivity extends AppCompatActivity {
         
         btnNext.setOnClickListener(v -> {
             int currentItem = viewPager.getCurrentItem();
+            
+            // Save data from current fragment before proceeding
+            if (currentItem == 2) { // TargetNumberSetupFragment is at position 2
+                saveCurrentFragmentData();
+            }
+            
             if (currentItem < NUM_PAGES - 1) {
                 viewPager.setCurrentItem(currentItem + 1);
             } else {
@@ -118,6 +124,14 @@ public class OnboardingActivity extends AppCompatActivity {
         finish();
     }
     
+    private void saveCurrentFragmentData() {
+        // Get current fragment from adapter
+        Fragment currentFragment = pagerAdapter.getCurrentFragment();
+        if (currentFragment instanceof TargetNumberSetupFragment) {
+            ((TargetNumberSetupFragment) currentFragment).saveTargetNumber();
+        }
+    }
+    
     public static boolean isOnboardingCompleted(android.content.Context context) {
         SharedPreferences prefs = context.getSharedPreferences("app_prefs", android.content.Context.MODE_PRIVATE);
         return prefs.getBoolean(PREF_ONBOARDING_COMPLETED, false);
@@ -125,8 +139,11 @@ public class OnboardingActivity extends AppCompatActivity {
     
     private static class OnboardingPagerAdapter extends FragmentStateAdapter {
         
+        private FragmentActivity fragmentActivity;
+        
         public OnboardingPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
             super(fragmentActivity);
+            this.fragmentActivity = fragmentActivity;
         }
         
         @NonNull
@@ -146,6 +163,12 @@ public class OnboardingActivity extends AppCompatActivity {
                 default:
                     return new WelcomeFragment();
             }
+        }
+        
+        public Fragment getCurrentFragment() {
+            // ViewPager2 uses this tag format for fragments
+            String fragmentTag = "f" + ((OnboardingActivity) fragmentActivity).viewPager.getCurrentItem();
+            return fragmentActivity.getSupportFragmentManager().findFragmentByTag(fragmentTag);
         }
         
         @Override

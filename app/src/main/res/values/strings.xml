@@ -444,6 +444,7 @@
     <string name="target_disable">Devre Dışı Bırak</string>
     <string name="filter_last_never">Son: Hiçbir zaman</string>
     <string name="no_pattern_specified">Desen belirtilmedi</string>
+    <string name="filter_no_pattern_specified">Desen belirtilmedi</string>
     
     <!-- Filter Adapter Dynamic Text -->
     <string name="filter_pattern_prefix">Desen: </string>
@@ -488,5 +489,9 @@
     <string name="completion_step_2">Filter kuralları oluşturarak yönlendirmeyi özelleştirin</string>
     <string name="completion_step_3">Mesaj geçmişini takip etmek için geçmiş sekmesini kullanın</string>
     <string name="completion_support">Yardıma mı ihtiyacınız var? Ayarlar > Hakkında bölümünden destek alabilirsiniz.</string>
+    
+    <!-- Target Number Setup Messages -->
+    <string name="target_number_saved_successfully">Hedef numara başarıyla kaydedildi</string>
+    <string name="error_saving_target_number">Hedef numara kaydedilirken hata oluştu</string>
     
 </resources>
