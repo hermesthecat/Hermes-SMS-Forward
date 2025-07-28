@@ -129,9 +129,6 @@ if %BUILD_RESULT%==0 (
         )
     )
     echo.
-    echo Press any key to continue...
-    pause > nul
-    exit /b 0
 ) else (
     echo.
     echo ❌ Build failed with error code: %BUILD_RESULT%
