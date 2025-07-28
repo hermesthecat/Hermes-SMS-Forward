@@ -60,14 +60,28 @@ if %errorlevel%==0 (
 
 echo 4. Creating Signed Release APK...
 echo.
-echo DEBUG: About to call gradlew.bat...
-gradlew.bat clean assembleRelease > build_output.log 2>&1
+echo Building signed release APK...
+call gradlew.bat clean assembleRelease
 set BUILD_RESULT=%errorlevel%
-echo.
-echo Build completed successfully!
 
-echo 5. Running APK archiving...
-call quick-archive.bat
+if %BUILD_RESULT%==0 (
+    echo.
+    echo ✅ Build completed successfully!
+    echo.
+    echo 5. Running APK archiving...
+    call quick-archive.bat
+) else (
+    echo.
+    echo ❌ Build failed with error code: %BUILD_RESULT%
+    echo.
+    echo Possible reasons:
+    echo - Keystore password is incorrect
+    echo - Android SDK is not properly configured
+    echo - Build dependencies are missing
+    echo.
+    pause
+    exit /b %BUILD_RESULT%
+)
 
 :end_script
 echo.

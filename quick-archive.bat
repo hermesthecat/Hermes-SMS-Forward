@@ -1,10 +1,17 @@
 @echo off
+setlocal enabledelayedexpansion
 echo ========================================
 echo Quick APK Archive
 echo ========================================
 
-REM Use hardcoded version for now
-set VERSION=2.11.0
+REM Extract version from build.gradle
+echo Getting version from build.gradle...
+for /f "tokens=3 delims= " %%a in ('findstr "versionName" app\build.gradle') do (
+    set VERSION=%%a
+)
+REM Remove quotes
+set VERSION=!VERSION:"=!
+echo Found version: !VERSION!
 
 REM Create archive directory
 if not exist "apk_archive" mkdir apk_archive
@@ -24,13 +31,30 @@ if exist "apk_archive\%APK_NAME%" (
 )
 
 REM Check if APK exists and copy
+echo.
+echo Checking for release APK...
 if exist "app\build\outputs\apk\release\app-release.apk" (
-    echo Copying APK: %APK_NAME%
-    copy "app\build\outputs\apk\release\app-release.apk" "apk_archive\%APK_NAME%"
-    echo ✅ APK archived as: apk_archive\%APK_NAME%
-    dir apk_archive\*.apk
+    echo ✅ APK found: app\build\outputs\apk\release\app-release.apk
+    echo.
+    echo Copying APK as: !APK_NAME!
+    copy "app\build\outputs\apk\release\app-release.apk" "apk_archive\!APK_NAME!" > nul
+    if %errorlevel%==0 (
+        echo ✅ APK successfully archived as: apk_archive\!APK_NAME!
+        echo.
+        echo Archive contents:
+        dir apk_archive\*.apk
+    ) else (
+        echo ❌ Failed to copy APK to archive
+    )
 ) else (
     echo ❌ APK not found: app\build\outputs\apk\release\app-release.apk
+    echo.
+    echo Checking build output directory...
+    if exist "app\build\outputs\apk\release\" (
+        echo Release directory contents:
+        dir app\build\outputs\apk\release\
+    ) else (
+        echo Release directory does not exist - build may have failed
+    )
 )
-
-REM pause
+echo.
