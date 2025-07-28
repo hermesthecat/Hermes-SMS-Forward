@@ -106,11 +106,14 @@ if %BUILD_RESULT%==0 (
         echo.
         echo Copying APK as: !APK_NAME!
         copy "app\build\outputs\apk\release\app-release.apk" "apk_archive\!APK_NAME!" > nul
-        if !errorlevel!==0 (
+        set COPY_RESULT=!errorlevel!
+        if !COPY_RESULT!==0 (
             echo ✅ APK successfully archived as: apk_archive\!APK_NAME!
             echo.
             echo Archive contents:
             dir apk_archive\*.apk
+            echo.
+            echo ✅ APK creation and archiving completed successfully!
         ) else (
             echo ❌ Failed to copy APK to archive
         )
@@ -126,6 +129,9 @@ if %BUILD_RESULT%==0 (
         )
     )
     echo.
+    echo Press any key to continue...
+    pause > nul
+    exit /b 0
 ) else (
     echo.
     echo ❌ Build failed with error code: %BUILD_RESULT%
