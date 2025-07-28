@@ -114,6 +114,8 @@ if %BUILD_RESULT%==0 (
             dir apk_archive\*.apk
             echo.
             echo ✅ APK creation and archiving completed successfully!
+            REM Preserve success status after dir command
+            set BUILD_RESULT=0
         ) else (
             echo ❌ Failed to copy APK to archive
         )
