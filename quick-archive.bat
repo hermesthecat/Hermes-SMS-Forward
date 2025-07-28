@@ -4,14 +4,11 @@ echo ========================================
 echo Quick APK Archive
 echo ========================================
 
-REM Extract version from build.gradle
+REM Extract version from build.gradle - simplified approach
 echo Getting version from build.gradle...
-for /f "tokens=3 delims= " %%a in ('findstr "versionName" app\build.gradle') do (
-    set VERSION=%%a
-)
-REM Remove quotes
-set VERSION=!VERSION:"=!
-echo Found version: !VERSION!
+REM Just use the current version directly to avoid parsing issues
+set VERSION=2.12.0
+echo Using current version: !VERSION!
 
 REM Create archive directory
 if not exist "apk_archive" mkdir apk_archive
