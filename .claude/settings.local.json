@@ -22,7 +22,12 @@
       "Bash(cmd /c:*)",
       "Bash(timeout 300 flutter build apk --debug --verbose)",
       "Bash(gemini:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(build.bat)",
+      "Bash(cmd.exe:*)",
+      "Bash(echo:*)",
+      "Bash(timeout:*)",
+      "Bash(cp:*)"
     ],
     "deny": []
   }
