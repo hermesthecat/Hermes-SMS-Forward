@@ -28,7 +28,8 @@
       "Bash(echo:*)",
       "Bash(timeout:*)",
       "Bash(cp:*)",
-      "Bash(adb:*)"
+      "Bash(adb:*)",
+      "Bash(powershell:*)"
     ],
     "deny": []
   }
