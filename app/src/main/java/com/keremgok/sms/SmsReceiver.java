@@ -286,10 +286,14 @@ public class SmsReceiver extends BroadcastReceiver {
             // Determine priority based on SMS characteristics
             int priority = determineSmsPriority(originalSender, message);
             
-            // Determine forwarding SIM based on SIM selection logic (placeholder for now)
-            // TODO: AŞAMA 6 will implement proper SIM selection logic
-            int forwardingSubscriptionId = -1; // Will be determined by SIM selection logic
-            int forwardingSimSlot = -1; // Will be determined by SIM selection logic
+            // Determine forwarding SIM based on SIM selection logic
+            SmsSimSelectionHelper.SimSelectionResult simSelection = 
+                SmsSimSelectionHelper.determineForwardingSim(context, targetPhoneNumber, sourceSubscriptionId, targetNumber);
+            
+            int forwardingSubscriptionId = simSelection.getSubscriptionId();
+            int forwardingSimSlot = simSelection.getSimSlot();
+            
+            logDebug("SIM selection result for " + maskPhoneNumber(targetPhoneNumber) + ": " + simSelection.toString());
             
             // Queue the SMS for background processing with dual SIM support
             java.util.UUID workId = null;
@@ -370,10 +374,14 @@ public class SmsReceiver extends BroadcastReceiver {
     private void fallbackDirectForwardingToSingleTarget(Context context, String originalSender, String message, TargetNumber targetNumber, long timestamp, int sourceSubscriptionId, int sourceSimSlot) {
         String targetPhoneNumber = targetNumber.getPhoneNumber();
         
-        // Determine forwarding SIM based on SIM selection logic (placeholder for now)
-        // TODO: AŞAMA 6 will implement proper SIM selection logic
-        int forwardingSubscriptionId = -1; // Will be determined by SIM selection logic
-        int forwardingSimSlot = -1; // Will be determined by SIM selection logic
+        // Determine forwarding SIM based on SIM selection logic
+        SmsSimSelectionHelper.SimSelectionResult simSelection = 
+            SmsSimSelectionHelper.determineForwardingSim(context, targetPhoneNumber, sourceSubscriptionId, targetNumber);
+        
+        int forwardingSubscriptionId = simSelection.getSubscriptionId();
+        int forwardingSimSlot = simSelection.getSimSlot();
+        
+        logDebug("Fallback SIM selection result for " + maskPhoneNumber(targetPhoneNumber) + ": " + simSelection.toString());
         
         try {
             logDebug("Using fallback direct forwarding for target: " + maskPhoneNumber(targetPhoneNumber));

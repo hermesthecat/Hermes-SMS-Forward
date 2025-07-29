@@ -1,5 +1,21 @@
 # Changelog - Hermes SMS Forward
 
+## [2.24.0] - 2025-07-29
+
+- ✅ AŞAMA 6.1: SIM Selection Modes Implementasyonu - Intelligent SIM Selection Logic
+  - **SmsSimSelectionHelper Class:** Comprehensive SIM selection utility with intelligent mode-based forwarding logic
+  - **Three Selection Modes:** Auto mode (default SMS SIM), Source SIM mode (same as received), Specific SIM mode (per-target preference)
+  - **SimSelectionResult Class:** Structured result object with subscription ID, SIM slot, selection reason, and validation status
+  - **Auto Mode Logic:** Automatically selects default SMS SIM with fallback to first active SIM if default unavailable
+  - **Source SIM Mode Logic:** Uses the same SIM that received the SMS with automatic fallback to auto mode if unavailable
+  - **Specific SIM Mode Logic:** Uses target-specific preferred SIM slot with fallback to auto mode if preferred SIM unavailable
+  - **Global Settings Support:** getGlobalSimSelectionMode() and setGlobalSimSelectionMode() for app-wide preferences
+  - **Dual SIM Detection:** Automatic single SIM device detection with graceful degradation
+  - **Comprehensive Error Handling:** Robust error handling with fallback mechanisms and detailed logging
+  - **SmsReceiver Integration:** Replaced placeholder logic in both queue and fallback forwarding with intelligent SIM selection
+  - **Enhanced Logging:** Detailed SIM selection reasoning and result logging for debugging and transparency
+  - **Foundation Complete:** Core SIM selection infrastructure ready for UI configuration and advanced targeting rules
+
 ## [2.23.0] - 2025-07-29
 
 - ✅ AŞAMA 5.3: Fallback Direct Forwarding Güncellemeleri - Dual SIM Fallback Support
