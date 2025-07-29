@@ -394,14 +394,11 @@ public class SmsReceiver extends BroadcastReceiver {
         try {
             logDebug("Using fallback direct forwarding for target: " + maskPhoneNumber(targetPhoneNumber));
             
-            // Format the forwarded message with original sender info
-            String forwardedMessage = String.format(
-                "[Hermes SMS Forward]\nGönderen: %s\nMesaj: %s\nZaman: %s",
-                originalSender,
-                message,
-                new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss", java.util.Locale.getDefault())
-                    .format(new java.util.Date(timestamp))
-            );
+            // Format the forwarded message using SmsFormatter
+            SmsFormatter formatter = new SmsFormatter(context);
+            String forwardedMessage = formatter.formatMessage(originalSender, message, timestamp, 
+                                                            sourceSimSlot, forwardingSimSlot, 
+                                                            sourceSubscriptionId, forwardingSubscriptionId);
             
             // Get appropriate SmsManager based on subscription ID (dual SIM support)
             SmsManager smsManager;

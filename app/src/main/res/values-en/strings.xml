@@ -534,4 +534,98 @@ Examples:<br/>
     <string name="sim_selection_source">Source SIM</string>
     <string name="sim_selection_specific">Specific SIM</string>
     
+    <!-- History SIM Filter Strings -->
+    <string name="history_filter_sim1">Sent via SIM 1</string>
+    <string name="history_filter_sim2">Sent via SIM 2</string>
+    <string name="history_filter_by_source_sim">Filter by Source SIM</string>
+    <string name="history_filter_by_source_sim_title">Select Source SIM</string>
+    <string name="history_showing_sim_filter">Showing messages sent via %s</string>
+    <string name="history_showing_source_sim_filter">Showing messages from %s source SIM</string>
+    
+    <!-- SMS Formatting Settings -->
+    <string name="settings_category_sms_formatting">SMS Formatting</string>
+    <string name="settings_sms_format_type_title">SMS Format Type</string>
+    <string name="settings_sms_format_type_summary">Choose the formatting type for forwarded SMS messages</string>
+    <string name="settings_custom_header_title">Custom Header</string>
+    <string name="settings_custom_header_summary">Custom header to appear in SMS messages</string>
+    <string name="settings_include_timestamp_title">Include Timestamp</string>
+    <string name="settings_include_timestamp_summary">Add date and time information to forwarded SMS</string>
+    <string name="settings_include_sim_info_title">Include SIM Info</string>
+    <string name="settings_include_sim_info_summary">Add information about which SIM received and sent the message</string>
+    <string name="settings_date_format_title">Date Format</string>
+    <string name="settings_date_format_summary">Format to use for timestamp</string>
+    <string name="settings_custom_template_title">Custom Template</string>
+    <string name="settings_custom_template_summary">Available tags: \{HEADER\}, \{SENDER\}, \{MESSAGE\}, \{TIME\}, \{SIM_INFO\}</string>
+    <string name="settings_format_preview_title">Format Preview</string>
+    <string name="settings_format_preview_summary">Preview how the selected format will look</string>
+    
+    <!-- Custom Template Dialog -->
+    <string name="custom_template_keys_title">Available Tags:</string>
+    <string name="custom_template_keys_list">\{HEADER\} - Custom header\n\{SENDER\} - Sender number\n\{MESSAGE\} - Original message\n\{TIME\} - Date and time\n\{SIM_INFO\} - SIM information\n\{APP_NAME\} - Application name</string>
+    <string name="custom_template_input_label">Custom Template:</string>
+    <string name="custom_template_hint">[\{HEADER\}]\nFrom: \{SENDER\}\nMessage: \{MESSAGE\}\nTime: \{TIME\}\n\{SIM_INFO\}</string>
+    <string name="custom_template_preview_title">Preview:</string>
+    <string name="custom_template_preview_placeholder">Enter a template and press Preview button</string>
+    <string name="preview_button">Preview</string>
+    <string name="reset_button">Reset</string>
+    
+    <!-- Date Format Options -->
+    <string-array name="date_format_entries">
+        <item>dd/MM/yyyy HH:mm:ss</item>
+        <item>yyyy-MM-dd HH:mm:ss</item>
+        <item>dd.MM.yyyy HH:mm</item>
+        <item>MM/dd/yyyy h:mm a</item>
+        <item>HH:mm dd/MM/yyyy</item>
+    </string-array>
+    
+    <string-array name="date_format_values">
+        <item>dd/MM/yyyy HH:mm:ss</item>
+        <item>yyyy-MM-dd HH:mm:ss</item>
+        <item>dd.MM.yyyy HH:mm</item>
+        <item>MM/dd/yyyy h:mm a</item>
+        <item>HH:mm dd/MM/yyyy</item>
+    </string-array>
+    
+    <!-- Hardcoded Text Fixes -->
+    <string name="main_target_default_name">Main Target</string>
+    <string name="permission_granted_symbol">✅</string>
+    <string name="permission_denied_symbol">❌</string>
+    <string name="language_change_dialog_title">Language Change</string>
+    <string name="language_change_dialog_message">Language change will be applied after app restart.</string>
+    <string name="language_change_confirm">OK</string>
+    <string name="language_change_cancel">Cancel</string>
+    <string name="format_compact_button">Compact</string>
+    <string name="format_preview_error">Format preview error: </string>
+    <string name="format_preview_title_template">%s Format Preview</string>
+    <string name="custom_template_saved">Custom template saved</string>
+    <string name="template_save_error">Template save error: </string>
+    <string name="error_none">None</string>
+    <string name="error_unknown">Unknown</string>
+    <string name="last_updated_prefix">Last updated: </string>
+    <string name="default_zero">0</string>
+    <string name="default_zero_percent">0%</string>
+    <string name="csv_export_header">Hermes SMS Forward - Analytics Export</string>
+    <string name="csv_generated_prefix">Generated: </string>
+    <string name="csv_overall_statistics">OVERALL STATISTICS</string>
+    <string name="csv_metric_value_header">Metric,Value</string>
+    <string name="csv_total_received">Total SMS Received,</string>
+    <string name="csv_total_forwarded">Total SMS Forwarded,</string>
+    <string name="csv_successful_forwards">Successful Forwards,</string>
+    <string name="csv_failed_forwards">Failed Forwards,</string>
+    <string name="csv_success_rate">Success Rate,</string>
+    <string name="csv_total_errors">Total Errors,</string>
+    <string name="csv_app_opens">App Opens,</string>
+    <string name="csv_daily_stats_header">DAILY STATISTICS (Last 30 Days)</string>
+    <string name="csv_daily_columns">Date,Received,Forwarded,Successful,Failed,Success Rate,Errors</string>
+    <string name="csv_error_analysis_header">ERROR ANALYSIS (Last 30 Days)</string>
+    <string name="csv_error_columns">Error Code,Count</string>
+    <string name="csv_no_error_data">No error data available</string>
+    <string name="analytics_email_subject">Hermes SMS Forward - Analytics Export</string>
+    <string name="analytics_email_body">Analytics data exported from Hermes SMS Forward app.</string>
+    <string name="share_analytics_title">Share Analytics Export</string>
+    <string name="migrated_target_name">Migrated Target</string>
+    <string name="backup_app_name">Hermes SMS Forward</string>
+    <string name="sim_debug_title">SIM Debug Information</string>
+    <string name="primary_target_name">Primary Target</string>
+
 </resources>

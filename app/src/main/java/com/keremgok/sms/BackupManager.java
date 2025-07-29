@@ -91,7 +91,7 @@ public class BackupManager {
             }
             
             backup.put("created_timestamp", System.currentTimeMillis());
-            backup.put("created_by", "Hermes SMS Forward");
+            backup.put("created_by", context.getString(R.string.backup_app_name));
             
             // Backup SharedPreferences settings
             backup.put("settings", exportSettings());

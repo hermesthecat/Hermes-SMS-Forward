@@ -435,7 +435,7 @@ public abstract class AppDatabase extends RoomDatabase {
                     // Create target number record
                     TargetNumber targetNumber = new TargetNumber(
                         existingTargetNumber,
-                        "Migrated Target", // Default display name
+                        context.getString(R.string.migrated_target_name), // Default display name
                         true, // Set as primary
                         true  // Enabled
                     );

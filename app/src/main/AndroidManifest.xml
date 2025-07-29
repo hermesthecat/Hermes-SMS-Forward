@@ -88,7 +88,7 @@
             android:name=".SimDebugActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"
-            android:label="SIM Debug Information"
+            android:label="@string/sim_debug_title"
             android:theme="@style/Theme.HermesSmsForward.NoActionBar"
             android:enabled="@bool/is_debug_build">
             <meta-data

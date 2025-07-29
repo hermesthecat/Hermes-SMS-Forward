@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
                     // Create new target number as primary
                     TargetNumber newTargetNumber = new TargetNumber(
                         numberToSave,
-                        "Main Target", // Display name
+                        getString(R.string.main_target_default_name), // Display name
                         true, // isPrimary
                         true  // isEnabled
                     );
@@ -288,26 +288,26 @@ public class MainActivity extends AppCompatActivity {
         
         // Update individual permission status indicators
         if (hasReceiveSmsPermission) {
-            tvReceiveSmsStatus.setText("✅");
+            tvReceiveSmsStatus.setText(getString(R.string.permission_granted_symbol));
             tvReceiveSmsStatus.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
         } else {
-            tvReceiveSmsStatus.setText("❌");
+            tvReceiveSmsStatus.setText(getString(R.string.permission_denied_symbol));
             tvReceiveSmsStatus.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
         }
 
         if (hasSendSmsPermission) {
-            tvSendSmsStatus.setText("✅");
+            tvSendSmsStatus.setText(getString(R.string.permission_granted_symbol));
             tvSendSmsStatus.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
         } else {
-            tvSendSmsStatus.setText("❌");
+            tvSendSmsStatus.setText(getString(R.string.permission_denied_symbol));
             tvSendSmsStatus.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
         }
         
         if (hasReadPhoneStatePermission) {
-            tvReadPhoneStateStatus.setText("✅");
+            tvReadPhoneStateStatus.setText(getString(R.string.permission_granted_symbol));
             tvReadPhoneStateStatus.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
         } else {
-            tvReadPhoneStateStatus.setText("❌");
+            tvReadPhoneStateStatus.setText(getString(R.string.permission_denied_symbol));
             tvReadPhoneStateStatus.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
         }
         

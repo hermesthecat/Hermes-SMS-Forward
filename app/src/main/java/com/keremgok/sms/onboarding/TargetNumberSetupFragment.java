@@ -131,7 +131,7 @@ public class TargetNumberSetupFragment extends Fragment {
         // Create new target number (first one is primary and enabled by default)
         TargetNumber targetNumber = new TargetNumber(
             formattedNumber,
-            "Primary Target", // Default display name
+            getString(R.string.primary_target_name), // Default display name
             true, // isPrimary - first target is primary
             true  // isEnabled
         );

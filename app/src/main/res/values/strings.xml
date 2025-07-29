@@ -126,6 +126,23 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
         <item>custom</item>
     </string-array>
     
+    <!-- Date Format Options -->
+    <string-array name="date_format_entries">
+        <item>dd/MM/yyyy HH:mm:ss</item>
+        <item>yyyy-MM-dd HH:mm:ss</item>
+        <item>dd.MM.yyyy HH:mm</item>
+        <item>MM/dd/yyyy h:mm a</item>
+        <item>HH:mm dd/MM/yyyy</item>
+    </string-array>
+    
+    <string-array name="date_format_values">
+        <item>dd/MM/yyyy HH:mm:ss</item>
+        <item>yyyy-MM-dd HH:mm:ss</item>
+        <item>dd.MM.yyyy HH:mm</item>
+        <item>MM/dd/yyyy h:mm a</item>
+        <item>HH:mm dd/MM/yyyy</item>
+    </string-array>
+    
     <!-- Language Selection Options -->
     <string name="settings_language_title">Uygulama Dili</string>
     <string name="settings_language_summary">Uygulamada kullanılacak dili seçin</string>
@@ -509,7 +526,7 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <!-- Language Strings -->
     <string name="language_auto">Otomatik</string>
     <string name="language_turkish">Türkçe</string>
-    <string name="language_english">English</string>
+    <string name="language_english">İngilizce</string>
     
     <!-- Log Level Strings -->
     <string name="log_level_error">Hata</string>
@@ -546,4 +563,73 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="sim_source">Kaynak SIM</string>
     <string name="sim_specific">Belirli SIM</string>
     
+    <!-- SMS Formatting Settings -->
+    <string name="settings_category_sms_formatting">SMS Biçimlendirme</string>
+    <string name="settings_sms_format_type_title">SMS Format Türü</string>
+    <string name="settings_sms_format_type_summary">Yönlendirilen SMS mesajlarının biçimlendirme türünü seçin</string>
+    <string name="settings_custom_header_title">Özel Başlık</string>
+    <string name="settings_custom_header_summary">SMS mesajlarında görünecek özel başlık</string>
+    <string name="settings_include_timestamp_title">Zaman Damgası Ekle</string>
+    <string name="settings_include_timestamp_summary">Yönlendirilen SMS mesajlarına tarih ve saat bilgisi ekle</string>
+    <string name="settings_include_sim_info_title">SIM Bilgisi Ekle</string>
+    <string name="settings_include_sim_info_summary">Hangi SIM\'den geldiği ve hangisinden gönderildiği bilgisini ekle</string>
+    <string name="settings_date_format_title">Tarih Formatı</string>
+    <string name="settings_date_format_summary">Zaman damgası için kullanılacak format</string>
+    <string name="settings_custom_template_title">Özel Şablon</string>
+    <string name="settings_custom_template_summary">Kullanılabilir etiketler: \{HEADER\}, \{SENDER\}, \{MESSAGE\}, \{TIME\}, \{SIM_INFO\}</string>
+    <string name="settings_format_preview_title">Format Önizleme</string>
+    <string name="settings_format_preview_summary">Seçili formatın nasıl görüneceğini önizle</string>
+    
+    <!-- Custom Template Dialog -->
+    <string name="custom_template_keys_title">Kullanılabilir Etiketler:</string>
+    <string name="custom_template_keys_list">\{HEADER\} - Özel başlık\n\{SENDER\} - Gönderen numara\n\{MESSAGE\} - Orijinal mesaj\n\{TIME\} - Tarih ve saat\n\{SIM_INFO\} - SIM bilgileri\n\{APP_NAME\} - Uygulama adı</string>
+    <string name="custom_template_input_label">Özel Şablon:</string>
+    <string name="custom_template_hint">[\{HEADER\}]\nGönderen: \{SENDER\}\nMesaj: \{MESSAGE\}\nZaman: \{TIME\}\n\{SIM_INFO\}</string>
+    <string name="custom_template_preview_title">Önizleme:</string>
+    <string name="custom_template_preview_placeholder">Bir şablon girin ve Önizleme butonuna basın</string>
+    <string name="preview_button">Önizleme</string>
+    <string name="reset_button">Sıfırla</string>
+    
+    <!-- Hardcoded Text Fixes -->
+    <string name="main_target_default_name">Ana Hedef</string>
+    <string name="permission_granted_symbol">✅</string>
+    <string name="permission_denied_symbol">❌</string>
+    <string name="language_change_dialog_title">Dil Değişikliği</string>
+    <string name="language_change_dialog_message">Dil değişikliğinin uygulanması için uygulama yeniden başlatılacak.</string>
+    <string name="language_change_confirm">Tamam</string>
+    <string name="language_change_cancel">İptal</string>
+    <string name="format_compact_button">Kompakt</string>
+    <string name="format_preview_error">Format önizleme hatası: </string>
+    <string name="format_preview_title_template">%s Format Önizleme</string>
+    <string name="custom_template_saved">Özel şablon kaydedildi</string>
+    <string name="template_save_error">Şablon kaydetme hatası: </string>
+    <string name="error_none">Yok</string>
+    <string name="error_unknown">Bilinmeyen</string>
+    <string name="last_updated_prefix">Son güncelleme: </string>
+    <string name="default_zero">0</string>
+    <string name="default_zero_percent">0%</string>
+    <string name="csv_export_header">Hermes SMS Forward - Analitik Dışa Aktarım</string>
+    <string name="csv_generated_prefix">Oluşturulma: </string>
+    <string name="csv_overall_statistics">GENEL İSTATİSTİKLER</string>
+    <string name="csv_metric_value_header">Metrik,Değer</string>
+    <string name="csv_total_received">Toplam SMS Alındı,</string>
+    <string name="csv_total_forwarded">Toplam SMS Yönlendirildi,</string>
+    <string name="csv_successful_forwards">Başarılı Yönlendirmeler,</string>
+    <string name="csv_failed_forwards">Başarısız Yönlendirmeler,</string>
+    <string name="csv_success_rate">Başarı Oranı,</string>
+    <string name="csv_total_errors">Toplam Hatalar,</string>
+    <string name="csv_app_opens">Uygulama Açılışları,</string>
+    <string name="csv_daily_stats_header">GÜNLÜK İSTATİSTİKLER (Son 30 Gün)</string>
+    <string name="csv_daily_columns">Tarih,Alınan,Yönlendirilen,Başarılı,Başarısız,Başarı Oranı,Hatalar</string>
+    <string name="csv_error_analysis_header">HATA ANALİZİ (Son 30 Gün)</string>
+    <string name="csv_error_columns">Hata Kodu,Sayı</string>
+    <string name="csv_no_error_data">Hata verisi mevcut değil</string>
+    <string name="analytics_email_subject">Hermes SMS Forward - Analitik Dışa Aktarım</string>
+    <string name="analytics_email_body">Hermes SMS Forward uygulamasından analitik verileri dışa aktarıldı.</string>
+    <string name="share_analytics_title">Analitik Dışa Aktarımı Paylaş</string>
+    <string name="migrated_target_name">Taşınan Hedef</string>
+    <string name="backup_app_name">Hermes SMS Forward</string>
+    <string name="sim_debug_title">SIM Debug Bilgisi</string>
+    <string name="primary_target_name">Birincil Hedef</string>
+
 </resources>

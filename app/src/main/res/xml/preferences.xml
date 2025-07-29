@@ -22,6 +22,57 @@
             android:max="10"
             android:defaultValue="0" />
 
+        <!-- SMS Format Type -->
+        <ListPreference
+            android:key="sms_format_type"
+            android:title="@string/settings_sms_format_title"
+            android:summary="@string/settings_sms_format_summary"
+            android:entries="@array/sms_format_entries"
+            android:entryValues="@array/sms_format_values"
+            android:defaultValue="standard" />
+
+        <!-- Custom Header -->
+        <EditTextPreference
+            android:key="custom_header"
+            android:title="@string/settings_custom_header_title"
+            android:summary="@string/settings_custom_header_summary"
+            android:defaultValue="Hermes SMS Forward" />
+
+        <!-- Include Timestamp -->
+        <SwitchPreferenceCompat
+            android:key="include_timestamp"
+            android:title="@string/settings_include_timestamp_title"
+            android:summary="@string/settings_include_timestamp_summary"
+            android:defaultValue="true" />
+
+        <!-- Include SIM Info -->
+        <SwitchPreferenceCompat
+            android:key="include_sim_info"
+            android:title="@string/settings_include_sim_info_title"
+            android:summary="@string/settings_include_sim_info_summary"
+            android:defaultValue="true" />
+
+        <!-- Date Format -->
+        <ListPreference
+            android:key="date_format"
+            android:title="@string/settings_date_format_title"
+            android:summary="@string/settings_date_format_summary"
+            android:entries="@array/date_format_entries"
+            android:entryValues="@array/date_format_values"
+            android:defaultValue="dd/MM/yyyy HH:mm:ss" />
+
+        <!-- Custom Template -->
+        <Preference
+            android:key="custom_sms_template"
+            android:title="@string/settings_custom_template_title"
+            android:summary="@string/settings_custom_template_summary" />
+
+        <!-- Format Preview -->
+        <Preference
+            android:key="format_preview"
+            android:title="@string/settings_format_preview_title"
+            android:summary="@string/settings_format_preview_summary" />
+
     </PreferenceCategory>
 
     <!-- Notification Settings Category -->

@@ -86,8 +86,11 @@ public class SmsQueueWorker extends Worker {
                 return Result.failure();
             }
             
-            // Format forwarded message
-            String forwardedMessage = formatForwardedMessage(originalSender, originalMessage, timestamp);
+            // Format forwarded message using SmsFormatter
+            SmsFormatter formatter = new SmsFormatter(getApplicationContext());
+            String forwardedMessage = formatter.formatMessage(originalSender, originalMessage, timestamp,
+                                                            sourceSimSlot, forwardingSimSlot,
+                                                            sourceSubscriptionId, forwardingSubscriptionId);
             
             // Process SMS based on priority with dual SIM support
             boolean success = processSmsWithPriority(forwardedMessage, targetNumber, priority, forwardingSubscriptionId);
@@ -211,16 +214,14 @@ public class SmsQueueWorker extends Worker {
     }
     
     /**
-     * Format the forwarded message with original sender info
+     * Format the forwarded message with original sender info (deprecated - use SmsFormatter)
+     * @deprecated Use SmsFormatter.formatMessage() instead
      */
+    @Deprecated
     private String formatForwardedMessage(String originalSender, String originalMessage, long timestamp) {
-        return String.format(
-            "[Hermes SMS Forward]\nGönderen: %s\nMesaj: %s\nZaman: %s",
-            originalSender,
-            originalMessage,
-            new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss", java.util.Locale.getDefault())
-                .format(new java.util.Date(timestamp))
-        );
+        // Fallback to SmsFormatter for consistency
+        SmsFormatter formatter = new SmsFormatter(getApplicationContext());
+        return formatter.formatMessage(originalSender, originalMessage, timestamp);
     }
     
     /**

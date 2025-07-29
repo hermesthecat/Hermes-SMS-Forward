@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -98,6 +99,9 @@ public class SettingsActivity extends AppCompatActivity {
             
             // Initialize dual SIM settings
             initializeDualSimSettings();
+            
+            // Initialize SMS formatting settings
+            initializeSmsFormattingSettings();
         }
         
         /**
@@ -170,9 +174,9 @@ public class SettingsActivity extends AppCompatActivity {
                     
                     // Show restart dialog to apply language change
                     new AlertDialog.Builder(requireContext())
-                        .setTitle(getString(R.string.settings_language_title))
-                        .setMessage("Dil değişikliğinin uygulanması için uygulama yeniden başlatılacak.\n\nLanguage change will be applied after app restart.")
-                        .setPositiveButton("Tamam / OK", (dialog, which) -> {
+                        .setTitle(getString(R.string.language_change_dialog_title))
+                        .setMessage(getString(R.string.language_change_dialog_message))
+                        .setPositiveButton(getString(R.string.language_change_confirm), (dialog, which) -> {
                             // Save the language preference
                             getPreferenceManager().getSharedPreferences()
                                 .edit()
@@ -188,7 +192,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 requireActivity().finish();
                             }
                         })
-                        .setNegativeButton("İptal / Cancel", null)
+                        .setNegativeButton(getString(R.string.language_change_cancel), null)
                         .show();
                     
                     return false; // Don't update preference immediately
@@ -665,6 +669,267 @@ public class SettingsActivity extends AppCompatActivity {
                 if (dualSimCategory != null) {
                     dualSimCategory.addPreference(singleSimInfo);
                 }
+            }
+        }
+        
+        /**
+         * Initialize SMS formatting settings
+         */
+        private void initializeSmsFormattingSettings() {
+            // Initialize format preview
+            Preference formatPreview = findPreference("format_preview");
+            if (formatPreview != null) {
+                formatPreview.setOnPreferenceClickListener(preference -> {
+                    showFormatPreview();
+                    return true;
+                });
+                
+                // Update preview summary based on current format
+                updateFormatPreviewSummary();
+            }
+            
+            // Listen for format type changes
+            androidx.preference.ListPreference formatTypePref = findPreference("sms_format_type");
+            if (formatTypePref != null) {
+                formatTypePref.setOnPreferenceChangeListener((preference, newValue) -> {
+                    // Update preview when format type changes
+                    ThreadManager.getInstance().executeBackground(() -> {
+                        try {
+                            Thread.sleep(100); // Small delay to ensure preference is updated
+                            if (getActivity() != null) {
+                                getActivity().runOnUiThread(this::updateFormatPreviewSummary);
+                            }
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
+                    });
+                    return true;
+                });
+            }
+            
+            // Initialize custom template preference
+            Preference customTemplatePref = findPreference("custom_sms_template");
+            if (customTemplatePref != null) {
+                customTemplatePref.setOnPreferenceClickListener(preference -> {
+                    showCustomTemplateDialog();
+                    return true;
+                });
+            }
+            
+            // Listen for other formatting preference changes
+            String[] formatPrefs = {"custom_header", "include_timestamp", "include_sim_info", "date_format"};
+            for (String prefKey : formatPrefs) {
+                Preference pref = findPreference(prefKey);
+                if (pref != null) {
+                    pref.setOnPreferenceChangeListener((preference, newValue) -> {
+                        // Update preview when any formatting option changes
+                        ThreadManager.getInstance().executeBackground(() -> {
+                            try {
+                                Thread.sleep(100); // Small delay to ensure preference is updated
+                                if (getActivity() != null) {
+                                    getActivity().runOnUiThread(this::updateFormatPreviewSummary);
+                                }
+                            } catch (InterruptedException e) {
+                                Thread.currentThread().interrupt();
+                            }
+                        });
+                        return true;
+                    });
+                }
+            }
+        }
+        
+        /**
+         * Update format preview summary
+         */
+        private void updateFormatPreviewSummary() {
+            Preference formatPreview = findPreference("format_preview");
+            if (formatPreview != null) {
+                try {
+                    SmsFormatter formatter = new SmsFormatter(requireContext());
+                    String currentFormat = formatter.getCurrentFormatType();
+                    
+                    String previewText;
+                    switch (currentFormat) {
+                        case SmsFormatter.FORMAT_COMPACT:
+                            previewText = "Kompakt / Compact";
+                            break;
+                        case SmsFormatter.FORMAT_DETAILED:
+                            previewText = "Detaylı / Detailed";
+                            break;
+                        case SmsFormatter.FORMAT_CUSTOM:
+                            previewText = "Özel / Custom";
+                            break;
+                        case SmsFormatter.FORMAT_STANDARD:
+                        default:
+                            previewText = "Standart / Standard";
+                            break;
+                    }
+                    
+                    formatPreview.setSummary("Mevcut format: " + previewText + " - Önizleme için tıklayın");
+                } catch (Exception e) {
+                    formatPreview.setSummary(getString(R.string.settings_format_preview_summary));
+                }
+            }
+        }
+        
+        /**
+         * Show format preview dialog
+         */
+        private void showFormatPreview() {
+            try {
+                SmsFormatter formatter = new SmsFormatter(requireContext());
+                String currentFormat = formatter.getCurrentFormatType();
+                String preview = formatter.getFormatPreview(currentFormat);
+                
+                new AlertDialog.Builder(requireContext())
+                    .setTitle(getString(R.string.settings_format_preview_title))
+                    .setMessage(preview)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setNeutralButton(getResources().getStringArray(R.array.sms_format_entries)[0], (dialog, which) -> showFormatPreviewForType(SmsFormatter.FORMAT_STANDARD))
+                    .setNegativeButton(getString(R.string.format_compact_button), (dialog, which) -> showFormatPreviewForType(SmsFormatter.FORMAT_COMPACT))
+                    .show();
+                    
+            } catch (Exception e) {
+                Toast.makeText(requireContext(), getString(R.string.format_preview_error) + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+        
+        /**
+         * Show format preview for specific type
+         */
+        private void showFormatPreviewForType(String formatType) {
+            try {
+                SmsFormatter formatter = new SmsFormatter(requireContext());
+                String preview = formatter.getFormatPreview(formatType);
+                
+                new AlertDialog.Builder(requireContext())
+                    .setTitle(getString(R.string.format_preview_title_template, formatType.toUpperCase()))
+                    .setMessage(preview)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
+                    
+            } catch (Exception e) {
+                Toast.makeText(requireContext(), getString(R.string.format_preview_error) + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+        
+        /**
+         * Show custom template dialog
+         */
+        private void showCustomTemplateDialog() {
+            View dialogView = getLayoutInflater().inflate(R.layout.dialog_custom_template, null);
+            
+            android.widget.EditText etCustomTemplate = dialogView.findViewById(R.id.etCustomTemplate);
+            android.widget.TextView tvTemplatePreview = dialogView.findViewById(R.id.tvTemplatePreview);
+            android.widget.Button btnPreviewTemplate = dialogView.findViewById(R.id.btnPreviewTemplate);
+            android.widget.Button btnResetTemplate = dialogView.findViewById(R.id.btnResetTemplate);
+            
+            // Load current template
+            android.content.SharedPreferences prefs = requireContext().getSharedPreferences("HermesPrefs", android.content.Context.MODE_PRIVATE);
+            String currentTemplate = prefs.getString("custom_sms_template", getDefaultTemplate());
+            etCustomTemplate.setText(currentTemplate);
+            
+            // Preview button functionality
+            btnPreviewTemplate.setOnClickListener(v -> {
+                String template = etCustomTemplate.getText().toString();
+                if (!android.text.TextUtils.isEmpty(template)) {
+                    String preview = generateTemplatePreview(template);
+                    tvTemplatePreview.setText(preview);
+                    tvTemplatePreview.setTextColor(getResources().getColor(android.R.color.black));
+                } else {
+                    tvTemplatePreview.setText(getString(R.string.custom_template_preview_placeholder));
+                    tvTemplatePreview.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                }
+            });
+            
+            // Reset button functionality
+            btnResetTemplate.setOnClickListener(v -> {
+                etCustomTemplate.setText(getDefaultTemplate());
+                tvTemplatePreview.setText(getString(R.string.custom_template_preview_placeholder));
+                tvTemplatePreview.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            });
+            
+            // Show initial preview
+            if (!android.text.TextUtils.isEmpty(currentTemplate)) {
+                String preview = generateTemplatePreview(currentTemplate);
+                tvTemplatePreview.setText(preview);
+                tvTemplatePreview.setTextColor(getResources().getColor(android.R.color.black));
+            }
+            
+            AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(getString(R.string.settings_custom_template_title))
+                .setView(dialogView)
+                .setPositiveButton(android.R.string.ok, (d, which) -> {
+                    String newTemplate = etCustomTemplate.getText().toString();
+                    saveCustomTemplate(newTemplate);
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .create();
+                
+            dialog.show();
+        }
+        
+        /**
+         * Get default template based on language
+         */
+        private String getDefaultTemplate() {
+            String currentLanguage = getResources().getConfiguration().locale.getLanguage();
+            boolean isTurkish = "tr".equals(currentLanguage);
+            
+            if (isTurkish) {
+                return "[{HEADER}]\nGönderen: {SENDER}\nMesaj: {MESSAGE}\nZaman: {TIME}\n{SIM_INFO}";
+            } else {
+                return "[{HEADER}]\nFrom: {SENDER}\nMessage: {MESSAGE}\nTime: {TIME}\n{SIM_INFO}";
+            }
+        }
+        
+        /**
+         * Generate template preview
+         */
+        private String generateTemplatePreview(String template) {
+            try {
+                // Sample data for preview
+                String sampleSender = "+905551234567";
+                String sampleMessage = "Bu bir örnek SMS mesajıdır";
+                long sampleTimestamp = System.currentTimeMillis();
+                
+                // Use SmsFormatter to generate preview with the custom template
+                android.content.SharedPreferences prefs = requireContext().getSharedPreferences("HermesPrefs", android.content.Context.MODE_PRIVATE);
+                String originalTemplate = prefs.getString("custom_sms_template", "");
+                
+                // Temporarily save the new template
+                prefs.edit().putString("custom_sms_template", template).apply();
+                
+                // Generate preview
+                SmsFormatter formatter = new SmsFormatter(requireContext());
+                String preview = formatter.formatMessage(sampleSender, sampleMessage, sampleTimestamp, 0, 1, 1, 2);
+                
+                // Restore original template
+                prefs.edit().putString("custom_sms_template", originalTemplate).apply();
+                
+                return preview;
+                
+            } catch (Exception e) {
+                return "Template önizleme hatası: " + e.getMessage();
+            }
+        }
+        
+        /**
+         * Save custom template
+         */
+        private void saveCustomTemplate(String template) {
+            try {
+                android.content.SharedPreferences prefs = requireContext().getSharedPreferences("HermesPrefs", android.content.Context.MODE_PRIVATE);
+                prefs.edit().putString("custom_sms_template", template).apply();
+                
+                Toast.makeText(requireContext(), getString(R.string.custom_template_saved), Toast.LENGTH_SHORT).show();
+                
+                // Update format preview
+                updateFormatPreviewSummary();
+                
+            } catch (Exception e) {
+                Toast.makeText(requireContext(), getString(R.string.template_save_error) + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }

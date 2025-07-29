@@ -122,7 +122,7 @@
                 android:id="@+id/tvReceiveSmsStatus"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:text="❌"
+android:text="@string/permission_denied_symbol"
                 android:textSize="12sp"
                 android:gravity="center"
                 android:layout_marginEnd="8dp" />
@@ -148,7 +148,7 @@
                 android:id="@+id/tvSendSmsStatus"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:text="❌"
+android:text="@string/permission_denied_symbol"
                 android:textSize="12sp"
                 android:gravity="center"
                 android:layout_marginEnd="8dp" />
@@ -173,7 +173,7 @@
                 android:id="@+id/tvReadPhoneStateStatus"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:text="❌"
+android:text="@string/permission_denied_symbol"
                 android:textSize="12sp"
                 android:gravity="center"
                 android:layout_marginEnd="8dp" />

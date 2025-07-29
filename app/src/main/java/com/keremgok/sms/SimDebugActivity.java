@@ -28,7 +28,7 @@ public class SimDebugActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("SIM Debug Information");
+            getSupportActionBar().setTitle(getString(R.string.sim_debug_title));
         }
         
         tvSimInfo = findViewById(R.id.tv_sim_info);

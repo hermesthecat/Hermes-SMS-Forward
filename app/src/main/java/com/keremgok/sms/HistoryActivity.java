@@ -318,7 +318,7 @@ public class HistoryActivity extends AppCompatActivity {
                     filteredHistory.addAll(simHistory);
                     adapter.notifyDataSetChanged();
                     
-                    String simName = simSlot == 0 ? "SIM 1" : "SIM 2";
+                    String simName = simSlot == 0 ? getString(R.string.sim_1) : getString(R.string.sim_2);
                     String message = getString(R.string.history_showing_sim_filter, simName);
                     Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
                 });

@@ -195,7 +195,7 @@ public class AnalyticsActivity extends AppCompatActivity {
                 final Double finalAvgProcessingTime = avgProcessingTime;
                 
                 // Get most common error
-                String commonError = "None";
+                String commonError = getString(R.string.error_none);
                 try {
                     List<AnalyticsEventDao.ErrorCodeCount> errors = analyticsDao.getMostCommonErrors(
                         thirtyDaysAgo, System.currentTimeMillis(), 1);
@@ -203,7 +203,7 @@ public class AnalyticsActivity extends AppCompatActivity {
                         commonError = errors.get(0).error_code;
                     }
                 } catch (Exception e) {
-                    commonError = "Unknown";
+                    commonError = getString(R.string.error_unknown);
                 }
                 final String mostCommonError = commonError;
                 
@@ -257,7 +257,7 @@ public class AnalyticsActivity extends AppCompatActivity {
         
         // Update last refresh time
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.US);
-        tvLastUpdateTime.setText("Last updated: " + timeFormat.format(new Date()));
+        tvLastUpdateTime.setText(getString(R.string.last_updated_prefix) + timeFormat.format(new Date()));
         
         // Today's statistics
         if (todayStats != null) {
@@ -266,10 +266,10 @@ public class AnalyticsActivity extends AppCompatActivity {
             tvTodaySuccessRate.setText(String.format(Locale.US, "%.1f%%", todayStats.getSuccessRate()));
             tvTodayErrors.setText(String.valueOf(todayStats.getErrorCount()));
         } else {
-            tvTodayReceived.setText("0");
-            tvTodayForwarded.setText("0");
-            tvTodaySuccessRate.setText("0%");
-            tvTodayErrors.setText("0");
+            tvTodayReceived.setText(getString(R.string.default_zero));
+            tvTodayForwarded.setText(getString(R.string.default_zero));
+            tvTodaySuccessRate.setText(getString(R.string.default_zero_percent));
+            tvTodayErrors.setText(getString(R.string.default_zero));
         }
         
         // Week's statistics (aggregate from daily summaries)
@@ -328,12 +328,12 @@ public class AnalyticsActivity extends AppCompatActivity {
             try {
                 // Generate CSV content
                 StringBuilder csvContent = new StringBuilder();
-                csvContent.append("Hermes SMS Forward - Analytics Export\n");
-                csvContent.append("Generated: ").append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(new Date())).append("\n\n");
+                csvContent.append(getString(R.string.csv_export_header)).append("\n");
+                csvContent.append(getString(R.string.csv_generated_prefix)).append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(new Date())).append("\n\n");
                 
                 // Overall statistics
-                csvContent.append("OVERALL STATISTICS\n");
-                csvContent.append("Metric,Value\n");
+                csvContent.append(getString(R.string.csv_overall_statistics)).append("\n");
+                csvContent.append(getString(R.string.csv_metric_value_header)).append("\n");
                 
                 SmsHistoryDao historyDao = database.smsHistoryDao();
                 int totalReceived = historyDao.getTotalCount();
@@ -341,23 +341,23 @@ public class AnalyticsActivity extends AppCompatActivity {
                 int failedCount = historyDao.getFailedCount();
                 double overallSuccessRate = totalReceived > 0 ? (successCount * 100.0 / totalReceived) : 0.0;
                 
-                csvContent.append("Total SMS Received,").append(totalReceived).append("\n");
-                csvContent.append("Total SMS Forwarded,").append(successCount + failedCount).append("\n");
-                csvContent.append("Successful Forwards,").append(successCount).append("\n");
-                csvContent.append("Failed Forwards,").append(failedCount).append("\n");
-                csvContent.append("Success Rate,").append(String.format(Locale.US, "%.2f%%", overallSuccessRate)).append("\n");
+                csvContent.append(getString(R.string.csv_total_received)).append(totalReceived).append("\n");
+                csvContent.append(getString(R.string.csv_total_forwarded)).append(successCount + failedCount).append("\n");
+                csvContent.append(getString(R.string.csv_successful_forwards)).append(successCount).append("\n");
+                csvContent.append(getString(R.string.csv_failed_forwards)).append(failedCount).append("\n");
+                csvContent.append(getString(R.string.csv_success_rate)).append(String.format(Locale.US, "%.2f%%", overallSuccessRate)).append("\n");
                 
                 // Get analytics data
                 AnalyticsEventDao analyticsDao = database.analyticsEventDao();
                 int totalErrors = analyticsDao.getEventCountByType("SMS_ERROR");
                 int appOpens = analyticsDao.getEventCountByType("APP_OPEN");
                 
-                csvContent.append("Total Errors,").append(totalErrors).append("\n");
-                csvContent.append("App Opens,").append(appOpens).append("\n");
+                csvContent.append(getString(R.string.csv_total_errors)).append(totalErrors).append("\n");
+                csvContent.append(getString(R.string.csv_app_opens)).append(appOpens).append("\n");
                 
                 // Daily statistics for last 30 days
-                csvContent.append("\nDAILY STATISTICS (Last 30 Days)\n");
-                csvContent.append("Date,Received,Forwarded,Successful,Failed,Success Rate,Errors\n");
+                csvContent.append("\n").append(getString(R.string.csv_daily_stats_header)).append("\n");
+                csvContent.append(getString(R.string.csv_daily_columns)).append("\n");
                 
                 StatisticsSummaryDao summaryDao = database.statisticsSummaryDao();
                 List<StatisticsSummary> dailyStats = summaryDao.getLastNDays(30);
@@ -373,8 +373,8 @@ public class AnalyticsActivity extends AppCompatActivity {
                 }
                 
                 // Error analysis
-                csvContent.append("\nERROR ANALYSIS (Last 30 Days)\n");
-                csvContent.append("Error Code,Count\n");
+                csvContent.append("\n").append(getString(R.string.csv_error_analysis_header)).append("\n");
+                csvContent.append(getString(R.string.csv_error_columns)).append("\n");
                 
                 long thirtyDaysAgo = System.currentTimeMillis() - (30L * 24 * 60 * 60 * 1000);
                 try {
@@ -384,7 +384,7 @@ public class AnalyticsActivity extends AppCompatActivity {
                         csvContent.append(error.error_code).append(",").append(error.count).append("\n");
                     }
                 } catch (Exception e) {
-                    csvContent.append("No error data available\n");
+                    csvContent.append(getString(R.string.csv_no_error_data)).append("\n");
                 }
                 
                 // Create file in app-specific external storage (no permissions needed)
@@ -424,11 +424,11 @@ public class AnalyticsActivity extends AppCompatActivity {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/csv");
             shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Hermes SMS Forward - Analytics Export");
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "Analytics data exported from Hermes SMS Forward app.");
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.analytics_email_subject));
+            shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.analytics_email_body));
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             
-            startActivity(Intent.createChooser(shareIntent, "Share Analytics Export"));
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_analytics_title)));
             
             Toast.makeText(this, getString(R.string.statistics_exported_successfully), Toast.LENGTH_SHORT).show();
             
