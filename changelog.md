@@ -7,7 +7,7 @@
   - **Code Cleanup:** Removed SPAM_DETECTION from FilterEngine.java switch case and method references
   - **Entity Update:** Removed TYPE_SPAM_DETECTION constant from SmsFilter.java and updated comment
   - **UI Update:** Updated FilterRulesAdapter.java to use TYPE_SIM_BASED instead of removed SPAM_DETECTION
-  - **Array Resources:** Removed SPAM_DETECTION from filter type arrays in arrays.xml 
+  - **Array Resources:** Removed SPAM_DETECTION from filter type arrays in arrays.xml
   - **Database Migration:** Added migration 6->7 to remove existing SPAM_DETECTION filters from database
   - **Build Consistency:** Clean build achieved with no SPAM_DETECTION references remaining
   - **Filter Types Reduced:** Now supporting 5 filter types: KEYWORD, SENDER_NUMBER, WHITELIST, BLACKLIST, SIM_BASED
