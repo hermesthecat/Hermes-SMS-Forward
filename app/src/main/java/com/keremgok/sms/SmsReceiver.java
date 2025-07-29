@@ -368,8 +368,14 @@ public class SmsReceiver extends BroadcastReceiver {
      * Fallback direct forwarding method for a single target when queue system fails
      */
     private void fallbackDirectForwardingToSingleTarget(Context context, String originalSender, String message, TargetNumber targetNumber, long timestamp, int sourceSubscriptionId, int sourceSimSlot) {
+        String targetPhoneNumber = targetNumber.getPhoneNumber();
+        
+        // Determine forwarding SIM based on SIM selection logic (placeholder for now)
+        // TODO: AŞAMA 6 will implement proper SIM selection logic
+        int forwardingSubscriptionId = -1; // Will be determined by SIM selection logic
+        int forwardingSimSlot = -1; // Will be determined by SIM selection logic
+        
         try {
-            String targetPhoneNumber = targetNumber.getPhoneNumber();
             logDebug("Using fallback direct forwarding for target: " + maskPhoneNumber(targetPhoneNumber));
             
             // Format the forwarded message with original sender info
@@ -381,31 +387,47 @@ public class SmsReceiver extends BroadcastReceiver {
                     .format(new java.util.Date(timestamp))
             );
             
-            // Send SMS directly using SmsManager
-            SmsManager smsManager = SmsManager.getDefault();
+            // Get appropriate SmsManager based on subscription ID (dual SIM support)
+            SmsManager smsManager;
+            if (forwardingSubscriptionId != -1 && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
+                try {
+                    smsManager = SmsManager.getSmsManagerForSubscriptionId(forwardingSubscriptionId);
+                    logDebug("Fallback using subscription-specific SmsManager for subscription " + forwardingSubscriptionId);
+                } catch (Exception e) {
+                    Log.w(TAG, "Failed to get SmsManager for subscription " + forwardingSubscriptionId + 
+                             " in fallback, using default: " + e.getMessage());
+                    smsManager = SmsManager.getDefault();
+                }
+            } else {
+                smsManager = SmsManager.getDefault();
+                logDebug("Fallback using default SmsManager (subscription ID: " + forwardingSubscriptionId + ")");
+            }
             
             if (forwardedMessage.length() > 160) {
                 // Send multipart SMS
                 java.util.ArrayList<String> parts = smsManager.divideMessage(forwardedMessage);
                 smsManager.sendMultipartTextMessage(targetPhoneNumber, null, parts, null, null);
-                logDebug("Fallback multipart SMS sent to " + maskPhoneNumber(targetPhoneNumber) + " (" + parts.size() + " parts)");
+                String subscriptionInfo = forwardingSubscriptionId != -1 ? " via subscription " + forwardingSubscriptionId : " via default SIM";
+                logDebug("Fallback multipart SMS sent to " + maskPhoneNumber(targetPhoneNumber) + " (" + parts.size() + " parts)" + subscriptionInfo);
             } else {
                 // Send single SMS
                 smsManager.sendTextMessage(targetPhoneNumber, null, forwardedMessage, null, null);
-                logDebug("Fallback single SMS sent to " + maskPhoneNumber(targetPhoneNumber));
+                String subscriptionInfo = forwardingSubscriptionId != -1 ? " via subscription " + forwardingSubscriptionId : " via default SIM";
+                logDebug("Fallback single SMS sent to " + maskPhoneNumber(targetPhoneNumber) + subscriptionInfo);
             }
             
-            // Log success to database
-            logSmsHistory(context, originalSender, message, targetPhoneNumber, forwardedMessage, timestamp, true, null, sourceSimSlot, -1, sourceSubscriptionId, -1);
+            // Log success to database with dual SIM information
+            logSmsHistory(context, originalSender, message, targetPhoneNumber, forwardedMessage, timestamp, true, null, sourceSimSlot, forwardingSimSlot, sourceSubscriptionId, forwardingSubscriptionId);
             // Update last used timestamp
             updateTargetLastUsed(context, targetNumber.getId(), timestamp);
-            logInfo("Fallback SMS forwarding completed successfully for target: " + maskPhoneNumber(targetPhoneNumber));
+            String subscriptionInfo = forwardingSubscriptionId != -1 ? " via subscription " + forwardingSubscriptionId : " via default SIM";
+            logInfo("Fallback SMS forwarding completed successfully for target: " + maskPhoneNumber(targetPhoneNumber) + subscriptionInfo);
             
         } catch (Exception e) {
-            String targetPhoneNumber = targetNumber.getPhoneNumber();
-            Log.e(TAG, "Fallback SMS forwarding failed for target " + maskPhoneNumber(targetPhoneNumber) + ": " + e.getMessage(), e);
-            // Log failure to database
-            logSmsHistory(context, originalSender, message, targetPhoneNumber, "", timestamp, false, "Fallback forwarding failed: " + e.getMessage(), sourceSimSlot, -1, sourceSubscriptionId, -1);
+            String subscriptionInfo = forwardingSubscriptionId != -1 ? " via subscription " + forwardingSubscriptionId : "";
+            Log.e(TAG, "Fallback SMS forwarding failed for target " + maskPhoneNumber(targetPhoneNumber) + subscriptionInfo + ": " + e.getMessage(), e);
+            // Log failure to database with dual SIM information
+            logSmsHistory(context, originalSender, message, targetPhoneNumber, "", timestamp, false, "Fallback forwarding failed: " + e.getMessage(), sourceSimSlot, forwardingSimSlot, sourceSubscriptionId, forwardingSubscriptionId);
         }
     }
     

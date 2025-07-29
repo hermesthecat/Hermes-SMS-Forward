@@ -1,5 +1,19 @@
 # Changelog - Hermes SMS Forward
 
+## [2.23.0] - 2025-07-29
+
+- ✅ AŞAMA 5.3: Fallback Direct Forwarding Güncellemeleri - Dual SIM Fallback Support
+  - **Subscription-Specific Fallback:** Updated fallbackDirectForwardingToSingleTarget() to use subscription-specific SmsManager
+  - **Dual SIM Fallback Logic:** Implemented SmsManager.getSmsManagerForSubscriptionId() with graceful fallback to default
+  - **Enhanced Fallback Logging:** Comprehensive logging with SIM subscription information throughout fallback process
+  - **SIM-Aware Error Handling:** Database logging and error messages now include subscription and SIM slot information
+  - **Graceful Degradation:** Automatic fallback to default SmsManager when subscription-specific manager fails
+  - **Complete SIM Integration:** History logging updated to store source and forwarding SIM information in fallback scenarios
+  - **API Level Compatibility:** Proper handling of Android 5.1+ dual SIM APIs with backward compatibility for older versions
+  - **Variable Scope Fix:** Resolved compilation errors by properly scoping SIM variables across try-catch blocks
+  - **Placeholder for SIM Selection:** Added TODO for AŞAMA 6 SIM selection logic implementation
+  - **Foundation Complete:** Fallback SMS forwarding infrastructure ready for advanced SIM selection and forwarding logic
+
 ## [2.22.0] - 2025-07-29
 
 - ✅ AŞAMA 5.2: SmsQueueManager.java Güncellemeleri - Dual SIM Queue Management

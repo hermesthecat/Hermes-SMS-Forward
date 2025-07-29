@@ -253,9 +253,9 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
 - [x] Git commit with descriptive message
 - [x] Git push
 
-#### 5.2 SmsQueueManager.java Güncellemeleri
+#### ✅ 5.2 SmsQueueManager.java Güncellemeleri
 
-- [ ] Queue metodlarına SIM parametreleri ekle:
+- [x] Queue metodlarına SIM parametreleri ekle:
 
   ```java
   public UUID queueHighPrioritySms(String sender, String message, String targetNumber, 
@@ -263,14 +263,14 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
                                    int forwardingSubscriptionId)
   ```
 
-- [ ] SIM selection logic ekle
-- [ ] APK build test
-- [ ] Fix errors and warnings if build fails
-- [ ] ✅ Mark task as completed (AFTER successful APK build)
-- [ ] Update versionCode and versionName in app/build.gradle
-- [ ] Update changelog.md
-- [ ] Git commit with descriptive message
-- [ ] Git push
+- [x] SIM selection logic ekle
+- [x] APK build test
+- [x] Fix errors and warnings if build fails
+- [x] ✅ Mark task as completed (AFTER successful APK build)
+- [x] Update versionCode and versionName in app/build.gradle
+- [x] Update changelog.md
+- [x] Git commit with descriptive message
+- [x] Git push
 
 #### 5.3 Fallback Direct Forwarding Güncellemeleri
 
