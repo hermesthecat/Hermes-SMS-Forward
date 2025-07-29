@@ -57,6 +57,9 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
     private Spinner spinnerSimSelection;
     private List<SimManager.SimInfo> availableSims;
     
+    // Cache to prevent repeated SIM checks during dialog
+    private Boolean cachedDualSimSupported = null;
+    
     // Data and Adapters
     private TargetNumberAdapter adapter;
     private AppDatabase database;
@@ -161,10 +164,7 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
      * Setup SIM selection UI components
      */
     private void setupSimSelectionUI() {
-        // Load available SIMs
-        loadAvailableSims();
-        
-        // Setup radio button listeners
+        // Setup radio button listeners first
         radioGroupSimMode.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.radio_specific) {
                 spinnerSimSelection.setVisibility(View.VISIBLE);
@@ -173,30 +173,55 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
             }
         });
         
-        // Hide/show SIM selection based on dual SIM support
-        if (!SimManager.isDualSimSupported(this) || (availableSims != null && availableSims.size() <= 1)) {
-            // Single SIM device or no dual SIM - hide SIM selection UI
-            radioGroupSimMode.setVisibility(View.GONE);
-            spinnerSimSelection.setVisibility(View.GONE);
-            
-            // Add info message for single SIM devices
-            TextView simInfoText = new TextView(this);
-            simInfoText.setText(R.string.dual_sim_not_supported);
-            simInfoText.setTextSize(12);
-            simInfoText.setTextColor(getResources().getColor(android.R.color.darker_gray));
-        }
+        // Default to hiding SIM selection until we confirm dual SIM support
+        radioGroupSimMode.setVisibility(View.GONE);
+        spinnerSimSelection.setVisibility(View.GONE);
+        
+        // Check dual SIM support in background thread
+        ThreadManager.getInstance().executeBackground(() -> {
+            try {
+                // Load available SIMs
+                List<SimManager.SimInfo> sims = SimManager.getActiveSimCards(this);
+                boolean isDualSim = sims.size() >= 2;
+                
+                runOnUiThread(() -> {
+                    availableSims = sims;
+                    cachedDualSimSupported = isDualSim;
+                    
+                    if (isDualSim && availableSims.size() > 1) {
+                        // Show SIM selection UI for dual SIM devices
+                        radioGroupSimMode.setVisibility(View.VISIBLE);
+                        setupSimSpinner();
+                    } else {
+                        // Keep hidden for single SIM devices
+                        radioGroupSimMode.setVisibility(View.GONE);
+                        spinnerSimSelection.setVisibility(View.GONE);
+                        
+                        // Show single SIM info message
+                        showSingleSimInfo();
+                    }
+                });
+            } catch (Exception e) {
+                runOnUiThread(() -> {
+                    // On error, hide SIM selection and show single SIM info
+                    availableSims = new ArrayList<>();
+                    cachedDualSimSupported = false;
+                    radioGroupSimMode.setVisibility(View.GONE);
+                    spinnerSimSelection.setVisibility(View.GONE);
+                    showSingleSimInfo();
+                });
+            }
+        });
     }
     
     /**
      * Load available SIM cards for selection
+     * This method is now handled in setupSimSelectionUI() background thread
      */
     private void loadAvailableSims() {
-        try {
-            availableSims = SimManager.getActiveSimCards(this);
-            setupSimSpinner();
-        } catch (Exception e) {
+        // This method is deprecated - SIM loading now happens in setupSimSelectionUI()
+        if (availableSims == null) {
             availableSims = new ArrayList<>();
-            Toast.makeText(this, "SIM bilgileri yüklenirken hata oluştu", Toast.LENGTH_SHORT).show();
         }
     }
     
@@ -388,7 +413,7 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
         String simSelectionMode = "auto"; // default
         int preferredSimSlot = -1; // default
         
-        if (SimManager.isDualSimSupported(this) && availableSims != null && availableSims.size() > 1) {
+        if (cachedDualSimSupported != null && cachedDualSimSupported && availableSims != null && availableSims.size() > 1) {
             // Determine SIM selection mode based on radio button selection
             int checkedRadioButtonId = radioGroupSimMode.getCheckedRadioButtonId();
             if (checkedRadioButtonId == R.id.radio_auto) {
@@ -542,6 +567,35 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
                 });
             }
         });
+    }
+    
+    /**
+     * Show single SIM device information in dialog
+     */
+    private void showSingleSimInfo() {
+        // Find a parent view where we can add the info text
+        if (radioGroupSimMode != null && radioGroupSimMode.getParent() instanceof android.view.ViewGroup) {
+            android.view.ViewGroup parent = (android.view.ViewGroup) radioGroupSimMode.getParent();
+            
+            // Check if info text already exists
+            android.view.View existingInfo = parent.findViewWithTag("single_sim_info");
+            if (existingInfo == null) {
+                // Create info text view
+                TextView simInfoText = new TextView(this);
+                simInfoText.setTag("single_sim_info");
+                simInfoText.setText(R.string.single_sim_device_info);
+                simInfoText.setTextSize(14);
+                simInfoText.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                simInfoText.setPadding(16, 8, 16, 8);
+                simInfoText.setGravity(android.view.Gravity.CENTER);
+                
+                // Find the index where SIM selection would be
+                int insertIndex = parent.indexOfChild(radioGroupSimMode);
+                if (insertIndex >= 0) {
+                    parent.addView(simInfoText, insertIndex);
+                }
+            }
+        }
     }
     
     @Override

@@ -480,12 +480,34 @@ public class AnalyticsActivity extends AppCompatActivity {
      * Check if device supports dual SIM
      */
     private void checkDualSimSupport() {
-        isDualSimDevice = SimManager.isDualSimSupported(this);
-        
-        // Show/hide SIM statistics card based on dual SIM support
+        // Default to hiding SIM stats card
         if (cardSimStats != null) {
-            cardSimStats.setVisibility(isDualSimDevice ? View.VISIBLE : View.GONE);
+            cardSimStats.setVisibility(View.GONE);
         }
+        
+        // Check dual SIM support in background thread to avoid ANR
+        ThreadManager.getInstance().executeBackground(() -> {
+            try {
+                boolean isDualSim = SimManager.isDualSimSupported(this);
+                
+                runOnUiThread(() -> {
+                    isDualSimDevice = isDualSim;
+                    
+                    // Show/hide SIM statistics card based on dual SIM support
+                    if (cardSimStats != null) {
+                        cardSimStats.setVisibility(isDualSimDevice ? View.VISIBLE : View.GONE);
+                    }
+                });
+            } catch (Exception e) {
+                android.util.Log.e(TAG, "Error checking dual SIM support: " + e.getMessage(), e);
+                runOnUiThread(() -> {
+                    isDualSimDevice = false;
+                    if (cardSimStats != null) {
+                        cardSimStats.setVisibility(View.GONE);
+                    }
+                });
+            }
+        });
     }
     
     /**

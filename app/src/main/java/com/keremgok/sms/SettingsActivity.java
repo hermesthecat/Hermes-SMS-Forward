@@ -412,81 +412,98 @@ public class SettingsActivity extends AppCompatActivity {
          * Initialize dual SIM settings and preferences
          */
         private void initializeDualSimSettings() {
-            // Initialize default forwarding SIM preference
-            initializeDefaultForwardingSim();
+            // Hide all SIM preferences initially to prevent ANR
+            androidx.preference.ListPreference defaultSimPref = findPreference("pref_default_forwarding_sim");
+            androidx.preference.ListPreference globalSimModePref = findPreference("pref_global_sim_mode");
+            androidx.preference.SwitchPreferenceCompat simIndicatorsPref = findPreference("pref_show_sim_indicators");
+            Preference simInfoPref = findPreference("pref_sim_information");
             
-            // Initialize global SIM mode preference
-            initializeGlobalSimMode();
+            if (defaultSimPref != null) defaultSimPref.setVisible(false);
+            if (globalSimModePref != null) globalSimModePref.setVisible(false);
+            if (simIndicatorsPref != null) simIndicatorsPref.setVisible(false);
+            if (simInfoPref != null) simInfoPref.setVisible(false);
             
-            // Initialize SIM indicators preference
-            initializeSimIndicators();
-            
-            // Initialize SIM information preference
-            initializeSimInformation();
+            // Check dual SIM in background thread
+            ThreadManager.getInstance().executeBackground(() -> {
+                try {
+                    boolean isDualSimSupported = SimManager.isDualSimSupported(requireContext());
+                    java.util.List<SimManager.SimInfo> availableSims = null;
+                    
+                    if (isDualSimSupported) {
+                        availableSims = SimManager.getActiveSimCards(requireContext());
+                    }
+                    
+                    final java.util.List<SimManager.SimInfo> finalAvailableSims = availableSims;
+                    final boolean finalIsDualSimSupported = isDualSimSupported;
+                    
+                    requireActivity().runOnUiThread(() -> {
+                        if (finalIsDualSimSupported) {
+                            // Initialize dual SIM preferences
+                            initializeDefaultForwardingSim(finalAvailableSims);
+                            initializeGlobalSimMode();
+                            initializeSimIndicators();
+                            initializeSimInformation(finalAvailableSims);
+                        } else {
+                            // Show single SIM info message
+                            showSingleSimInfo();
+                        }
+                    });
+                    
+                } catch (Exception e) {
+                    android.util.Log.e("Settings", "Error checking dual SIM support: " + e.getMessage(), e);
+                    // On error, preferences remain hidden
+                }
+            });
         }
         
         /**
          * Initialize default forwarding SIM preference with dynamic entries
          */
-        private void initializeDefaultForwardingSim() {
+        private void initializeDefaultForwardingSim(java.util.List<SimManager.SimInfo> availableSims) {
             androidx.preference.ListPreference defaultSimPref = findPreference("pref_default_forwarding_sim");
             if (defaultSimPref != null) {
-                // Check if dual SIM is supported
-                if (!SimManager.isDualSimSupported(requireContext())) {
-                    // Hide preference on single SIM devices
-                    defaultSimPref.setVisible(false);
-                    return;
-                }
-                
-                // Load available SIMs and create dynamic entries
-                try {
-                    java.util.List<SimManager.SimInfo> availableSims = SimManager.getActiveSimCards(requireContext());
+                // Create entries and values based on available SIMs
+                if (availableSims != null && !availableSims.isEmpty()) {
+                    java.util.List<String> entries = new java.util.ArrayList<>();
+                    java.util.List<String> values = new java.util.ArrayList<>();
                     
-                    if (availableSims != null && !availableSims.isEmpty()) {
-                        // Create entries and values based on available SIMs
-                        java.util.List<String> entries = new java.util.ArrayList<>();
-                        java.util.List<String> values = new java.util.ArrayList<>();
-                        
-                        // Add auto option
-                        entries.add(getString(R.string.sim_auto_mode));
-                        values.add("auto");
-                        
-                        // Add each available SIM
-                        for (SimManager.SimInfo simInfo : availableSims) {
-                            String displayName = simInfo.displayName;
-                            if (android.text.TextUtils.isEmpty(displayName)) {
-                                displayName = getString(R.string.sim_slot_format, simInfo.slotIndex + 1);
-                            }
-                            
-                            String entryText = displayName;
-                            if (!android.text.TextUtils.isEmpty(simInfo.carrierName)) {
-                                entryText += " (" + simInfo.carrierName + ")";
-                            }
-                            
-                            entries.add(entryText);
-                            values.add("sim" + simInfo.slotIndex);
+                    // Add auto option
+                    entries.add(getString(R.string.sim_auto_mode));
+                    values.add("auto");
+                    
+                    // Add each available SIM
+                    for (SimManager.SimInfo simInfo : availableSims) {
+                        String displayName = simInfo.displayName;
+                        if (android.text.TextUtils.isEmpty(displayName)) {
+                            displayName = getString(R.string.sim_slot_format, simInfo.slotIndex + 1);
                         }
                         
-                        // Set dynamic entries
-                        defaultSimPref.setEntries(entries.toArray(new CharSequence[0]));
-                        defaultSimPref.setEntryValues(values.toArray(new CharSequence[0]));
+                        String entryText = displayName;
+                        if (!android.text.TextUtils.isEmpty(simInfo.carrierName)) {
+                            entryText += " (" + simInfo.carrierName + ")";
+                        }
                         
-                        // Update summary based on current value
-                        updateDefaultSimSummary(defaultSimPref, defaultSimPref.getValue());
-                        
-                        // Add change listener
-                        defaultSimPref.setOnPreferenceChangeListener((preference, newValue) -> {
-                            updateDefaultSimSummary((androidx.preference.ListPreference) preference, (String) newValue);
-                            return true;
-                        });
-                        
-                    } else {
-                        // No SIMs available - hide preference
-                        defaultSimPref.setVisible(false);
+                        entries.add(entryText);
+                        values.add("sim" + simInfo.slotIndex);
                     }
                     
-                } catch (Exception e) {
-                    // Error loading SIMs - hide preference
+                    // Set dynamic entries
+                    defaultSimPref.setEntries(entries.toArray(new CharSequence[0]));
+                    defaultSimPref.setEntryValues(values.toArray(new CharSequence[0]));
+                    
+                    // Update summary based on current value
+                    updateDefaultSimSummary(defaultSimPref, defaultSimPref.getValue());
+                    
+                    // Add change listener
+                    defaultSimPref.setOnPreferenceChangeListener((preference, newValue) -> {
+                        updateDefaultSimSummary((androidx.preference.ListPreference) preference, (String) newValue);
+                        return true;
+                    });
+                    
+                    // Show the preference
+                    defaultSimPref.setVisible(true);
+                } else {
+                    // No SIMs available - keep hidden
                     defaultSimPref.setVisible(false);
                 }
             }
@@ -520,12 +537,6 @@ public class SettingsActivity extends AppCompatActivity {
         private void initializeGlobalSimMode() {
             androidx.preference.ListPreference globalSimModePref = findPreference("pref_global_sim_mode");
             if (globalSimModePref != null) {
-                // Check if dual SIM is supported
-                if (!SimManager.isDualSimSupported(requireContext())) {
-                    globalSimModePref.setVisible(false);
-                    return;
-                }
-                
                 // Update summary based on current value
                 updateGlobalSimModeSummary(globalSimModePref, globalSimModePref.getValue());
                 
@@ -538,6 +549,9 @@ public class SettingsActivity extends AppCompatActivity {
                     
                     return true;
                 });
+                
+                // Show the preference
+                globalSimModePref.setVisible(true);
             }
         }
         
@@ -569,56 +583,43 @@ public class SettingsActivity extends AppCompatActivity {
         private void initializeSimIndicators() {
             androidx.preference.SwitchPreferenceCompat simIndicatorsPref = findPreference("pref_show_sim_indicators");
             if (simIndicatorsPref != null) {
-                // Check if dual SIM is supported
-                if (!SimManager.isDualSimSupported(requireContext())) {
-                    simIndicatorsPref.setVisible(false);
-                    return;
-                }
-                
                 // This preference doesn't need special handling - it's just a simple switch
                 // The target number adapter will check this preference when displaying badges
+                
+                // Show the preference
+                simIndicatorsPref.setVisible(true);
             }
         }
         
         /**
          * Initialize SIM information preference
          */
-        private void initializeSimInformation() {
+        private void initializeSimInformation(java.util.List<SimManager.SimInfo> availableSims) {
             Preference simInfoPref = findPreference("pref_sim_information");
             if (simInfoPref != null) {
-                // Check if dual SIM is supported
-                if (!SimManager.isDualSimSupported(requireContext())) {
-                    simInfoPref.setVisible(false);
-                    return;
-                }
-                
                 // Update summary with current SIM information
-                updateSimInformationSummary(simInfoPref);
+                updateSimInformationSummary(simInfoPref, availableSims);
                 
                 // Add click listener to show SIM selection dialog
                 simInfoPref.setOnPreferenceClickListener(preference -> {
                     showSimInformationDialog();
                     return true;
                 });
+                
+                // Show the preference
+                simInfoPref.setVisible(true);
             }
         }
         
         /**
          * Update SIM information preference summary
          */
-        private void updateSimInformationSummary(Preference preference) {
-            try {
-                java.util.List<SimManager.SimInfo> availableSims = SimManager.getActiveSimCards(requireContext());
-                
-                if (availableSims != null && !availableSims.isEmpty()) {
-                    String summary = availableSims.size() + " SIM kartı tespit edildi";
-                    preference.setSummary(summary);
-                } else {
-                    preference.setSummary(getString(R.string.sim_not_available));
-                }
-                
-            } catch (Exception e) {
-                preference.setSummary("SIM bilgisi alınamadı");
+        private void updateSimInformationSummary(Preference preference, java.util.List<SimManager.SimInfo> availableSims) {
+            if (availableSims != null && !availableSims.isEmpty()) {
+                String summary = availableSims.size() + " SIM kartı tespit edildi";
+                preference.setSummary(summary);
+            } else {
+                preference.setSummary(getString(R.string.sim_not_available));
             }
         }
         
@@ -641,6 +642,30 @@ public class SettingsActivity extends AppCompatActivity {
             });
             
             dialog.show();
+        }
+        
+        /**
+         * Show single SIM device information
+         */
+        private void showSingleSimInfo() {
+            // Find any preference where we can add the info message
+            // We'll use the first hidden preference to show the message
+            androidx.preference.ListPreference defaultSimPref = findPreference("pref_default_forwarding_sim");
+            if (defaultSimPref != null) {
+                // Convert to a simple informational preference
+                Preference singleSimInfo = new Preference(requireContext());
+                singleSimInfo.setKey("single_sim_info");
+                singleSimInfo.setTitle(getString(R.string.single_sim_device_info));
+                singleSimInfo.setSummary("SMS'ler varsayılan SIM kartından gönderilecektir / SMS will be sent from default SIM card");
+                singleSimInfo.setEnabled(false);
+                singleSimInfo.setSelectable(false);
+                
+                // Add to the same category as dual SIM preferences
+                androidx.preference.PreferenceCategory dualSimCategory = findPreference("category_dual_sim");
+                if (dualSimCategory != null) {
+                    dualSimCategory.addPreference(singleSimInfo);
+                }
+            }
         }
     }
 }

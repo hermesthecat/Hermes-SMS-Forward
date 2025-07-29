@@ -25,6 +25,42 @@
     <string name="sms_send_final_failure">SMS send permanently failed</string>
     <string name="sms_service_unavailable">SMS service unavailable</string>
     
+    <!-- Single SIM Messages -->
+    <string name="single_sim_device_info">This device supports single SIM</string>
+    
+    <!-- Filter Help -->
+    <string name="filter_help_title">About Filter Types</string>
+    <string name="filter_help_content">
+<b>KEYWORD BASED</b><br/>
+Searches for specific words or phrases in SMS content.<br/>
+Example: Block SMS containing \"bank\"<br/><br/>
+
+<b>SENDER NUMBER</b><br/>
+Filters SMS from specific phone numbers.<br/>
+Example: Allow SMS from \"+905551234567\"<br/><br/>
+
+<b>WHITELIST</b><br/>
+Only forwards SMS from allowed senders.<br/>
+Example: Only forward SMS containing \"John\" or \"Work\"<br/><br/>
+
+<b>BLACKLIST</b><br/>
+Blocks SMS from specific senders.<br/>
+Example: Block SMS containing \"Ads\" or \"Spam\"<br/><br/>
+
+<b>SIM BASED</b><br/>
+Determines which SIM card SMS should be processed from.<br/>
+Examples:<br/>
+• \"slot:0\" - Only SMS from SIM 1<br/>
+• \"turkcell\" - SMS from Turkcell SIM<br/>
+• \"vodafone\" - SMS from Vodafone SIM<br/><br/>
+
+<b>ACTION TYPES:</b><br/>
+• <b>ALLOW:</b> Forward SMS if filter matches<br/>
+• <b>BLOCK:</b> Block SMS if filter matches<br/><br/>
+
+<b>REGEX:</b> You can use regex for advanced pattern matching.
+    </string>
+    
     <!-- Settings Screen -->
     <string name="settings_title">Settings</string>
     <string name="settings_menu_title">Settings</string>
@@ -407,6 +443,7 @@
     <string name="required_permissions_title">Required Permissions:</string>
     <string name="receive_sms_permission_label">SMS Reading Permission</string>
     <string name="send_sms_permission_label">SMS Sending Permission</string>
+    <string name="read_phone_state_permission_label">Phone State Reading Permission</string>
     
     <!-- General Messages -->
     <string name="permissions_granted_message">Permissions granted. You can now save the target number.</string>

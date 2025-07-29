@@ -6,14 +6,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.style.StyleSpan;
+import android.graphics.Typeface;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -34,6 +41,7 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
     private FloatingActionButton fabAddFilter;
     private RecyclerView rvFilterRules;
     private TextView tvEmptyState;
+    private ImageButton btnFilterHelp;
     
     // Dialog components (initialized when needed)
     private EditText etFilterName;
@@ -86,8 +94,10 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
         fabAddFilter = findViewById(R.id.fabAddFilter);
         rvFilterRules = findViewById(R.id.rvFilterRules);
         tvEmptyState = findViewById(R.id.tvEmptyState);
+        btnFilterHelp = findViewById(R.id.btnFilterHelp);
         
         fabAddFilter.setOnClickListener(v -> showAddFilterDialog());
+        btnFilterHelp.setOnClickListener(v -> showFilterHelp());
     }
     
     /**
@@ -426,5 +436,150 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Show filter help dialog with explanations
+     */
+    private void showFilterHelp() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.filter_help_title);
+        
+        // Create a ScrollView to contain the TextView
+        android.widget.ScrollView scrollView = new android.widget.ScrollView(this);
+        
+        // Create a TextView to display formatted content
+        TextView messageView = new TextView(this);
+        messageView.setText(createFormattedHelpText());
+        messageView.setPadding(48, 24, 48, 24);
+        messageView.setTextSize(14);
+        messageView.setLineSpacing(8, 1.3f);
+        messageView.setMovementMethod(android.text.method.ScrollingMovementMethod.getInstance());
+        
+        // Add TextView to ScrollView
+        scrollView.addView(messageView);
+        
+        // Set max height for the ScrollView
+        android.widget.LinearLayout.LayoutParams layoutParams = new android.widget.LinearLayout.LayoutParams(
+            android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
+            (int) (getResources().getDisplayMetrics().heightPixels * 0.6)
+        );
+        scrollView.setLayoutParams(layoutParams);
+        
+        builder.setView(scrollView);
+        builder.setPositiveButton(android.R.string.ok, null);
+        
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    
+    /**
+     * Create formatted help text using SpannableStringBuilder
+     */
+    private SpannableStringBuilder createFormattedHelpText() {
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        
+        // Get current language
+        String currentLanguage = getResources().getConfiguration().locale.getLanguage();
+        boolean isTurkish = "tr".equals(currentLanguage);
+        
+        if (isTurkish) {
+            // Turkish content
+            // KEYWORD BASED
+            appendBoldText(builder, "KELİME BAZLI (KEYWORD)");
+            builder.append("\nSMS içeriğinde belirli kelime veya cümleleri arar.\n");
+            builder.append("Örnek: \"banka\" kelimesi geçen SMS'leri engelle\n\n");
+            
+            // SENDER NUMBER
+            appendBoldText(builder, "GÖNDEREN NUMARASI (SENDER_NUMBER)");
+            builder.append("\nBelirli telefon numaralarından gelen SMS'leri filtreler.\n");
+            builder.append("Örnek: \"+905551234567\" numarasından gelen SMS'leri izin ver\n\n");
+            
+            // WHITELIST
+            appendBoldText(builder, "İZİN LİSTESİ (WHITELIST)");
+            builder.append("\nSadece izin verilen gönderenlerden SMS'leri iletir.\n");
+            builder.append("Örnek: Sadece \"Ahmet\" veya \"İş\" geçen SMS'leri ilet\n\n");
+            
+            // BLACKLIST
+            appendBoldText(builder, "ENGEL LİSTESİ (BLACKLIST)");
+            builder.append("\nBelirli gönderenlerden gelen SMS'leri engeller.\n");
+            builder.append("Örnek: \"Reklam\" veya \"Spam\" geçen SMS'leri engelle\n\n");
+            
+            // SIM BASED
+            appendBoldText(builder, "SIM BAZLI (SIM_BASED)");
+            builder.append("\nHangi SIM kartından gelen SMS'lerin işleneceğini belirler.\n");
+            builder.append("Örnekler:\n");
+            builder.append("• \"slot:0\" - Sadece SIM 1'den gelen SMS'ler\n");
+            builder.append("• \"turkcell\" - Turkcell SIM'inden gelen SMS'ler\n");
+            builder.append("• \"vodafone\" - Vodafone SIM'inden gelen SMS'ler\n\n");
+            
+            // ACTION TYPES
+            appendBoldText(builder, "İŞLEM TİPLERİ:");
+            builder.append("\n• ");
+            appendBoldText(builder, "İZİN VER (ALLOW):");
+            builder.append(" Filtre eşleşirse SMS'i ilet\n");
+            builder.append("• ");
+            appendBoldText(builder, "ENGELLE (BLOCK):");
+            builder.append(" Filtre eşleşirse SMS'i engelle\n\n");
+            
+            // REGEX
+            appendBoldText(builder, "REGEX:");
+            builder.append(" Gelişmiş kalıp eşleştirme için regex kullanabilirsiniz.");
+            
+        } else {
+            // English content
+            // KEYWORD BASED
+            appendBoldText(builder, "KEYWORD BASED");
+            builder.append("\nSearches for specific words or phrases in SMS content.\n");
+            builder.append("Example: Block SMS containing \"bank\"\n\n");
+            
+            // SENDER NUMBER
+            appendBoldText(builder, "SENDER NUMBER");
+            builder.append("\nFilters SMS from specific phone numbers.\n");
+            builder.append("Example: Allow SMS from \"+905551234567\"\n\n");
+            
+            // WHITELIST
+            appendBoldText(builder, "WHITELIST");
+            builder.append("\nOnly forwards SMS from allowed senders.\n");
+            builder.append("Example: Only forward SMS containing \"John\" or \"Work\"\n\n");
+            
+            // BLACKLIST
+            appendBoldText(builder, "BLACKLIST");
+            builder.append("\nBlocks SMS from specific senders.\n");
+            builder.append("Example: Block SMS containing \"Ads\" or \"Spam\"\n\n");
+            
+            // SIM BASED
+            appendBoldText(builder, "SIM BASED");
+            builder.append("\nDetermines which SIM card SMS should be processed from.\n");
+            builder.append("Examples:\n");
+            builder.append("• \"slot:0\" - Only SMS from SIM 1\n");
+            builder.append("• \"turkcell\" - SMS from Turkcell SIM\n");
+            builder.append("• \"vodafone\" - SMS from Vodafone SIM\n\n");
+            
+            // ACTION TYPES
+            appendBoldText(builder, "ACTION TYPES:");
+            builder.append("\n• ");
+            appendBoldText(builder, "ALLOW:");
+            builder.append(" Forward SMS if filter matches\n");
+            builder.append("• ");
+            appendBoldText(builder, "BLOCK:");
+            builder.append(" Block SMS if filter matches\n\n");
+            
+            // REGEX
+            appendBoldText(builder, "REGEX:");
+            builder.append(" You can use regex for advanced pattern matching.");
+        }
+        
+        return builder;
+    }
+    
+    /**
+     * Append bold text to SpannableStringBuilder
+     */
+    private void appendBoldText(SpannableStringBuilder builder, String text) {
+        int start = builder.length();
+        builder.append(text);
+        int end = builder.length();
+        builder.setSpan(new StyleSpan(Typeface.BOLD), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 }

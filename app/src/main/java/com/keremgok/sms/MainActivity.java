@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvStatus;
     private TextView tvReceiveSmsStatus;
     private TextView tvSendSmsStatus;
+    private TextView tvReadPhoneStateStatus;
     private TextView tvValidation;
     private SharedPreferences prefs;
 
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         tvStatus = findViewById(R.id.tvStatus);
         tvReceiveSmsStatus = findViewById(R.id.tvReceiveSmsStatus);
         tvSendSmsStatus = findViewById(R.id.tvSendSmsStatus);
+        tvReadPhoneStateStatus = findViewById(R.id.tvReadPhoneStateStatus);
         tvValidation = findViewById(R.id.tvValidation);
     }
     
@@ -299,6 +301,14 @@ public class MainActivity extends AppCompatActivity {
         } else {
             tvSendSmsStatus.setText("❌");
             tvSendSmsStatus.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+        }
+        
+        if (hasReadPhoneStatePermission) {
+            tvReadPhoneStateStatus.setText("✅");
+            tvReadPhoneStateStatus.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+        } else {
+            tvReadPhoneStateStatus.setText("❌");
+            tvReadPhoneStateStatus.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
         }
         
         if (!TextUtils.isEmpty(savedNumber) && hasAllPermissions) {

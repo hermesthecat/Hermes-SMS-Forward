@@ -141,7 +141,8 @@
             android:id="@+id/llSendSmsPermission"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
 
             <TextView
                 android:id="@+id/tvSendSmsStatus"
@@ -158,6 +159,31 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/send_sms_permission_label"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llReadPhoneStatePermission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvReadPhoneStateStatus"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:text="❌"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tvReadPhoneStateLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/read_phone_state_permission_label"
                 android:textSize="12sp" />
 
         </LinearLayout>

@@ -25,6 +25,42 @@
     <string name="sms_send_final_failure">SMS gönderimi kalıcı olarak başarısız</string>
     <string name="sms_service_unavailable">SMS servisi kullanılamıyor</string>
     
+    <!-- Single SIM Messages -->
+    <string name="single_sim_device_info">Bu cihaz tek SIM destekliyor</string>
+    
+    <!-- Filter Help -->
+    <string name="filter_help_title">Filtre Türleri Hakkında</string>
+    <string name="filter_help_content">
+<b>KELİME BAZLI (KEYWORD)</b><br/>
+SMS içeriğinde belirli kelime veya cümleleri arar.<br/>
+Örnek: \"banka\" kelimesi geçen SMS\'leri engelle<br/><br/>
+
+<b>GÖNDEREN NUMARASI (SENDER_NUMBER)</b><br/>
+Belirli telefon numaralarından gelen SMS\'leri filtreler.<br/>
+Örnek: \"+905551234567\" numarasından gelen SMS\'leri izin ver<br/><br/>
+
+<b>İZİN LİSTESİ (WHITELIST)</b><br/>
+Sadece izin verilen gönderenlerden SMS\'leri iletir.<br/>
+Örnek: Sadece \"Ahmet\" veya \"İş\" geçen SMS\'leri ilet<br/><br/>
+
+<b>ENGEL LİSTESİ (BLACKLIST)</b><br/>
+Belirli gönderenlerden gelen SMS\'leri engeller.<br/>
+Örnek: \"Reklam\" veya \"Spam\" geçen SMS\'leri engelle<br/><br/>
+
+<b>SIM BAZLI (SIM_BASED)</b><br/>
+Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
+Örnekler:<br/>
+• \"slot:0\" - Sadece SIM 1\'den gelen SMS\'ler<br/>
+• \"turkcell\" - Turkcell SIM\'inden gelen SMS\'ler<br/>
+• \"vodafone\" - Vodafone SIM\'inden gelen SMS\'ler<br/><br/>
+
+<b>İŞLEM TİPLERİ:</b><br/>
+• <b>İZİN VER (ALLOW):</b> Filtre eşleşirse SMS\'i ilet<br/>
+• <b>ENGELLE (BLOCK):</b> Filtre eşleşirse SMS\'i engelle<br/><br/>
+
+<b>REGEX:</b> Gelişmiş kalıp eşleştirme için regex kullanabilirsiniz.
+    </string>
+    
     <!-- Settings Screen -->
     <string name="settings_title">Ayarlar</string>
     <string name="settings_menu_title">Ayarlar</string>
@@ -371,6 +407,7 @@
     <string name="required_permissions_title">Gerekli İzinler:</string>
     <string name="receive_sms_permission_label">SMS Okuma İzni</string>
     <string name="send_sms_permission_label">SMS Gönderme İzni</string>
+    <string name="read_phone_state_permission_label">Telefon Durumu Okuma İzni</string>
     
     <!-- General Messages -->
     <string name="permissions_granted_message">İzinler verildi. Şimdi hedef numarayı kaydedebilirsiniz.</string>

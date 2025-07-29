@@ -20,6 +20,15 @@ public class SimManager {
     private static final String TAG = "SimManager";
     private static final boolean DEBUG = true;
     
+    // Cache to prevent infinite loops and improve performance
+    private static List<SimInfo> cachedSimList = null;
+    private static long lastCacheTime = 0;
+    private static final long CACHE_DURATION_MS = 5000; // 5 seconds cache
+    
+    // Cache for dual SIM support check
+    private static Boolean cachedDualSimSupported = null;
+    private static long lastDualSimCheckTime = 0;
+    
     /**
      * SimInfo data class - Contains detailed information about a SIM card
      */
@@ -61,8 +70,17 @@ public class SimManager {
      * @return true if dual SIM is supported and available
      */
     public static boolean isDualSimSupported(Context context) {
+        // Use cache to prevent excessive calls
+        long currentTime = System.currentTimeMillis();
+        if (cachedDualSimSupported != null && (currentTime - lastDualSimCheckTime) < CACHE_DURATION_MS) {
+            logDebug("Returning cached dual SIM support: " + cachedDualSimSupported);
+            return cachedDualSimSupported;
+        }
+        
         if (!isDualSimApiSupported()) {
             logDebug("Dual SIM APIs not supported - Android version < 5.1");
+            cachedDualSimSupported = false;
+            lastDualSimCheckTime = currentTime;
             return false;
         }
         
@@ -70,6 +88,8 @@ public class SimManager {
             // Check for required permissions first
             if (!hasRequiredPermissions(context)) {
                 Log.w(TAG, "Required permissions not granted for dual SIM detection");
+                cachedDualSimSupported = false;
+                lastDualSimCheckTime = currentTime;
                 return false;
             }
             
@@ -77,12 +97,21 @@ public class SimManager {
             boolean isDualSupported = sims.size() >= 2;
             logDebug("Dual SIM supported: " + isDualSupported + " (Found " + sims.size() + " SIMs)");
             SimLogger.logSimDetection(context, sims);
+            
+            // Cache the result
+            cachedDualSimSupported = isDualSupported;
+            lastDualSimCheckTime = currentTime;
+            
             return isDualSupported;
         } catch (SecurityException e) {
             Log.e(TAG, "Permission denied while checking dual SIM support: " + e.getMessage());
+            cachedDualSimSupported = false;
+            lastDualSimCheckTime = currentTime;
             return false;
         } catch (Exception e) {
             Log.e(TAG, "Error checking dual SIM support: " + e.getMessage(), e);
+            cachedDualSimSupported = false;
+            lastDualSimCheckTime = currentTime;
             return false;
         }
     }
@@ -93,12 +122,21 @@ public class SimManager {
      * @return List of SimInfo objects representing active SIM cards
      */
     public static List<SimInfo> getActiveSimCards(Context context) {
+        // Use cache to prevent excessive calls
+        long currentTime = System.currentTimeMillis();
+        if (cachedSimList != null && (currentTime - lastCacheTime) < CACHE_DURATION_MS) {
+            logDebug("Returning cached SIM list (" + cachedSimList.size() + " SIMs)");
+            return new ArrayList<>(cachedSimList);
+        }
+        
         List<SimInfo> simList = new ArrayList<>();
         
         if (!isDualSimApiSupported()) {
             logDebug("Dual SIM APIs not supported - returning single SIM fallback");
             // Fallback for older Android versions - assume single SIM
             simList.add(new SimInfo(-1, 0, "Default", "SIM 1", "Unknown", true));
+            cachedSimList = new ArrayList<>(simList);
+            lastCacheTime = currentTime;
             return simList;
         }
         
@@ -127,6 +165,11 @@ public class SimManager {
         } catch (Exception e) {
             Log.e(TAG, "Error getting active SIM cards: " + e.getMessage(), e);
         }
+        
+        // Update cache
+        cachedSimList = new ArrayList<>(simList);
+        lastCacheTime = currentTime;
+        logDebug("Updated SIM cache with " + simList.size() + " SIMs");
         
         return simList;
     }
