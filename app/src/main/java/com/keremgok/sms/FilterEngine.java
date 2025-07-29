@@ -67,6 +67,19 @@ public class FilterEngine {
      * @return FilterResult indicating whether to forward and why
      */
     public FilterResult applyFilters(String senderNumber, String messageContent, long timestamp) {
+        return applyFilters(senderNumber, messageContent, timestamp, -1, -1);
+    }
+    
+    /**
+     * Apply all enabled filters to an SMS and determine if it should be forwarded (with SIM support)
+     * @param senderNumber The sender's phone number
+     * @param messageContent The SMS message content
+     * @param timestamp The SMS timestamp
+     * @param sourceSubscriptionId The subscription ID of the source SIM (-1 if not available)
+     * @param sourceSimSlot The slot index of the source SIM (-1 if not available)
+     * @return FilterResult indicating whether to forward and why
+     */
+    public FilterResult applyFilters(String senderNumber, String messageContent, long timestamp, int sourceSubscriptionId, int sourceSimSlot) {
         try {
             // Get all enabled filters ordered by priority
             List<SmsFilter> enabledFilters = filterDao.getEnabledFilters();
@@ -78,9 +91,14 @@ public class FilterEngine {
             
             logDebug("Applying " + enabledFilters.size() + " filters to SMS from: " + maskPhoneNumber(senderNumber));
             
+            // Log SIM information if available (for debugging)
+            if (sourceSubscriptionId != -1 || sourceSimSlot != -1) {
+                logDebug("Applying filters with SIM info - Subscription ID: " + sourceSubscriptionId + ", Slot: " + sourceSimSlot);
+            }
+            
             // Apply filters in priority order
             for (SmsFilter filter : enabledFilters) {
-                FilterResult result = applyFilter(filter, senderNumber, messageContent, timestamp);
+                FilterResult result = applyFilter(filter, senderNumber, messageContent, timestamp, sourceSubscriptionId, sourceSimSlot);
                 
                 if (result != null) {
                     // Filter matched, update match count and return result
@@ -107,9 +125,11 @@ public class FilterEngine {
      * @param senderNumber The sender's phone number
      * @param messageContent The SMS message content
      * @param timestamp The SMS timestamp
+     * @param sourceSubscriptionId The subscription ID of the source SIM (-1 if not available)
+     * @param sourceSimSlot The slot index of the source SIM (-1 if not available)
      * @return FilterResult if filter matches, null if no match
      */
-    private FilterResult applyFilter(SmsFilter filter, String senderNumber, String messageContent, long timestamp) {
+    private FilterResult applyFilter(SmsFilter filter, String senderNumber, String messageContent, long timestamp, int sourceSubscriptionId, int sourceSimSlot) {
         try {
             boolean matches = false;
             String filterType = filter.getFilterType();
@@ -137,6 +157,10 @@ public class FilterEngine {
                     
                 case SmsFilter.TYPE_SPAM_DETECTION:
                     matches = applySpamDetectionFilter(filter, senderNumber, messageContent);
+                    break;
+                    
+                case "SIM_BASED":
+                    matches = applySimBasedFilter(filter, sourceSubscriptionId, sourceSimSlot);
                     break;
                     
                 default:
@@ -332,6 +356,105 @@ public class FilterEngine {
         }
         
         return false;
+    }
+    
+    /**
+     * Apply SIM-based filtering (for dual SIM support)
+     * Allows filtering based on which SIM received the SMS
+     * @param filter The SIM-based filter to apply
+     * @param sourceSubscriptionId The subscription ID of the source SIM
+     * @param sourceSimSlot The slot index of the source SIM
+     * @return true if filter matches, false otherwise
+     */
+    private boolean applySimBasedFilter(SmsFilter filter, int sourceSubscriptionId, int sourceSimSlot) {
+        try {
+            // If SIM information is not available, skip SIM-based filtering
+            if (sourceSubscriptionId == -1 && sourceSimSlot == -1) {
+                logDebug("SIM information not available, skipping SIM-based filter: " + filter.getFilterName());
+                return false;
+            }
+            
+            String pattern = filter.getPattern();
+            if (TextUtils.isEmpty(pattern)) {
+                return false;
+            }
+            
+            // Pattern can be:
+            // "slot:0" or "slot:1" for specific SIM slots
+            // "subscription:12345" for specific subscription IDs
+            // "sim:SIM1" or "sim:SIM2" for named SIMs
+            
+            if (pattern.startsWith("slot:")) {
+                try {
+                    int targetSlot = Integer.parseInt(pattern.substring(5));
+                    boolean matches = sourceSimSlot == targetSlot;
+                    if (matches) {
+                        logDebug("SIM slot filter matched: " + sourceSimSlot + " == " + targetSlot);
+                    }
+                    return matches;
+                } catch (NumberFormatException e) {
+                    Log.e(TAG, "Invalid slot pattern in SIM filter " + filter.getFilterName() + ": " + pattern);
+                    return false;
+                }
+            }
+            
+            if (pattern.startsWith("subscription:")) {
+                try {
+                    int targetSubscriptionId = Integer.parseInt(pattern.substring(13));
+                    boolean matches = sourceSubscriptionId == targetSubscriptionId;
+                    if (matches) {
+                        logDebug("SIM subscription filter matched: " + sourceSubscriptionId + " == " + targetSubscriptionId);
+                    }
+                    return matches;
+                } catch (NumberFormatException e) {
+                    Log.e(TAG, "Invalid subscription pattern in SIM filter " + filter.getFilterName() + ": " + pattern);
+                    return false;
+                }
+            }
+            
+            if (pattern.startsWith("sim:")) {
+                String simName = pattern.substring(4).toLowerCase();
+                // Map SIM names to slots
+                boolean matches = false;
+                if ("sim1".equals(simName) && sourceSimSlot == 0) {
+                    matches = true;
+                } else if ("sim2".equals(simName) && sourceSimSlot == 1) {
+                    matches = true;
+                }
+                
+                if (matches) {
+                    logDebug("SIM name filter matched: slot " + sourceSimSlot + " for " + simName);
+                }
+                return matches;
+            }
+            
+            // Enhanced SIM filtering - get actual SIM information using SimManager
+            if (sourceSubscriptionId != -1) {
+                SimManager.SimInfo simInfo = SimManager.getSimInfo(context, sourceSubscriptionId);
+                if (simInfo != null) {
+                    // Check if pattern matches carrier name
+                    if (!TextUtils.isEmpty(simInfo.carrierName) && 
+                        simInfo.carrierName.toLowerCase().contains(pattern.toLowerCase())) {
+                        logDebug("SIM carrier filter matched: " + simInfo.carrierName + " contains " + pattern);
+                        return true;
+                    }
+                    
+                    // Check if pattern matches display name
+                    if (!TextUtils.isEmpty(simInfo.displayName) && 
+                        simInfo.displayName.toLowerCase().contains(pattern.toLowerCase())) {
+                        logDebug("SIM display name filter matched: " + simInfo.displayName + " contains " + pattern);
+                        return true;
+                    }
+                }
+            }
+            
+            logDebug("SIM-based filter did not match: " + pattern + " for subscription " + sourceSubscriptionId + ", slot " + sourceSimSlot);
+            return false;
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error in SIM-based filter " + filter.getFilterName() + ": " + e.getMessage(), e);
+            return false;
+        }
     }
     
     /**

@@ -168,9 +168,9 @@ public class SmsReceiver extends BroadcastReceiver {
             if (!TextUtils.isEmpty(finalMessage) && !TextUtils.isEmpty(senderNumber)) {
                 logDebug("SMS from: " + maskPhoneNumber(senderNumber) + ", applying filters before forwarding to " + targetNumbers.size() + " targets");
                 
-                // Apply SMS filters before forwarding
+                // Apply SMS filters before forwarding (with SIM information for dual SIM support)
                 FilterEngine filterEngine = new FilterEngine(context);
-                FilterEngine.FilterResult filterResult = filterEngine.applyFilters(senderNumber, finalMessage, timestamp);
+                FilterEngine.FilterResult filterResult = filterEngine.applyFilters(senderNumber, finalMessage, timestamp, sourceSubscriptionId, sourceSimSlot);
                 
                 if (filterResult.shouldForward()) {
                     logDebug("SMS passed filters: " + filterResult.getReason() + " - forwarding to targets");

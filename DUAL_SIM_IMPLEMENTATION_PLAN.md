@@ -178,9 +178,9 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
 
 ### 📋 **AŞAMA 4: SMS Alma Mekanizması Güncellemeleri**
 
-#### 4.1 SmsReceiver.java Güncellemeleri
+#### ✅ 4.1 SmsReceiver.java Güncellemeleri
 
-- [ ] `onReceive` metodunda gelen SMS'in SIM bilgisini çıkar:
+- [x] `onReceive` metodunda gelen SMS'in SIM bilgisini çıkar:
 
   ```java
   // Bundle'dan subscription ID al
@@ -193,17 +193,17 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
   }
   ```
 
-- [ ] SIM bilgisini queue'ya ve history'ye ilet
-- [ ] `queueSmsForwardingToMultipleTargets` metodunu güncelle - SIM parametresi ekle
-- [ ] `logSmsHistory` metodunu güncelle - SIM bilgilerini kaydet
-- [ ] Debug log'larına SIM bilgisi ekle
-- [ ] APK build test
-- [ ] Fix errors and warnings if build fails
-- [ ] ✅ Mark task as completed (AFTER successful APK build)
-- [ ] Update versionCode and versionName in app/build.gradle
-- [ ] Update changelog.md
-- [ ] Git commit with descriptive message
-- [ ] Git push
+- [x] SIM bilgisini queue'ya ve history'ye ilet
+- [x] `queueSmsForwardingToMultipleTargets` metodunu güncelle - SIM parametresi ekle
+- [x] `logSmsHistory` metodunu güncelle - SIM bilgilerini kaydet
+- [x] Debug log'larına SIM bilgisi ekle
+- [x] APK build test
+- [x] Fix errors and warnings if build fails
+- [x] ✅ Mark task as completed (AFTER successful APK build)
+- [x] Update versionCode and versionName in app/build.gradle
+- [x] Update changelog.md
+- [x] Git commit with descriptive message
+- [x] Git push
 
 #### 4.2 FilterEngine Güncellemeleri  
 

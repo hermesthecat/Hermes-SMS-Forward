@@ -1,5 +1,19 @@
 # Changelog - Hermes SMS Forward
 
+## [2.20.0] - 2025-07-29
+
+- ✅ AŞAMA 4.2: FilterEngine Güncellemeleri - Dual SIM Filter Support
+  - **SIM-Based Filtering:** New SIM_BASED filter type for dual SIM filtering capabilities
+  - **SIM Parameter Support:** Updated applyFilters() method to accept source subscription ID and SIM slot
+  - **Multiple Filter Patterns:** Support for slot:N, subscription:ID, sim:NAME, carrier name, and display name patterns
+  - **SimManager Integration:** Enhanced SIM filtering using SimManager.getSimInfo() for carrier and display name matching
+  - **Backward Compatibility:** Original applyFilters() method preserved for single SIM compatibility
+  - **Enhanced Logging:** SIM-aware debug logging in filter processing
+  - **Pattern Validation:** Robust error handling for invalid SIM filter patterns
+  - **Comprehensive Coverage:** Support for slot-based, subscription-based, and name-based SIM filtering
+  - **SmsReceiver Integration:** Updated SMS receiving to pass SIM information to filter engine
+  - **Foundation Complete:** SMS filtering infrastructure ready for dual SIM configuration UI
+
 ## [2.19.0] - 2025-07-29
 
 - ✅ AŞAMA 4.1: SmsReceiver.java Güncellemeleri - Dual SIM SMS Detection
