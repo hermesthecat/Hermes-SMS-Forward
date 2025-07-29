@@ -61,35 +61,64 @@ public class SmsQueueManager {
     }
     
     /**
-     * Queue SMS for processing with high priority
+     * Queue SMS for processing with high priority (dual SIM support)
+     */
+    public UUID queueHighPrioritySms(String originalSender, String originalMessage, String targetNumber, long timestamp,
+                                   int sourceSubscriptionId, int forwardingSubscriptionId, int sourceSimSlot, int forwardingSimSlot) {
+        return queueSms(originalSender, originalMessage, targetNumber, timestamp, 0, SmsQueueWorker.PRIORITY_HIGH,
+                       sourceSubscriptionId, forwardingSubscriptionId, sourceSimSlot, forwardingSimSlot);
+    }
+    
+    /**
+     * Queue SMS for processing with high priority (backward compatibility)
      */
     public UUID queueHighPrioritySms(String originalSender, String originalMessage, String targetNumber, long timestamp) {
-        return queueSms(originalSender, originalMessage, targetNumber, timestamp, 0, SmsQueueWorker.PRIORITY_HIGH);
+        return queueHighPrioritySms(originalSender, originalMessage, targetNumber, timestamp, -1, -1, -1, -1);
     }
     
     /**
-     * Queue SMS for processing with normal priority
+     * Queue SMS for processing with normal priority (dual SIM support)
+     */
+    public UUID queueNormalPrioritySms(String originalSender, String originalMessage, String targetNumber, long timestamp,
+                                     int sourceSubscriptionId, int forwardingSubscriptionId, int sourceSimSlot, int forwardingSimSlot) {
+        return queueSms(originalSender, originalMessage, targetNumber, timestamp, 0, SmsQueueWorker.PRIORITY_NORMAL,
+                       sourceSubscriptionId, forwardingSubscriptionId, sourceSimSlot, forwardingSimSlot);
+    }
+    
+    /**
+     * Queue SMS for processing with normal priority (backward compatibility)
      */
     public UUID queueNormalPrioritySms(String originalSender, String originalMessage, String targetNumber, long timestamp) {
-        return queueSms(originalSender, originalMessage, targetNumber, timestamp, 0, SmsQueueWorker.PRIORITY_NORMAL);
+        return queueNormalPrioritySms(originalSender, originalMessage, targetNumber, timestamp, -1, -1, -1, -1);
     }
     
     /**
-     * Queue SMS for processing with low priority
+     * Queue SMS for processing with low priority (dual SIM support)
+     */
+    public UUID queueLowPrioritySms(String originalSender, String originalMessage, String targetNumber, long timestamp,
+                                  int sourceSubscriptionId, int forwardingSubscriptionId, int sourceSimSlot, int forwardingSimSlot) {
+        return queueSms(originalSender, originalMessage, targetNumber, timestamp, 0, SmsQueueWorker.PRIORITY_LOW,
+                       sourceSubscriptionId, forwardingSubscriptionId, sourceSimSlot, forwardingSimSlot);
+    }
+    
+    /**
+     * Queue SMS for processing with low priority (backward compatibility)
      */
     public UUID queueLowPrioritySms(String originalSender, String originalMessage, String targetNumber, long timestamp) {
-        return queueSms(originalSender, originalMessage, targetNumber, timestamp, 0, SmsQueueWorker.PRIORITY_LOW);
+        return queueLowPrioritySms(originalSender, originalMessage, targetNumber, timestamp, -1, -1, -1, -1);
     }
     
     /**
-     * Queue SMS for processing with specified priority
+     * Queue SMS for processing with specified priority and dual SIM support
      */
     private UUID queueSms(String originalSender, String originalMessage, String targetNumber, 
-                         long timestamp, int retryCount, int priority) {
+                         long timestamp, int retryCount, int priority, int sourceSubscriptionId, 
+                         int forwardingSubscriptionId, int sourceSimSlot, int forwardingSimSlot) {
         try {
-            // Create input data
+            // Create input data with dual SIM support
             Data inputData = SmsQueueWorker.createInputData(
-                originalSender, originalMessage, targetNumber, timestamp, retryCount, priority
+                originalSender, originalMessage, targetNumber, timestamp, retryCount, priority,
+                sourceSubscriptionId, forwardingSubscriptionId, sourceSimSlot, forwardingSimSlot
             );
             
             // Create constraints for SMS processing
@@ -121,7 +150,12 @@ public class SmsQueueManager {
             
             workManager.enqueueUniqueWork(workName, policy, workRequest);
             
-            logDebug("SMS queued for processing: priority=" + priority + ", delay=" + initialDelay + "ms, retry=" + retryCount);
+            // Log with SIM information if available
+            String simInfo = "";
+            if (forwardingSubscriptionId != -1 || forwardingSimSlot != -1) {
+                simInfo = ", forwarding via subscription " + forwardingSubscriptionId + ", slot " + forwardingSimSlot;
+            }
+            logDebug("SMS queued for processing: priority=" + priority + ", delay=" + initialDelay + "ms, retry=" + retryCount + simInfo);
             
             return workRequest.getId();
             
@@ -129,6 +163,15 @@ public class SmsQueueManager {
             Log.e(TAG, "Failed to queue SMS: " + e.getMessage(), e);
             return null;
         }
+    }
+    
+    /**
+     * Queue SMS for processing with specified priority (backward compatibility)
+     */
+    private UUID queueSms(String originalSender, String originalMessage, String targetNumber, 
+                         long timestamp, int retryCount, int priority) {
+        return queueSms(originalSender, originalMessage, targetNumber, timestamp, retryCount, priority,
+                       -1, -1, -1, -1);
     }
     
     /**

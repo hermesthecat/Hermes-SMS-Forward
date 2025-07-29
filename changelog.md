@@ -1,5 +1,18 @@
 # Changelog - Hermes SMS Forward
 
+## [2.22.0] - 2025-07-29
+
+- ✅ AŞAMA 5.2: SmsQueueManager.java Güncellemeleri - Dual SIM Queue Management
+  - **Dual SIM Queue Methods:** Updated queueHighPrioritySms(), queueNormalPrioritySms(), queueLowPrioritySms() with SIM parameters
+  - **SIM Parameter Integration:** All queue methods now accept sourceSubscriptionId, forwardingSubscriptionId, sourceSimSlot, forwardingSimSlot
+  - **Enhanced Logging:** Queue operations now log SIM information (subscription ID and slot) for debugging
+  - **Backward Compatibility:** Maintained original method signatures with parameter forwarding to new dual SIM methods
+  - **WorkManager Integration:** Updated private queueSms() method to pass SIM parameters to SmsQueueWorker via createInputData()
+  - **SmsReceiver Integration:** Updated SMS queueing calls in SmsReceiver to pass dual SIM parameters through queue manager
+  - **Placeholder for SIM Selection:** Added TODO for AŞAMA 6 SIM selection logic implementation
+  - **Complete Queue Pipeline:** Full end-to-end dual SIM support from SMS reception through queue management to worker processing
+  - **Foundation Complete:** Queue management infrastructure ready for advanced SIM selection and forwarding logic
+
 ## [2.21.0] - 2025-07-29
 
 - ✅ AŞAMA 5.1: SmsQueueWorker.java Güncellemeleri - Dual SIM SMS Sending

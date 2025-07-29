@@ -286,19 +286,27 @@ public class SmsReceiver extends BroadcastReceiver {
             // Determine priority based on SMS characteristics
             int priority = determineSmsPriority(originalSender, message);
             
-            // Queue the SMS for background processing
+            // Determine forwarding SIM based on SIM selection logic (placeholder for now)
+            // TODO: AŞAMA 6 will implement proper SIM selection logic
+            int forwardingSubscriptionId = -1; // Will be determined by SIM selection logic
+            int forwardingSimSlot = -1; // Will be determined by SIM selection logic
+            
+            // Queue the SMS for background processing with dual SIM support
             java.util.UUID workId = null;
             switch (priority) {
                 case SmsQueueWorker.PRIORITY_HIGH:
-                    workId = queueManager.queueHighPrioritySms(originalSender, message, targetPhoneNumber, timestamp);
+                    workId = queueManager.queueHighPrioritySms(originalSender, message, targetPhoneNumber, timestamp,
+                                                              sourceSubscriptionId, forwardingSubscriptionId, sourceSimSlot, forwardingSimSlot);
                     logDebug("SMS queued with HIGH priority for target: " + maskPhoneNumber(targetPhoneNumber));
                     break;
                 case SmsQueueWorker.PRIORITY_NORMAL:
-                    workId = queueManager.queueNormalPrioritySms(originalSender, message, targetPhoneNumber, timestamp);
+                    workId = queueManager.queueNormalPrioritySms(originalSender, message, targetPhoneNumber, timestamp,
+                                                                sourceSubscriptionId, forwardingSubscriptionId, sourceSimSlot, forwardingSimSlot);
                     logDebug("SMS queued with NORMAL priority for target: " + maskPhoneNumber(targetPhoneNumber));
                     break;
                 case SmsQueueWorker.PRIORITY_LOW:
-                    workId = queueManager.queueLowPrioritySms(originalSender, message, targetPhoneNumber, timestamp);
+                    workId = queueManager.queueLowPrioritySms(originalSender, message, targetPhoneNumber, timestamp,
+                                                             sourceSubscriptionId, forwardingSubscriptionId, sourceSimSlot, forwardingSimSlot);
                     logDebug("SMS queued with LOW priority for target: " + maskPhoneNumber(targetPhoneNumber));
                     break;
             }
