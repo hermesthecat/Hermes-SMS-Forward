@@ -194,5 +194,6 @@ Comprehensive testing framework configured with:
 ```
 
 Reports are generated in:
+
 - **Lint Report**: `app/build/reports/lint-results.html`
 - **Test Report**: `app/build/reports/tests/test/index.html`

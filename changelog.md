@@ -1,5 +1,15 @@
 # Changelog - Hermes SMS Forward
 
+## [2.14.0] - 2025-07-29
+
+- ✅ AŞAMA 2.2: SmsHistory Entity Dual SIM Güncellemeleri
+  - **SIM Tracking Fields:** Added sourceSimSlot, forwardingSimSlot, sourceSubscriptionId, forwardingSubscriptionId
+  - **Dual Constructor Support:** Primary constructor for dual SIM, @Ignore annotated for backward compatibility
+  - **History Enhancement:** Complete SIM information tracking for forwarded messages
+  - **Room Database Integration:** Proper Room entity configuration with multiple constructors
+  - **Analytics Foundation:** Enables SIM-based reporting and statistics
+  - **Migration Ready:** Entity structure prepared for database schema upgrade
+
 ## [2.13.0] - 2025-07-29
 
 - ✅ AŞAMA 2.1: TargetNumber Entity Dual SIM Güncellemeleri

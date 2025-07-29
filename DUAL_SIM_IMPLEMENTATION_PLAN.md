@@ -19,9 +19,9 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
 
 ### 📋 **AŞAMA 2: Veritabanı Şema Güncellemeleri**
 
-#### 2.1 TargetNumber Entity Güncellemeleri
+#### ✅ 2.1 TargetNumber Entity Güncellemeleri
 
-- [ ] `TargetNumber.java` dosyasına aşağıdaki alanları ekle:
+- [x] `TargetNumber.java` dosyasına aşağıdaki alanları ekle:
 
   ```java
   @ColumnInfo(name = "preferred_sim_slot")
@@ -31,15 +31,15 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
   private String simSelectionMode = "auto"; // "auto", "source_sim", "specific_sim"
   ```
 
-- [ ] Getter ve setter metodları ekle
-- [ ] Constructor'ları güncelle
-- [ ] APK build test
-- [ ] Fix errors and warnings if build fails
-- [ ] ✅ Mark task as completed (AFTER successful APK build)
-- [ ] Update versionCode and versionName in app/build.gradle
-- [ ] Update changelog.md
-- [ ] Git commit with descriptive message
-- [ ] Git push
+- [x] Getter ve setter metodları ekle
+- [x] Constructor'ları güncelle
+- [x] APK build test
+- [x] Fix errors and warnings if build fails
+- [x] ✅ Mark task as completed (AFTER successful APK build)
+- [x] Update versionCode and versionName in app/build.gradle
+- [x] Update changelog.md
+- [x] Git commit with descriptive message
+- [x] Git push
 
 #### 2.2 SmsHistory Entity Güncellemeleri  
 
@@ -150,6 +150,7 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
       public boolean isActive;
   }
   ```
+
 - [ ] APK build test
 - [ ] Fix errors and warnings if build fails
 - [ ] ✅ Mark task as completed (AFTER successful APK build)
@@ -301,6 +302,7 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
       private static int handleSpecificSimMode(TargetNumber targetConfig)
   }
   ```
+
 - [ ] APK build test
 - [ ] Fix errors and warnings if build fails
 - [ ] ✅ Mark task as completed (AFTER successful APK build)
@@ -415,6 +417,7 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
           android:summary="Hedef listesinde SIM göstergelerini göster" />
   </PreferenceCategory>
   ```
+
 - [ ] APK build test
 - [ ] Fix errors and warnings if build fails
 - [ ] ✅ Mark task as completed (AFTER successful APK build)
@@ -450,6 +453,7 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
   <string name="sim_not_available">SIM mevcut değil</string>
   <string name="dual_sim_not_supported">Dual SIM desteklenmiyor</string>
   ```
+
 - [ ] APK build test
 - [ ] Fix errors and warnings if build fails
 - [ ] ✅ Mark task as completed (AFTER successful APK build)
