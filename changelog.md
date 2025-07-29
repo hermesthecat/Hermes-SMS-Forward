@@ -1,5 +1,19 @@
 # Changelog - Hermes SMS Forward
 
+## [2.17.0] - 2025-07-29
+
+- ✅ AŞAMA 3.1: SimManager.java Sınıfı Oluşturma - Dual SIM Utility
+  - **Core SIM Management:** Comprehensive dual SIM detection and configuration utility
+  - **SimInfo Data Class:** Detailed SIM card information (subscription ID, slot, carrier, display name)
+  - **API Compatibility:** Support for Android 5.1+ (API 22+) with graceful degradation for older versions
+  - **SIM Detection:** isDualSimSupported(), getActiveSimCards(), getSimInfo() methods
+  - **Subscription Management:** Default SMS subscription handling and subscription ID mapping
+  - **Slot Management:** Bidirectional slot ↔ subscription ID conversion utilities
+  - **User-Friendly Display:** getSimDisplayName() for UI presentation with carrier information
+  - **Debug Support:** Comprehensive SIM status logging and masked phone number display
+  - **Security First:** Proper permission handling and secure logging practices
+  - **Foundation Complete:** SIM management infrastructure ready for integration
+
 ## [2.16.0] - 2025-07-29
 
 - ✅ AŞAMA 2.4: DAO Güncellemeleri - Dual SIM Query Support

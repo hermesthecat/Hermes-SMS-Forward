@@ -100,17 +100,17 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
 - [x] Git commit with descriptive message
 - [x] Git push
 
-#### 2.4 DAO Güncellemeleri
+#### ✅ 2.4 DAO Güncellemeleri
 
-- [ ] `TargetNumberDao.java` güncelle - SIM filtreli sorgular ekle
-- [ ] `SmsHistoryDao.java` güncelle - SIM bazlı raporlama sorguları ekle
-- [ ] APK build test
-- [ ] Fix errors and warnings if build fails
-- [ ] ✅ Mark task as completed (AFTER successful APK build)
-- [ ] Update versionCode and versionName in app/build.gradle
-- [ ] Update changelog.md
-- [ ] Git commit with descriptive message
-- [ ] Git push
+- [x] `TargetNumberDao.java` güncelle - SIM filtreli sorgular ekle
+- [x] `SmsHistoryDao.java` güncelle - SIM bazlı raporlama sorguları ekle
+- [x] APK build test
+- [x] Fix errors and warnings if build fails
+- [x] ✅ Mark task as completed (AFTER successful APK build)
+- [x] Update versionCode and versionName in app/build.gradle
+- [x] Update changelog.md
+- [x] Git commit with descriptive message
+- [x] Git push
 
 ### 📋 **AŞAMA 3: SIM Yönetim Utility Sınıfı Oluşturma**
 
