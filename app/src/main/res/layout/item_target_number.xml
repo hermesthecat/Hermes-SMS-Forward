@@ -57,6 +57,7 @@
                 android:id="@+id/tvDisabledBadge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
                 android:text="@string/target_disabled_label"
                 android:textSize="10sp"
                 android:textStyle="bold"
@@ -66,6 +67,21 @@
                 android:paddingVertical="2dp"
                 android:visibility="gone"
                 android:contentDescription="@string/target_disabled_label" />
+
+            <!-- SIM indicator badge -->
+            <TextView
+                android:id="@+id/tvSimBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sim_1"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:background="@drawable/badge_sim"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="2dp"
+                android:visibility="gone"
+                android:contentDescription="@string/sim_selection_info" />
 
         </LinearLayout>
 

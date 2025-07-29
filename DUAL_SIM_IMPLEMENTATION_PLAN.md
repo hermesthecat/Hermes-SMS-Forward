@@ -286,9 +286,9 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
 
 ### 📋 **AŞAMA 6: SIM Selection Logic İmplementasyonu**
 
-#### 6.1 SIM Selection Modes
+#### ✅ 6.1 SIM Selection Modes
 
-- [ ] `SmsSimSelectionHelper.java` sınıfı oluştur:
+- [x] `SmsSimSelectionHelper.java` sınıfı oluştur:
 
   ```java
   public class SmsSimSelectionHelper {
@@ -303,27 +303,27 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
   }
   ```
 
-- [ ] APK build test
-- [ ] Fix errors and warnings if build fails
-- [ ] ✅ Mark task as completed (AFTER successful APK build)
-- [ ] Update versionCode and versionName in app/build.gradle
-- [ ] Update changelog.md
-- [ ] Git commit with descriptive message
-- [ ] Git push
+- [x] APK build test
+- [x] Fix errors and warnings if build fails
+- [x] ✅ Mark task as completed (AFTER successful APK build)
+- [x] Update versionCode and versionName in app/build.gradle
+- [x] Update changelog.md
+- [x] Git commit with descriptive message
+- [x] Git push
 
-#### 6.2 Selection Logic
+#### ✅ 6.2 Selection Logic
 
-- [ ] **Auto Mode**: Varsayılan SMS SIM'ini kullan
-- [ ] **Source SIM Mode**: Gelen SMS'in geldiği SIM'i kullan  
-- [ ] **Specific SIM Mode**: Hedef numara için belirtilen SIM'i kullan
-- [ ] Single SIM cihazlarda mode'ları ignore et
-- [ ] APK build test
-- [ ] Fix errors and warnings if build fails
-- [ ] ✅ Mark task as completed (AFTER successful APK build)
-- [ ] Update versionCode and versionName in app/build.gradle
-- [ ] Update changelog.md
-- [ ] Git commit with descriptive message
-- [ ] Git push
+- [x] **Auto Mode**: Varsayılan SMS SIM'ini kullan
+- [x] **Source SIM Mode**: Gelen SMS'in geldiği SIM'i kullan  
+- [x] **Specific SIM Mode**: Hedef numara için belirtilen SIM'i kullan
+- [x] Single SIM cihazlarda mode'ları ignore et
+- [x] APK build test
+- [x] Fix errors and warnings if build fails
+- [x] ✅ Mark task as completed (AFTER successful APK build)
+- [x] Update versionCode and versionName in app/build.gradle (Already included in 6.1)
+- [x] Update changelog.md (Already included in 6.1)
+- [x] Git commit with descriptive message (Already included in 6.1)
+- [x] Git push (Already included in 6.1)
 
 ### 📋 **AŞAMA 7: UI Güncellemeleri**
 

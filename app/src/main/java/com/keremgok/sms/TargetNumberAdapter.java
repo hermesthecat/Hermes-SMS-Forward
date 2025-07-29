@@ -79,6 +79,7 @@ public class TargetNumberAdapter extends RecyclerView.Adapter<TargetNumberAdapte
         private TextView tvLastUsed;
         private TextView tvPrimaryBadge;
         private TextView tvDisabledBadge;
+        private TextView tvSimBadge;
         private Button btnSetPrimary;
         private Button btnToggleEnabled;
         private Button btnDelete;
@@ -91,6 +92,7 @@ public class TargetNumberAdapter extends RecyclerView.Adapter<TargetNumberAdapte
             tvLastUsed = itemView.findViewById(R.id.tvLastUsed);
             tvPrimaryBadge = itemView.findViewById(R.id.tvPrimaryBadge);
             tvDisabledBadge = itemView.findViewById(R.id.tvDisabledBadge);
+            tvSimBadge = itemView.findViewById(R.id.tvSimBadge);
             btnSetPrimary = itemView.findViewById(R.id.btnSetPrimary);
             btnToggleEnabled = itemView.findViewById(R.id.btnToggleEnabled);
             btnDelete = itemView.findViewById(R.id.btnDelete);
@@ -136,6 +138,9 @@ public class TargetNumberAdapter extends RecyclerView.Adapter<TargetNumberAdapte
                 btnToggleEnabled.setText(context.getString(R.string.target_disable));
             }
             
+            // SIM selection badge
+            updateSimBadge(targetNumber);
+            
             // Button click listeners
             btnSetPrimary.setOnClickListener(v -> {
                 if (listener != null) {
@@ -154,6 +159,57 @@ public class TargetNumberAdapter extends RecyclerView.Adapter<TargetNumberAdapte
                     listener.onDelete(targetNumber);
                 }
             });
+        }
+        
+        /**
+         * Update SIM selection badge display
+         * @param targetNumber The target number with SIM configuration
+         */
+        private void updateSimBadge(TargetNumber targetNumber) {
+            try {
+                // Check if dual SIM is supported
+                if (!SimManager.isDualSimSupported(context)) {
+                    tvSimBadge.setVisibility(View.GONE);
+                    return;
+                }
+                
+                String simSelectionMode = targetNumber.getSimSelectionMode();
+                if (TextUtils.isEmpty(simSelectionMode)) {
+                    simSelectionMode = "auto";
+                }
+                
+                String badgeText = "";
+                switch (simSelectionMode.toLowerCase()) {
+                    case "auto":
+                        badgeText = "AUTO";
+                        break;
+                    case "source_sim":
+                        badgeText = "SOURCE";
+                        break;
+                    case "specific_sim":
+                        int simSlot = targetNumber.getPreferredSimSlot();
+                        if (simSlot >= 0) {
+                            badgeText = context.getString(R.string.sim_slot_format, simSlot + 1);
+                        } else {
+                            badgeText = "SIM";
+                        }
+                        break;
+                    default:
+                        badgeText = "AUTO";
+                        break;
+                }
+                
+                if (!TextUtils.isEmpty(badgeText)) {
+                    tvSimBadge.setText(badgeText);
+                    tvSimBadge.setVisibility(View.VISIBLE);
+                } else {
+                    tvSimBadge.setVisibility(View.GONE);
+                }
+                
+            } catch (Exception e) {
+                // Hide badge on error
+                tvSimBadge.setVisibility(View.GONE);
+            }
         }
         
         /**

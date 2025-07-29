@@ -494,4 +494,17 @@
     <string name="target_number_saved_successfully">Hedef numara başarıyla kaydedildi</string>
     <string name="error_saving_target_number">Hedef numara kaydedilirken hata oluştu</string>
     
+    <!-- Dual SIM Strings -->
+    <string name="sim_selection_title">SIM Kartı Seçimi</string>
+    <string name="sim_auto_mode">Otomatik (Varsayılan SMS SIM\'i)</string>
+    <string name="sim_source_mode">Kaynak SIM (SMS\'in geldiği SIM)</string>
+    <string name="sim_specific_mode">Belirli SIM Kartı</string>
+    <string name="sim_1">SIM 1</string>
+    <string name="sim_2">SIM 2</string>
+    <string name="sim_not_available">SIM mevcut değil</string>
+    <string name="dual_sim_not_supported">Dual SIM desteklenmiyor</string>
+    <string name="sim_card_format" formatted="false">%s (%s)</string>
+    <string name="sim_slot_format">SIM %d</string>
+    <string name="sim_selection_info">Bu hedef için hangi SIM kartının kullanılacağını seçin</string>
+    
 </resources>

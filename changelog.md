@@ -1,5 +1,23 @@
 # Changelog - Hermes SMS Forward
 
+## [2.25.0] - 2025-07-29
+
+- ✅ AŞAMA 7.1: Target Numbers Activity Güncellemeleri - SIM Selection UI
+  - **SIM Selection Dialog:** Added comprehensive SIM selection UI to target number add/edit dialog
+  - **Three Selection Modes:** Auto mode (default SMS SIM), Source SIM mode (same as received), Specific SIM mode (per-target preference)
+  - **Dual SIM UI Support:** RadioGroup with mode selection and Spinner for specific SIM selection
+  - **SIM Detection:** Automatic dual SIM device detection with UI adaptation for single SIM devices
+  - **Available SIM Loading:** Dynamic loading and display of active SIM cards with carrier information
+  - **SIM Badge Display:** Visual SIM indicators in target number list (AUTO, SOURCE, SIM 1/2 badges)
+  - **Smart UI Adaptation:** SIM selection UI automatically hidden on single SIM devices
+  - **Enhanced Constructor:** Added dual SIM parameter support to TargetNumber entity constructor
+  - **Backward Compatibility:** Maintained existing constructor with @Ignore annotation for Room compatibility
+  - **Comprehensive UI Strings:** Added Turkish language support for all SIM selection UI elements
+  - **Badge System:** Created SIM indicator badge drawable with blue theme matching existing badge system
+  - **Adapter Integration:** Updated TargetNumberAdapter to display SIM selection modes in list view
+  - **Error Handling:** Robust error handling for SIM detection failures with graceful UI degradation
+  - **Foundation Complete:** Target number management UI fully equipped for dual SIM configuration
+
 ## [2.24.0] - 2025-07-29
 
 - ✅ AŞAMA 6.1: SIM Selection Modes Implementasyonu - Intelligent SIM Selection Logic

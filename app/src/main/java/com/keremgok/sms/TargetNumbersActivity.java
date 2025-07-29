@@ -11,14 +11,19 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,6 +48,14 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
     private CheckBox cbEnabled;
     private TextView tvValidationMessage;
     private Button btnAddTarget;
+    
+    // SIM selection components
+    private RadioGroup radioGroupSimMode;
+    private RadioButton radioAuto;
+    private RadioButton radioSource;
+    private RadioButton radioSpecific;
+    private Spinner spinnerSimSelection;
+    private List<SimManager.SimInfo> availableSims;
     
     // Data and Adapters
     private TargetNumberAdapter adapter;
@@ -112,6 +125,16 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
         cbEnabled = dialogView.findViewById(R.id.cbEnabled);
         tvValidationMessage = dialogView.findViewById(R.id.tvValidationMessage);
         
+        // Initialize SIM selection components
+        radioGroupSimMode = dialogView.findViewById(R.id.radio_group_sim_mode);
+        radioAuto = dialogView.findViewById(R.id.radio_auto);
+        radioSource = dialogView.findViewById(R.id.radio_source);
+        radioSpecific = dialogView.findViewById(R.id.radio_specific);
+        spinnerSimSelection = dialogView.findViewById(R.id.spinner_sim_selection);
+        
+        // Setup SIM selection
+        setupSimSelectionUI();
+        
         // Setup validation
         setupDialogValidation();
         
@@ -132,6 +155,82 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
         });
         
         dialog.show();
+    }
+    
+    /**
+     * Setup SIM selection UI components
+     */
+    private void setupSimSelectionUI() {
+        // Load available SIMs
+        loadAvailableSims();
+        
+        // Setup radio button listeners
+        radioGroupSimMode.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.radio_specific) {
+                spinnerSimSelection.setVisibility(View.VISIBLE);
+            } else {
+                spinnerSimSelection.setVisibility(View.GONE);
+            }
+        });
+        
+        // Hide/show SIM selection based on dual SIM support
+        if (!SimManager.isDualSimSupported(this) || (availableSims != null && availableSims.size() <= 1)) {
+            // Single SIM device or no dual SIM - hide SIM selection UI
+            radioGroupSimMode.setVisibility(View.GONE);
+            spinnerSimSelection.setVisibility(View.GONE);
+            
+            // Add info message for single SIM devices
+            TextView simInfoText = new TextView(this);
+            simInfoText.setText(R.string.dual_sim_not_supported);
+            simInfoText.setTextSize(12);
+            simInfoText.setTextColor(getResources().getColor(android.R.color.darker_gray));
+        }
+    }
+    
+    /**
+     * Load available SIM cards for selection
+     */
+    private void loadAvailableSims() {
+        try {
+            availableSims = SimManager.getActiveSimCards(this);
+            setupSimSpinner();
+        } catch (Exception e) {
+            availableSims = new ArrayList<>();
+            Toast.makeText(this, "SIM bilgileri yüklenirken hata oluştu", Toast.LENGTH_SHORT).show();
+        }
+    }
+    
+    /**
+     * Setup SIM selection spinner
+     */
+    private void setupSimSpinner() {
+        if (availableSims == null || availableSims.isEmpty()) {
+            // No SIMs available
+            List<String> simNames = new ArrayList<>();
+            simNames.add(getString(R.string.sim_not_available));
+            
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, 
+                android.R.layout.simple_spinner_item, simNames);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerSimSelection.setAdapter(adapter);
+            spinnerSimSelection.setEnabled(false);
+            return;
+        }
+        
+        // Create SIM display names
+        List<String> simNames = new ArrayList<>();
+        for (SimManager.SimInfo simInfo : availableSims) {
+            String displayName = String.format(getString(R.string.sim_card_format), 
+                simInfo.displayName != null ? simInfo.displayName : getString(R.string.sim_slot_format, simInfo.slotIndex + 1),
+                simInfo.carrierName != null ? simInfo.carrierName : "");
+            simNames.add(displayName);
+        }
+        
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, 
+            android.R.layout.simple_spinner_item, simNames);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSimSelection.setAdapter(adapter);
+        spinnerSimSelection.setEnabled(true);
     }
     
     /**
@@ -285,8 +384,29 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
         String formattedNumber = result.getFormattedNumber() != null ? 
                                 result.getFormattedNumber() : phoneNumber;
         
-        // Create target number object
-        TargetNumber targetNumber = new TargetNumber(formattedNumber, displayName, isPrimary, isEnabled);
+        // Get SIM selection settings
+        String simSelectionMode = "auto"; // default
+        int preferredSimSlot = -1; // default
+        
+        if (SimManager.isDualSimSupported(this) && availableSims != null && availableSims.size() > 1) {
+            // Determine SIM selection mode based on radio button selection
+            int checkedRadioButtonId = radioGroupSimMode.getCheckedRadioButtonId();
+            if (checkedRadioButtonId == R.id.radio_auto) {
+                simSelectionMode = "auto";
+            } else if (checkedRadioButtonId == R.id.radio_source) {
+                simSelectionMode = "source_sim";
+            } else if (checkedRadioButtonId == R.id.radio_specific) {
+                simSelectionMode = "specific_sim";
+                // Get selected SIM slot from spinner
+                int selectedIndex = spinnerSimSelection.getSelectedItemPosition();
+                if (selectedIndex >= 0 && selectedIndex < availableSims.size()) {
+                    preferredSimSlot = availableSims.get(selectedIndex).slotIndex;
+                }
+            }
+        }
+        
+        // Create target number object with SIM preferences
+        TargetNumber targetNumber = new TargetNumber(formattedNumber, displayName, isPrimary, isEnabled, preferredSimSlot, simSelectionMode);
         
         // Save to database
         ThreadManager.getInstance().executeDatabase(() -> {

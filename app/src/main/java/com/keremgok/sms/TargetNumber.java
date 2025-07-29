@@ -3,6 +3,7 @@ package com.keremgok.sms;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.ColumnInfo;
+import androidx.room.Ignore;
 
 /**
  * Target Number Entity for Room Database
@@ -38,7 +39,8 @@ public class TargetNumber {
     @ColumnInfo(name = "sim_selection_mode")
     private String simSelectionMode = "auto"; // "auto", "source_sim", "specific_sim"
     
-    // Constructor
+    // Constructor (backward compatibility)
+    @Ignore
     public TargetNumber(String phoneNumber, String displayName, boolean isPrimary, boolean isEnabled) {
         this.phoneNumber = phoneNumber;
         this.displayName = displayName;
@@ -48,6 +50,18 @@ public class TargetNumber {
         this.lastUsedTimestamp = 0;
         this.preferredSimSlot = -1; // Default to auto
         this.simSelectionMode = "auto"; // Default to auto mode
+    }
+    
+    // Constructor with dual SIM support
+    public TargetNumber(String phoneNumber, String displayName, boolean isPrimary, boolean isEnabled, int preferredSimSlot, String simSelectionMode) {
+        this.phoneNumber = phoneNumber;
+        this.displayName = displayName;
+        this.isPrimary = isPrimary;
+        this.isEnabled = isEnabled;
+        this.createdTimestamp = System.currentTimeMillis();
+        this.lastUsedTimestamp = 0;
+        this.preferredSimSlot = preferredSimSlot;
+        this.simSelectionMode = simSelectionMode != null ? simSelectionMode : "auto";
     }
     
     // Getters and Setters

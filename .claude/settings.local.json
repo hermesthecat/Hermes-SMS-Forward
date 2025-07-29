@@ -31,7 +31,8 @@
       "Bash(adb:*)",
       "Bash(powershell:*)",
       "Bash(./create-signed-apk.bat)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(.gradlew assembleDebug)"
     ],
     "deny": []
   }
