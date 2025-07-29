@@ -1,5 +1,16 @@
 # Changelog - Hermes SMS Forward
 
+## [2.33.0] - 2025-07-29
+
+- ✅ AŞAMA 8.3: String Resources Completion
+  - **Additional Dual SIM Strings:** Added missing string resources for dual SIM operations
+  - **sim_auto:** String for automatic SIM selection mode
+  - **sim_source:** String for source SIM selection mode  
+  - **sim_specific:** String for specific SIM selection mode
+  - **Resource Consistency:** Ensured all dual SIM UI components have proper string resources
+  - **Localization Support:** Prepared string infrastructure for future multi-language support
+  - **Version Update:** Incremented to v2.33.0 (versionCode 44) for string resources completion
+
 ## [2.32.0] - 2025-07-29
 
 - ✅ AŞAMA 10.3: Comprehensive Logging and Debug System

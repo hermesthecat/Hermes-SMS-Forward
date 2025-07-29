@@ -555,4 +555,9 @@
     <string name="history_showing_sim_filter">%s ile gönderilen mesajlar gösteriliyor</string>
     <string name="history_showing_source_sim_filter">%s kaynak SIM\'inden gelen mesajlar gösteriliyor</string>
     
+    <!-- Additional Dual SIM Strings (AŞAMA 8.3) -->
+    <string name="sim_auto">Otomatik</string>
+    <string name="sim_source">Kaynak SIM</string>
+    <string name="sim_specific">Belirli SIM</string>
+    
 </resources>
