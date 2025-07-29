@@ -490,4 +490,9 @@
     <string name="edit_functionality_coming_soon">Edit functionality coming soon</string>
     <string name="filter_validation_passed">Filter validation passed</string>
     
+    <!-- Additional Dual SIM Strings (AŞAMA 8.3) - English -->
+    <string name="sim_auto">Automatic</string>
+    <string name="sim_source">Source SIM</string>
+    <string name="sim_specific">Specific SIM</string>
+    
 </resources>

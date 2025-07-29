@@ -8,7 +8,8 @@
   - **sim_source:** String for source SIM selection mode  
   - **sim_specific:** String for specific SIM selection mode
   - **Resource Consistency:** Ensured all dual SIM UI components have proper string resources
-  - **Localization Support:** Prepared string infrastructure for future multi-language support
+  - **Multilingual Support:** Added English translations for dual SIM strings (Turkish + English)
+  - **Localization Ready:** Full integration with existing multilingual system (values-en/)
   - **Version Update:** Incremented to v2.33.0 (versionCode 44) for string resources completion
 
 ## [2.32.0] - 2025-07-29
