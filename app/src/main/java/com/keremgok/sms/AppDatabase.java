@@ -144,15 +144,100 @@ public abstract class AppDatabase extends RoomDatabase {
     static final Migration MIGRATION_4_5 = new Migration(4, 5) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-            // Add dual SIM fields to target_numbers table
-            database.execSQL("ALTER TABLE target_numbers ADD COLUMN preferred_sim_slot INTEGER DEFAULT -1");
-            database.execSQL("ALTER TABLE target_numbers ADD COLUMN sim_selection_mode TEXT DEFAULT 'auto'");
-            
-            // Add dual SIM fields to sms_history table
-            database.execSQL("ALTER TABLE sms_history ADD COLUMN source_sim_slot INTEGER DEFAULT -1");
-            database.execSQL("ALTER TABLE sms_history ADD COLUMN forwarding_sim_slot INTEGER DEFAULT -1");
-            database.execSQL("ALTER TABLE sms_history ADD COLUMN source_subscription_id INTEGER DEFAULT -1");
-            database.execSQL("ALTER TABLE sms_history ADD COLUMN forwarding_subscription_id INTEGER DEFAULT -1");
+            try {
+                android.util.Log.i("AppDatabase", "Starting migration from version 4 to 5 (dual SIM support)");
+                
+                // Add dual SIM fields to target_numbers table with error handling
+                try {
+                    // Check if columns already exist first
+                    android.database.Cursor cursor = database.query("PRAGMA table_info(target_numbers)");
+                    boolean hasPreferredSimSlot = false;
+                    boolean hasSimSelectionMode = false;
+                    
+                    while (cursor.moveToNext()) {
+                        String columnName = cursor.getString(1); // Column name is at index 1
+                        if ("preferred_sim_slot".equals(columnName)) {
+                            hasPreferredSimSlot = true;
+                        } else if ("sim_selection_mode".equals(columnName)) {
+                            hasSimSelectionMode = true;
+                        }
+                    }
+                    cursor.close();
+                    
+                    if (!hasPreferredSimSlot) {
+                        database.execSQL("ALTER TABLE target_numbers ADD COLUMN preferred_sim_slot INTEGER DEFAULT -1");
+                        android.util.Log.d("AppDatabase", "Added preferred_sim_slot column to target_numbers");
+                    }
+                    
+                    if (!hasSimSelectionMode) {
+                        database.execSQL("ALTER TABLE target_numbers ADD COLUMN sim_selection_mode TEXT DEFAULT 'auto'");
+                        android.util.Log.d("AppDatabase", "Added sim_selection_mode column to target_numbers");
+                    }
+                    
+                } catch (Exception e) {
+                    android.util.Log.e("AppDatabase", "Error migrating target_numbers table: " + e.getMessage(), e);
+                    throw e;
+                }
+                
+                // Add dual SIM fields to sms_history table with error handling
+                try {
+                    // Check if columns already exist first
+                    android.database.Cursor cursor = database.query("PRAGMA table_info(sms_history)");
+                    boolean hasSourceSimSlot = false;
+                    boolean hasForwardingSimSlot = false;
+                    boolean hasSourceSubscriptionId = false;
+                    boolean hasForwardingSubscriptionId = false;
+                    
+                    while (cursor.moveToNext()) {
+                        String columnName = cursor.getString(1); // Column name is at index 1
+                        switch (columnName) {
+                            case "source_sim_slot":
+                                hasSourceSimSlot = true;
+                                break;
+                            case "forwarding_sim_slot":
+                                hasForwardingSimSlot = true;
+                                break;
+                            case "source_subscription_id":
+                                hasSourceSubscriptionId = true;
+                                break;
+                            case "forwarding_subscription_id":
+                                hasForwardingSubscriptionId = true;
+                                break;
+                        }
+                    }
+                    cursor.close();
+                    
+                    if (!hasSourceSimSlot) {
+                        database.execSQL("ALTER TABLE sms_history ADD COLUMN source_sim_slot INTEGER DEFAULT -1");
+                        android.util.Log.d("AppDatabase", "Added source_sim_slot column to sms_history");
+                    }
+                    
+                    if (!hasForwardingSimSlot) {
+                        database.execSQL("ALTER TABLE sms_history ADD COLUMN forwarding_sim_slot INTEGER DEFAULT -1");
+                        android.util.Log.d("AppDatabase", "Added forwarding_sim_slot column to sms_history");
+                    }
+                    
+                    if (!hasSourceSubscriptionId) {
+                        database.execSQL("ALTER TABLE sms_history ADD COLUMN source_subscription_id INTEGER DEFAULT -1");
+                        android.util.Log.d("AppDatabase", "Added source_subscription_id column to sms_history");
+                    }
+                    
+                    if (!hasForwardingSubscriptionId) {
+                        database.execSQL("ALTER TABLE sms_history ADD COLUMN forwarding_subscription_id INTEGER DEFAULT -1");
+                        android.util.Log.d("AppDatabase", "Added forwarding_subscription_id column to sms_history");
+                    }
+                    
+                } catch (Exception e) {
+                    android.util.Log.e("AppDatabase", "Error migrating sms_history table: " + e.getMessage(), e);
+                    throw e;
+                }
+                
+                android.util.Log.i("AppDatabase", "Successfully completed migration from version 4 to 5");
+                
+            } catch (Exception e) {
+                android.util.Log.e("AppDatabase", "Migration 4->5 failed: " + e.getMessage(), e);
+                throw e; // Re-throw to trigger fallback
+            }
         }
     };
     
@@ -166,27 +251,56 @@ public abstract class AppDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(
-                        context.getApplicationContext(),
-                        AppDatabase.class,
-                        DATABASE_NAME
-                    )
-                    .allowMainThreadQueries() // For simple operations only
-                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
-                    .addCallback(new RoomDatabase.Callback() {
-                        @Override
-                        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                            super.onCreate(db);
-                        }
+                    try {
+                        INSTANCE = Room.databaseBuilder(
+                            context.getApplicationContext(),
+                            AppDatabase.class,
+                            DATABASE_NAME
+                        )
+                        .allowMainThreadQueries() // For simple operations only
+                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+                        .addCallback(new RoomDatabase.Callback() {
+                            @Override
+                            public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                                super.onCreate(db);
+                                android.util.Log.i("AppDatabase", "Database created successfully");
+                            }
+                            
+                            @Override
+                            public void onOpen(@NonNull SupportSQLiteDatabase db) {
+                                super.onOpen(db);
+                                android.util.Log.i("AppDatabase", "Database opened successfully");
+                                // Migrate SharedPreferences data on first open after migration
+                                migrateSharedPreferencesData(context);
+                            }
+                        })
+                        .fallbackToDestructiveMigration() // Fallback if migration fails
+                        .build();
                         
-                        @Override
-                        public void onOpen(@NonNull SupportSQLiteDatabase db) {
-                            super.onOpen(db);
-                            // Migrate SharedPreferences data on first open after migration
-                            migrateSharedPreferencesData(context);
+                        android.util.Log.i("AppDatabase", "Database instance created successfully");
+                        
+                    } catch (Exception e) {
+                        android.util.Log.e("AppDatabase", "Failed to create database instance: " + e.getMessage(), e);
+                        
+                        // Try fallback database creation without migrations
+                        try {
+                            android.util.Log.w("AppDatabase", "Attempting emergency database creation");
+                            INSTANCE = Room.databaseBuilder(
+                                context.getApplicationContext(),
+                                AppDatabase.class,
+                                DATABASE_NAME + "_emergency"
+                            )
+                            .allowMainThreadQueries()
+                            .fallbackToDestructiveMigration()
+                            .build();
+                            
+                            android.util.Log.i("AppDatabase", "Emergency database created successfully");
+                            
+                        } catch (Exception emergencyException) {
+                            android.util.Log.e("AppDatabase", "Emergency database creation failed: " + emergencyException.getMessage(), emergencyException);
+                            throw new RuntimeException("Cannot create database", emergencyException);
                         }
-                    })
-                    .build();
+                    }
                 }
             }
         }

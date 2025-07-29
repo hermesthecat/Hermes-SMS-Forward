@@ -139,21 +139,8 @@ public class SmsQueueWorker extends Worker {
                     break;
             }
             
-            // Get appropriate SmsManager based on subscription ID (dual SIM support)
-            SmsManager smsManager;
-            if (forwardingSubscriptionId != -1 && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
-                try {
-                    smsManager = SmsManager.getSmsManagerForSubscriptionId(forwardingSubscriptionId);
-                    logDebug("Using subscription-specific SmsManager for subscription " + forwardingSubscriptionId);
-                } catch (Exception e) {
-                    Log.w(TAG, "Failed to get SmsManager for subscription " + forwardingSubscriptionId + 
-                             ", falling back to default: " + e.getMessage());
-                    smsManager = SmsManager.getDefault();
-                }
-            } else {
-                smsManager = SmsManager.getDefault();
-                logDebug("Using default SmsManager (subscription ID: " + forwardingSubscriptionId + ")");
-            }
+            // Get appropriate SmsManager with enhanced fallback mechanism
+            SmsManager smsManager = getSmsManagerWithFallback(forwardingSubscriptionId);
             
             // Check if message needs to be split
             if (message.length() > 160) {
@@ -286,6 +273,72 @@ public class SmsQueueWorker extends Worker {
             }
         } catch (Exception e) {
             Log.e(TAG, "Failed to log failed SMS history: " + e.getMessage(), e);
+        }
+    }
+    
+    /**
+     * Get SmsManager with comprehensive fallback mechanism
+     * @param preferredSubscriptionId Preferred subscription ID
+     * @return SmsManager instance with fallback to default if needed
+     */
+    private SmsManager getSmsManagerWithFallback(int preferredSubscriptionId) {
+        try {
+            // If no specific subscription requested, use default
+            if (preferredSubscriptionId == -1) {
+                logDebug("No specific subscription requested, using default SmsManager");
+                return SmsManager.getDefault();
+            }
+            
+            // Check if dual SIM API is supported
+            if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
+                logDebug("Dual SIM API not supported (API < 22), using default SmsManager");
+                return SmsManager.getDefault();
+            }
+            
+            // Validate subscription before using it
+            if (!SimManager.isSubscriptionValid(getApplicationContext(), preferredSubscriptionId)) {
+                Log.w(TAG, "Preferred subscription " + preferredSubscriptionId + " is not valid, finding fallback");
+                int fallbackSubscriptionId = SimManager.getFallbackSubscriptionId(getApplicationContext(), preferredSubscriptionId);
+                
+                if (fallbackSubscriptionId != -1 && fallbackSubscriptionId != preferredSubscriptionId) {
+                    logDebug("Using fallback subscription " + fallbackSubscriptionId + " instead of " + preferredSubscriptionId);
+                    return SmsManager.getSmsManagerForSubscriptionId(fallbackSubscriptionId);
+                } else {
+                    logDebug("No valid fallback subscription found, using default SmsManager");
+                    return SmsManager.getDefault();
+                }
+            }
+            
+            // Try to get subscription-specific SmsManager
+            try {
+                SmsManager subscriptionManager = SmsManager.getSmsManagerForSubscriptionId(preferredSubscriptionId);
+                logDebug("Successfully created SmsManager for subscription " + preferredSubscriptionId);
+                return subscriptionManager;
+            } catch (Exception e) {
+                Log.w(TAG, "Failed to create SmsManager for subscription " + preferredSubscriptionId + 
+                           ", trying fallback: " + e.getMessage());
+                
+                // Try fallback subscription
+                int fallbackSubscriptionId = SimManager.getFallbackSubscriptionId(getApplicationContext(), preferredSubscriptionId);
+                if (fallbackSubscriptionId != -1 && fallbackSubscriptionId != preferredSubscriptionId) {
+                    try {
+                        SmsManager fallbackManager = SmsManager.getSmsManagerForSubscriptionId(fallbackSubscriptionId);
+                        logDebug("Successfully created fallback SmsManager for subscription " + fallbackSubscriptionId);
+                        return fallbackManager;
+                    } catch (Exception fallbackException) {
+                        Log.w(TAG, "Fallback subscription " + fallbackSubscriptionId + " also failed: " + fallbackException.getMessage());
+                    }
+                }
+                
+                // Ultimate fallback to default
+                logDebug("All subscription attempts failed, using default SmsManager");
+                return SmsManager.getDefault();
+            }
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error in getSmsManagerWithFallback: " + e.getMessage(), e);
+            // Ultimate fallback
+            return SmsManager.getDefault();
         }
     }
     

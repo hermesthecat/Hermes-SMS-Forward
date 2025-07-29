@@ -1,5 +1,22 @@
 # Changelog - Hermes SMS Forward
 
+## [2.31.0] - 2025-07-29
+
+- ✅ AŞAMA 10.2: Advanced Fallback Mechanisms and System Resilience
+  - **Enhanced SmsManager Fallback:** Created getSmsManagerWithFallback() with comprehensive subscription validation
+  - **Intelligent SIM Selection:** Multi-tier fallback system for SIM selection failures with real-time validation
+  - **Database Migration Resilience:** Enhanced MIGRATION_4_5 with column existence checks and detailed error handling
+  - **Emergency Database Creation:** Fallback database creation system for catastrophic migration failures
+  - **Safe Migration Process:** Added comprehensive logging and error recovery for all database operations
+  - **Subscription Validity Checks:** Real-time subscription validation before SmsManager creation
+  - **Multi-level Fallback Chain:** Primary → Fallback → Default SIM selection with validation at each step
+  - **Database Integrity Protection:** Emergency database creation with fallbackToDestructiveMigration
+  - **Comprehensive Error Logging:** Detailed logging for migration process and error diagnosis
+  - **System Resilience:** Graceful degradation ensuring app continues functioning despite failures
+  - **API Level Compatibility:** Enhanced checks for dual SIM API availability with proper fallbacks
+  - **Emergency Recovery:** Ultimate fallback mechanisms ensuring SMS forwarding continues in all scenarios
+  - **Version Update:** Incremented to v2.31.0 (versionCode 42) for fallback mechanisms completion
+
 ## [2.30.0] - 2025-07-29
 
 - ✅ AŞAMA 10.1: Enhanced Error Handling and SIM State Management
