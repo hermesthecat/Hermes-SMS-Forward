@@ -1,5 +1,24 @@
 # Changelog - Hermes SMS Forward
 
+## [2.27.0] - 2025-07-29
+
+- ✅ AŞAMA 8.1 & 8.2: Settings Integration for Dual SIM
+  - **Dual SIM Settings Category:** Added comprehensive dual SIM preferences to settings screen
+  - **Default Forwarding SIM:** Dynamic list preference with available SIM cards for default forwarding selection
+  - **Global SIM Mode:** Settings integration for app-wide SIM selection mode configuration
+  - **SIM Indicators Toggle:** User preference to show/hide SIM badges in target number lists
+  - **SIM Information Panel:** Interactive preference showing available SIM cards with detailed information
+  - **Dynamic SIM Detection:** Settings preferences automatically adapt based on dual SIM device capabilities
+  - **Smart UI Adaptation:** SIM preferences hidden on single SIM devices for clean UI experience
+  - **Settings Activity Integration:** Complete SettingsFragment integration with dual SIM preference handling
+  - **Real-time Updates:** Dynamic preference entries based on currently available SIM cards
+  - **SIM Information Dialog:** Integrated SimSelectionDialog for interactive SIM information display
+  - **Preference Validation:** Comprehensive error handling and fallback for SIM detection failures
+  - **Summary Updates:** Dynamic preference summaries reflecting current SIM selection and status
+  - **Global Settings Sync:** Integration with SmsSimSelectionHelper for consistent app-wide settings
+  - **String Resources:** Complete Turkish language support for all dual SIM settings elements
+  - **Foundation Complete:** Settings system fully equipped for dual SIM configuration and management
+
 ## [2.26.0] - 2025-07-29
 
 - ✅ AŞAMA 7.2 & 7.3: Layout Güncellemeleri ve SIM Selection Dialog

@@ -523,4 +523,28 @@
         <item>specific_sim</item>
     </string-array>
     
+    <!-- Default SIM Arrays -->
+    <string-array name="default_sim_entries">
+        <item>@string/sim_auto_mode</item>
+        <item>@string/sim_1</item>
+        <item>@string/sim_2</item>
+    </string-array>
+    
+    <string-array name="default_sim_values">
+        <item>auto</item>
+        <item>sim1</item>
+        <item>sim2</item>
+    </string-array>
+    
+    <!-- Dual SIM Settings Strings -->
+    <string name="settings_category_dual_sim">Dual SIM Ayarları</string>
+    <string name="settings_default_forwarding_sim_title">Varsayılan İletim SIM\'i</string>
+    <string name="settings_default_forwarding_sim_summary">SMS iletimi için kullanılacak varsayılan SIM kartı</string>
+    <string name="settings_global_sim_mode_title">Genel SIM Seçim Modu</string>
+    <string name="settings_global_sim_mode_summary">Tüm hedefler için varsayılan SIM seçim modu</string>
+    <string name="settings_show_sim_indicators_title">SIM Göstergelerini Göster</string>
+    <string name="settings_show_sim_indicators_summary">Hedef listesinde SIM göstergelerini göster</string>
+    <string name="settings_sim_information_title">SIM Kartı Bilgisi</string>
+    <string name="settings_sim_information_summary">Aktif SIM kartları hakkında bilgi görüntüle</string>
+    
 </resources>

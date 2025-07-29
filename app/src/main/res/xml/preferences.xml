@@ -91,6 +91,44 @@
 
     </PreferenceCategory>
 
+    <!-- Dual SIM Settings Category -->
+    <PreferenceCategory
+        android:title="@string/settings_category_dual_sim"
+        android:key="category_dual_sim">
+
+        <!-- Default Forwarding SIM -->
+        <ListPreference
+            android:key="pref_default_forwarding_sim"
+            android:title="@string/settings_default_forwarding_sim_title"
+            android:summary="@string/settings_default_forwarding_sim_summary"
+            android:entries="@array/default_sim_entries"
+            android:entryValues="@array/default_sim_values"
+            android:defaultValue="auto" />
+
+        <!-- Global SIM Selection Mode -->
+        <ListPreference
+            android:key="pref_global_sim_mode"
+            android:title="@string/settings_global_sim_mode_title"
+            android:summary="@string/settings_global_sim_mode_summary"
+            android:entries="@array/sim_selection_entries"
+            android:entryValues="@array/sim_selection_values"
+            android:defaultValue="auto" />
+
+        <!-- Show SIM Indicators -->
+        <SwitchPreferenceCompat
+            android:key="pref_show_sim_indicators"
+            android:title="@string/settings_show_sim_indicators_title"
+            android:summary="@string/settings_show_sim_indicators_summary"
+            android:defaultValue="true" />
+
+        <!-- SIM Information -->
+        <Preference
+            android:key="pref_sim_information"
+            android:title="@string/settings_sim_information_title"
+            android:summary="@string/settings_sim_information_summary" />
+
+    </PreferenceCategory>
+
     <!-- About Section Category -->
     <PreferenceCategory
         android:title="@string/settings_category_about"

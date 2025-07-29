@@ -349,9 +349,9 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
 - [x] Git commit with descriptive message
 - [x] Git push
 
-#### 7.2 Layout Güncellemeleri
+#### ✅ 7.2 Layout Güncellemeleri
 
-- [ ] `dialog_add_target_number.xml` güncelle:
+- [x] `dialog_add_target_number.xml` güncelle:
 
   ```xml
   <Spinner
@@ -371,27 +371,27 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
   </RadioGroup>
   ```
 
-- [ ] Target number list item layout'una SIM indicator ekle
-- [ ] APK build test
-- [ ] Fix errors and warnings if build fails
-- [ ] ✅ Mark task as completed (AFTER successful APK build)
-- [ ] Update versionCode and versionName in app/build.gradle
-- [ ] Update changelog.md
-- [ ] Git commit with descriptive message
-- [ ] Git push
+- [x] Target number list item layout'una SIM indicator ekle
+- [x] APK build test
+- [x] Fix errors and warnings if build fails
+- [x] ✅ Mark task as completed (AFTER successful APK build)
+- [x] Update versionCode and versionName in app/build.gradle
+- [x] Update changelog.md
+- [x] Git commit with descriptive message
+- [x] Git push
 
-#### 7.3 SIM Selection Dialog
+#### ✅ 7.3 SIM Selection Dialog
 
-- [ ] `SimSelectionDialog.java` ve layout oluştur
-- [ ] Available SIM'leri listele
-- [ ] SIM durumlarını göster (aktif/inaktif)
-- [ ] APK build test
-- [ ] Fix errors and warnings if build fails
-- [ ] ✅ Mark task as completed (AFTER successful APK build)
-- [ ] Update versionCode and versionName in app/build.gradle
-- [ ] Update changelog.md
-- [ ] Git commit with descriptive message
-- [ ] Git push
+- [x] `SimSelectionDialog.java` ve layout oluştur
+- [x] Available SIM'leri listele
+- [x] SIM durumlarını göster (aktif/inaktif)
+- [x] APK build test
+- [x] Fix errors and warnings if build fails
+- [x] ✅ Mark task as completed (AFTER successful APK build)
+- [x] Update versionCode and versionName in app/build.gradle
+- [x] Update changelog.md
+- [x] Git commit with descriptive message
+- [x] Git push
 
 ### 📋 **AŞAMA 8: Settings ve Preferences Güncellemeleri**
 
