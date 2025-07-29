@@ -32,7 +32,9 @@
       "Bash(powershell:*)",
       "Bash(./create-signed-apk.bat)",
       "Bash(git checkout:*)",
-      "Bash(.gradlew assembleDebug)"
+      "Bash(.gradlew assembleDebug)",
+      "Bash(git branch:*)",
+      "Bash(git stash:*)"
     ],
     "deny": []
   }
