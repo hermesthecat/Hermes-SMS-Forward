@@ -69,10 +69,10 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
 - [x] Git commit with descriptive message
 - [x] Git push
 
-#### 2.3 Database Migration
+#### ✅ 2.3 Database Migration
 
-- [ ] `AppDatabase.java` dosyasında version'ı 4'ten 5'e yükselt
-- [ ] `MIGRATION_4_5` migration'ı oluştur:
+- [x] `AppDatabase.java` dosyasında version'ı 4'ten 5'e yükselt
+- [x] `MIGRATION_4_5` migration'ı oluştur:
 
   ```java
   static final Migration MIGRATION_4_5 = new Migration(4, 5) {
@@ -91,14 +91,14 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
   };
   ```
 
-- [ ] Migration'ı database builder'a ekle
-- [ ] APK build test
-- [ ] Fix errors and warnings if build fails
-- [ ] ✅ Mark task as completed (AFTER successful APK build)
-- [ ] Update versionCode and versionName in app/build.gradle
-- [ ] Update changelog.md
-- [ ] Git commit with descriptive message
-- [ ] Git push
+- [x] Migration'ı database builder'a ekle
+- [x] APK build test
+- [x] Fix errors and warnings if build fails
+- [x] ✅ Mark task as completed (AFTER successful APK build)
+- [x] Update versionCode and versionName in app/build.gradle
+- [x] Update changelog.md
+- [x] Git commit with descriptive message
+- [x] Git push
 
 #### 2.4 DAO Güncellemeleri
 

@@ -1,5 +1,16 @@
 # Changelog - Hermes SMS Forward
 
+## [2.16.0] - 2025-07-29
+
+- ✅ AŞAMA 2.4: DAO Güncellemeleri - Dual SIM Query Support
+  - **TargetNumberDao Enhancement:** Added SIM-specific queries (updateSimSettings, getTargetNumbersBySimMode, getTargetNumbersBySimSlot)
+  - **SIM Configuration Queries:** Enable filtering and counting targets by SIM slot and selection mode
+  - **SmsHistoryDao Enhancement:** Added comprehensive SIM-based reporting queries
+  - **Analytics Queries:** Support for SIM usage statistics, success rates, and dual SIM analytics
+  - **Advanced Filtering:** Filter history by source/forwarding SIM slots and subscription IDs
+  - **Performance Metrics:** SIM-specific success rates and most used SIM detection
+  - **Foundation Ready:** Complete database layer prepared for dual SIM implementation
+
 ## [2.15.0] - 2025-07-29
 
 - ✅ AŞAMA 2.3: Database Migration v4→v5 Dual SIM Support

@@ -108,4 +108,52 @@ public interface TargetNumberDao {
      */
     @Query("UPDATE target_numbers SET is_enabled = :enabled WHERE id = :targetNumberId")
     void setEnabledStatus(int targetNumberId, boolean enabled);
+    
+    /**
+     * Update SIM selection settings for a target number
+     * @param targetNumberId The ID of the target number
+     * @param preferredSimSlot The preferred SIM slot (-1 for auto, 0 for SIM1, 1 for SIM2)
+     * @param simSelectionMode The SIM selection mode ("auto", "source_sim", "specific_sim")
+     */
+    @Query("UPDATE target_numbers SET preferred_sim_slot = :preferredSimSlot, sim_selection_mode = :simSelectionMode WHERE id = :targetNumberId")
+    void updateSimSettings(int targetNumberId, int preferredSimSlot, String simSelectionMode);
+    
+    /**
+     * Get target numbers filtered by SIM selection mode
+     * @param simSelectionMode The SIM selection mode to filter by
+     * @return List of target numbers with the specified SIM selection mode
+     */
+    @Query("SELECT * FROM target_numbers WHERE sim_selection_mode = :simSelectionMode AND is_enabled = 1 ORDER BY is_primary DESC, created_timestamp ASC")
+    List<TargetNumber> getTargetNumbersBySimMode(String simSelectionMode);
+    
+    /**
+     * Get target numbers that use a specific SIM slot
+     * @param simSlot The SIM slot to filter by (0 for SIM1, 1 for SIM2)
+     * @return List of target numbers configured for the specified SIM slot
+     */
+    @Query("SELECT * FROM target_numbers WHERE preferred_sim_slot = :simSlot AND is_enabled = 1 ORDER BY is_primary DESC, created_timestamp ASC")
+    List<TargetNumber> getTargetNumbersBySimSlot(int simSlot);
+    
+    /**
+     * Get target numbers that use auto SIM selection
+     * @return List of target numbers configured for auto SIM selection
+     */
+    @Query("SELECT * FROM target_numbers WHERE preferred_sim_slot = -1 AND is_enabled = 1 ORDER BY is_primary DESC, created_timestamp ASC")
+    List<TargetNumber> getAutoSimTargetNumbers();
+    
+    /**
+     * Get count of target numbers by SIM selection mode
+     * @param simSelectionMode The SIM selection mode to count
+     * @return Number of target numbers with the specified SIM selection mode
+     */
+    @Query("SELECT COUNT(*) FROM target_numbers WHERE sim_selection_mode = :simSelectionMode AND is_enabled = 1")
+    int getTargetCountBySimMode(String simSelectionMode);
+    
+    /**
+     * Get count of target numbers by preferred SIM slot
+     * @param simSlot The SIM slot to count (-1 for auto, 0 for SIM1, 1 for SIM2)
+     * @return Number of target numbers configured for the specified SIM slot
+     */
+    @Query("SELECT COUNT(*) FROM target_numbers WHERE preferred_sim_slot = :simSlot AND is_enabled = 1")
+    int getTargetCountBySimSlot(int simSlot);
 }
