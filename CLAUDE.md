@@ -137,7 +137,7 @@ create-signed-apk.bat
 - **App ID**: `com.keremgok.sms`
 - **Min SDK**: 21 (Android 5.0)
 - **Target SDK**: 34 (Android 14)
-- **Current Version**: 2.11.0 (versionCode 22) - Update these values when releasing new versions
+- **Current Version**: 2.12.0 (versionCode 23) - Update these values when releasing new versions
 - **Permissions**: RECEIVE_SMS, SEND_SMS (both require runtime permission requests)
 - **Build Types**: Debug (with `.debug` suffix) and Release (with ProGuard/R8 obfuscation)
 - **Threading**: Use ThreadManager for all background operations instead of creating raw threads
