@@ -18,7 +18,7 @@ public class SmsFilter {
     private String filterName;
     
     @ColumnInfo(name = "filter_type")
-    private String filterType; // KEYWORD, SENDER_NUMBER, TIME_BASED, WHITELIST, BLACKLIST, SPAM_DETECTION
+    private String filterType; // KEYWORD, SENDER_NUMBER, WHITELIST, BLACKLIST, SIM_BASED
     
     @ColumnInfo(name = "pattern")
     private String pattern; // The pattern to match (keyword, regex, phone number pattern)
@@ -38,14 +38,6 @@ public class SmsFilter {
     @ColumnInfo(name = "priority")
     private int priority; // Higher number = higher priority
     
-    @ColumnInfo(name = "time_start")
-    private String timeStart; // For time-based filtering (HH:mm format)
-    
-    @ColumnInfo(name = "time_end") 
-    private String timeEnd; // For time-based filtering (HH:mm format)
-    
-    @ColumnInfo(name = "days_of_week")
-    private String daysOfWeek; // Comma-separated days (1=Monday, 7=Sunday)
     
     @ColumnInfo(name = "match_count")
     private int matchCount; // Number of times this filter has matched
@@ -62,10 +54,9 @@ public class SmsFilter {
     // Filter Type Constants
     public static final String TYPE_KEYWORD = "KEYWORD";
     public static final String TYPE_SENDER_NUMBER = "SENDER_NUMBER";
-    public static final String TYPE_TIME_BASED = "TIME_BASED";
     public static final String TYPE_WHITELIST = "WHITELIST";
     public static final String TYPE_BLACKLIST = "BLACKLIST";
-    public static final String TYPE_SPAM_DETECTION = "SPAM_DETECTION";
+    public static final String TYPE_SIM_BASED = "SIM_BASED";
     
     // Action Constants
     public static final String ACTION_ALLOW = "ALLOW";
@@ -168,32 +159,6 @@ public class SmsFilter {
         this.modifiedTimestamp = System.currentTimeMillis();
     }
     
-    public String getTimeStart() {
-        return timeStart;
-    }
-    
-    public void setTimeStart(String timeStart) {
-        this.timeStart = timeStart;
-        this.modifiedTimestamp = System.currentTimeMillis();
-    }
-    
-    public String getTimeEnd() {
-        return timeEnd;
-    }
-    
-    public void setTimeEnd(String timeEnd) {
-        this.timeEnd = timeEnd;
-        this.modifiedTimestamp = System.currentTimeMillis();
-    }
-    
-    public String getDaysOfWeek() {
-        return daysOfWeek;
-    }
-    
-    public void setDaysOfWeek(String daysOfWeek) {
-        this.daysOfWeek = daysOfWeek;
-        this.modifiedTimestamp = System.currentTimeMillis();
-    }
     
     public int getMatchCount() {
         return matchCount;

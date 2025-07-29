@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Filter Type Arrays -->
+    <string-array name="filter_type_entries">
+        <item>@string/filter_type_keyword</item>
+        <item>@string/filter_type_sender_number</item>
+        <item>@string/filter_type_whitelist</item>
+        <item>@string/filter_type_blacklist</item>
+        <item>@string/filter_type_sim_based</item>
+    </string-array>
+
+    <string-array name="filter_type_values">
+        <item>KEYWORD</item>
+        <item>SENDER_NUMBER</item>
+        <item>WHITELIST</item>
+        <item>BLACKLIST</item>
+        <item>SIM_BASED</item>
+    </string-array>
+
+    <!-- Language entries and values for settings -->
+    <string-array name="language_entries">
+        <item>@string/language_auto</item>
+        <item>@string/language_turkish</item>
+        <item>@string/language_english</item>
+    </string-array>
+
+    <string-array name="language_values">
+        <item>auto</item>
+        <item>tr</item>
+        <item>en</item>
+    </string-array>
+
+    <!-- Log Level entries and values for settings -->
+    <string-array name="log_level_entries">
+        <item>@string/log_level_error</item>
+        <item>@string/log_level_warning</item>
+        <item>@string/log_level_info</item>
+        <item>@string/log_level_debug</item>
+    </string-array>
+
+    <string-array name="log_level_values">
+        <item>error</item>
+        <item>warning</item>
+        <item>info</item>
+        <item>debug</item>
+    </string-array>
+
+    <!-- Default SIM entries and values for dual SIM settings -->
+    <string-array name="default_sim_entries">
+        <item>@string/sim_auto</item>
+        <item>@string/sim_1</item>
+        <item>@string/sim_2</item>
+    </string-array>
+
+    <string-array name="default_sim_values">
+        <item>auto</item>
+        <item>sim0</item>
+        <item>sim1</item>
+    </string-array>
+
+    <!-- SIM Selection Mode entries and values -->
+    <string-array name="sim_selection_entries">
+        <item>@string/sim_selection_auto</item>
+        <item>@string/sim_selection_source</item>
+        <item>@string/sim_selection_specific</item>
+    </string-array>
+
+    <string-array name="sim_selection_values">
+        <item>auto</item>
+        <item>source_sim</item>
+        <item>specific_sim</item>
+    </string-array>
+</resources>

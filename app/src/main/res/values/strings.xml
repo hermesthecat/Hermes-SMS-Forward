@@ -90,36 +90,9 @@
         <item>custom</item>
     </string-array>
     
-    <!-- Log Level Options -->
-    <string-array name="log_level_entries">
-        <item>Sadece Hatalar</item>
-        <item>Hata ve Uyarılar</item>
-        <item>Tüm Aktiviteler</item>
-        <item>Debug Bilgileri</item>
-    </string-array>
-    
-    <string-array name="log_level_values">
-        <item>error</item>
-        <item>warning</item>
-        <item>info</item>
-        <item>debug</item>
-    </string-array>
-    
     <!-- Language Selection Options -->
     <string name="settings_language_title">Uygulama Dili</string>
     <string name="settings_language_summary">Uygulamada kullanılacak dili seçin</string>
-    
-    <string-array name="language_entries">
-        <item>Otomatik (Sistem Dili)</item>
-        <item>Türkçe</item>
-        <item>English</item>
-    </string-array>
-    
-    <string-array name="language_values">
-        <item>auto</item>
-        <item>tr</item>
-        <item>en</item>
-    </string-array>
     
     <!-- History Screen -->
     <string name="history_title">SMS Geçmişi</string>
@@ -213,81 +186,6 @@
     </string-array>
     
     <!-- SMS Filter Rules Management -->
-    <string name="filter_rules_title">SMS Filtre Kuralları</string>
-    <string name="filter_rules_menu_title">Filtre Kuralları</string>
-    <string name="filter_rules_description">Gelen SMS mesajlarını yönlendirmeden önce filtrelemek için kurallar oluşturun</string>
-    <string name="quick_filters">Hızlı Filtreler</string>
-    <string name="add_spam_filter">Spam Filtresi Ekle</string>
-    <string name="add_work_hours_filter">Çalışma Saatleri Filtresi</string>
-    <string name="add_new_filter">Yeni Filtre Ekle</string>
-    <string name="filter_name_hint">Filtre Adı</string>
-    <string name="filter_type_label">Filtre Türü</string>
-    <string name="filter_pattern_hint">Desen (anahtar kelime, telefon numarası veya regex)</string>
-    <string name="filter_action_label">Eylem</string>
-    <string name="action_allow">İzin Ver</string>
-    <string name="action_block">Engelle</string>
-    <string name="case_sensitive">Büyük/Küçük Harf Duyarlı</string>
-    <string name="use_regex">Regex Kullan</string>
-    <string name="add_filter">Filtre Ekle</string>
-    <string name="existing_filters">Mevcut Filtreler</string>
-    <string name="no_filters_configured">Henüz hiç filtre yapılandırılmamış</string>
-    
-    <!-- Filter Types -->
-    <string-array name="filter_type_entries">
-        <item>Anahtar Kelime Filtresi</item>
-        <item>Gönderen Numara Filtresi</item>
-        <item>Beyaz Liste</item>
-        <item>Kara Liste</item>
-    </string-array>
-    
-    <string-array name="filter_type_values">
-        <item>KEYWORD</item>
-        <item>SENDER_NUMBER</item>
-        <item>WHITELIST</item>
-        <item>BLACKLIST</item>
-    </string-array>
-    
-    <!-- Filter Operations -->
-    <string name="filter_edit">Düzenle</string>
-    <string name="filter_delete">Sil</string>
-    <string name="filter_toggle_enabled">Etkinliği Değiştir</string>
-    <string name="filter_test">Filtreyi Test Et</string>
-    <string name="filter_stats">İstatistikler</string>
-    <string name="filter_enabled_label">ETKİN</string>
-    <string name="filter_disabled_label">DEVRE DIŞI</string>
-    <string name="filter_priority_label">Öncelik:</string>
-    <string name="filter_matches_label">Eşleşmeler:</string>
-    
-    <!-- Filter Validation -->
-    <string name="filter_name_required">Filtre adı gerekli</string>
-    <string name="filter_pattern_required">Filtre deseni gerekli</string>
-    <string name="filter_name_exists">Bu adda bir filtre zaten mevcut</string>
-    <string name="filter_invalid_regex">Geçersiz regular expression deseni</string>
-    <string name="filter_add_success">Filtre başarıyla eklendi</string>
-    <string name="filter_add_error">Filtre ekleme hatası</string>
-    <string name="filter_update_success">Filtre başarıyla güncellendi</string>
-    <string name="filter_update_error">Filtre güncelleme hatası</string>
-    <string name="filter_delete_success">Filtre başarıyla silindi</string>
-    <string name="filter_delete_error">Filtre silme hatası</string>
-    
-    <!-- Filter Delete Confirmation -->
-    <string name="filter_delete_title">Filtreyi Sil</string>
-    <string name="filter_delete_message">Bu filtreyi silmek istediğinizden emin misiniz?</string>
-    <string name="filter_delete_confirm">Sil</string>
-    
-    <!-- Filter Test -->
-    <string name="filter_test_title">Filtreyi Test Et</string>
-    <string name="filter_test_message_hint">Test mesajı girin</string>
-    <string name="filter_test_sender_hint">Test gönderen numarası girin</string>
-    <string name="filter_test_run">Testi Çalıştır</string>
-    <string name="filter_test_result_match">✅ Filtre eşleşti - Eylem: %s</string>
-    <string name="filter_test_result_no_match">❌ Filtre eşleşmedi</string>
-    
-    <!-- Default Filter Names -->
-    <string name="default_spam_filter_name">Spam Tespiti</string>
-    <string name="default_work_hours_filter_name">Sadece Çalışma Saatleri</string>
-    <string name="default_spam_pattern">spam|advertisement|promotion|winner|prize|free|urgent|limited time</string>
-    <string name="default_work_hours_pattern">09:00-18:00</string>
     
     <!-- Backup & Restore -->
     <string name="backup_create_title">Ayarları Yedekle</string>
@@ -428,7 +326,6 @@
     
     <!-- Filter Placeholders -->
     <string name="filter_name_placeholder">Filtre Adı</string>
-    <string name="filter_type_keyword">ANAHTAR KELİME</string>
     <string name="filter_action_allow">İZİN VER</string>
     <string name="filter_pattern_placeholder">Desen: spam|reklam</string>
     
@@ -479,7 +376,6 @@
     <string name="permissions_granted_message">İzinler verildi. Şimdi hedef numarayı kaydedebilirsiniz.</string>
     <string name="sms_permissions_required">SMS izinleri gerekli!</string>
     <string name="edit_functionality_coming_soon">Düzenleme özelliği yakında gelecek</string>
-    <string name="filter_validation_passed">Filtre doğrulama geçti</string>
     
     <!-- Completion Fragment -->
     <string name="completion_title">Tebrikler!</string>
@@ -510,31 +406,84 @@
     <string name="sim_status_active">Aktif</string>
     <string name="sim_status_inactive">İnaktif</string>
     
-    <!-- SIM Selection Arrays -->
-    <string-array name="sim_selection_entries">
-        <item>@string/sim_auto_mode</item>
-        <item>@string/sim_source_mode</item>
-        <item>@string/sim_specific_mode</item>
-    </string-array>
+    <!-- Filter Type Strings -->
+    <string name="filter_type_keyword">Anahtar Kelime</string>
+    <string name="filter_type_sender_number">Gönderen Numarası</string>
+    <string name="filter_type_whitelist">Beyaz Liste</string>
+    <string name="filter_type_blacklist">Kara Liste</string>
+    <string name="filter_type_spam_detection">Spam Algılama</string>
+    <string name="filter_type_sim_based">SIM Tabanlı</string>
     
-    <string-array name="sim_selection_values">
-        <item>auto</item>
-        <item>source_sim</item>
-        <item>specific_sim</item>
-    </string-array>
+    <!-- Filter Related Strings -->
+    <string name="filter_rules_title">Filtre Kuralları</string>
+    <string name="filter_rules_description">Gelen SMS mesajlarını yönlendirmeden önce filtrelemek için kurallar oluşturun</string>
+    <string name="add_new_filter">Yeni Filtre Ekle</string>
+    <string name="existing_filters">Mevcut Filtreler</string>
+    <string name="no_filters_configured">Henüz hiç filtre yapılandırılmamış</string>
     
-    <!-- Default SIM Arrays -->
-    <string-array name="default_sim_entries">
-        <item>@string/sim_auto_mode</item>
-        <item>@string/sim_1</item>
-        <item>@string/sim_2</item>
-    </string-array>
+    <!-- Filter UI Labels -->
+    <string name="filter_enabled_label">ETKİN</string>
+    <string name="filter_disabled_label">DEVRE DIŞI</string>
+    <string name="filter_priority_label">Öncelik:</string>
+    <string name="filter_matches_label">Eşleşmeler:</string>
+    <string name="filter_test">Filtreyi Test Et</string>
+    <string name="filter_toggle_enabled">Etkinliği Değiştir</string>
+    <string name="filter_edit">Düzenle</string>
+    <string name="filter_delete">Sil</string>
+    <string name="filter_rules_menu_title">Filtre Kuralları</string>
     
-    <string-array name="default_sim_values">
-        <item>auto</item>
-        <item>sim1</item>
-        <item>sim2</item>
-    </string-array>
+    <!-- Filter Test Dialog -->
+    <string name="filter_test_sender_hint">Test gönderen numarası girin</string>
+    <string name="filter_test_message_hint">Test mesajı girin</string>
+    <string name="filter_test_run">Testi Çalıştır</string>
+    <string name="filter_name_hint">Filtre Adı</string>
+    <string name="filter_type_label">Filtre Türü</string>
+    <string name="filter_pattern_hint">Filtre Deseni</string>
+    <string name="filter_action_label">Filtre Eylemi</string>
+    <string name="action_allow">İzin Ver</string>
+    <string name="action_block">Engelle</string>
+    <string name="case_sensitive">Büyük/Küçük Harf Duyarlı</string>
+    <string name="use_regex">Regex Kullan</string>
+    <string name="add_filter">Filtre Ekle</string>
+    
+    <!-- Filter Validation Messages -->
+    <string name="filter_name_required">Filtre adı gerekli</string>
+    <string name="filter_pattern_required">Filtre deseni gerekli</string>
+    <string name="filter_name_exists">Bu filtre adı zaten mevcut</string>
+    <string name="filter_invalid_regex">Geçersiz regex deseni</string>
+    <string name="filter_validation_passed">Doğrulama başarılı</string>
+    
+    <!-- Filter Actions -->
+    <string name="filter_add_success">Filtre başarıyla eklendi</string>
+    <string name="filter_add_error">Filtre eklenirken hata oluştu</string>
+    <string name="filter_update_success">Filtre güncellendi</string>
+    <string name="filter_update_error">Filtre güncellenirken hata oluştu</string>
+    <string name="filter_delete_title">Filtreyi Sil</string>
+    <string name="filter_delete_message">Bu filtreyi silmek istediğinizden emin misiniz?</string>
+    <string name="filter_delete_confirm">Sil</string>
+    <string name="filter_delete_success">Filtre silindi</string>
+    <string name="filter_delete_error">Filtre silinirken hata oluştu</string>
+    
+    <!-- Filter Test -->
+    <string name="filter_test_title">Filtre Testi</string>
+    <string name="filter_test_result_match">Filtre eşleşti: %s</string>
+    <string name="filter_test_result_no_match">Filtre eşleşmedi</string>
+    
+    <!-- Language Strings -->
+    <string name="language_auto">Otomatik</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_english">English</string>
+    
+    <!-- Log Level Strings -->
+    <string name="log_level_error">Hata</string>
+    <string name="log_level_warning">Uyarı</string>
+    <string name="log_level_info">Bilgi</string>
+    <string name="log_level_debug">Debug</string>
+    
+    <!-- SIM Selection Mode Strings -->
+    <string name="sim_selection_auto">Otomatik</string>
+    <string name="sim_selection_source">Kaynak SIM</string>
+    <string name="sim_selection_specific">Belirli SIM</string>
     
     <!-- Dual SIM Settings Strings -->
     <string name="settings_category_dual_sim">Dual SIM Ayarları</string>

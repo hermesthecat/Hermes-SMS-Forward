@@ -200,14 +200,12 @@ public class FilterRulesAdapter extends RecyclerView.Adapter<FilterRulesAdapter.
                     return "Keyword Filter";
                 case SmsFilter.TYPE_SENDER_NUMBER:
                     return "Sender Number Filter";
-                case SmsFilter.TYPE_TIME_BASED:
-                    return "Time-based Filter";
                 case SmsFilter.TYPE_WHITELIST:
                     return "Whitelist";
                 case SmsFilter.TYPE_BLACKLIST:
                     return "Blacklist";
-                case SmsFilter.TYPE_SPAM_DETECTION:
-                    return "Spam Detection";
+                case SmsFilter.TYPE_SIM_BASED:
+                    return "SIM-based Filter";
                 default:
                     return filterType;
             }

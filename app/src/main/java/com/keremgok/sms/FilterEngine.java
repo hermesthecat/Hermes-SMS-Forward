@@ -143,9 +143,6 @@ public class FilterEngine {
                     matches = applySenderFilter(filter, senderNumber);
                     break;
                     
-                case SmsFilter.TYPE_TIME_BASED:
-                    matches = applyTimeBasedFilter(filter, timestamp);
-                    break;
                     
                 case SmsFilter.TYPE_WHITELIST:
                     matches = applyWhitelistFilter(filter, senderNumber, messageContent);
@@ -155,9 +152,6 @@ public class FilterEngine {
                     matches = applyBlacklistFilter(filter, senderNumber, messageContent);
                     break;
                     
-                case SmsFilter.TYPE_SPAM_DETECTION:
-                    matches = applySpamDetectionFilter(filter, senderNumber, messageContent);
-                    break;
                     
                 case "SIM_BASED":
                     matches = applySimBasedFilter(filter, sourceSubscriptionId, sourceSimSlot);
@@ -230,69 +224,6 @@ public class FilterEngine {
         }
     }
     
-    /**
-     * Apply time-based filtering (work hours, etc.)
-     */
-    private boolean applyTimeBasedFilter(SmsFilter filter, long timestamp) {
-        try {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(timestamp);
-            
-            // Check day of week if specified
-            String daysOfWeek = filter.getDaysOfWeek();
-            if (!TextUtils.isEmpty(daysOfWeek)) {
-                int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-                // Convert to Monday=1 format (Calendar uses Sunday=1)
-                int dayOfWeek = currentDayOfWeek == Calendar.SUNDAY ? 7 : currentDayOfWeek - 1;
-                
-                if (!daysOfWeek.contains(String.valueOf(dayOfWeek))) {
-                    return false; // Not in allowed days
-                }
-            }
-            
-            // Check time range if specified
-            String timeStart = filter.getTimeStart();
-            String timeEnd = filter.getTimeEnd();
-            
-            if (!TextUtils.isEmpty(timeStart) && !TextUtils.isEmpty(timeEnd)) {
-                SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-                int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-                int currentMinute = calendar.get(Calendar.MINUTE);
-                int currentTimeMinutes = currentHour * 60 + currentMinute;
-                
-                try {
-                    Date startTime = timeFormat.parse(timeStart);
-                    Date endTime = timeFormat.parse(timeEnd);
-                    
-                    if (startTime != null && endTime != null) {
-                        Calendar startCal = Calendar.getInstance();
-                        Calendar endCal = Calendar.getInstance();
-                        startCal.setTime(startTime);
-                        endCal.setTime(endTime);
-                        
-                        int startMinutes = startCal.get(Calendar.HOUR_OF_DAY) * 60 + startCal.get(Calendar.MINUTE);
-                        int endMinutes = endCal.get(Calendar.HOUR_OF_DAY) * 60 + endCal.get(Calendar.MINUTE);
-                        
-                        // Handle time range spanning midnight
-                        if (startMinutes <= endMinutes) {
-                            return currentTimeMinutes >= startMinutes && currentTimeMinutes <= endMinutes;
-                        } else {
-                            return currentTimeMinutes >= startMinutes || currentTimeMinutes <= endMinutes;
-                        }
-                    }
-                } catch (Exception e) {
-                    Log.e(TAG, "Error parsing time in filter " + filter.getFilterName() + ": " + e.getMessage());
-                    return false;
-                }
-            }
-            
-            return true; // Time-based filter passed
-            
-        } catch (Exception e) {
-            Log.e(TAG, "Error in time-based filter " + filter.getFilterName() + ": " + e.getMessage());
-            return false;
-        }
-    }
     
     /**
      * Apply whitelist filtering (always allow)
@@ -310,53 +241,6 @@ public class FilterEngine {
         return applySenderFilter(filter, senderNumber) || applyKeywordFilter(filter, messageContent);
     }
     
-    /**
-     * Apply spam detection filtering
-     */
-    private boolean applySpamDetectionFilter(SmsFilter filter, String senderNumber, String messageContent) {
-        if (TextUtils.isEmpty(messageContent)) {
-            return false;
-        }
-        
-        // Basic spam detection heuristics
-        String content = messageContent.toLowerCase();
-        
-        // Check for common spam keywords
-        String[] spamKeywords = {
-            "congratulations", "winner", "prize", "free", "click here", "urgent", 
-            "limited time", "act now", "call now", "teklif", "hediye", "ücretsiz",
-            "kazandınız", "ödül", "acele edin", "son fırsat", "kredi", "loan"
-        };
-        
-        for (String keyword : spamKeywords) {
-            if (content.contains(keyword)) {
-                return true;
-            }
-        }
-        
-        // Check for suspicious sender patterns
-        if (!TextUtils.isEmpty(senderNumber)) {
-            // Short codes (typically 4-6 digits) can be spam
-            if (senderNumber.matches("\\d{4,6}")) {
-                return true;
-            }
-            
-            // Numbers with many repeated digits
-            if (senderNumber.matches(".*([0-9])\\1{3,}.*")) {
-                return true;
-            }
-        }
-        
-        // Check for excessive caps or special characters
-        long capsCount = content.chars().filter(Character::isUpperCase).count();
-        long totalLetters = content.chars().filter(Character::isLetter).count();
-        
-        if (totalLetters > 0 && (capsCount * 100 / totalLetters) > 50) {
-            return true; // More than 50% caps
-        }
-        
-        return false;
-    }
     
     /**
      * Apply SIM-based filtering (for dual SIM support)

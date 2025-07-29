@@ -283,9 +283,6 @@ public class BackupManager {
             json.put("is_case_sensitive", filter.isCaseSensitive());
             json.put("is_regex", filter.isRegex());
             json.put("priority", filter.getPriority());
-            json.put("time_start", filter.getTimeStart());
-            json.put("time_end", filter.getTimeEnd());
-            json.put("days_of_week", filter.getDaysOfWeek());
             json.put("match_count", filter.getMatchCount());
             json.put("last_matched", filter.getLastMatched());
             json.put("created_timestamp", filter.getCreatedTimestamp());
@@ -447,15 +444,6 @@ public class BackupManager {
                 if (json.has("priority")) {
                     filter.setPriority(json.getInt("priority"));
                 }
-                if (json.has("time_start") && !json.isNull("time_start")) {
-                    filter.setTimeStart(json.getString("time_start"));
-                }
-                if (json.has("time_end") && !json.isNull("time_end")) {
-                    filter.setTimeEnd(json.getString("time_end"));
-                }
-                if (json.has("days_of_week") && !json.isNull("days_of_week")) {
-                    filter.setDaysOfWeek(json.getString("days_of_week"));
-                }
                 if (json.has("match_count")) {
                     filter.setMatchCount(json.getInt("match_count"));
                 }
@@ -481,9 +469,6 @@ public class BackupManager {
                         existing.setCaseSensitive(filter.isCaseSensitive());
                         existing.setRegex(filter.isRegex());
                         existing.setPriority(filter.getPriority());
-                        existing.setTimeStart(filter.getTimeStart());
-                        existing.setTimeEnd(filter.getTimeEnd());
-                        existing.setDaysOfWeek(filter.getDaysOfWeek());
                         dao.update(existing);
                         continue;
                     }

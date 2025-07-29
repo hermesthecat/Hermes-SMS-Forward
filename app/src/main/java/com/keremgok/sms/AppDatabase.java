@@ -15,7 +15,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
  */
 @Database(
     entities = {SmsHistory.class, TargetNumber.class, SmsFilter.class, AnalyticsEvent.class, StatisticsSummary.class},
-    version = 5,
+    version = 7,
     exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
@@ -242,6 +242,77 @@ public abstract class AppDatabase extends RoomDatabase {
     };
     
     /**
+     * Migration from version 5 to 6: Remove time-based filter columns
+     */
+    static final Migration MIGRATION_5_6 = new Migration(5, 6) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            try {
+                android.util.Log.i("AppDatabase", "Starting migration from version 5 to 6 (removing time-based filter columns)");
+                
+                // Create new sms_filters table without time-based columns
+                database.execSQL("CREATE TABLE IF NOT EXISTS `sms_filters_new` (" +
+                    "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    "`filter_name` TEXT, " +
+                    "`filter_type` TEXT, " +
+                    "`pattern` TEXT, " +
+                    "`action` TEXT, " +
+                    "`is_enabled` INTEGER NOT NULL, " +
+                    "`is_case_sensitive` INTEGER NOT NULL, " +
+                    "`is_regex` INTEGER NOT NULL, " +
+                    "`priority` INTEGER NOT NULL, " +
+                    "`match_count` INTEGER NOT NULL, " +
+                    "`last_matched` INTEGER NOT NULL, " +
+                    "`created_timestamp` INTEGER NOT NULL, " +
+                    "`modified_timestamp` INTEGER NOT NULL)");
+                
+                // Copy data from old table to new table (excluding time-based columns)
+                database.execSQL("INSERT INTO sms_filters_new (" +
+                    "id, filter_name, filter_type, pattern, action, is_enabled, " +
+                    "is_case_sensitive, is_regex, priority, match_count, last_matched, " +
+                    "created_timestamp, modified_timestamp) " +
+                    "SELECT id, filter_name, filter_type, pattern, action, is_enabled, " +
+                    "is_case_sensitive, is_regex, priority, match_count, last_matched, " +
+                    "created_timestamp, modified_timestamp FROM sms_filters " +
+                    "WHERE filter_type != 'TIME_BASED'"); // Exclude TIME_BASED filters
+                
+                // Drop old table
+                database.execSQL("DROP TABLE sms_filters");
+                
+                // Rename new table to original name
+                database.execSQL("ALTER TABLE sms_filters_new RENAME TO sms_filters");
+                
+                android.util.Log.i("AppDatabase", "Successfully completed migration from version 5 to 6");
+                
+            } catch (Exception e) {
+                android.util.Log.e("AppDatabase", "Migration 5->6 failed: " + e.getMessage(), e);
+                throw e; // Re-throw to trigger fallback
+            }
+        }
+    };
+    
+    /**
+     * Migration from version 6 to 7: Remove SPAM_DETECTION filters
+     */
+    static final Migration MIGRATION_6_7 = new Migration(6, 7) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            try {
+                android.util.Log.i("AppDatabase", "Starting migration from version 6 to 7 (removing SPAM_DETECTION filters)");
+                
+                // Remove all SPAM_DETECTION filters from the database
+                database.execSQL("DELETE FROM sms_filters WHERE filter_type = 'SPAM_DETECTION'");
+                
+                android.util.Log.i("AppDatabase", "Successfully completed migration from version 6 to 7");
+                
+            } catch (Exception e) {
+                android.util.Log.e("AppDatabase", "Migration 6->7 failed: " + e.getMessage(), e);
+                throw e; // Re-throw to trigger fallback
+            }
+        }
+    };
+    
+    /**
      * Get singleton instance of the database
      * Thread-safe implementation with double-checked locking
      * @param context Application context
@@ -258,7 +329,7 @@ public abstract class AppDatabase extends RoomDatabase {
                             DATABASE_NAME
                         )
                         .allowMainThreadQueries() // For simple operations only
-                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7)
                         .addCallback(new RoomDatabase.Callback() {
                             @Override
                             public void onCreate(@NonNull SupportSQLiteDatabase db) {
