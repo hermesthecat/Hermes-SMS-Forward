@@ -1,5 +1,17 @@
 # Changelog - Hermes SMS Forward
 
+## [2.18.0] - 2025-07-29
+
+- ✅ AŞAMA 3.2: İzinler ve Manifest Güncellemeleri - READ_PHONE_STATE Permission
+  - **Manifest Enhancement:** Added READ_PHONE_STATE permission to AndroidManifest.xml
+  - **Permission System Update:** Extended hasRequiredPermissions() to include READ_PHONE_STATE
+  - **Runtime Permission Handling:** Updated requestPermissions() to request all three permissions
+  - **UI Permission Tracking:** Enhanced updateUI() to monitor READ_PHONE_STATE permission status
+  - **Complete Permission Set:** RECEIVE_SMS, SEND_SMS, and READ_PHONE_STATE now properly managed
+  - **Dual SIM Prerequisites:** All required permissions in place for dual SIM functionality
+  - **Security Compliance:** Proper permission request flow for SIM information access
+  - **Foundation Ready:** Permission infrastructure complete for SimManager integration
+
 ## [2.17.0] - 2025-07-29
 
 - ✅ AŞAMA 3.1: SimManager.java Sınıfı Oluşturma - Dual SIM Utility

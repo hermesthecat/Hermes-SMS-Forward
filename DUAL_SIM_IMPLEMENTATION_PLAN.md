@@ -114,10 +114,10 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
 
 ### 📋 **AŞAMA 3: SIM Yönetim Utility Sınıfı Oluşturma**
 
-#### 3.1 SimManager.java Sınıfı Oluştur
+#### ✅ 3.1 SimManager.java Sınıfı Oluştur
 
-- [ ] `app/src/main/java/com/keremgok/sms/SimManager.java` dosyası oluştur
-- [ ] Temel fonksiyonlar:
+- [x] `app/src/main/java/com/keremgok/sms/SimManager.java` dosyası oluştur
+- [x] Temel fonksiyonlar:
 
   ```java
   public class SimManager {
@@ -138,7 +138,7 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
   }
   ```
 
-- [ ] SimInfo data class'ı oluştur:
+- [x] SimInfo data class'ı oluştur:
 
   ```java
   public static class SimInfo {
@@ -151,13 +151,13 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
   }
   ```
 
-- [ ] APK build test
-- [ ] Fix errors and warnings if build fails
-- [ ] ✅ Mark task as completed (AFTER successful APK build)
-- [ ] Update versionCode and versionName in app/build.gradle
-- [ ] Update changelog.md
-- [ ] Git commit with descriptive message
-- [ ] Git push
+- [x] APK build test
+- [x] Fix errors and warnings if build fails
+- [x] ✅ Mark task as completed (AFTER successful APK build)
+- [x] Update versionCode and versionName in app/build.gradle
+- [x] Update changelog.md
+- [x] Git commit with descriptive message
+- [x] Git push
 
 #### 3.2 İzinler ve Manifest Güncellemeleri
 

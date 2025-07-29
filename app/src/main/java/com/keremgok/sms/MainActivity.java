@@ -261,12 +261,13 @@ public class MainActivity extends AppCompatActivity {
     
     private boolean hasRequiredPermissions() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED &&
-               ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED;
+               ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED &&
+               ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED;
     }
     
     private void requestPermissions() {
         ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.SEND_SMS},
+                new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.SEND_SMS, Manifest.permission.READ_PHONE_STATE},
                 SMS_PERMISSION_REQUEST_CODE);
     }
     
@@ -280,7 +281,8 @@ public class MainActivity extends AppCompatActivity {
         String savedNumber = prefs.getString(KEY_TARGET_NUMBER, "");
         boolean hasReceiveSmsPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED;
         boolean hasSendSmsPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED;
-        boolean hasAllPermissions = hasReceiveSmsPermission && hasSendSmsPermission;
+        boolean hasReadPhoneStatePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED;
+        boolean hasAllPermissions = hasReceiveSmsPermission && hasSendSmsPermission && hasReadPhoneStatePermission;
         
         // Update individual permission status indicators
         if (hasReceiveSmsPermission) {
