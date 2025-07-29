@@ -59,8 +59,22 @@ public class AnalyticsActivity extends AppCompatActivity {
     private TextView tvMonthSuccessRate;
     private TextView tvMonthErrors;
     
+    // SIM statistics TextViews
+    private TextView tvSim1Received;
+    private TextView tvSim1Forwarded;
+    private TextView tvSim1SuccessRate;
+    private TextView tvSim2Received;
+    private TextView tvSim2Forwarded;
+    private TextView tvSim2SuccessRate;
+    private TextView tvSimSwitchCount;
+    private TextView tvMostUsedSim;
+    private CardView cardSimStats;
+    private ProgressBar progressSim1Success;
+    private ProgressBar progressSim2Success;
+    
     private AppDatabase database;
     private StatisticsManager statsManager;
+    private boolean isDualSimDevice = false;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +93,7 @@ public class AnalyticsActivity extends AppCompatActivity {
         
         initViews();
         setupClickListeners();
+        checkDualSimSupport();
         loadStatistics();
     }
     
@@ -96,6 +111,19 @@ public class AnalyticsActivity extends AppCompatActivity {
         tvMostCommonError = findViewById(R.id.tvMostCommonError);
         tvLastUpdateTime = findViewById(R.id.tvLastUpdateTime);
         progressSuccessRate = findViewById(R.id.progressSuccessRate);
+        
+        // SIM statistics views - Initialize to null for now (UI layout not implemented yet)
+        cardSimStats = null; // findViewById(R.id.cardSimStats);
+        tvSim1Received = null; // findViewById(R.id.tvSim1Received);
+        tvSim1Forwarded = null; // findViewById(R.id.tvSim1Forwarded);
+        tvSim1SuccessRate = null; // findViewById(R.id.tvSim1SuccessRate);
+        tvSim2Received = null; // findViewById(R.id.tvSim2Received);
+        tvSim2Forwarded = null; // findViewById(R.id.tvSim2Forwarded);
+        tvSim2SuccessRate = null; // findViewById(R.id.tvSim2SuccessRate);
+        tvSimSwitchCount = null; // findViewById(R.id.tvSimSwitchCount);
+        tvMostUsedSim = null; // findViewById(R.id.tvMostUsedSim);
+        progressSim1Success = null; // findViewById(R.id.progressSim1Success);
+        progressSim2Success = null; // findViewById(R.id.progressSim2Success);
         
         // Action buttons
         btnExport = findViewById(R.id.btnExport);
@@ -285,6 +313,11 @@ public class AnalyticsActivity extends AppCompatActivity {
         tvMonthForwarded.setText(String.valueOf(monthForwarded));
         tvMonthSuccessRate.setText(String.format(Locale.US, "%.1f%%", monthSuccessRate));
         tvMonthErrors.setText(String.valueOf(monthErrors));
+        
+        // Load SIM statistics if dual SIM is supported
+        if (isDualSimDevice) {
+            loadSimStatistics();
+        }
     }
     
     /**
@@ -441,6 +474,102 @@ public class AnalyticsActivity extends AppCompatActivity {
             .setPositiveButton(getString(R.string.clear_button), (dialog, which) -> clearAnalyticsData())
             .setNegativeButton(getString(R.string.cancel_button), null)
             .show();
+    }
+    
+    /**
+     * Check if device supports dual SIM
+     */
+    private void checkDualSimSupport() {
+        isDualSimDevice = SimManager.isDualSimSupported(this);
+        
+        // Show/hide SIM statistics card based on dual SIM support
+        if (cardSimStats != null) {
+            cardSimStats.setVisibility(isDualSimDevice ? View.VISIBLE : View.GONE);
+        }
+    }
+    
+    /**
+     * Load SIM-specific statistics
+     */
+    private void loadSimStatistics() {
+        if (!isDualSimDevice) {
+            return;
+        }
+        
+        long startTime = System.currentTimeMillis() - (30L * 24 * 60 * 60 * 1000); // 30 days ago
+        long endTime = System.currentTimeMillis();
+        
+        statsManager.getSimUsageStatistics(startTime, endTime, new StatisticsManager.SimStatsCallback() {
+            @Override
+            public void onStatsReady(StatisticsManager.SimUsageStats stats) {
+                updateSimStatisticsUI(stats);
+            }
+            
+            @Override
+            public void onError(String error) {
+                android.util.Log.e(TAG, "Error loading SIM statistics: " + error);
+                // Hide SIM stats card on error
+                if (cardSimStats != null) {
+                    cardSimStats.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+    
+    /**
+     * Update SIM statistics UI
+     */
+    private void updateSimStatisticsUI(StatisticsManager.SimUsageStats stats) {
+        if (!isDualSimDevice || cardSimStats == null) {
+            return;
+        }
+        
+        // SIM 1 statistics
+        if (tvSim1Received != null) {
+            tvSim1Received.setText(String.valueOf(stats.sim1Received));
+        }
+        if (tvSim1Forwarded != null) {
+            tvSim1Forwarded.setText(String.valueOf(stats.sim1Forwarded));
+        }
+        if (tvSim1SuccessRate != null) {
+            tvSim1SuccessRate.setText(String.format(Locale.US, "%.1f%%", stats.sim1SuccessRate));
+        }
+        if (progressSim1Success != null) {
+            progressSim1Success.setProgress((int) stats.sim1SuccessRate);
+        }
+        
+        // SIM 2 statistics
+        if (tvSim2Received != null) {
+            tvSim2Received.setText(String.valueOf(stats.sim2Received));
+        }
+        if (tvSim2Forwarded != null) {
+            tvSim2Forwarded.setText(String.valueOf(stats.sim2Forwarded));
+        }
+        if (tvSim2SuccessRate != null) {
+            tvSim2SuccessRate.setText(String.format(Locale.US, "%.1f%%", stats.sim2SuccessRate));
+        }
+        if (progressSim2Success != null) {
+            progressSim2Success.setProgress((int) stats.sim2SuccessRate);
+        }
+        
+        // Additional SIM statistics
+        if (tvSimSwitchCount != null) {
+            tvSimSwitchCount.setText(String.valueOf(stats.simSwitchCount));
+        }
+        if (tvMostUsedSim != null) {
+            String mostUsedText;
+            if (stats.mostUsedForwardingSim == 0) {
+                mostUsedText = getString(R.string.sim_1);
+            } else if (stats.mostUsedForwardingSim == 1) {
+                mostUsedText = getString(R.string.sim_2);
+            } else {
+                mostUsedText = getString(R.string.sim_not_available);
+            }
+            tvMostUsedSim.setText(mostUsedText);
+        }
+        
+        // Make SIM stats card visible
+        cardSimStats.setVisibility(View.VISIBLE);
     }
     
     /**

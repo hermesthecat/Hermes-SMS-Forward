@@ -1,5 +1,23 @@
 # Changelog - Hermes SMS Forward
 
+## [2.29.0] - 2025-07-29
+
+- ✅ AŞAMA 9.2: Analytics SIM-based Statistics Implementation  
+  - **StatisticsManager Enhancement:** Added comprehensive SIM-aware analytics methods for dual SIM tracking
+  - **SIM Forward Statistics:** New recordSmsForwardSuccessWithSim() and recordSmsForwardFailureWithSim() methods
+  - **SIM Received Tracking:** Enhanced recordSmsReceivedWithSim() with privacy-first sender hashing
+  - **SIM Selection Analytics:** Added recordSimSelection() and recordDualSimConfigChange() for configuration tracking
+  - **SIM Usage Statistics:** Comprehensive getSimUsageStatistics() with callback-based async data loading
+  - **Enhanced Daily Summaries:** Added generateDailySummaryWithSim() for SIM-specific daily metrics
+  - **SimUsageStats Class:** Complete statistics data structure with SIM 1/2 metrics and cross-SIM analysis
+  - **AnalyticsActivity Integration:** Added dual SIM support detection and SIM statistics UI framework
+  - **Privacy-First Analytics:** All SIM analytics maintain user privacy by hashing sensitive phone numbers
+  - **Thread-Safe Operations:** All SIM analytics operations use ThreadManager for optimal performance
+  - **Error Handling:** Comprehensive error handling for SIM detection and analytics failures
+  - **Backward Compatibility:** All SIM analytics are optional and gracefully degrade on single SIM devices
+  - **Event Type Extensions:** Added SIM_SELECTION, DUAL_SIM_CONFIG, and DAILY_SIM_SUMMARY event types
+  - **Version Update:** Incremented to v2.29.0 (versionCode 40) for SIM analytics feature completion
+
 ## [2.28.0] - 2025-07-29
 
 - ✅ AŞAMA 9.1: History Activity Dual SIM Support
