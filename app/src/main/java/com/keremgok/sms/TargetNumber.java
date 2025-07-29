@@ -32,6 +32,12 @@ public class TargetNumber {
     @ColumnInfo(name = "last_used_timestamp")
     private long lastUsedTimestamp;
     
+    @ColumnInfo(name = "preferred_sim_slot")
+    private int preferredSimSlot = -1; // -1 = auto, 0 = SIM 1, 1 = SIM 2
+    
+    @ColumnInfo(name = "sim_selection_mode")
+    private String simSelectionMode = "auto"; // "auto", "source_sim", "specific_sim"
+    
     // Constructor
     public TargetNumber(String phoneNumber, String displayName, boolean isPrimary, boolean isEnabled) {
         this.phoneNumber = phoneNumber;
@@ -40,6 +46,8 @@ public class TargetNumber {
         this.isEnabled = isEnabled;
         this.createdTimestamp = System.currentTimeMillis();
         this.lastUsedTimestamp = 0;
+        this.preferredSimSlot = -1; // Default to auto
+        this.simSelectionMode = "auto"; // Default to auto mode
     }
     
     // Getters and Setters
@@ -97,6 +105,22 @@ public class TargetNumber {
     
     public void setLastUsedTimestamp(long lastUsedTimestamp) {
         this.lastUsedTimestamp = lastUsedTimestamp;
+    }
+    
+    public int getPreferredSimSlot() {
+        return preferredSimSlot;
+    }
+    
+    public void setPreferredSimSlot(int preferredSimSlot) {
+        this.preferredSimSlot = preferredSimSlot;
+    }
+    
+    public String getSimSelectionMode() {
+        return simSelectionMode;
+    }
+    
+    public void setSimSelectionMode(String simSelectionMode) {
+        this.simSelectionMode = simSelectionMode;
     }
     
     @Override

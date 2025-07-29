@@ -28,7 +28,7 @@
 
 - APK build test - Fix errors and warnings if build fails
 - ✅ Mark task as completed (AFTER successful APK build)
-- Update versionCode and versionName in app/build.gradle: 1.4.0 (versionCode: 5)
+- Update versionCode and versionName in app/build.gradle
 - Update changelog.md
 - Git commit: "Task 5: Security logging improvements and data masking"
 - Git push

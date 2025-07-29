@@ -1,5 +1,15 @@
 # Changelog - Hermes SMS Forward
 
+## [2.13.0] - 2025-07-29
+
+- ✅ AŞAMA 2.1: TargetNumber Entity Dual SIM Güncellemeleri
+  - **Database Schema Enhancement:** Added dual SIM support fields to TargetNumber entity
+  - **SIM Selection Fields:** Added preferredSimSlot (-1=auto, 0=SIM1, 1=SIM2) and simSelectionMode fields
+  - **SIM Selection Modes:** Support for "auto", "source_sim", and "specific_sim" modes
+  - **Backward Compatibility:** Default values ensure existing target numbers continue working
+  - **Entity Structure:** Added proper getters/setters and updated constructor
+  - **Foundation Layer:** Core database preparation for full dual SIM implementation
+
 ## [2.12.0] - 2025-07-28
 
 - ✅ Critical Bug Fix: Target Number Saving Issues

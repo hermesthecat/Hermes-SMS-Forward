@@ -30,7 +30,8 @@
       "Bash(cp:*)",
       "Bash(adb:*)",
       "Bash(powershell:*)",
-      "Bash(./create-signed-apk.bat)"
+      "Bash(./create-signed-apk.bat)",
+      "Bash(git checkout:*)"
     ],
     "deny": []
   }
