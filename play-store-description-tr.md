@@ -2,100 +2,101 @@
 
 ## Kısa Açıklama (80 karakter)
 
-Gelen SMS'leri otomatik olarak belirlediğiniz numaraya yönlendirin
+Dual SIM desteği ve gelişmiş filtreleme ile profesyonel SMS yönlendirme
 
 ## Tam Açıklama
 
-### 📱 Hermes SMS Forward - Güvenilir SMS Yönlendirme Uygulaması
+### Hermes SMS Forward - Kurumsal Seviye SMS Yönlendirme Çözümü
 
-**Hermes SMS Forward**, gelen SMS mesajlarınızı otomatik olarak belirlediğiniz hedef telefon numarasına yönlendiren güvenli ve kullanıcı dostu bir Android uygulamasıdır.
+**Hermes SMS Forward**, gelen SMS mesajlarını otomatik olarak birden fazla hedef telefon numarasına gelişmiş özellikler ve tam gizlilik koruması ile yönlendiren profesyonel bir Android uygulamasıdır.
 
-### ✨ Temel Özellikler
+### Temel Özellikler
 
-🔄 **Otomatik SMS Yönlendirme**
+**Çoklu Hedef Numaralar**
 
-- Gelen tüm SMS'leri anlık olarak belirlediğiniz numaraya yönlendirir
-- Orijinal gönderen bilgisi, mesaj içeriği ve zaman damgası korunur
-- Uzun mesajlar için otomatik multipart SMS desteği
+- SMS'leri sınırsız hedef telefon numarasına yönlendirme
+- Etkinleştir/devre dışı bırak kontrolleri ile bireysel hedef numara yönetimi
+- Öncelikli yönlendirme için birincil hedef atama
 
-🛡️ **Güvenlik & Gizlilik**
+**Gelişmiş SMS Filtreleme**
 
-- Hassas bilgiler production build'de loglanmaz
-- Telefon numaraları maskelenerek güvenli şekilde işlenir
-- Tüm veriler cihazınızda yerel olarak saklanır
+- İçerik tabanlı dahil etme/hariç tutma desenleri ile filtreleme
+- Büyük/küçük harf duyarlı seçenekleri ile kelime filtreleme
+- Gönderen numarası beyaz liste/kara liste işlevselliği
+- Çalışma saatleri için zaman tabanlı filtreleme
+- Öncelik tabanlı kural işleme
 
-⚡ **Akıllı Validation & Error Handling**
+**Dual SIM Desteği**
 
-- Gerçek zamanlı telefon numarası doğrulama
-- Türkiye (+90) özel format desteği
-- Otomatik yeniden deneme mekanizması (3 deneme)
-- Akıllı hata yönetimi ve kullanıcı geri bildirimi
+- Otomatik algılama ile tam dual SIM uyumluluğu
+- Hedef başına SIM yönlendirme yapılandırması
+- Otomatik, kaynak tabanlı veya belirli SIM seçim modları
+- Teşhis için SIM hata ayıklama arayüzü
 
-🎨 **Modern Tasarım & Kullanıcı Deneyimi**
+**Gizlilik Öncelikli Analitik**
 
-- Material Design 3 prensiplerine uygun arayüz
-- 5 adımlı rehberli kurulum süreci (Onboarding)
-- Etkileşimli setup flow ile kolay yapılandırma
-- Özel Hermes temalı app icon
-- Adaptive icon desteği (Android 8.0+)
-- Kullanıcı dostu ve sezgisel deneyim
+- Harici veri iletimi olmayan yerel kullanım istatistikleri
+- SMS yönlendirme başarı oranları ve performans metrikleri
+- Otomatik temizleme ile 90 günlük analitik saklama
+- Veri taşınabilirliği için dışa aktarma yetenekleri
 
-🧪 **Test Edilmiş & Güvenilir**
+**Profesyonel Özellikler**
 
-- Kapsamlı unit test coverage (%100)
-- UI/Integration test desteği
-- Production-ready build optimizasyonu
-- ProGuard/R8 code obfuscation
+- Yeni kullanıcılar için rehberli 5 adımlı tanıtım
+- Arama işlevselliği ile kapsamlı mesaj geçmişi
+- WorkManager güvenilirliği ile arka plan işleme
+- Koyu mod desteği ile Material Design 3 UI
+- Tam Türkçe ve İngilizce yerelleştirme
+- TalkBack ile tam erişilebilirlik desteği
 
-### 📋 Kullanım Senaryoları
+**Kurumsal Güvenlik**
 
-• **İş Hayatı**: İş telefonunuza gelen SMS'leri kişisel telefonunuzda alın
-• **Seyahat**: Yurt dışında iken SMS'lerinizi ana telefonunuzda takip edin  
-• **Yedekleme**: Önemli SMS'lerinizi ikinci bir cihazda yedekleyin
-• **Aile**: Çocuğunuzun telefonuna gelen SMS'leri takip edin
-• **Acil Durumlar**: Kritik mesajları birden fazla cihazda alın
+- Tüm veri işleme yerel olarak cihazda gerçekleşir
+- Şifrelenmiş yerel depolama ile Room veritabanı
+- Sürüm yapıları için ProGuard/R8 kod karmaşıklaştırma
+- Kapsamlı giriş doğrulama ve hata işleme
+- Sıfır harici veri iletimi veya bulut depolama
 
-### 🔧 Teknik Özellikler
+### Sistem Gereksinimleri
 
-- **Minimum Android Sürümü**: Android 5.0 (API 21)
-- **Hedef Android Sürümü**: Android 14 (API 34)
-- **İzinler**: SMS Alma (RECEIVE_SMS), SMS Gönderme (SEND_SMS)
-- **Boyut**: ~2MB (optimize edilmiş)
-- **Dil Desteği**: Türkçe (yakında İngilizce)
+- Android 5.0+ (API Seviye 21)
+- SMS gönderme/alma izinleri
+- Dual SIM desteği (isteğe bağlı, gelişmiş özellikler için)
+- 15MB kullanılabilir depolama alanı
 
-### 🛠️ Kurulum & Yapılandırma
+### Mükemmel Olan Durumlar
 
-1. Uygulamayı indirin ve kurun
-2. 5 adımlı onboarding sürecini takip edin:
-   - Hoş geldin ekranı ve özellik tanıtımı
-   - SMS izinleri açıklaması ve güvenlik bilgisi
-   - Hedef telefon numarası setup'ı
-   - Filtre sistemi tanıtımı
-   - Kurulum tamamlama ve sonraki adımlar
-3. SMS izinlerini verin (zorunlu)
-4. Hedef telefon numarasını girin
-5. Artık gelen SMS'ler otomatik olarak yönlendirilecek!
+- SMS yedeklemesine ihtiyaç duyan iş profesyonelleri
+- Mesaj yönlendirmesi gerektiren uzaktan çalışanlar
+- Merkezi SMS izlemeye ihtiyaç duyan takımlar
+- Birden fazla telefon numarası olan kullanıcılar
+- Dual SIM cihaz sahipleri
 
-### 🔒 Gizlilik & Güvenlik
+### Gizlilik ve Güvenlik
 
-- Herhangi bir kişisel veri sunucularımızda saklanmaz
-- Tüm işlemler cihazınızda yerel olarak gerçekleşir
-- SMS içerikleri yalnızca yönlendirme için kullanılır
-- Telefon numaraları güvenli şekilde şifrelenir
-- Açık kaynak kod politikası (GitHub'da mevcut)
+- **Sadece Yerel İşleme**: Tüm işlemler cihazınızda gerçekleşir
+- **Bulut Depolama Yok**: Sıfır harici veri iletimi
+- **Açık Kaynak**: Tamamen şeffaf kod tabanı mevcut
+- **GDPR Uyumlu**: Uluslararası gizlilik standartlarını karşılar
+- **Minimal İzinler**: Sadece gerekli SMS ve telefon izinleri
 
-### 📞 Destek & İletişim
+### Teknik Mükemmellik
 
-Herhangi bir sorun yaşarsanız veya öneriniz varsa:
+- **Modern Mimari**: Room veritabanı + WorkManager + Material Design 3
+- **Güvenilir Arka Plan İşleme**: WorkManager mesaj teslimatını garanti eder
+- **Kapsamlı Test**: Tam birim ve enstrümantasyon test kapsamı
+- **Performans Optimize**: Verimli thread yönetimi ve kaynak kullanımı
+- **Düzenli Güncellemeler**: Sürekli iyileştirmeler ve özellik eklemeleri
 
-- Email: <support@hermessms.com>
-- GitHub: github.com/hermesthecat/Hermes-SMS-Forward
-- Sürüm geçmişi ve güncellemeler için changelog'u takip edin
+### Profesyonel Destek
 
-### 🏷️ Etiketler
-
-SMS, Yönlendirme, Otomatik, Güvenli, İş, Seyahat, Backup, Android, Hermes
+- Kapsamlı dokümantasyon ve kullanıcı kılavuzları
+- GitHub tabanlı sorun takibi ve destek
+- Düzenli güvenlik güncellemeleri ve iyileştirmeler
+- Topluluk odaklı özellik geliştirme
 
 ---
 
-**Not**: Bu uygulama yalnızca yasal amaçlarla kullanılmalıdır. SMS yönlendirme özelliğini kullanmadan önce yerel yasaları kontrol edin.
+**Hermes SMS Forward'ı bugün indirin ve kurumsal güvenilirlik ve gizlilik koruması ile profesyonel seviye SMS yönlendirme deneyimi yaşayın.**
+
+**Anahtar Kelimeler**: SMS yönlendirme, dual SIM, mesaj aktarma, iş iletişimi, gizlilik koruması, yerel işleme, profesyonel SMS araçları

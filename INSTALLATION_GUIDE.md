@@ -1,24 +1,26 @@
-# 📲 Installation Guide - Hermes SMS Forward
+# Installation Guide - Hermes SMS Forward
 
 Complete step-by-step installation and setup guide for Hermes SMS Forward.
 
-## 📋 Table of Contents
+## Table of Contents
 
-1. [System Requirements](#-system-requirements)
-2. [Installation Methods](#-installation-methods)
-3. [First-Time Setup](#-first-time-setup)
-4. [Troubleshooting](#-troubleshooting)
-5. [Advanced Installation](#-advanced-installation)
+1. [System Requirements](#system-requirements)
+2. [Installation Methods](#installation-methods)
+3. [First-Time Setup](#first-time-setup)
+4. [Troubleshooting](#troubleshooting)
+5. [Advanced Installation](#advanced-installation)
 
-## 🔧 System Requirements
+## System Requirements
 
 ### Minimum Requirements
 
 - **Android Version**: 5.0+ (API level 21)
+- **Target SDK**: Android 14 (API level 34)
 - **RAM**: 1GB or more
-- **Storage**: 10MB available space
+- **Storage**: 15MB available space
 - **SMS Service**: Active SMS service from carrier
 - **Device Type**: Smartphone with SMS capabilities
+- **Dual SIM Support**: Optional, for advanced SIM routing features
 
 ### Recommended Specifications
 
@@ -43,13 +45,13 @@ Before installation, verify your device compatibility:
    - Send and receive a test SMS
    - Confirm SMS app is working properly
 
-## 🚀 Installation Methods
+## Installation Methods
 
 ### Method 1: APK Download (Recommended)
 
 #### Step 1: Download APK
 
-1. Visit the [GitHub Releases page](https://github.com/hermesthecat/Hermes-SMS-Forward/releases)
+1. Visit the [GitHub Releases page](https://github.com/hermesthecat/sms-forward-android/releases)
 2. Download the latest `app-release.apk` file
 3. Note the file location (usually Downloads folder)
 
@@ -72,7 +74,7 @@ For Android 7.1 and below:
 #### Step 3: Install APK
 
 1. Open your file manager or browser downloads
-2. Locate the downloaded `app-release.apv` file
+2. Locate the downloaded `app-release.apk` file
 3. Tap the file to begin installation
 4. Tap **Install** when prompted
 5. Wait for installation to complete
@@ -90,8 +92,8 @@ For Android 7.1 and below:
 #### Step 1: Clone Repository
 
 ```bash
-git clone https://github.com/hermesthecat/Hermes-SMS-Forward.git
-cd Hermes-SMS-Forward
+git clone https://github.com/hermesthecat/sms-forward-android.git
+cd sms-forward-android
 ```
 
 #### Step 2: Open in Android Studio
@@ -125,7 +127,7 @@ cd Hermes-SMS-Forward
 
 The app will be available on Google Play Store after review process completion.
 
-## 🎯 First-Time Setup
+## First-Time Setup
 
 ### Step 1: Launch Application
 
@@ -135,28 +137,40 @@ The app will be available on Google Play Store after review process completion.
 
 ### Step 2: Grant Permissions
 
-The app will request two critical permissions:
+The app will request three critical permissions:
 
 #### SMS Permissions Dialog
 
 1. **"Allow Hermes SMS Forward to send and view SMS messages?"**
-2. Tap **Allow** to grant both permissions
-3. If you tap **Deny**, the app will explain why permissions are needed
+2. **"Allow access to phone information for dual SIM support?"**
+3. Tap **Allow** to grant all permissions
+4. If you tap **Deny**, the app will explain why permissions are needed
 
 #### Manual Permission Grant (if needed)
 
 1. Go to **Settings** > **Apps** > **Hermes SMS Forward**
 2. Tap **Permissions**
-3. Enable **SMS** permission
+3. Enable **SMS** and **Phone** permissions
 4. Return to the app and try again
 
-### Step 3: Configure Target Number
+### Step 3: Complete Guided Setup
 
-#### Enter Phone Number
+The app features a 5-step onboarding process for new users:
 
-1. In the **Target Phone Number** field, enter the number where SMS should be forwarded
+#### Onboarding Steps
+
+1. **Welcome Screen**: Introduction to app features
+2. **Permissions**: Guided permission granting with explanations
+3. **Target Numbers**: Add your first forwarding destination
+4. **Filtering**: Introduction to SMS filtering capabilities
+5. **Completion**: Setup completion and next steps
+
+#### Configure Target Numbers
+
+1. Add multiple target phone numbers for SMS forwarding
 2. Use international format: `+90555123456` (Turkey example)
 3. Or local format: `05551234567` (if in Turkey)
+4. Configure SIM routing preferences for dual SIM devices
 
 #### Validation Feedback
 
@@ -183,7 +197,7 @@ The app will request two critical permissions:
 2. Check if the SMS is forwarded to your target number
 3. Verify the forwarded message includes original sender info
 
-## 🔍 Troubleshooting
+## Troubleshooting
 
 ### Common Installation Issues
 
@@ -270,7 +284,7 @@ The app will request two critical permissions:
 3. Find **Hermes SMS Forward**
 4. Select **Don't optimize**
 
-## 🔧 Advanced Installation
+## Advanced Installation
 
 ### Enterprise/Bulk Installation
 
@@ -318,7 +332,7 @@ keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg
 # This allows running both debug and release versions simultaneously
 ```
 
-## 🗑️ Uninstallation
+## Uninstallation
 
 ### Method 1: Standard Uninstall
 
@@ -354,7 +368,7 @@ After uninstallation:
 - No residual data remains on the device
 - App permissions are automatically revoked
 
-## 🔄 Updating the App
+## Updating the App
 
 ### Update Process
 
@@ -370,14 +384,13 @@ After uninstallation:
 - No data loss during updates
 - Rollback to previous version possible
 
-## 📞 Installation Support
+## Installation Support
 
 ### Getting Help
 
 If you encounter issues during installation:
 
-- **Email**: <support@hermessms.com>
-- **GitHub Issues**: [Report Installation Problems](https://github.com/hermesthecat/Hermes-SMS-Forward/issues)
+- **GitHub Issues**: [Report Installation Problems](https://github.com/hermesthecat/sms-forward-android/issues)
 - **Documentation**: Check README.md for additional information
 
 ### Information to Include in Support Requests
@@ -388,7 +401,7 @@ If you encounter issues during installation:
 - Steps taken before the error occurred
 - Screenshots of error messages (if applicable)
 
-## ✅ Installation Checklist
+## Installation Checklist
 
 Before contacting support, verify:
 
@@ -403,6 +416,6 @@ Before contacting support, verify:
 
 ---
 
-**Note**: This installation guide is updated regularly. For the latest version, visit the [GitHub repository](https://github.com/hermesthecat/Hermes-SMS-Forward).
+**Note**: This installation guide is updated regularly. For the latest version, visit the [GitHub repository](https://github.com/hermesthecat/sms-forward-android).
 
 **Support**: If you encounter any issues not covered in this guide, please open an issue on GitHub or contact our support team.

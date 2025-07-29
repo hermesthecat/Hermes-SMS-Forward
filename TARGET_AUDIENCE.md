@@ -4,7 +4,7 @@
 **Age Rating:** 18+ (Adult supervision required for minors)  
 **Content Rating:** Everyone with guidance  
 
-## 🎯 Primary Target Audience
+## Primary Target Audience
 
 ### Age Demographics
 

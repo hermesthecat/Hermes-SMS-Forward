@@ -2,100 +2,101 @@
 
 ## Short Description (80 characters)
 
-Automatically forward incoming SMS messages to your designated phone number
+Professional SMS forwarding with dual SIM support and advanced filtering
 
 ## Full Description
 
-### 📱 Hermes SMS Forward - Reliable SMS Forwarding App
+### Hermes SMS Forward - Enterprise-Grade SMS Forwarding Solution
 
-**Hermes SMS Forward** is a secure and user-friendly Android application that automatically forwards incoming SMS messages to your designated target phone number.
+**Hermes SMS Forward** is a professional Android application that automatically forwards incoming SMS messages to multiple target phone numbers with advanced features and complete privacy protection.
 
-### ✨ Key Features
+### Key Features
 
-🔄 **Automatic SMS Forwarding**
+**Multiple Target Numbers**
 
-- Instantly forwards all incoming SMS to your specified number
-- Preserves original sender information, message content, and timestamp
-- Automatic multipart SMS support for long messages
+- Forward SMS to unlimited destination phone numbers
+- Individual target number management with enable/disable controls
+- Primary target designation for priority routing
 
-🛡️ **Security & Privacy**
+**Advanced SMS Filtering**
 
-- Sensitive information not logged in production builds
-- Phone numbers processed securely with masking
-- All data stored locally on your device
+- Content-based filtering with include/exclude patterns
+- Keyword filtering with case-sensitive options
+- Sender number whitelist/blacklist functionality
+- Time-based filtering for work hours
+- Priority-based rule processing
 
-⚡ **Smart Validation & Error Handling**
+**Dual SIM Support**
 
-- Real-time phone number validation
-- Special support for Turkey (+90) format
-- Automatic retry mechanism (3 attempts)
-- Intelligent error management and user feedback
+- Full dual SIM compatibility with automatic detection
+- Per-target SIM routing configuration
+- Automatic, source-based, or specific SIM selection modes
+- SIM debugging interface for diagnostics
 
-🎨 **Modern Design & User Experience**
+**Privacy-First Analytics**
 
-- Material Design 3 compliant interface
-- 5-step guided onboarding process
-- Interactive setup flow for easy configuration
-- Custom Hermes-themed app icon
-- Adaptive icon support (Android 8.0+)
-- User-friendly and intuitive experience
+- Local usage statistics with no external data transmission
+- SMS forwarding success rates and performance metrics
+- 90-day analytics retention with automatic cleanup
+- Export capabilities for data portability
 
-🧪 **Tested & Reliable**
+**Professional Features**
 
-- Comprehensive unit test coverage (100%)
-- UI/Integration test support
-- Production-ready build optimization
-- ProGuard/R8 code obfuscation
+- Guided 5-step onboarding for new users
+- Comprehensive message history with search functionality
+- Background processing with WorkManager reliability
+- Material Design 3 UI with dark mode support
+- Full Turkish and English localization
+- Complete accessibility support with TalkBack
 
-### 📋 Use Cases
+**Enterprise Security**
 
-• **Business**: Receive work SMS on your personal phone
-• **Travel**: Monitor SMS while abroad on your main device
-• **Backup**: Backup important SMS to a secondary device
-• **Family**: Monitor SMS received on your child's phone
-• **Emergency**: Receive critical messages on multiple devices
+- All data processing occurs locally on device
+- Room database with encrypted local storage
+- ProGuard/R8 code obfuscation for release builds
+- Comprehensive input validation and error handling
+- Zero external data transmission or cloud storage
 
-### 🔧 Technical Specifications
+### System Requirements
 
-- **Minimum Android Version**: Android 5.0 (API 21)
-- **Target Android Version**: Android 14 (API 34)
-- **Permissions**: Receive SMS (RECEIVE_SMS), Send SMS (SEND_SMS)
-- **Size**: ~2MB (optimized)
-- **Language Support**: Turkish (English coming soon)
+- Android 5.0+ (API Level 21)
+- SMS send/receive permissions
+- Dual SIM support (optional, for advanced features)
+- 15MB available storage space
 
-### 🛠️ Installation & Setup
+### Perfect For
 
-1. Download and install the app
-2. Follow the 5-step onboarding process:
-   - Welcome screen and feature introduction
-   - SMS permissions explanation and security information
-   - Target phone number setup
-   - Filter system introduction
-   - Setup completion and next steps
-3. Grant SMS permissions (required)
-4. Enter your target phone number
-5. Incoming SMS will now be automatically forwarded!
+- Business professionals needing SMS backup
+- Remote workers requiring message forwarding
+- Teams needing centralized SMS monitoring
+- Users with multiple phone numbers
+- Dual SIM device owners
 
-### 🔒 Privacy & Security
+### Privacy & Security
 
-- No personal data stored on our servers
-- All processing happens locally on your device
-- SMS content used only for forwarding purposes
-- Phone numbers securely encrypted
-- Open source code policy (available on GitHub)
+- **Local Processing Only**: All operations occur on your device
+- **No Cloud Storage**: Zero external data transmission
+- **Open Source**: Fully transparent codebase available
+- **GDPR Compliant**: Meets international privacy standards
+- **Minimal Permissions**: Only essential SMS and phone permissions
 
-### 📞 Support & Contact
+### Technical Excellence
 
-If you experience any issues or have suggestions:
+- **Modern Architecture**: Room database + WorkManager + Material Design 3
+- **Reliable Background Processing**: WorkManager ensures message delivery
+- **Comprehensive Testing**: Full unit and instrumentation test coverage
+- **Performance Optimized**: Efficient thread management and resource usage
+- **Regular Updates**: Continuous improvements and feature additions
 
-- Email: <support@hermessms.com>
-- GitHub: github.com/hermesthecat/Hermes-SMS-Forward
-- Follow changelog for version history and updates
+### Professional Support
 
-### 🏷️ Tags
-
-SMS, Forwarding, Automatic, Secure, Business, Travel, Backup, Android, Hermes
+- Comprehensive documentation and user guides
+- GitHub-based issue tracking and support
+- Regular security updates and improvements
+- Community-driven feature development
 
 ---
 
-**Note**: This application should only be used for legal purposes. Please check local laws before using the SMS forwarding feature.
+**Download Hermes SMS Forward today and experience professional-grade SMS forwarding with enterprise reliability and privacy protection.**
+
+**Keywords**: SMS forwarding, dual SIM, message relay, business communication, privacy protection, local processing, professional SMS tools

@@ -1,28 +1,31 @@
 # Data Handling Disclosure - Hermes SMS Forward
 
-**Last Updated:** July 25, 2025  
-**App Version:** 2.0.0
+**Last Updated:** July 29, 2025  
+**App Version:** 2.35.0
 
 This document provides a comprehensive disclosure of how Hermes SMS Forward handles user data in compliance with Google Play Store requirements and international privacy regulations.
 
-## 📊 Data Collection and Processing Summary
+## Data Collection and Processing Summary
 
 ### Data Types Processed
 
 | Data Type | Purpose | Storage Location | Retention Period | Third-Party Sharing |
 |-----------|---------|------------------|------------------|-------------------|
 | SMS Content | Forwarding functionality | Not stored (processed only) | Not retained | No |
-| Target Phone Number | SMS forwarding destination | Device only (SharedPreferences) | Until user changes/deletes | No |
+| Target Phone Numbers | SMS forwarding destinations | Device only (Room Database) | Until user changes/deletes | No |
+| SIM Information | Dual SIM forwarding support | Device only (temporary processing) | Not retained | No |
 | Sender Phone Numbers | SMS forwarding context | Not stored (processed only) | Not retained | No |
+| Filter Rules | SMS filtering configuration | Device only (Room Database) | Until user changes/deletes | No |
+| Usage Statistics | Local analytics | Device only (Room Database) | 90 days retention | No |
 | App Usage Logs | Debugging and error handling | Device only | Until app uninstall | No |
 
-## 🔒 Data Security Measures
+## Data Security Measures
 
 ### Technical Safeguards
 
 - **Local Processing Only:** All data processing occurs locally on the user's device
 - **No Server Communication:** The app does not communicate with external servers
-- **Encrypted Storage:** Uses Android's secure SharedPreferences for local data storage
+- **Encrypted Storage:** Uses Android's Room Database with secure local storage
 - **Code Obfuscation:** ProGuard/R8 implementation for additional security
 - **Permission Validation:** Runtime permission checks before accessing sensitive data
 
@@ -33,7 +36,7 @@ This document provides a comprehensive disclosure of how Hermes SMS Forward hand
 - **No Data Mining:** No analysis, profiling, or data mining of user communications
 - **Secure Logging:** Sensitive information masked in debug logs, disabled in production
 
-## 📱 Data Flow Architecture
+## Data Flow Architecture
 
 ### SMS Processing Flow
 
@@ -45,13 +48,13 @@ This document provides a comprehensive disclosure of how Hermes SMS Forward hand
 
 ### Configuration Data Flow
 
-1. **User Input:** User enters target phone number in the app interface
-2. **Validation:** Phone number validated using local validation algorithms
-3. **Storage:** Valid phone number stored in Android's SharedPreferences
-4. **Retrieval:** Number retrieved when SMS forwarding is needed
-5. **Security:** Number masked in any log outputs for privacy
+1. **User Input:** User enters multiple target phone numbers and filtering rules
+2. **Validation:** Phone numbers validated using local validation algorithms
+3. **Storage:** Valid data stored in Android's Room Database with encryption
+4. **Retrieval:** Data retrieved when SMS forwarding or filtering is needed
+5. **Security:** Sensitive information masked in any log outputs for privacy
 
-## 🌍 International Compliance
+## International Compliance
 
 ### GDPR Compliance (European Union)
 
@@ -78,7 +81,7 @@ This document provides a comprehensive disclosure of how Hermes SMS Forward hand
 - **Cross-Border Transfer:** Only occurs when user initiates SMS forwarding
 - **Data Security:** Appropriate technical measures implemented
 
-## 🚫 What We Don't Do
+## What We Don't Do
 
 ### No Data Collection
 
@@ -104,7 +107,7 @@ This document provides a comprehensive disclosure of how Hermes SMS Forward hand
 - ❌ We do not create advertising profiles
 - ❌ We do not share data for commercial gain
 
-## 👶 Children's Privacy
+## Children's Privacy
 
 ### Age Restrictions
 
@@ -119,7 +122,7 @@ This document provides a comprehensive disclosure of how Hermes SMS Forward hand
 - If we become aware of data collection from children under 13, we immediately delete it
 - Parents can contact us to review, delete, or refuse further collection of their child's information
 
-## 🔄 Data Lifecycle Management
+## Data Lifecycle Management
 
 ### Collection Phase
 
@@ -145,7 +148,7 @@ This document provides a comprehensive disclosure of how Hermes SMS Forward hand
 - **User-Initiated:** Users can delete configuration data through app settings
 - **Complete Removal:** Uninstalling app removes all data completely
 
-## 📋 User Rights and Controls
+## User Rights and Controls
 
 ### Access Rights
 
@@ -171,21 +174,20 @@ This document provides a comprehensive disclosure of how Hermes SMS Forward hand
 - Configuration data is stored in standard Android format
 - No complex data structures or proprietary formats used
 
-## 📞 Contact Information
+## Contact Information
 
 ### Data Protection Inquiries
 
-- **Email:** <privacy@hermessms.com>
+- **Email:** Available upon request via GitHub Issues
 - **Subject Line:** "Data Handling Inquiry - Hermes SMS Forward"
 - **Response Time:** Within 72 hours for privacy-related inquiries
 
 ### Technical Support
 
-- **Email:** <support@hermessms.com>
-- **GitHub Issues:** <https://github.com/hermesthecat/Hermes-SMS-Forward/issues>
+- **GitHub Issues:** <https://github.com/hermesthecat/sms-forward-android/issues>
 - **Documentation:** Comprehensive documentation available in app repository
 
-## 📝 Regular Updates
+## Regular Updates
 
 ### Review Schedule
 
@@ -203,4 +205,4 @@ This document provides a comprehensive disclosure of how Hermes SMS Forward hand
 
 **Declaration of Accuracy:** This data handling disclosure accurately represents all data processing activities of Hermes SMS Forward as of the last updated date. We commit to maintaining transparency and updating this document as needed to reflect any changes in our data handling practices.
 
-**Contact for Corrections:** If you find any inaccuracies in this disclosure, please contact <privacy@hermessms.com> immediately so we can investigate and correct any issues.
+**Contact for Corrections:** If you find any inaccuracies in this disclosure, please open an issue on our GitHub repository so we can investigate and correct any issues.

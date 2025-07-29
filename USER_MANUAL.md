@@ -1,19 +1,19 @@
-# 📖 User Manual - Hermes SMS Forward
+# User Manual - Hermes SMS Forward
 
 Complete user guide for using Hermes SMS Forward effectively and safely.
 
-## 📋 Table of Contents
+## Table of Contents
 
-1. [Getting Started](#-getting-started)
-2. [Main Interface](#-main-interface)
-3. [Setup and Configuration](#-setup-and-configuration)
-4. [Daily Usage](#-daily-usage)
-5. [Advanced Features](#-advanced-features)
-6. [Troubleshooting](#-troubleshooting)
-7. [Best Practices](#-best-practices)
-8. [FAQ](#-faq)
+1. [Getting Started](#getting-started)
+2. [Main Interface](#main-interface)
+3. [Setup and Configuration](#setup-and-configuration)
+4. [Daily Usage](#daily-usage)
+5. [Advanced Features](#advanced-features)
+6. [Troubleshooting](#troubleshooting)
+7. [Best Practices](#best-practices)
+8. [FAQ](#faq)
 
-## 🚀 Getting Started
+## Getting Started
 
 ### What is Hermes SMS Forward?
 
@@ -26,11 +26,14 @@ Hermes SMS Forward is a secure Android application that automatically forwards i
 
 ### Key Benefits
 
-- 🔒 **Complete Privacy**: All processing happens on your device
-- ⚡ **Real-time Forwarding**: Instant SMS forwarding
-- 🛡️ **Secure**: No data sent to external servers
-- 🎯 **Simple Setup**: Easy one-time configuration
-- 📱 **Reliable**: Production-tested and optimized
+- **Complete Privacy**: All processing happens on your device
+- **Real-time Forwarding**: Instant SMS forwarding
+- **Dual SIM Support**: Advanced dual SIM routing capabilities
+- **Smart Filtering**: Content-based message filtering
+- **Multiple Targets**: Forward to unlimited phone numbers
+- **Secure**: No data sent to external servers
+- **Simple Setup**: Easy guided onboarding process
+- **Reliable**: Production-tested and optimized
 
 ## 📱 Main Interface
 

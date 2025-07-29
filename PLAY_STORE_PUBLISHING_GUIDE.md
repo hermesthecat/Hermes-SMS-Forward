@@ -1,19 +1,19 @@
-# 📱 Play Store Publishing Guide - Hermes SMS Forward
+# Play Store Publishing Guide - Hermes SMS Forward
 
 Complete guide for publishing Hermes SMS Forward to Google Play Store.
 
-## 📋 Table of Contents
+## Table of Contents
 
-1. [Prerequisites](#-prerequisites)
-2. [Pre-Publishing Checklist](#-pre-publishing-checklist)
-3. [Play Console Setup](#-play-console-setup)
-4. [App Bundle Preparation](#-app-bundle-preparation)
-5. [Store Listing Configuration](#-store-listing-configuration)
-6. [Release Management](#-release-management)
-7. [Compliance & Review](#-compliance--review)
-8. [Post-Launch Management](#-post-launch-management)
+1. [Prerequisites](#prerequisites)
+2. [Pre-Publishing Checklist](#pre-publishing-checklist)
+3. [Play Console Setup](#play-console-setup)
+4. [App Bundle Preparation](#app-bundle-preparation)
+5. [Store Listing Configuration](#store-listing-configuration)
+6. [Release Management](#release-management)
+7. [Compliance & Review](#compliance--review)
+8. [Post-Launch Management](#post-launch-management)
 
-## 🔧 Prerequisites
+## Prerequisites
 
 ### Developer Account
 
@@ -34,7 +34,7 @@ Complete guide for publishing Hermes SMS Forward to Google Play Store.
 - Data Handling Disclosure (✅ Available: `DATA_HANDLING_DISCLOSURE.md`)
 - Target Audience definition (✅ Available: `TARGET_AUDIENCE.md`)
 
-## ✅ Pre-Publishing Checklist
+## Pre-Publishing Checklist
 
 ### Build Preparation
 
@@ -53,10 +53,10 @@ Complete guide for publishing Hermes SMS Forward to Google Play Store.
 
 ### Version Management
 
-- [ ] Update `versionCode` in `app/build.gradle` (current: 22)
-- [ ] Update `versionName` in `app/build.gradle` (current: "2.11.0")
+- [ ] Update `versionCode` in `app/build.gradle` (current: 46)
+- [ ] Update `versionName` in `app/build.gradle` (current: "2.35.0")
 - [ ] Update `changelog.md` with release notes
-- [ ] Create git tag: `git tag v2.11.0`
+- [ ] Create git tag: `git tag v2.35.0`
 
 ### Signing Configuration
 
@@ -72,7 +72,7 @@ Complete guide for publishing Hermes SMS Forward to Google Play Store.
 - [ ] Screenshots (phone, tablet, TV if applicable)
 - [ ] High-res icon (512x512px)
 
-## 🏪 Play Console Setup
+## Play Console Setup
 
 ### 1. Create New App
 

@@ -1,7 +1,7 @@
 # Privacy Policy - Hermes SMS Forward
 
-**Effective Date:** July 25, 2025  
-**Last Updated:** July 25, 2025
+**Effective Date:** July 29, 2025  
+**Last Updated:** July 29, 2025
 
 ## 1. Introduction
 
@@ -19,7 +19,7 @@ This Privacy Policy explains how Hermes SMS Forward ("we," "our," or "the app") 
 
 - **What we collect:** Your target phone number for SMS forwarding
 - **Why we collect it:** To know where to forward incoming SMS messages
-- **How we store it:** Stored locally on your device using Android's SharedPreferences
+- **How we store it:** Stored locally on your device using Android's Room Database
 
 ### 2.3 App Usage Data
 

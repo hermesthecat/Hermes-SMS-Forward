@@ -86,6 +86,23 @@ create-signed-apk.bat
 
 ## Architecture
 
+The application follows a **layered, component-based architecture** with clear separation of concerns:
+
+- **UI Layer**: Activities and Fragments with Material Design 3 components
+- **Business Logic Layer**: FilterEngine, SmsQueueManager, and various Manager classes
+- **Data Layer**: Room database with DAOs providing abstraction over SQLite
+- **Background Processing Layer**: WorkManager for reliable task execution
+- **System Integration Layer**: BroadcastReceiver for SMS interception
+
+### SMS Processing Pipeline
+
+1. **SMS_RECEIVED** broadcast intercepted by `SmsReceiver` (priority 1000)
+2. **FilterEngine** evaluates message against user-defined rules from database
+3. **SmsQueueManager** queues qualifying messages for background processing
+4. **SmsQueueWorker** (WorkManager) handles actual forwarding with retry logic
+5. **SmsSimSelectionHelper** manages dual-SIM routing
+6. **StatisticsManager** logs events locally for privacy-first analytics
+
 ## Core Components
 
 - **MainActivity** (`app/src/main/java/com/keremgok/sms/MainActivity.java`): Main UI for configuration, handles permission requests and navigation
@@ -145,18 +162,31 @@ create-signed-apk.bat
 
 ## Testing
 
-Comprehensive testing framework configured with:
+Comprehensive testing framework with **two-pronged strategy**:
 
-- **Unit tests**: `junit`, `mockito`, `robolectric` for isolated component testing
-- **Integration tests**: `androidx.test.ext:junit`, `espresso-core`, and `truth` for UI and database testing
-- **Test directories**: `app/src/test/` (unit) and `app/src/androidTest/` (instrumentation)
+### Unit Tests (`app/src/test/`)
+
+- **Frameworks**: JUnit, Mockito, Robolectric, Truth
+- **Focus**: Testing individual components in isolation
+- **Key Test**: `SimplePhoneNumberValidatorTest.java` for validation logic
+- **Command**: `./gradlew test --tests "PhoneNumberValidatorTest"`
+
+### Instrumentation Tests (`app/src/androidTest/`)  
+
+- **Frameworks**: AndroidX Test (JUnit4), Espresso
+- **Focus**: UI interactions and component integrations on real device/emulator
+- **Key Tests**:
+  - `MainActivityTest.java`: Main screen UI and behavior
+  - `PermissionFlowTest.java`: Permission declarations and handling
+  - `SMSForwardIntegrationTest.java`: End-to-end flow testing
+- **Command**: `./gradlew connectedAndroidTest`
 
 ## Development Patterns
 
-## Essential Practices
+### Essential Practices
 
 - **Database Access**: Always use Room DAOs instead of direct database operations
-- **Background Work**: Use ThreadManager's executor services (database, network, background) instead of creating threads
+- **Background Work**: Use ThreadManager's executor services (database, network, background) instead of creating threads  
 - **Privacy-First**: All analytics and data processing must remain local - no external data transmission
 - **Input Validation**: Use PhoneNumberValidator for all phone number inputs
 - **Error Handling**: Leverage WorkManager's retry logic for reliable SMS forwarding
@@ -165,13 +195,23 @@ Comprehensive testing framework configured with:
 - **Dual SIM Support**: Use SimManager for SIM card detection and selection; SmsSimSelectionHelper for SMS sending
 - **Internationalization**: Use LanguageManager for runtime language switching; support Turkish and English
 
+### Modern Android Patterns Used
+
+- **Room Database**: Type-safe database access with automatic SQLite generation
+- **WorkManager**: Deferrable, guaranteed background work execution
+- **Material Design 3**: Latest design system with adaptive theming
+- **ViewPager2**: Modern fragment-based UI flows with better performance
+- **BroadcastReceiver**: System-level SMS interception with high priority
+- **Singleton Pattern**: StatisticsManager and ThreadManager for centralized resource management
+
 ## Key Dependencies
 
-- **Room**: `androidx.room` for database operations
-- **WorkManager**: `androidx.work` for background task reliability
-- **Material Design**: `com.google.android.material` for UI components
-- **ViewPager2**: `androidx.viewpager2` for onboarding flow
-- **Preferences**: `androidx.preference` for settings management
+- **Room**: `androidx.room` for database operations and type-safe SQL generation
+- **WorkManager**: `androidx.work` for background task reliability and retry logic  
+- **Material Design**: `com.google.android.material` for UI components and theming
+- **ViewPager2**: `androidx.viewpager2` for onboarding flow and fragment navigation
+- **Preferences**: `androidx.preference` for settings management with PreferenceFragmentCompat
+- **Testing**: JUnit, Mockito, Robolectric (unit) + AndroidX Test, Espresso (instrumentation)
 
 ## Important Files
 

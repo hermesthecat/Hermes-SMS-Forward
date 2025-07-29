@@ -2,7 +2,7 @@
 
 This document explains why Hermes SMS Forward requires specific Android permissions and how they are used.
 
-## 📋 Required Permissions
+## Required Permissions
 
 ### 1. RECEIVE_SMS (Receive Text Messages)
 
@@ -48,11 +48,33 @@ This document explains why Hermes SMS Forward requires specific Android permissi
 - Implements PendingIntent for delivery status tracking
 - Includes retry mechanism for failed sends (up to 3 attempts)
 
-## 🔒 Permission Security & Privacy
+### 3. READ_PHONE_STATE (Read Phone Information)
+
+**Why we need this permission:**
+
+- To support dual SIM functionality on compatible devices
+- Enables automatic SIM card detection and selection
+- Required for advanced SIM routing features
+
+**How we use this permission:**
+
+- Detects available SIM cards and their properties
+- Enables user to choose which SIM to use for forwarding
+- Supports automatic SIM selection based on received SMS source
+- No personal information or call logs are accessed
+
+**Technical Details:**
+
+- Uses `SubscriptionManager` API for SIM card information
+- Only accesses SIM slot information and carrier details
+- No access to call history, contacts, or phone numbers
+- Permission gracefully degrades on single SIM devices
+
+## Permission Security & Privacy
 
 ### Runtime Permission Requests
 
-- Both permissions are classified as "dangerous" by Android
+- All three permissions are classified as "dangerous" by Android
 - The app explicitly requests these permissions at runtime
 - Users can grant or deny permissions individually
 - Clear explanations are provided for why each permission is needed
@@ -71,7 +93,7 @@ This document explains why Hermes SMS Forward requires specific Android permissi
 - Clear error messages guide users if permissions are needed but not granted
 - App provides direct links to system settings for easy permission management
 
-## 🛡️ Security Measures
+## Security Measures
 
 ### Data Protection
 
@@ -87,7 +109,7 @@ This document explains why Hermes SMS Forward requires specific Android permissi
 - User-friendly prompts explain why permissions are necessary
 - No unauthorized permission requests or excessive permission usage
 
-## 📱 Android Version Compatibility
+## Android Version Compatibility
 
 ### Modern Android (6.0+)
 
@@ -103,7 +125,7 @@ This document explains why Hermes SMS Forward requires specific Android permissi
 - No runtime permission dialogs on older versions
 - Maintains full functionality across all supported versions
 
-## 🚫 Permissions We DON'T Request
+## Permissions We DON'T Request
 
 ### Internet/Network Access
 
@@ -113,10 +135,10 @@ This document explains why Hermes SMS Forward requires specific Android permissi
 
 ### Device Access
 
-- **READ_PHONE_STATE** - Not required for SMS functionality
 - **CAMERA** - Not used by the application
 - **MICROPHONE** - Not used by the application
 - **LOCATION** - Not required for SMS forwarding
+- **BLUETOOTH** - Not required for SMS forwarding
 
 ### Storage Access
 
@@ -130,35 +152,36 @@ This document explains why Hermes SMS Forward requires specific Android permissi
 - **DEVICE_ADMIN** - Not required for SMS forwarding
 - **ACCESSIBILITY_SERVICE** - Not used by the application
 
-## 📖 User Guidance
+## User Guidance
 
 ### First Launch
 
-1. The app will request SMS permissions on first use
+1. The app will request SMS and phone permissions on first use
 2. Clear explanations are provided for each permission
 3. Users can choose to grant or deny permissions
-4. Demo mode available without full permissions for testing
+4. Dual SIM features require phone permission
 
 ### Permission Management
 
 1. Access Android Settings > Apps > Hermes SMS Forward > Permissions
-2. Toggle SMS permissions on/off as needed
+2. Toggle SMS and Phone permissions on/off as needed
 3. App will request permissions again when needed
 4. No persistent permission requests or nagging
 
 ### Troubleshooting
 
 - If SMS forwarding stops working, check permissions
-- Ensure both RECEIVE_SMS and SEND_SMS are enabled
+- Ensure RECEIVE_SMS, SEND_SMS, and READ_PHONE_STATE are enabled
 - Restart the app after changing permissions
 - Check device SMS settings for any restrictions
 
-## 🔍 Transparency Report
+## Transparency Report
 
 ### Permission Usage Statistics
 
 - RECEIVE_SMS: Used continuously when app is active
 - SEND_SMS: Used only when forwarding SMS messages
+- READ_PHONE_STATE: Used for dual SIM detection and configuration
 - Average SMS processing time: <100ms per message
 - No background permission usage when app is inactive
 
@@ -169,12 +192,11 @@ This document explains why Hermes SMS Forward requires specific Android permissi
 - Regular security audits ensure proper permission handling
 - Open source code available for verification
 
-## 📞 Support
+## Support
 
 If you have questions about app permissions:
 
-- **Email:** <permissions@hermessms.com>
-- **GitHub:** <https://github.com/hermesthecat/Hermes-SMS-Forward/issues>
+- **GitHub:** <https://github.com/hermesthecat/sms-forward-android/issues>
 - **Documentation:** Check README.md for additional information
 
 ---

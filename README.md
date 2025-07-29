@@ -1,170 +1,156 @@
-# 📱 Hermes SMS Forward
+# Hermes SMS Forward
 
-[![Version](https://img.shields.io/badge/version-2.12.0-blue.svg)](https://github.com/hermesthecat/Hermes-SMS-Forward)
+[![Version](https://img.shields.io/badge/version-2.35.0-blue.svg)](https://github.com/hermesthecat/sms-forward-android)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Android](https://img.shields.io/badge/platform-Android%205.0%2B-brightgreen.svg)](https://android.com)
 
-> **Secure and privacy-focused SMS forwarding application for Android**
+**Professional SMS forwarding solution for Android with enterprise-grade reliability and privacy protection.**
 
-Automatically forwards incoming SMS messages to your configured phone numbers with advanced features and complete privacy protection.
+Automatically forwards incoming SMS messages to multiple configured phone numbers with advanced filtering, dual SIM support, and comprehensive analytics - all processed locally on your device.
 
-## ✨ Features
+## Features
 
-- 📱 **Multiple Target Numbers**: Forward SMS to unlimited destination numbers
-- 🔍 **Smart Filtering**: Content-based SMS filtering system with include/exclude rules
-- 📊 **Message History**: Complete log of all forwarded messages with analytics
-- 🌐 **Multi-language**: Full Turkish and English language support
-- ♿ **Accessibility**: Complete TalkBack and screen reader support
-- 🔐 **Privacy First**: All data stays on your device, no cloud storage
+- **Multiple Target Numbers**: Forward SMS to unlimited destination phone numbers
+- **Advanced Filtering**: Content-based SMS filtering with include/exclude patterns
+- **Dual SIM Support**: Full dual SIM compatibility with SIM selection controls
+- **Message History**: Complete audit trail of all forwarded messages
+- **Local Analytics**: Privacy-first usage statistics and insights
+- **Multi-language Support**: Native Turkish and English localization
+- **Accessibility**: Full TalkBack and screen reader compatibility
+- **Privacy Protection**: Zero external data transmission - all processing local
+- **Background Processing**: Reliable WorkManager-based SMS forwarding with retry logic
 
-## 🚀 Quick Start
+## Installation
 
-### Requirements
-- Android 5.0+ (API 21)
+### System Requirements
+
+- Android 5.0+ (API Level 21)
 - SMS send/receive permissions
+- Dual SIM support (optional)
 
-### Installation
-1. Download APK from [Releases](https://github.com/hermesthecat/Hermes-SMS-Forward/releases)
+### Setup Process
+
+1. Download APK from [Releases](https://github.com/hermesthecat/sms-forward-android/releases)
 2. Enable "Install from Unknown Sources" in Android settings
 3. Install the APK file
-4. Open the app and follow the 5-step guided setup
+4. Complete the guided onboarding process (5 steps)
+5. Configure target numbers and filtering rules
 
-## 📱 Usage
+## Application Components
 
-### First Time Setup
-1. **Welcome**: Learn about app features and benefits
-2. **Permissions**: Grant SMS permissions with detailed explanations
-3. **Target Number**: Add your first forwarding destination
-4. **Filters**: Introduction to the smart filtering system
-5. **Completion**: Finish setup and start forwarding
+### Core Activities
 
-### Main Features
-- **Main Screen**: Quick status check and basic settings
-- **Target Numbers**: Manage multiple forwarding destinations
-- **Filter Rules**: Configure which messages to forward
-- **History**: View all forwarded messages with detailed logs
-- **Analytics**: Local usage statistics and insights
-- **Settings**: Advanced configuration options
+- **MainActivity**: Primary interface with status overview and navigation
+- **OnboardingActivity**: Guided 5-step setup for new users
+- **TargetNumbersActivity**: Multiple destination number management
+- **FilterRulesActivity**: SMS filtering rule configuration
+- **HistoryActivity**: Complete message forwarding audit trail
+- **AnalyticsActivity**: Local usage statistics dashboard
+- **SettingsActivity**: Advanced configuration and preferences
+- **SimDebugActivity**: Dual SIM diagnostics and debugging interface
 
-## 🔧 Development
+### Background Services
 
-### Build Commands
+- **SmsReceiver**: High-priority broadcast receiver for SMS interception
+- **SmsQueueManager**: WorkManager-based reliable message forwarding
+- **FilterEngine**: Core message filtering logic with pattern matching
+
+## Architecture
+
+### Technical Stack
+
+- **Database**: Room persistence library with SQLite backend
+- **Background Processing**: WorkManager for reliable task execution
+- **UI Framework**: Material Design 3 with ViewPager2
+- **Threading**: Custom ThreadManager for optimized resource usage
+- **Testing**: Comprehensive unit and instrumentation test coverage
+
+### Data Flow
+
+```text
+Incoming SMS → SmsReceiver → FilterEngine → SmsQueueManager → Multiple Targets
+     ↓              ↓              ↓              ↓              ↓
+  Priority 1000   Rule Engine   WorkManager   Background      Retry Logic
+  Interception    Processing     Queuing       Execution      & Analytics
+```
+
+### Build System
+
 ```bash
-# Build debug APK
+# Development builds
 ./gradlew assembleDebug
-
-# Build release APK
-./gradlew assembleRelease
-
-# Run tests
-./gradlew test
-
-# Install to device
 ./gradlew installDebug
 
-# Clean and rebuild
-./gradlew clean assembleDebug
+# Production builds  
+./gradlew assembleRelease
+./gradlew bundleRelease
+
+# Quality assurance
+./gradlew test
+./gradlew connectedAndroidTest
+./gradlew lint
 ```
 
-### Project Structure
-```
-app/src/main/java/com/keremgok/sms/
-├── MainActivity.java              # Main screen and configuration
-├── OnboardingActivity.java        # 5-step guided setup
-├── SmsReceiver.java              # SMS interception and forwarding
-├── TargetNumbersActivity.java    # Multiple target number management
-├── FilterRulesActivity.java      # SMS filtering rules
-├── HistoryActivity.java          # Message history and logs
-├── AnalyticsActivity.java        # Local usage statistics
-├── SettingsActivity.java         # Advanced settings
-├── AppDatabase.java              # Room database configuration
-├── ThreadManager.java            # Centralized thread management
-└── SmsQueueManager.java          # WorkManager-based SMS queue
-```
+## Security & Privacy
 
-## 🔐 Security & Privacy
+### Privacy-First Design
 
-- **Local Processing**: All data processing happens on your device
-- **No Cloud Storage**: Zero external data transmission
-- **Encrypted Storage**: Sensitive data encrypted using Android secure storage
-- **Minimal Permissions**: Only necessary SMS permissions requested
-- **Open Source**: Fully transparent codebase
+- **Local Processing**: All data processing occurs exclusively on device
+- **Zero External Transmission**: No cloud storage or external data sharing
+- **Encrypted Storage**: Sensitive data secured using Android Keystore
+- **Minimal Permissions**: Only essential SMS permissions requested
+- **Audit Trail**: Complete local logging for transparency
 
-## ⚡ How It Works
+### Security Features
 
-```
-Incoming SMS → Filter Engine → Queue Manager → Multiple Targets
-     ↓              ↓              ↓              ↓
-   Original     Apply Rules    WorkManager    Reliable Delivery
-   Message      (Include/      Background     with Retry Logic
-               Exclude)       Processing
-```
+- **Code Obfuscation**: ProGuard/R8 enabled for release builds
+- **Input Validation**: Comprehensive phone number and SMS content validation
+- **Thread Safety**: Concurrent operations managed through ThreadManager
+- **Error Handling**: Robust exception handling with graceful degradation
 
-## 📊 Statistics
-
-- **Lines of Code**: 4,500+ lines (excluding tests)
-- **Test Coverage**: 100% for core functionality
-- **Supported Languages**: Turkish, English
-- **APK Size**: ~2MB (optimized with ProGuard/R8)
-- **Minimum Android**: 5.0 (99.8% device coverage)
-- **Architecture**: Room + WorkManager + Material Design 3
-
-## 🔮 Version History
-
-### 2.12.0 (Current)
-- 🔧 Complete Room database integration
-- 📱 Multiple target number support
-- 🎯 Advanced filtering system with include/exclude patterns
-- 📊 Local analytics and comprehensive history tracking
-- 🌐 Full Turkish/English internationalization
-- ♿ Complete accessibility support with TalkBack
-- 🛠️ Reliable WorkManager-based background processing
-- 📈 Performance monitoring and optimization
-
-### 2.11.0
-- 🎯 5-step guided onboarding flow with ViewPager2
-- 📱 Modern Material Design 3 UI components
-- 🎨 Interactive setup with visual guides
-- 🛡️ Detailed permission explanations
-
-## 🛠️ Technical Details
-
-### Architecture Components
-- **Room Database**: Local data persistence
-- **WorkManager**: Reliable background SMS processing
-- **ThreadManager**: Centralized thread pool management
-- **Material Design 3**: Modern UI components
-- **BroadcastReceiver**: SMS interception (priority 1000)
+## Technical Specifications
 
 ### Build Configuration
-- **Min SDK**: 21 (Android 5.0)
+
+- **Application ID**: `com.keremgok.sms`
+- **Version**: 2.35.0 (Build 46)
+- **Min SDK**: 21 (Android 5.0+)
 - **Target SDK**: 34 (Android 14)
 - **Compile SDK**: 34
-- **ProGuard/R8**: Enabled for release builds (63% size reduction)
 
-## 📄 License
+### Dependencies
+
+- **Room Database**: 2.5.0 - Type-safe SQLite abstraction
+- **WorkManager**: 2.8.1 - Reliable background task execution
+- **Material Components**: 1.9.0 - Modern UI framework
+- **ViewPager2**: 1.0.0 - Fragment-based navigation
+- **Testing**: JUnit, Mockito, Robolectric, Espresso
+
+## License
 
 MIT License - see [LICENSE](LICENSE) file for details.
 
-## 📞 Support
+## Support & Development
 
-- **Issues**: [Report bugs](https://github.com/hermesthecat/Hermes-SMS-Forward/issues)
-- **Documentation**: Check this README and other .md files
+- **Issue Tracking**: [GitHub Issues](https://github.com/hermesthecat/sms-forward-android/issues)
+- **Documentation**: Comprehensive inline documentation and CLAUDE.md
+- **Build Scripts**: Windows batch files included for streamlined development
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/new-functionality`)
+3. Implement changes with comprehensive test coverage
+4. Ensure all quality checks pass (`./gradlew lint test`)
+5. Submit a pull request with detailed description
 
-### Development Guidelines
-- Follow existing code style and patterns
-- Add unit tests for new features
-- Update documentation
-- Test on multiple Android versions
+### Development Standards
+
+- Maintain existing architectural patterns
+- Add unit and instrumentation tests for new features
+- Follow Material Design 3 guidelines
+- Test across multiple Android versions and device configurations
 
 ---
 
-**⚡ Fast, secure, privacy-focused SMS forwarding**
+**Professional SMS forwarding solution with enterprise-grade reliability and privacy protection.**
