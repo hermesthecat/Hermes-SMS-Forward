@@ -71,6 +71,11 @@ public class SmsQueueWorker extends Worker {
             if (forwardingSubscriptionId != -1 || forwardingSimSlot != -1) {
                 logDebug("Processing SMS with dual SIM - Forwarding via subscription " + forwardingSubscriptionId + 
                          ", slot " + forwardingSimSlot);
+                SimLogger.logSimOperation("SMS_QUEUE_PROCESS", sourceSubscriptionId, forwardingSubscriptionId,
+                    "Priority: " + priority + ", Retry: " + retryCount, SimLogger.LEVEL_INFO);
+            } else {
+                SimLogger.logSimOperation("SMS_QUEUE_PROCESS", -1, -1,
+                    "Single SIM mode, Priority: " + priority + ", Retry: " + retryCount, SimLogger.LEVEL_DEBUG);
             }
             
             // Validate input data
@@ -89,11 +94,17 @@ public class SmsQueueWorker extends Worker {
             
             if (success) {
                 logDebug("SMS successfully processed in queue worker");
+                long processingTime = System.currentTimeMillis() - timestamp;
+                SimLogger.logSmsForwarding(originalSender, targetNumber, sourceSimSlot, forwardingSimSlot, 
+                    true, processingTime);
                 logSmsHistorySuccess(originalSender, originalMessage, targetNumber, forwardedMessage, timestamp,
                                    sourceSimSlot, forwardingSimSlot, sourceSubscriptionId, forwardingSubscriptionId);
                 return Result.success();
             } else {
                 logDebug("SMS processing failed in queue worker, retry count: " + retryCount);
+                long processingTime = System.currentTimeMillis() - timestamp;
+                SimLogger.logSmsForwarding(originalSender, targetNumber, sourceSimSlot, forwardingSimSlot, 
+                    false, processingTime);
                 
                 // Check if we should retry
                 if (retryCount < MAX_RETRY_COUNT) {

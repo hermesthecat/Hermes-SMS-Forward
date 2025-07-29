@@ -59,6 +59,10 @@ public class SmsSimSelectionHelper {
             logDebug("Determining forwarding SIM for target: " + maskPhoneNumber(targetNumber) + 
                     ", source subscription: " + sourceSubscriptionId);
             
+            // Log the SIM selection request
+            SimLogger.logSimSelection(targetNumber, "REQUEST", sourceSubscriptionId, -1, 
+                "Starting SIM selection process");
+            
             // Check if dual SIM is supported
             if (!SimManager.isDualSimSupported(context)) {
                 logDebug("Dual SIM not supported, using default SIM");
@@ -114,6 +118,8 @@ public class SmsSimSelectionHelper {
                 if (simInfo != null && simInfo.isActive) {
                     logDebug("Auto mode selected default SIM: " + simInfo.displayName + 
                             " (subscription " + defaultSmsSubscriptionId + ", slot " + simInfo.slotIndex + ")");
+                    SimLogger.logSimSelection("", "auto", sourceSubscriptionId, defaultSmsSubscriptionId, 
+                        "Default SMS SIM - " + simInfo.displayName);
                     return new SimSelectionResult(defaultSmsSubscriptionId, simInfo.slotIndex, 
                                                 "Auto mode - default SMS SIM", true);
                 }

@@ -32,4 +32,12 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
 
+    <!-- Debug menu item (only visible in debug builds) -->
+    <item
+        android:id="@+id/action_sim_debug"
+        android:title="SIM Debug Info"
+        android:orderInCategory="999"
+        android:visible="@bool/is_debug_build"
+        app:showAsAction="never" />
+
 </menu>

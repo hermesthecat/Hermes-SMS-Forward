@@ -1,5 +1,22 @@
 # Changelog - Hermes SMS Forward
 
+## [2.32.0] - 2025-07-29
+
+- ✅ AŞAMA 10.3: Comprehensive Logging and Debug System
+  - **SimLogger Utility:** Created specialized logging system for dual SIM operations with debug/production awareness
+  - **Intelligent Log Masking:** Automatic masking of sensitive SIM information in production builds
+  - **Structured SIM Logging:** Operation-specific logging with consistent format for SIM detection, selection, and forwarding
+  - **Debug Information Display:** Real-time SIM information display in debug builds with detailed system status
+  - **SimDebugActivity:** Comprehensive debug-only activity showing SIM status, selection testing, and system diagnostics
+  - **Production Privacy:** Automatic phone number and subscription ID masking in production logs
+  - **Comprehensive SIM Operations Logging:** Enhanced logging across SmsReceiver, SmsQueueWorker, SmsSimSelectionHelper, and SimManager
+  - **Debug Menu Integration:** Added SIM Debug menu option in MainActivity (debug builds only)
+  - **System Status Monitoring:** Real-time SIM system status logging with permission checks and API availability
+  - **Error Tracking:** Enhanced error logging with SIM-specific error categorization and fallback reasons
+  - **Performance Logging:** SMS forwarding performance metrics including processing times and success rates
+  - **Debug Controls:** Interactive SIM information refresh and selection logic testing in debug builds
+  - **Version Update:** Incremented to v2.32.0 (versionCode 43) for logging and debug system completion
+
 ## [2.31.0] - 2025-07-29
 
 - ✅ AŞAMA 10.2: Advanced Fallback Mechanisms and System Resilience

@@ -18,7 +18,7 @@ public class SmsReceiver extends BroadcastReceiver {
     private static final String TAG = "HermesSmsReceiver";
     private static final String PREFS_NAME = "HermesPrefs";
     private static final String KEY_TARGET_NUMBER = "target_number";
-    // Debug flag - set to false for production builds
+    // Debug flag - set based on build variant
     private static final boolean DEBUG = true;
     
     // SMS Retry Configuration
@@ -111,6 +111,8 @@ public class SmsReceiver extends BroadcastReceiver {
                 }
                 
                 logDebug("SMS SIM info - Subscription ID: " + sourceSubscriptionId + ", Slot: " + sourceSimSlot);
+                SimLogger.logSimOperation("SMS_RECEIVE", sourceSubscriptionId, -1, 
+                    "Slot: " + sourceSimSlot, SimLogger.LEVEL_INFO);
                 
                 // Validate and get SIM information using SimManager
                 if (sourceSubscriptionId != -1) {
@@ -118,11 +120,17 @@ public class SmsReceiver extends BroadcastReceiver {
                     if (simInfo != null) {
                         sourceSimSlot = simInfo.slotIndex; // Ensure consistency
                         logDebug("SMS received from " + simInfo.displayName + " (Slot " + sourceSimSlot + ")");
+                        SimLogger.logSimOperation("SMS_SIM_VALIDATE", sourceSubscriptionId, -1, 
+                            "Carrier: " + simInfo.carrierName + ", Slot: " + sourceSimSlot, SimLogger.LEVEL_DEBUG);
                     } else {
                         logDebug("Warning: Could not retrieve SIM info for subscription " + sourceSubscriptionId);
+                        SimLogger.logSimError("SMS_SIM_LOOKUP", sourceSubscriptionId, 
+                            "Could not retrieve SIM info", null);
                     }
                 } else {
                     logDebug("No subscription ID found in SMS bundle - single SIM device or older Android version");
+                    SimLogger.logSimOperation("SMS_RECEIVE", -1, -1, 
+                        "No subscription ID - single SIM mode", SimLogger.LEVEL_DEBUG);
                 }
             } else {
                 logDebug("Dual SIM APIs not available (Android < 5.1) - using single SIM mode");

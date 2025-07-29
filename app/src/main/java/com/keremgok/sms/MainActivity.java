@@ -375,6 +375,10 @@ public class MainActivity extends AppCompatActivity {
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
             startActivity(settingsIntent);
             return true;
+        } else if (itemId == R.id.action_sim_debug) {
+            // Launch SIM Debug Activity (debug builds only)
+            SimDebugActivity.launch(this);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

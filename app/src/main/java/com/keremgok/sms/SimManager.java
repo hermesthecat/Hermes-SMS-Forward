@@ -76,6 +76,7 @@ public class SimManager {
             List<SimInfo> sims = getActiveSimCards(context);
             boolean isDualSupported = sims.size() >= 2;
             logDebug("Dual SIM supported: " + isDualSupported + " (Found " + sims.size() + " SIMs)");
+            SimLogger.logSimDetection(context, sims);
             return isDualSupported;
         } catch (SecurityException e) {
             Log.e(TAG, "Permission denied while checking dual SIM support: " + e.getMessage());

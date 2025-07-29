@@ -83,6 +83,18 @@
                 android:value=".MainActivity" />
         </activity>
 
+        <!-- SIM Debug Activity (Debug builds only) -->
+        <activity
+            android:name=".SimDebugActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:label="SIM Debug Information"
+            android:enabled="@bool/is_debug_build">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
         <!-- SMS Receiver for incoming SMS messages -->
         <receiver 
             android:name=".SmsReceiver"
