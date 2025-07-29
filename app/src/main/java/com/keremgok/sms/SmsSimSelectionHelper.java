@@ -91,8 +91,10 @@ public class SmsSimSelectionHelper {
             
         } catch (Exception e) {
             Log.e(TAG, "Error determining forwarding SIM: " + e.getMessage(), e);
-            // Fallback to default SIM on error
-            return new SimSelectionResult(-1, -1, "Error in SIM selection: " + e.getMessage(), false);
+            // Fallback to default SIM on error with validation
+            int fallbackSubscriptionId = SimManager.getFallbackSubscriptionId(context, -1);
+            return new SimSelectionResult(fallbackSubscriptionId, -1, 
+                "Error fallback: " + e.getMessage(), fallbackSubscriptionId != -1);
         }
     }
     
@@ -132,7 +134,9 @@ public class SmsSimSelectionHelper {
             
         } catch (Exception e) {
             Log.e(TAG, "Error in auto mode SIM selection: " + e.getMessage(), e);
-            return new SimSelectionResult(-1, -1, "Auto mode error: " + e.getMessage(), false);
+            int fallbackSubscriptionId = SimManager.getFallbackSubscriptionId(context, -1);
+            return new SimSelectionResult(fallbackSubscriptionId, -1, 
+                "Auto mode error fallback: " + e.getMessage(), fallbackSubscriptionId != -1);
         }
     }
     

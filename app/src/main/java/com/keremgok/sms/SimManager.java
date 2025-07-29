@@ -67,10 +67,19 @@ public class SimManager {
         }
         
         try {
+            // Check for required permissions first
+            if (!hasRequiredPermissions(context)) {
+                Log.w(TAG, "Required permissions not granted for dual SIM detection");
+                return false;
+            }
+            
             List<SimInfo> sims = getActiveSimCards(context);
             boolean isDualSupported = sims.size() >= 2;
             logDebug("Dual SIM supported: " + isDualSupported + " (Found " + sims.size() + " SIMs)");
             return isDualSupported;
+        } catch (SecurityException e) {
+            Log.e(TAG, "Permission denied while checking dual SIM support: " + e.getMessage());
+            return false;
         } catch (Exception e) {
             Log.e(TAG, "Error checking dual SIM support: " + e.getMessage(), e);
             return false;
@@ -307,6 +316,184 @@ public class SimManager {
             return "***";
         }
         return phoneNumber.substring(0, 2) + "***" + phoneNumber.substring(phoneNumber.length() - 2);
+    }
+    
+    /**
+     * Check if all required permissions are granted for dual SIM operations
+     * @param context Application context
+     * @return true if all required permissions are granted
+     */
+    public static boolean hasRequiredPermissions(Context context) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                boolean hasReadPhoneState = context.checkSelfPermission(android.Manifest.permission.READ_PHONE_STATE) 
+                    == android.content.pm.PackageManager.PERMISSION_GRANTED;
+                boolean hasReadSms = context.checkSelfPermission(android.Manifest.permission.RECEIVE_SMS) 
+                    == android.content.pm.PackageManager.PERMISSION_GRANTED;
+                boolean hasSendSms = context.checkSelfPermission(android.Manifest.permission.SEND_SMS) 
+                    == android.content.pm.PackageManager.PERMISSION_GRANTED;
+                
+                logDebug("Permission check - READ_PHONE_STATE: " + hasReadPhoneState + 
+                        ", RECEIVE_SMS: " + hasReadSms + ", SEND_SMS: " + hasSendSms);
+                
+                return hasReadPhoneState && hasReadSms && hasSendSms;
+            } else {
+                // Pre-Marshmallow - permissions granted at install time
+                return true;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error checking permissions: " + e.getMessage(), e);
+            return false;
+        }
+    }
+    
+    /**
+     * Check if a specific subscription ID is valid and active
+     * @param context Application context
+     * @param subscriptionId Subscription ID to validate
+     * @return true if subscription is valid and active
+     */
+    public static boolean isSubscriptionValid(Context context, int subscriptionId) {
+        if (subscriptionId == -1) {
+            // -1 means default/unspecified subscription
+            return true;
+        }
+        
+        if (!isDualSimApiSupported()) {
+            logDebug("Dual SIM APIs not supported - treating subscription as valid");
+            return true;
+        }
+        
+        try {
+            if (!hasRequiredPermissions(context)) {
+                Log.w(TAG, "Cannot validate subscription - missing permissions");
+                return false;
+            }
+            
+            List<SimInfo> activeSims = getActiveSimCards(context);
+            for (SimInfo sim : activeSims) {
+                if (sim.subscriptionId == subscriptionId && sim.isActive) {
+                    logDebug("Subscription " + subscriptionId + " is valid and active");
+                    return true;
+                }
+            }
+            
+            Log.w(TAG, "Subscription " + subscriptionId + " not found or inactive");
+            return false;
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error validating subscription " + subscriptionId + ": " + e.getMessage(), e);
+            return false;
+        }
+    }
+    
+    /**
+     * Get fallback subscription ID when specified subscription is not available
+     * @param context Application context
+     * @param preferredSubscriptionId Preferred subscription ID
+     * @return Valid fallback subscription ID, or -1 for default
+     */
+    public static int getFallbackSubscriptionId(Context context, int preferredSubscriptionId) {
+        try {
+            // If preferred subscription is valid, use it
+            if (isSubscriptionValid(context, preferredSubscriptionId)) {
+                return preferredSubscriptionId;
+            }
+            
+            logDebug("Preferred subscription " + preferredSubscriptionId + " not available, finding fallback");
+            
+            // Get default SMS subscription as fallback
+            int defaultSubscriptionId = getDefaultSmsSubscriptionId(context);
+            if (isSubscriptionValid(context, defaultSubscriptionId)) {
+                logDebug("Using default SMS subscription " + defaultSubscriptionId + " as fallback");
+                return defaultSubscriptionId;
+            }
+            
+            // If default not available, use first active subscription
+            List<SimInfo> activeSims = getActiveSimCards(context);
+            if (!activeSims.isEmpty()) {
+                int fallbackId = activeSims.get(0).subscriptionId;
+                logDebug("Using first active subscription " + fallbackId + " as fallback");
+                return fallbackId;
+            }
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error finding fallback subscription: " + e.getMessage(), e);
+        }
+        
+        // Ultimate fallback - use default SIM
+        logDebug("No valid subscriptions found, using default SIM (-1)");
+        return -1;
+    }
+    
+    /**
+     * Handle SIM state changes (e.g., SIM removed/inserted)
+     * @param context Application context
+     * @param intent Intent containing SIM state change information
+     */
+    public static void handleSimStateChange(Context context, android.content.Intent intent) {
+        try {
+            String action = intent.getAction();
+            if (action == null) return;
+            
+            logDebug("Handling SIM state change: " + action);
+            
+            switch (action) {
+                case "android.intent.action.SIM_STATE_CHANGED":
+                case "android.intent.action.SIM_APPLICATION_STATE_CHANGED":
+                    // Get the affected slot
+                    int slotId = intent.getIntExtra("android.telephony.extra.SLOT_INDEX", -1);
+                    int simState = intent.getIntExtra("android.telephony.extra.SIM_STATE", -1);
+                    
+                    logDebug("SIM state change - Slot: " + slotId + ", State: " + simState);
+                    
+                    // Refresh SIM information
+                    List<SimInfo> currentSims = getActiveSimCards(context);
+                    logDebug("Current active SIMs after state change: " + currentSims.size());
+                    
+                    break;
+                    
+                default:
+                    logDebug("Unhandled SIM state change action: " + action);
+                    break;
+            }
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error handling SIM state change: " + e.getMessage(), e);
+        }
+    }
+    
+    /**
+     * Graceful degradation for single SIM devices
+     * @param context Application context
+     * @return SimInfo for single SIM device or null if no SIM
+     */
+    public static SimInfo getSingleSimFallback(Context context) {
+        try {
+            if (isDualSimSupported(context)) {
+                // Not a single SIM device
+                return null;
+            }
+            
+            logDebug("Creating single SIM fallback info");
+            
+            // Get basic telephony manager info for single SIM
+            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            if (telephonyManager != null && hasRequiredPermissions(context)) {
+                String carrierName = telephonyManager.getNetworkOperatorName();
+                if (carrierName == null || carrierName.trim().isEmpty()) {
+                    carrierName = "Unknown Carrier";
+                }
+                
+                return new SimInfo(-1, 0, carrierName, "SIM 1", "Unknown", true);
+            }
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error creating single SIM fallback: " + e.getMessage(), e);
+        }
+        
+        // Ultimate fallback
+        return new SimInfo(-1, 0, "Unknown", "SIM 1", "Unknown", true);
     }
     
     /**

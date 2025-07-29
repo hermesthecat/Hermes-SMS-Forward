@@ -1,5 +1,22 @@
 # Changelog - Hermes SMS Forward
 
+## [2.30.0] - 2025-07-29
+
+- ✅ AŞAMA 10.1: Enhanced Error Handling and SIM State Management
+  - **Permission Validation:** Added hasRequiredPermissions() for comprehensive dual SIM permission checking
+  - **Subscription Validation:** Implemented isSubscriptionValid() for real-time SIM subscription verification
+  - **Fallback Mechanisms:** Created getFallbackSubscriptionId() for intelligent SIM fallback selection
+  - **SIM State Change Handler:** Added handleSimStateChange() for SIM insertion/removal event handling  
+  - **Single SIM Degradation:** Implemented getSingleSimFallback() for graceful single SIM device support
+  - **Enhanced Error Handling:** Added SecurityException handling and comprehensive error recovery
+  - **SIM Selection Fallbacks:** Updated all SIM selection modes with robust fallback mechanisms
+  - **Permission-Aware Operations:** All dual SIM operations now check permissions before execution
+  - **Invalid Subscription Recovery:** Automatic fallback to valid SIM when preferred subscription unavailable
+  - **State Change Monitoring:** Framework for handling dynamic SIM state changes and updates
+  - **Error Logging:** Comprehensive error logging with detailed SIM state information
+  - **Graceful Degradation:** Seamless fallback to single SIM mode when dual SIM unavailable
+  - **Version Update:** Incremented to v2.30.0 (versionCode 41) for error handling completion
+
 ## [2.29.0] - 2025-07-29
 
 - ✅ AŞAMA 9.2: Analytics SIM-based Statistics Implementation  
