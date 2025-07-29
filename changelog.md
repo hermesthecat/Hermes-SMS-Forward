@@ -1,5 +1,19 @@
 # Changelog - Hermes SMS Forward
 
+## [2.21.0] - 2025-07-29
+
+- ✅ AŞAMA 5.1: SmsQueueWorker.java Güncellemeleri - Dual SIM SMS Sending
+  - **Dual SIM Input Keys:** Added SOURCE_SUBSCRIPTION_ID, FORWARDING_SUBSCRIPTION_ID, SOURCE_SIM_SLOT, FORWARDING_SIM_SLOT input data keys
+  - **Subscription-Specific SmsManager:** Updated processSmsWithPriority() to use SmsManager.getSmsManagerForSubscriptionId() for dual SIM sending
+  - **SIM-Aware SMS Sending:** Both sendSingleSms() and sendMultipartSms() now support subscription-specific sending with detailed logging
+  - **Enhanced History Logging:** Updated logSmsHistorySuccess() and logSmsHistoryFailure() to store complete SIM information in database
+  - **Dual Constructor Support:** Updated createInputData() with dual SIM parameters while maintaining backward compatibility
+  - **Graceful Fallback:** Automatic fallback to default SmsManager if subscription-specific manager fails
+  - **Debug Logging Enhancement:** Comprehensive SIM information logging throughout SMS processing pipeline
+  - **API Level Compatibility:** Proper handling of Android 5.1+ dual SIM APIs with backward compatibility
+  - **Worker Parameter Integration:** Complete doWork() method updated to extract and process SIM parameters
+  - **Foundation Complete:** SMS queue worker infrastructure ready for dual SIM forwarding with complete SIM selection logic
+
 ## [2.20.0] - 2025-07-29
 
 - ✅ AŞAMA 4.2: FilterEngine Güncellemeleri - Dual SIM Filter Support
