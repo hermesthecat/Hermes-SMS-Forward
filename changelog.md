@@ -1,5 +1,23 @@
 # Changelog - Hermes SMS Forward
 
+## [2.26.0] - 2025-07-29
+
+- ✅ AŞAMA 7.2 & 7.3: Layout Güncellemeleri ve SIM Selection Dialog
+  - **Enhanced Dialog Layout:** Added informational text and improved visual hierarchy in target number dialog
+  - **SIM Selection Arrays:** Added string arrays for SIM selection mode entries and values for standardized UI
+  - **SimSelectionDialog Class:** Comprehensive standalone SIM selection dialog with advanced features
+  - **SIM Status Display:** Visual status indicators (Active/Inactive) for each SIM card in selection dialog
+  - **SIM Information Display:** Shows carrier name, masked phone number, and slot indicator for each SIM
+  - **Custom List Adapter:** Specialized adapter for SIM card information display with proper formatting
+  - **Interactive Selection:** Touch-based SIM selection with callback interface for integration
+  - **Error Handling:** Graceful handling of dual SIM not supported and no SIM available scenarios
+  - **Visual Polish:** Improved spacing, typography, and information hierarchy in dialog layouts
+  - **Reusable Component:** SimSelectionDialog can be used throughout the app for SIM selection needs
+  - **Phone Number Masking:** Security-focused display of SIM phone numbers with proper masking
+  - **Comprehensive Layouts:** Created dialog_sim_selection.xml and item_sim_selection.xml layouts
+  - **String Resources:** Added Turkish language support for all new SIM dialog elements
+  - **Foundation Ready:** Advanced SIM selection UI components ready for settings integration
+
 ## [2.25.0] - 2025-07-29
 
 - ✅ AŞAMA 7.1: Target Numbers Activity Güncellemeleri - SIM Selection UI

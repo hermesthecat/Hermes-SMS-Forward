@@ -54,8 +54,16 @@
         android:text="@string/sim_selection_title"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:textColor="?attr/colorPrimary" />
+        
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sim_selection_info"
+        android:textSize="12sp"
+        android:textColor="?android:attr/textColorSecondary"
+        android:layout_marginBottom="8dp" />
 
     <RadioGroup
         android:id="@+id/radio_group_sim_mode"

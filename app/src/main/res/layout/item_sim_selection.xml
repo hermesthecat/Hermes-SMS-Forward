@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:gravity="center_vertical"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
+
+    <!-- SIM Slot Indicator -->
+    <TextView
+        android:id="@+id/tv_slot_indicator"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:text="@string/sim_1"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:background="@drawable/badge_sim"
+        android:gravity="center"
+        android:layout_marginEnd="16dp" />
+
+    <!-- SIM Info -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_sim_display_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sim_1"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="?android:attr/textColorPrimary"
+            android:layout_marginBottom="2dp" />
+
+        <TextView
+            android:id="@+id/tv_carrier_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Turkcell"
+            android:textSize="14sp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:layout_marginBottom="2dp" />
+
+        <TextView
+            android:id="@+id/tv_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+9055***4567"
+            android:textSize="12sp"
+            android:textColor="?android:attr/textColorTertiary" />
+
+    </LinearLayout>
+
+    <!-- Status Indicator -->
+    <TextView
+        android:id="@+id/tv_sim_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sim_status_active"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp"
+        android:background="@drawable/badge_primary"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

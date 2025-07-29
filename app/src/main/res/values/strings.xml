@@ -506,5 +506,21 @@
     <string name="sim_card_format" formatted="false">%s (%s)</string>
     <string name="sim_slot_format">SIM %d</string>
     <string name="sim_selection_info">Bu hedef için hangi SIM kartının kullanılacağını seçin</string>
+    <string name="sim_selection_dialog_info">Kullanmak istediğiniz SIM kartını seçin:</string>
+    <string name="sim_status_active">Aktif</string>
+    <string name="sim_status_inactive">İnaktif</string>
+    
+    <!-- SIM Selection Arrays -->
+    <string-array name="sim_selection_entries">
+        <item>@string/sim_auto_mode</item>
+        <item>@string/sim_source_mode</item>
+        <item>@string/sim_specific_mode</item>
+    </string-array>
+    
+    <string-array name="sim_selection_values">
+        <item>auto</item>
+        <item>source_sim</item>
+        <item>specific_sim</item>
+    </string-array>
     
 </resources>

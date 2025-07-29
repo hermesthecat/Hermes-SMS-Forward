@@ -327,10 +327,10 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
 
 ### 📋 **AŞAMA 7: UI Güncellemeleri**
 
-#### 7.1 Target Numbers Activity Güncellemeleri
+#### ✅ 7.1 Target Numbers Activity Güncellemeleri
 
-- [ ] `TargetNumbersActivity.java`'ye SIM selection UI ekle
-- [ ] Add/Edit dialog'larına SIM seçimi ekle:
+- [x] `TargetNumbersActivity.java`'ye SIM selection UI ekle
+- [x] Add/Edit dialog'larına SIM seçimi ekle:
 
   ```java
   // SIM selection spinner
@@ -340,14 +340,14 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
   }
   ```
 
-- [ ] Target list'te SIM göstergesi ekle
-- [ ] APK build test
-- [ ] Fix errors and warnings if build fails
-- [ ] ✅ Mark task as completed (AFTER successful APK build)
-- [ ] Update versionCode and versionName in app/build.gradle
-- [ ] Update changelog.md
-- [ ] Git commit with descriptive message
-- [ ] Git push
+- [x] Target list'te SIM göstergesi ekle
+- [x] APK build test
+- [x] Fix errors and warnings if build fails
+- [x] ✅ Mark task as completed (AFTER successful APK build)
+- [x] Update versionCode and versionName in app/build.gradle
+- [x] Update changelog.md
+- [x] Git commit with descriptive message
+- [x] Git push
 
 #### 7.2 Layout Güncellemeleri
 
