@@ -1,5 +1,18 @@
 # Changelog - Hermes SMS Forward
 
+## [2.19.0] - 2025-07-29
+
+- ✅ AŞAMA 4.1: SmsReceiver.java Güncellemeleri - Dual SIM SMS Detection
+  - **SIM Information Extraction:** Extract source subscription ID and slot index from SMS bundle
+  - **Multi-Vendor Compatibility:** Support for different Android versions and manufacturer bundle keys
+  - **SimManager Integration:** Validate and enrich SIM information using SimManager utility
+  - **Complete Method Chain Update:** All forwarding methods now support dual SIM parameters
+  - **Enhanced Logging:** SIM-aware debug logging with carrier and slot information
+  - **Backward Compatibility:** Graceful degradation for single SIM devices and older Android versions
+  - **Database Integration:** Pass SIM information to history logging with dual constructor support
+  - **Fallback Support:** SIM information preserved even in fallback forwarding scenarios
+  - **Foundation Complete:** SMS receiving infrastructure ready for dual SIM forwarding logic
+
 ## [2.18.0] - 2025-07-29
 
 - ✅ AŞAMA 3.2: İzinler ve Manifest Güncellemeleri - READ_PHONE_STATE Permission

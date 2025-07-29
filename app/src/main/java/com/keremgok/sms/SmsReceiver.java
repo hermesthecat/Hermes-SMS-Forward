@@ -92,6 +92,46 @@ public class SmsReceiver extends BroadcastReceiver {
             return;
         }
         
+        // Extract SIM information from bundle (dual SIM support)
+        int sourceSubscriptionId = -1;
+        int sourceSimSlot = -1;
+        
+        try {
+            // Extract subscription ID and slot index from bundle
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
+                sourceSubscriptionId = bundle.getInt("subscription", -1);
+                sourceSimSlot = bundle.getInt("slot", -1);
+                
+                // Alternative keys for different Android versions/manufacturers
+                if (sourceSubscriptionId == -1) {
+                    sourceSubscriptionId = bundle.getInt("android.telephony.extra.SUBSCRIPTION_INDEX", -1);
+                }
+                if (sourceSimSlot == -1) {
+                    sourceSimSlot = bundle.getInt("android.telephony.extra.SLOT_INDEX", -1);
+                }
+                
+                logDebug("SMS SIM info - Subscription ID: " + sourceSubscriptionId + ", Slot: " + sourceSimSlot);
+                
+                // Validate and get SIM information using SimManager
+                if (sourceSubscriptionId != -1) {
+                    SimManager.SimInfo simInfo = SimManager.getSimInfo(context, sourceSubscriptionId);
+                    if (simInfo != null) {
+                        sourceSimSlot = simInfo.slotIndex; // Ensure consistency
+                        logDebug("SMS received from " + simInfo.displayName + " (Slot " + sourceSimSlot + ")");
+                    } else {
+                        logDebug("Warning: Could not retrieve SIM info for subscription " + sourceSubscriptionId);
+                    }
+                } else {
+                    logDebug("No subscription ID found in SMS bundle - single SIM device or older Android version");
+                }
+            } else {
+                logDebug("Dual SIM APIs not available (Android < 5.1) - using single SIM mode");
+            }
+        } catch (Exception simExtractionError) {
+            Log.w(TAG, "Error extracting SIM information: " + simExtractionError.getMessage());
+            // Continue processing SMS even if SIM extraction fails
+        }
+        
         try {
             Object[] pdus = (Object[]) bundle.get("pdus");
             String format = bundle.getString("format");
@@ -134,7 +174,7 @@ public class SmsReceiver extends BroadcastReceiver {
                 
                 if (filterResult.shouldForward()) {
                     logDebug("SMS passed filters: " + filterResult.getReason() + " - forwarding to targets");
-                    queueSmsForwardingToMultipleTargets(context, senderNumber, finalMessage, targetNumbers, timestamp);
+                    queueSmsForwardingToMultipleTargets(context, senderNumber, finalMessage, targetNumbers, timestamp, sourceSubscriptionId, sourceSimSlot);
                     
                     // Record performance metrics
                     long processingTime = System.currentTimeMillis() - processingStartTime;
@@ -149,7 +189,8 @@ public class SmsReceiver extends BroadcastReceiver {
                     // Log blocked SMS to history with filter reason
                     for (TargetNumber target : targetNumbers) {
                         logSmsHistory(context, senderNumber, finalMessage, target.getPhoneNumber(), 
-                                     "", timestamp, false, "Blocked by filter: " + filterResult.getReason());
+                                     "", timestamp, false, "Blocked by filter: " + filterResult.getReason(),
+                                     sourceSimSlot, -1, sourceSubscriptionId, -1);
                     }
                 }
             } else {
@@ -167,9 +208,9 @@ public class SmsReceiver extends BroadcastReceiver {
     
     /**
      * Queue SMS for forwarding to multiple targets with parallel/sequential mode support
-     * This method handles SMS forwarding to multiple target numbers
+     * This method handles SMS forwarding to multiple target numbers with dual SIM support
      */
-    private void queueSmsForwardingToMultipleTargets(Context context, String originalSender, String message, java.util.List<TargetNumber> targetNumbers, long timestamp) {
+    private void queueSmsForwardingToMultipleTargets(Context context, String originalSender, String message, java.util.List<TargetNumber> targetNumbers, long timestamp, int sourceSubscriptionId, int sourceSimSlot) {
         try {
             // Get sending mode preference
             SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -177,34 +218,34 @@ public class SmsReceiver extends BroadcastReceiver {
             
             if ("parallel".equals(sendingMode)) {
                 // Parallel sending - queue all targets simultaneously
-                queueParallelForwarding(context, originalSender, message, targetNumbers, timestamp);
+                queueParallelForwarding(context, originalSender, message, targetNumbers, timestamp, sourceSubscriptionId, sourceSimSlot);
             } else {
                 // Sequential sending - queue targets one by one with delay
-                queueSequentialForwarding(context, originalSender, message, targetNumbers, timestamp);
+                queueSequentialForwarding(context, originalSender, message, targetNumbers, timestamp, sourceSubscriptionId, sourceSimSlot);
             }
             
         } catch (Exception e) {
             Log.e(TAG, "Error queuing SMS for multiple targets: " + e.getMessage(), e);
             // Fallback to direct forwarding for all targets
-            fallbackDirectForwardingToMultipleTargets(context, originalSender, message, targetNumbers, timestamp);
+            fallbackDirectForwardingToMultipleTargets(context, originalSender, message, targetNumbers, timestamp, sourceSubscriptionId, sourceSimSlot);
         }
     }
     
     /**
      * Queue SMS for parallel forwarding to all targets simultaneously
      */
-    private void queueParallelForwarding(Context context, String originalSender, String message, java.util.List<TargetNumber> targetNumbers, long timestamp) {
+    private void queueParallelForwarding(Context context, String originalSender, String message, java.util.List<TargetNumber> targetNumbers, long timestamp, int sourceSubscriptionId, int sourceSimSlot) {
         logDebug("Using parallel forwarding mode for " + targetNumbers.size() + " targets");
         
         for (TargetNumber target : targetNumbers) {
-            queueSmsForwardingToSingleTarget(context, originalSender, message, target, timestamp);
+            queueSmsForwardingToSingleTarget(context, originalSender, message, target, timestamp, sourceSubscriptionId, sourceSimSlot);
         }
     }
     
     /**
      * Queue SMS for sequential forwarding to targets with delays
      */
-    private void queueSequentialForwarding(Context context, String originalSender, String message, java.util.List<TargetNumber> targetNumbers, long timestamp) {
+    private void queueSequentialForwarding(Context context, String originalSender, String message, java.util.List<TargetNumber> targetNumbers, long timestamp, int sourceSubscriptionId, int sourceSimSlot) {
         logDebug("Using sequential forwarding mode for " + targetNumbers.size() + " targets");
         
         // Process primary target first, then others with increasing delays
@@ -221,21 +262,21 @@ public class SmsReceiver extends BroadcastReceiver {
         
         // Send to primary target immediately
         if (primaryTarget != null) {
-            queueSmsForwardingToSingleTarget(context, originalSender, message, primaryTarget, timestamp);
+            queueSmsForwardingToSingleTarget(context, originalSender, message, primaryTarget, timestamp, sourceSubscriptionId, sourceSimSlot);
         }
         
         // Send to other targets with 2-second intervals
         for (int i = 0; i < otherTargets.size(); i++) {
             TargetNumber target = otherTargets.get(i);
             long delay = (i + 1) * 2000; // 2 seconds delay between each target
-            queueSmsForwardingToSingleTargetWithDelay(context, originalSender, message, target, timestamp, delay);
+            queueSmsForwardingToSingleTargetWithDelay(context, originalSender, message, target, timestamp, delay, sourceSubscriptionId, sourceSimSlot);
         }
     }
     
     /**
      * Queue SMS for forwarding to a single target (original method adapted)
      */
-    private void queueSmsForwardingToSingleTarget(Context context, String originalSender, String message, TargetNumber targetNumber, long timestamp) {
+    private void queueSmsForwardingToSingleTarget(Context context, String originalSender, String message, TargetNumber targetNumber, long timestamp, int sourceSubscriptionId, int sourceSimSlot) {
         try {
             String targetPhoneNumber = targetNumber.getPhoneNumber();
             
@@ -269,24 +310,24 @@ public class SmsReceiver extends BroadcastReceiver {
             } else {
                 Log.e(TAG, "Failed to queue SMS for forwarding to: " + maskPhoneNumber(targetPhoneNumber));
                 // Fallback to direct processing if queue fails
-                fallbackDirectForwardingToSingleTarget(context, originalSender, message, targetNumber, timestamp);
+                fallbackDirectForwardingToSingleTarget(context, originalSender, message, targetNumber, timestamp, sourceSubscriptionId, sourceSimSlot);
             }
             
         } catch (Exception e) {
             Log.e(TAG, "Error queuing SMS for forwarding to target: " + e.getMessage(), e);
             // Fallback to direct processing if queue fails
-            fallbackDirectForwardingToSingleTarget(context, originalSender, message, targetNumber, timestamp);
+            fallbackDirectForwardingToSingleTarget(context, originalSender, message, targetNumber, timestamp, sourceSubscriptionId, sourceSimSlot);
         }
     }
     
     /**
      * Queue SMS for forwarding to a single target with delay
      */
-    private void queueSmsForwardingToSingleTargetWithDelay(Context context, String originalSender, String message, TargetNumber targetNumber, long timestamp, long delay) {
+    private void queueSmsForwardingToSingleTargetWithDelay(Context context, String originalSender, String message, TargetNumber targetNumber, long timestamp, long delay, int sourceSubscriptionId, int sourceSimSlot) {
         // For now, implement as immediate sending with fallback
         // In a full implementation, this would use WorkManager with scheduled delays
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            queueSmsForwardingToSingleTarget(context, originalSender, message, targetNumber, timestamp);
+            queueSmsForwardingToSingleTarget(context, originalSender, message, targetNumber, timestamp, sourceSubscriptionId, sourceSimSlot);
         }, delay);
     }
     
@@ -307,18 +348,18 @@ public class SmsReceiver extends BroadcastReceiver {
     /**
      * Fallback direct forwarding for multiple targets when queue system fails
      */
-    private void fallbackDirectForwardingToMultipleTargets(Context context, String originalSender, String message, java.util.List<TargetNumber> targetNumbers, long timestamp) {
+    private void fallbackDirectForwardingToMultipleTargets(Context context, String originalSender, String message, java.util.List<TargetNumber> targetNumbers, long timestamp, int sourceSubscriptionId, int sourceSimSlot) {
         logDebug("Using fallback direct forwarding for " + targetNumbers.size() + " targets");
         
         for (TargetNumber target : targetNumbers) {
-            fallbackDirectForwardingToSingleTarget(context, originalSender, message, target, timestamp);
+            fallbackDirectForwardingToSingleTarget(context, originalSender, message, target, timestamp, sourceSubscriptionId, sourceSimSlot);
         }
     }
     
     /**
      * Fallback direct forwarding method for a single target when queue system fails
      */
-    private void fallbackDirectForwardingToSingleTarget(Context context, String originalSender, String message, TargetNumber targetNumber, long timestamp) {
+    private void fallbackDirectForwardingToSingleTarget(Context context, String originalSender, String message, TargetNumber targetNumber, long timestamp, int sourceSubscriptionId, int sourceSimSlot) {
         try {
             String targetPhoneNumber = targetNumber.getPhoneNumber();
             logDebug("Using fallback direct forwarding for target: " + maskPhoneNumber(targetPhoneNumber));
@@ -347,7 +388,7 @@ public class SmsReceiver extends BroadcastReceiver {
             }
             
             // Log success to database
-            logSmsHistory(context, originalSender, message, targetPhoneNumber, forwardedMessage, timestamp, true, null);
+            logSmsHistory(context, originalSender, message, targetPhoneNumber, forwardedMessage, timestamp, true, null, sourceSimSlot, -1, sourceSubscriptionId, -1);
             // Update last used timestamp
             updateTargetLastUsed(context, targetNumber.getId(), timestamp);
             logInfo("Fallback SMS forwarding completed successfully for target: " + maskPhoneNumber(targetPhoneNumber));
@@ -356,7 +397,7 @@ public class SmsReceiver extends BroadcastReceiver {
             String targetPhoneNumber = targetNumber.getPhoneNumber();
             Log.e(TAG, "Fallback SMS forwarding failed for target " + maskPhoneNumber(targetPhoneNumber) + ": " + e.getMessage(), e);
             // Log failure to database
-            logSmsHistory(context, originalSender, message, targetPhoneNumber, "", timestamp, false, "Fallback forwarding failed: " + e.getMessage());
+            logSmsHistory(context, originalSender, message, targetPhoneNumber, "", timestamp, false, "Fallback forwarding failed: " + e.getMessage(), sourceSimSlot, -1, sourceSubscriptionId, -1);
         }
     }
     
@@ -392,10 +433,18 @@ public class SmsReceiver extends BroadcastReceiver {
     
     
     /**
-     * Log SMS forwarding history to database
+     * Log SMS forwarding history to database (backward compatibility)
      * Runs in optimized background thread to avoid blocking main thread
      */
     private void logSmsHistory(Context context, String senderNumber, String originalMessage, String targetNumber, String forwardedMessage, long timestamp, boolean success, String errorMessage) {
+        logSmsHistory(context, senderNumber, originalMessage, targetNumber, forwardedMessage, timestamp, success, errorMessage, -1, -1, -1, -1);
+    }
+    
+    /**
+     * Log SMS forwarding history to database with dual SIM support
+     * Runs in optimized background thread to avoid blocking main thread
+     */
+    private void logSmsHistory(Context context, String senderNumber, String originalMessage, String targetNumber, String forwardedMessage, long timestamp, boolean success, String errorMessage, int sourceSimSlot, int forwardingSimSlot, int sourceSubscriptionId, int forwardingSubscriptionId) {
         ThreadManager.getInstance().executeDatabase(() -> {
             try {
                 AppDatabase database = AppDatabase.getInstance(context);
@@ -406,7 +455,11 @@ public class SmsReceiver extends BroadcastReceiver {
                     forwardedMessage,
                     timestamp,
                     success,
-                    errorMessage
+                    errorMessage,
+                    sourceSimSlot,
+                    forwardingSimSlot,
+                    sourceSubscriptionId,
+                    forwardingSubscriptionId
                 );
                 database.smsHistoryDao().insert(history);
                 

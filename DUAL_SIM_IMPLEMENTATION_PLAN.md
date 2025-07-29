@@ -159,22 +159,22 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
 - [x] Git commit with descriptive message
 - [x] Git push
 
-#### 3.2 İzinler ve Manifest Güncellemeleri
+#### ✅ 3.2 İzinler ve Manifest Güncellemeleri
 
-- [ ] `AndroidManifest.xml`'e izin ekle:
+- [x] `AndroidManifest.xml`'e izin ekle:
 
   ```xml
   <uses-permission android:name="android.permission.READ_PHONE_STATE" />
   ```
 
-- [ ] API 23+ için runtime permission handling ekle
-- [ ] APK build test
-- [ ] Fix errors and warnings if build fails
-- [ ] ✅ Mark task as completed (AFTER successful APK build)
-- [ ] Update versionCode and versionName in app/build.gradle
-- [ ] Update changelog.md
-- [ ] Git commit with descriptive message
-- [ ] Git push
+- [x] API 23+ için runtime permission handling ekle
+- [x] APK build test
+- [x] Fix errors and warnings if build fails
+- [x] ✅ Mark task as completed (AFTER successful APK build)
+- [x] Update versionCode and versionName in app/build.gradle
+- [x] Update changelog.md
+- [x] Git commit with descriptive message
+- [x] Git push
 
 ### 📋 **AŞAMA 4: SMS Alma Mekanizması Güncellemeleri**
 
