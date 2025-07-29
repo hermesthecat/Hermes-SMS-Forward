@@ -41,9 +41,9 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
 - [x] Git commit with descriptive message
 - [x] Git push
 
-#### 2.2 SmsHistory Entity Güncellemeleri  
+#### ✅ 2.2 SmsHistory Entity Güncellemeleri  
 
-- [ ] `SmsHistory.java` dosyasına aşağıdaki alanları ekle:
+- [x] `SmsHistory.java` dosyasına aşağıdaki alanları ekle:
 
   ```java
   @ColumnInfo(name = "source_sim_slot")
@@ -59,15 +59,15 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
   private int forwardingSubscriptionId = -1;
   ```
 
-- [ ] Getter ve setter metodları ekle
-- [ ] Constructor'ları güncelle
-- [ ] APK build test
-- [ ] Fix errors and warnings if build fails
-- [ ] ✅ Mark task as completed (AFTER successful APK build)
-- [ ] Update versionCode and versionName in app/build.gradle
-- [ ] Update changelog.md
-- [ ] Git commit with descriptive message
-- [ ] Git push
+- [x] Getter ve setter metodları ekle
+- [x] Constructor'ları güncelle
+- [x] APK build test
+- [x] Fix errors and warnings if build fails
+- [x] ✅ Mark task as completed (AFTER successful APK build)
+- [x] Update versionCode and versionName in app/build.gradle
+- [x] Update changelog.md
+- [x] Git commit with descriptive message
+- [x] Git push
 
 #### 2.3 Database Migration
 

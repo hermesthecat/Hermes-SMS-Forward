@@ -15,7 +15,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
  */
 @Database(
     entities = {SmsHistory.class, TargetNumber.class, SmsFilter.class, AnalyticsEvent.class, StatisticsSummary.class},
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
@@ -139,6 +139,24 @@ public abstract class AppDatabase extends RoomDatabase {
     };
     
     /**
+     * Migration from version 4 to 5: Add dual SIM support fields
+     */
+    static final Migration MIGRATION_4_5 = new Migration(4, 5) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            // Add dual SIM fields to target_numbers table
+            database.execSQL("ALTER TABLE target_numbers ADD COLUMN preferred_sim_slot INTEGER DEFAULT -1");
+            database.execSQL("ALTER TABLE target_numbers ADD COLUMN sim_selection_mode TEXT DEFAULT 'auto'");
+            
+            // Add dual SIM fields to sms_history table
+            database.execSQL("ALTER TABLE sms_history ADD COLUMN source_sim_slot INTEGER DEFAULT -1");
+            database.execSQL("ALTER TABLE sms_history ADD COLUMN forwarding_sim_slot INTEGER DEFAULT -1");
+            database.execSQL("ALTER TABLE sms_history ADD COLUMN source_subscription_id INTEGER DEFAULT -1");
+            database.execSQL("ALTER TABLE sms_history ADD COLUMN forwarding_subscription_id INTEGER DEFAULT -1");
+        }
+    };
+    
+    /**
      * Get singleton instance of the database
      * Thread-safe implementation with double-checked locking
      * @param context Application context
@@ -154,7 +172,7 @@ public abstract class AppDatabase extends RoomDatabase {
                         DATABASE_NAME
                     )
                     .allowMainThreadQueries() // For simple operations only
-                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
                     .addCallback(new RoomDatabase.Callback() {
                         @Override
                         public void onCreate(@NonNull SupportSQLiteDatabase db) {

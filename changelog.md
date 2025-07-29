@@ -1,5 +1,16 @@
 # Changelog - Hermes SMS Forward
 
+## [2.15.0] - 2025-07-29
+
+- ✅ AŞAMA 2.3: Database Migration v4→v5 Dual SIM Support
+  - **Schema Migration:** Implemented MIGRATION_4_5 for dual SIM database upgrade
+  - **Target Numbers Enhancement:** Added preferred_sim_slot and sim_selection_mode columns
+  - **History Tracking Enhancement:** Added source_sim_slot, forwarding_sim_slot, source_subscription_id, forwarding_subscription_id columns
+  - **Backward Compatibility:** Default values ensure existing data remains functional
+  - **Database Version:** Upgraded from v4 to v5 with proper migration path
+  - **Migration Safety:** Non-destructive ALTER TABLE operations preserve existing data
+  - **Foundation Complete:** Database infrastructure ready for dual SIM functionality
+
 ## [2.14.0] - 2025-07-29
 
 - ✅ AŞAMA 2.2: SmsHistory Entity Dual SIM Güncellemeleri
