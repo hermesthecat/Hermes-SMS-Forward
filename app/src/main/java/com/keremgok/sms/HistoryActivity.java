@@ -227,6 +227,18 @@ public class HistoryActivity extends AppCompatActivity {
             // Show all history
             loadHistoryData();
             return true;
+        } else if (itemId == R.id.action_filter_sim1) {
+            // Show only SIM 1 history
+            showHistoryByForwardingSim(0);
+            return true;
+        } else if (itemId == R.id.action_filter_sim2) {
+            // Show only SIM 2 history
+            showHistoryByForwardingSim(1);
+            return true;
+        } else if (itemId == R.id.action_filter_by_source_sim) {
+            // Show SIM selection dialog for source SIM filtering
+            showSourceSimFilterDialog();
+            return true;
         }
         
         return super.onOptionsItemSelected(item);
@@ -290,6 +302,97 @@ public class HistoryActivity extends AppCompatActivity {
             .setPositiveButton(getString(R.string.history_clear_confirm), (dialog, which) -> clearAllHistory())
             .setNegativeButton(getString(R.string.cancel), null)
             .show();
+    }
+    
+    /**
+     * Show history filtered by forwarding SIM
+     * @param simSlot SIM slot (0 for SIM 1, 1 for SIM 2)
+     */
+    private void showHistoryByForwardingSim(int simSlot) {
+        ThreadManager.getInstance().executeDatabase(() -> {
+            try {
+                List<SmsHistory> simHistory = database.smsHistoryDao().getHistoryByForwardingSim(simSlot);
+                
+                ThreadManager.getInstance().executeOnMainThread(() -> {
+                    filteredHistory.clear();
+                    filteredHistory.addAll(simHistory);
+                    adapter.notifyDataSetChanged();
+                    
+                    String simName = simSlot == 0 ? "SIM 1" : "SIM 2";
+                    String message = getString(R.string.history_showing_sim_filter, simName);
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+                });
+                
+            } catch (Exception e) {
+                ThreadManager.getInstance().executeOnMainThread(() -> {
+                    Toast.makeText(this, getString(R.string.history_filter_error), Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+    
+    /**
+     * Show source SIM filter dialog
+     */
+    private void showSourceSimFilterDialog() {
+        // Get available SIMs for filtering
+        List<SimManager.SimInfo> availableSims = SimManager.getActiveSimCards(this);
+        
+        if (availableSims == null || availableSims.isEmpty()) {
+            Toast.makeText(this, getString(R.string.dual_sim_not_supported), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        // Create dialog items
+        String[] simNames = new String[availableSims.size() + 1];
+        simNames[0] = getString(R.string.history_show_all);
+        
+        for (int i = 0; i < availableSims.size(); i++) {
+            SimManager.SimInfo sim = availableSims.get(i);
+            simNames[i + 1] = String.format("%s (%s)", sim.displayName, sim.carrierName);
+        }
+        
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle(getString(R.string.history_filter_by_source_sim_title))
+            .setItems(simNames, (dialog, which) -> {
+                if (which == 0) {
+                    // Show all history
+                    loadHistoryData();
+                } else {
+                    // Filter by selected source SIM
+                    SimManager.SimInfo selectedSim = availableSims.get(which - 1);
+                    showHistoryBySourceSubscription(selectedSim.subscriptionId, selectedSim.displayName);
+                }
+            })
+            .setNegativeButton(getString(R.string.cancel), null)
+            .show();
+    }
+    
+    /**
+     * Show history filtered by source SIM subscription
+     * @param sourceSubscriptionId Source SIM subscription ID
+     * @param simDisplayName SIM display name for toast message
+     */
+    private void showHistoryBySourceSubscription(int sourceSubscriptionId, String simDisplayName) {
+        ThreadManager.getInstance().executeDatabase(() -> {
+            try {
+                List<SmsHistory> sourceSimHistory = database.smsHistoryDao().getHistoryBySourceSubscription(sourceSubscriptionId);
+                
+                ThreadManager.getInstance().executeOnMainThread(() -> {
+                    filteredHistory.clear();
+                    filteredHistory.addAll(sourceSimHistory);
+                    adapter.notifyDataSetChanged();
+                    
+                    String message = getString(R.string.history_showing_source_sim_filter, simDisplayName);
+                    Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+                });
+                
+            } catch (Exception e) {
+                ThreadManager.getInstance().executeOnMainThread(() -> {
+                    Toast.makeText(this, getString(R.string.history_filter_error), Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
     }
     
     /**

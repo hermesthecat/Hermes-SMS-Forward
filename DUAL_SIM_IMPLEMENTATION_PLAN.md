@@ -395,9 +395,9 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
 
 ### 📋 **AŞAMA 8: Settings ve Preferences Güncellemeleri**
 
-#### 8.1 Preferences XML Güncellemeleri
+#### ✅ 8.1 Preferences XML Güncellemeleri
 
-- [ ] `res/xml/preferences.xml`'e dual SIM ayarları ekle:
+- [x] `res/xml/preferences.xml`'e dual SIM ayarları ekle:
 
   ```xml
   <PreferenceCategory android:title="Dual SIM Ayarları">
@@ -418,26 +418,26 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
   </PreferenceCategory>
   ```
 
-- [ ] APK build test
-- [ ] Fix errors and warnings if build fails
-- [ ] ✅ Mark task as completed (AFTER successful APK build)
-- [ ] Update versionCode and versionName in app/build.gradle
-- [ ] Update changelog.md
-- [ ] Git commit with descriptive message
-- [ ] Git push
+- [x] APK build test
+- [x] Fix errors and warnings if build fails
+- [x] ✅ Mark task as completed (AFTER successful APK build)
+- [x] Update versionCode and versionName in app/build.gradle
+- [x] Update changelog.md
+- [x] Git commit with descriptive message
+- [x] Git push
 
-#### 8.2 Settings Activity Güncellemeleri
+#### ✅ 8.2 Settings Activity Güncellemeleri
 
-- [ ] `SettingsActivity.java`'de SIM preference handling ekle
-- [ ] SIM detection ve validation logic
-- [ ] Dynamic preference entries (available SIM'lere göre)
-- [ ] APK build test
-- [ ] Fix errors and warnings if build fails
-- [ ] ✅ Mark task as completed (AFTER successful APK build)
-- [ ] Update versionCode and versionName in app/build.gradle
-- [ ] Update changelog.md
-- [ ] Git commit with descriptive message
-- [ ] Git push
+- [x] `SettingsActivity.java`'de SIM preference handling ekle
+- [x] SIM detection ve validation logic
+- [x] Dynamic preference entries (available SIM'lere göre)
+- [x] APK build test
+- [x] Fix errors and warnings if build fails
+- [x] ✅ Mark task as completed (AFTER successful APK build)
+- [x] Update versionCode and versionName in app/build.gradle (Combined with 8.1)
+- [x] Update changelog.md (Combined with 8.1)
+- [x] Git commit with descriptive message (Combined with 8.1)
+- [x] Git push (Combined with 8.1)
 
 #### 8.3 String Resources
 
@@ -464,18 +464,18 @@ Mevcut uygulama tek SIM kartı ile çalışmakta ve `SmsManager.getDefault()` ku
 
 ### 📋 **AŞAMA 9: History ve Analytics Güncellemeleri**
 
-#### 9.1 History Activity Güncellemeleri
+#### ✅ 9.1 History Activity Güncellemeleri
 
-- [ ] `HistoryActivity.java`'de SIM bilgilerini göster
-- [ ] SIM bazlı filtreleme seçenekleri ekle
-- [ ] History item layout'una SIM göstergesi ekle
-- [ ] APK build test
-- [ ] Fix errors and warnings if build fails
-- [ ] ✅ Mark task as completed (AFTER successful APK build)
-- [ ] Update versionCode and versionName in app/build.gradle
-- [ ] Update changelog.md
-- [ ] Git commit with descriptive message
-- [ ] Git push
+- [x] `HistoryActivity.java`'de SIM bilgilerini göster
+- [x] SIM bazlı filtreleme seçenekleri ekle
+- [x] History item layout'una SIM göstergesi ekle
+- [x] APK build test
+- [x] Fix errors and warnings if build fails
+- [x] ✅ Mark task as completed (AFTER successful APK build)
+- [x] Update versionCode and versionName in app/build.gradle
+- [x] Update changelog.md
+- [x] Git commit with descriptive message
+- [x] Git push
 
 #### 9.2 Analytics Güncellemeleri
 

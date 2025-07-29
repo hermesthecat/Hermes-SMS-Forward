@@ -1,5 +1,23 @@
 # Changelog - Hermes SMS Forward
 
+## [2.28.0] - 2025-07-29
+
+- ✅ AŞAMA 9.1: History Activity Dual SIM Support
+  - **SIM-based Filtering:** Added comprehensive SIM filtering options to history menu
+  - **Forwarding SIM Filters:** Menu options to filter by SIM 1 or SIM 2 forwarded messages
+  - **Source SIM Filtering:** Dynamic dialog for filtering by message source SIM with available SIM detection
+  - **Enhanced Menu System:** Extended history menu with SIM 1, SIM 2, and source SIM filtering options
+  - **DAO Integration:** Utilized existing dual SIM database queries for efficient history filtering
+  - **Dynamic SIM Detection:** Integration with SimManager for real-time available SIM detection
+  - **User-friendly Dialogs:** Interactive SIM selection dialog with carrier names and display names
+  - **Smart Fallback:** Graceful handling of devices without dual SIM support
+  - **String Resources:** Complete Turkish language support for all history SIM filtering features
+  - **Thread Safety:** All SIM filtering operations use ThreadManager for optimal performance
+  - **Toast Notifications:** User feedback for filter operations and SIM selection
+  - **Error Handling:** Comprehensive error handling for SIM detection and database operations
+  - **History Integration:** Seamless integration with existing history activity architecture
+  - **Version Update:** Incremented to v2.28.0 (versionCode 39) for dual SIM history feature completion
+
 ## [2.27.0] - 2025-07-29
 
 - ✅ AŞAMA 8.1 & 8.2: Settings Integration for Dual SIM

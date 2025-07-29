@@ -547,4 +547,12 @@
     <string name="settings_sim_information_title">SIM Kartı Bilgisi</string>
     <string name="settings_sim_information_summary">Aktif SIM kartları hakkında bilgi görüntüle</string>
     
+    <!-- History SIM Filter Strings -->
+    <string name="history_filter_sim1">SIM 1 ile Gönderilen</string>
+    <string name="history_filter_sim2">SIM 2 ile Gönderilen</string>
+    <string name="history_filter_by_source_sim">Kaynak SIM\'e Göre Filtrele</string>
+    <string name="history_filter_by_source_sim_title">Kaynak SIM Seçin</string>
+    <string name="history_showing_sim_filter">%s ile gönderilen mesajlar gösteriliyor</string>
+    <string name="history_showing_source_sim_filter">%s kaynak SIM\'inden gelen mesajlar gösteriliyor</string>
+    
 </resources>

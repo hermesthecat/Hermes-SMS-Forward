@@ -38,6 +38,27 @@
         android:orderInCategory="50"
         app:showAsAction="never" />
 
+    <!-- Filter by SIM 1 -->
+    <item
+        android:id="@+id/action_filter_sim1"
+        android:title="@string/history_filter_sim1"
+        android:orderInCategory="60"
+        app:showAsAction="never" />
+
+    <!-- Filter by SIM 2 -->
+    <item
+        android:id="@+id/action_filter_sim2"
+        android:title="@string/history_filter_sim2"
+        android:orderInCategory="70"
+        app:showAsAction="never" />
+
+    <!-- Filter by Source SIM -->
+    <item
+        android:id="@+id/action_filter_by_source_sim"
+        android:title="@string/history_filter_by_source_sim"
+        android:orderInCategory="80"
+        app:showAsAction="never" />
+
     <!-- Clear History -->
     <item
         android:id="@+id/action_clear_history"
