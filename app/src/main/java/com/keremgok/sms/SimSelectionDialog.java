@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -20,6 +21,7 @@ import java.util.List;
  */
 public class SimSelectionDialog {
     
+    private static final String TAG = "SimSelectionDialog";
     private Context context;
     private OnSimSelectedListener listener;
     private List<SimManager.SimInfo> availableSims;
@@ -58,7 +60,10 @@ public class SimSelectionDialog {
      * Show the SIM selection dialog
      */
     public void show() {
+        Log.d(TAG, "SimSelectionDialog.show() called");
+        
         if (!SimManager.isDualSimSupported(context)) {
+            Log.d(TAG, "Dual SIM not supported");
             Toast.makeText(context, R.string.dual_sim_not_supported, Toast.LENGTH_SHORT).show();
             if (listener != null) {
                 listener.onDialogCancelled();
@@ -67,6 +72,7 @@ public class SimSelectionDialog {
         }
         
         if (availableSims == null || availableSims.isEmpty()) {
+            Log.d(TAG, "No available SIMs found");
             Toast.makeText(context, R.string.sim_not_available, Toast.LENGTH_SHORT).show();
             if (listener != null) {
                 listener.onDialogCancelled();
@@ -74,25 +80,15 @@ public class SimSelectionDialog {
             return;
         }
         
+        Log.d(TAG, "Found " + availableSims.size() + " available SIMs");
+        
         // Create custom layout
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_sim_selection, null);
         
         // Setup ListView with SIM cards
         ListView listView = dialogView.findViewById(R.id.listview_sims);
-        SimListAdapter adapter = new SimListAdapter();
-        listView.setAdapter(adapter);
         
-        // Setup item click listener
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            if (position >= 0 && position < availableSims.size()) {
-                SimManager.SimInfo selectedSim = availableSims.get(position);
-                if (listener != null) {
-                    listener.onSimSelected(selectedSim.subscriptionId, selectedSim.slotIndex, selectedSim.displayName);
-                }
-            }
-        });
-        
-        // Create and show dialog
+        // Create dialog first to have reference for dismissing
         AlertDialog dialog = new AlertDialog.Builder(context)
             .setTitle(R.string.sim_selection_title)
             .setView(dialogView)
@@ -102,6 +98,26 @@ public class SimSelectionDialog {
                 }
             })
             .create();
+        
+        // Create adapter with dialog reference for dismissal
+        SimListAdapter adapter = new SimListAdapter(dialog);
+        listView.setAdapter(adapter);
+        
+        // Keep ListView click listener as backup
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            Log.d(TAG, "ListView item clicked: position=" + position);
+            if (position >= 0 && position < availableSims.size()) {
+                SimManager.SimInfo selectedSim = availableSims.get(position);
+                Log.d(TAG, "Selected SIM: " + selectedSim.displayName + " (slot=" + selectedSim.slotIndex + ")");
+                if (listener != null) {
+                    Log.d(TAG, "Calling onSimSelected callback");
+                    listener.onSimSelected(selectedSim.subscriptionId, selectedSim.slotIndex, selectedSim.displayName);
+                }
+                // Dismiss dialog after selection
+                Log.d(TAG, "Dismissing dialog");
+                dialog.dismiss();
+            }
+        });
             
         dialog.show();
     }
@@ -111,8 +127,11 @@ public class SimSelectionDialog {
      */
     private class SimListAdapter extends ArrayAdapter<SimManager.SimInfo> {
         
-        public SimListAdapter() {
+        private AlertDialog dialog;
+        
+        public SimListAdapter(AlertDialog dialog) {
             super(context, R.layout.item_sim_selection, availableSims);
+            this.dialog = dialog;
         }
         
         @Override
@@ -123,6 +142,25 @@ public class SimSelectionDialog {
             }
             
             SimManager.SimInfo simInfo = availableSims.get(position);
+            
+            // Add manual click listener to the view itself
+            final int finalPosition = position;
+            view.setOnClickListener(v -> {
+                Log.d(TAG, "Manual click listener triggered for position: " + finalPosition);
+                if (finalPosition >= 0 && finalPosition < availableSims.size()) {
+                    SimManager.SimInfo selectedSim = availableSims.get(finalPosition);
+                    Log.d(TAG, "Selected SIM: " + selectedSim.displayName + " (slot=" + selectedSim.slotIndex + ")");
+                    if (listener != null) {
+                        Log.d(TAG, "Calling onSimSelected callback");
+                        listener.onSimSelected(selectedSim.subscriptionId, selectedSim.slotIndex, selectedSim.displayName);
+                    }
+                    // Dismiss dialog after selection
+                    Log.d(TAG, "Manual click - dismissing dialog");
+                    if (dialog != null) {
+                        dialog.dismiss();
+                    }
+                }
+            });
             
             // SIM display name
             TextView tvDisplayName = view.findViewById(R.id.tv_sim_display_name);

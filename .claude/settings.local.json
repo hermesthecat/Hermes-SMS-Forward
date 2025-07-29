@@ -34,7 +34,9 @@
       "Bash(git checkout:*)",
       "Bash(.gradlew assembleDebug)",
       "Bash(git branch:*)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(where adb)",
+      "Bash(diff:*)"
     ],
     "deny": []
   }

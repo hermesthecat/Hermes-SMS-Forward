@@ -620,7 +620,7 @@ public class SettingsActivity extends AppCompatActivity {
          */
         private void updateSimInformationSummary(Preference preference, java.util.List<SimManager.SimInfo> availableSims) {
             if (availableSims != null && !availableSims.isEmpty()) {
-                String summary = availableSims.size() + " SIM kartı tespit edildi";
+                String summary = getString(R.string.sim_cards_detected, availableSims.size());
                 preference.setSummary(summary);
             } else {
                 preference.setSummary(getString(R.string.sim_not_available));
@@ -631,17 +631,19 @@ public class SettingsActivity extends AppCompatActivity {
          * Show SIM information dialog
          */
         private void showSimInformationDialog() {
+            android.util.Log.d("SettingsActivity", "showSimInformationDialog() called");
             SimSelectionDialog dialog = new SimSelectionDialog(requireContext(), new SimSelectionDialog.OnSimSelectedListener() {
                 @Override
                 public void onSimSelected(int subscriptionId, int simSlot, String displayName) {
+                    android.util.Log.d("SettingsActivity", "onSimSelected: " + displayName + " (slot=" + simSlot + ")");
                     // Just show a toast for information purposes
-                    String message = "Seçilen SIM: " + displayName + " (Slot " + (simSlot + 1) + ")";
+                    String message = getString(R.string.selected_sim_format, displayName, simSlot + 1);
                     Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
                 }
                 
                 @Override
                 public void onDialogCancelled() {
-                    // Do nothing
+                    android.util.Log.d("SettingsActivity", "onDialogCancelled");
                 }
             });
             
@@ -660,7 +662,7 @@ public class SettingsActivity extends AppCompatActivity {
                 Preference singleSimInfo = new Preference(requireContext());
                 singleSimInfo.setKey("single_sim_info");
                 singleSimInfo.setTitle(getString(R.string.single_sim_device_info));
-                singleSimInfo.setSummary("SMS'ler varsayılan SIM kartından gönderilecektir / SMS will be sent from default SIM card");
+                singleSimInfo.setSummary(getString(R.string.sms_default_sim_description));
                 singleSimInfo.setEnabled(false);
                 singleSimInfo.setSelectable(false);
                 
@@ -755,10 +757,10 @@ public class SettingsActivity extends AppCompatActivity {
                             previewText = "Kompakt / Compact";
                             break;
                         case SmsFormatter.FORMAT_DETAILED:
-                            previewText = "Detaylı / Detailed";
+                            previewText = getString(R.string.format_detailed);
                             break;
                         case SmsFormatter.FORMAT_CUSTOM:
-                            previewText = "Özel / Custom";
+                            previewText = getString(R.string.format_custom);
                             break;
                         case SmsFormatter.FORMAT_STANDARD:
                         default:
@@ -766,7 +768,7 @@ public class SettingsActivity extends AppCompatActivity {
                             break;
                     }
                     
-                    formatPreview.setSummary("Mevcut format: " + previewText + " - Önizleme için tıklayın");
+                    formatPreview.setSummary(getString(R.string.current_format_preview, previewText));
                 } catch (Exception e) {
                     formatPreview.setSummary(getString(R.string.settings_format_preview_summary));
                 }
@@ -878,9 +880,9 @@ public class SettingsActivity extends AppCompatActivity {
             boolean isTurkish = "tr".equals(currentLanguage);
             
             if (isTurkish) {
-                return "[{HEADER}]\nGönderen: {SENDER}\nMesaj: {MESSAGE}\nZaman: {TIME}\n{SIM_INFO}";
+                return getString(R.string.template_header_turkish);
             } else {
-                return "[{HEADER}]\nFrom: {SENDER}\nMessage: {MESSAGE}\nTime: {TIME}\n{SIM_INFO}";
+                return getString(R.string.template_header_english);
             }
         }
         
@@ -891,7 +893,7 @@ public class SettingsActivity extends AppCompatActivity {
             try {
                 // Sample data for preview
                 String sampleSender = "+905551234567";
-                String sampleMessage = "Bu bir örnek SMS mesajıdır";
+                String sampleMessage = getString(R.string.sample_message_turkish);
                 long sampleTimestamp = System.currentTimeMillis();
                 
                 // Use SmsFormatter to generate preview with the custom template
@@ -911,7 +913,7 @@ public class SettingsActivity extends AppCompatActivity {
                 return preview;
                 
             } catch (Exception e) {
-                return "Template önizleme hatası: " + e.getMessage();
+                return getString(R.string.template_preview_error, e.getMessage());
             }
         }
         

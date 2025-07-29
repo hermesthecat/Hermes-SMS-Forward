@@ -71,10 +71,7 @@ This is a comprehensive Android SMS forwarding application that automatically fo
 ### Windows Batch Scripts (Alternative)
 
 ```bat
-# Quick debug build
-build.bat
-
-# Clean and build
+# Clean and build debug APK
 clean-build.bat
 
 # Create signed release APK
@@ -97,6 +94,9 @@ create-signed-apk.bat
 - **ThreadManager** (`app/src/main/java/com/keremgok/sms/ThreadManager.java`): Centralized thread pool management for database, network, and background tasks
 - **SmsQueueManager** & **SmsQueueWorker**: WorkManager-based reliable background SMS forwarding with retry logic
 - **StatisticsManager**: Privacy-first local analytics system with no external data transmission
+- **FilterEngine** (`app/src/main/java/com/keremgok/sms/FilterEngine.java`): Core message filtering logic with include/exclude patterns
+- **SimManager** (`app/src/main/java/com/keremgok/sms/SimManager.java`): Dual SIM support and SIM card management
+- **LanguageManager** (`app/src/main/java/com/keremgok/sms/LanguageManager.java`): Runtime language switching and localization
 
 ## Feature Activities
 
@@ -106,6 +106,7 @@ create-signed-apk.bat
 - **HistoryActivity**: Displays comprehensive log of forwarded messages
 - **SettingsActivity**: Advanced configuration options
 - **AnalyticsActivity**: Local usage statistics dashboard
+- **SimDebugActivity**: Dual SIM debugging and diagnostics interface
 
 ## Database Entities (Room)
 
@@ -137,7 +138,7 @@ create-signed-apk.bat
 - **App ID**: `com.keremgok.sms`
 - **Min SDK**: 21 (Android 5.0)
 - **Target SDK**: 34 (Android 14)
-- **Current Version**: 2.12.0 (versionCode 23) - Update these values when releasing new versions
+- **Current Version**: 2.35.0 (versionCode 46) - Update these values when releasing new versions
 - **Permissions**: RECEIVE_SMS, SEND_SMS (both require runtime permission requests)
 - **Build Types**: Debug (with `.debug` suffix) and Release (with ProGuard/R8 obfuscation)
 - **Threading**: Use ThreadManager for all background operations instead of creating raw threads
@@ -161,6 +162,8 @@ Comprehensive testing framework configured with:
 - **Error Handling**: Leverage WorkManager's retry logic for reliable SMS forwarding
 - **First-Time Users**: OnboardingActivity automatically launches for new users; use `OnboardingActivity.isOnboardingCompleted()` to check status
 - **Fragment-Based UI**: Onboarding uses ViewPager2 with fragments; follow established patterns for new multi-step flows
+- **Dual SIM Support**: Use SimManager for SIM card detection and selection; SmsSimSelectionHelper for SMS sending
+- **Internationalization**: Use LanguageManager for runtime language switching; support Turkish and English
 
 ## Key Dependencies
 
@@ -178,7 +181,7 @@ Comprehensive testing framework configured with:
 - `app/src/main/AndroidManifest.xml`: Component declarations and permissions
 - `app/src/main/res/xml/preferences.xml`: Settings screen configuration
 - `changelog.md`: Version history and release notes
-- `build.bat` / `clean-build.bat`: Windows build scripts for easier development
+- `clean-build.bat` / `create-signed-apk.bat`: Windows build scripts for easier development
 
 ## Code Quality
 

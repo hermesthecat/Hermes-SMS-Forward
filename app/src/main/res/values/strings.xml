@@ -632,4 +632,16 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="sim_debug_title">SIM Debug Bilgisi</string>
     <string name="primary_target_name">Birincil Hedef</string>
 
+    <!-- Settings UI Strings -->
+    <string name="sim_cards_detected">%d SIM kartı tespit edildi</string>
+    <string name="selected_sim_format">Seçilen SIM: %1$s (Slot %2$d)</string>
+    <string name="sms_default_sim_description">SMS\'ler varsayılan SIM kartından gönderilecektir / SMS will be sent from default SIM card</string>
+    <string name="format_detailed">Detaylı / Detailed</string>
+    <string name="format_custom">Özel / Custom</string>
+    <string name="current_format_preview">Mevcut format: %1$s - Önizleme için tıklayın</string>
+    <string name="template_header_turkish">[{HEADER}]\nGönderen: {SENDER}\nMesaj: {MESSAGE}\nZaman: {TIME}\n{SIM_INFO}</string>
+    <string name="template_header_english">[{HEADER}]\nFrom: {SENDER}\nMessage: {MESSAGE}\nTime: {TIME}\n{SIM_INFO}</string>
+    <string name="sample_message_turkish">Bu bir örnek SMS mesajıdır</string>
+    <string name="template_preview_error">Template önizleme hatası: %s</string>
+
 </resources>

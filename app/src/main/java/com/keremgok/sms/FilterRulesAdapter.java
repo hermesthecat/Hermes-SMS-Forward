@@ -192,20 +192,20 @@ public class FilterRulesAdapter extends RecyclerView.Adapter<FilterRulesAdapter.
         }
         
         /**
-         * Convert filter type to readable format
+         * Convert filter type to readable format using string resources
          */
         private String getReadableFilterType(String filterType) {
             switch (filterType) {
                 case SmsFilter.TYPE_KEYWORD:
-                    return "Keyword Filter";
+                    return context.getString(R.string.filter_type_keyword);
                 case SmsFilter.TYPE_SENDER_NUMBER:
-                    return "Sender Number Filter";
+                    return context.getString(R.string.filter_type_sender_number);
                 case SmsFilter.TYPE_WHITELIST:
-                    return "Whitelist";
+                    return context.getString(R.string.filter_type_whitelist);
                 case SmsFilter.TYPE_BLACKLIST:
-                    return "Blacklist";
+                    return context.getString(R.string.filter_type_blacklist);
                 case SmsFilter.TYPE_SIM_BASED:
-                    return "SIM-based Filter";
+                    return context.getString(R.string.filter_type_sim_based);
                 default:
                     return filterType;
             }

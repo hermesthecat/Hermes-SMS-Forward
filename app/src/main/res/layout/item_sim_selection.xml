@@ -20,14 +20,18 @@
         android:textColor="@android:color/white"
         android:background="@drawable/badge_sim"
         android:gravity="center"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginEnd="16dp"
+        android:focusable="false"
+        android:clickable="false" />
 
     <!-- SIM Info -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:focusable="false"
+        android:clickable="false">
 
         <TextView
             android:id="@+id/tv_sim_display_name"
@@ -37,7 +41,9 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="?android:attr/textColorPrimary"
-            android:layout_marginBottom="2dp" />
+            android:layout_marginBottom="2dp"
+            android:focusable="false"
+            android:clickable="false" />
 
         <TextView
             android:id="@+id/tv_carrier_name"
@@ -46,7 +52,9 @@
             android:text="Turkcell"
             android:textSize="14sp"
             android:textColor="?android:attr/textColorSecondary"
-            android:layout_marginBottom="2dp" />
+            android:layout_marginBottom="2dp"
+            android:focusable="false"
+            android:clickable="false" />
 
         <TextView
             android:id="@+id/tv_phone_number"
@@ -54,7 +62,9 @@
             android:layout_height="wrap_content"
             android:text="+9055***4567"
             android:textSize="12sp"
-            android:textColor="?android:attr/textColorTertiary" />
+            android:textColor="?android:attr/textColorTertiary"
+            android:focusable="false"
+            android:clickable="false" />
 
     </LinearLayout>
 
@@ -69,6 +79,8 @@
         android:paddingHorizontal="8dp"
         android:paddingVertical="4dp"
         android:background="@drawable/badge_primary"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:focusable="false"
+        android:clickable="false" />
 
 </LinearLayout>

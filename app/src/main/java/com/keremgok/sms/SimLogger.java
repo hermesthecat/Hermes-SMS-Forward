@@ -55,13 +55,14 @@ public class SimLogger {
      * Log SIM detection and configuration
      * @param context Application context
      * @param sims List of detected SIMs
+     * @param isDualSupported Whether dual SIM is supported
      */
-    public static void logSimDetection(Context context, java.util.List<SimManager.SimInfo> sims) {
+    public static void logSimDetection(Context context, java.util.List<SimManager.SimInfo> sims, boolean isDualSupported) {
         String tag = TAG_PREFIX + "_DETECTION";
         
         StringBuilder logMessage = new StringBuilder();
         logMessage.append("[SIM_DETECT] Found ").append(sims.size()).append(" SIM(s) | ");
-        logMessage.append("DUAL_SUPPORT:").append(SimManager.isDualSimSupported(context)).append(" | ");
+        logMessage.append("DUAL_SUPPORT:").append(isDualSupported).append(" | ");
         logMessage.append("DEFAULT_SUB:").append(maskSubscriptionId(SimManager.getDefaultSmsSubscriptionId(context)));
         
         writeLog(tag, logMessage.toString(), LEVEL_INFO);

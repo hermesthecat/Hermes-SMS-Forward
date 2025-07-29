@@ -628,4 +628,47 @@ Examples:<br/>
     <string name="sim_debug_title">SIM Debug Information</string>
     <string name="primary_target_name">Primary Target</string>
 
+    <!-- Target Number Operations -->
+    <string name="target_number_saved_successfully">Target number saved successfully</string>
+    <string name="error_saving_target_number">Error occurred while saving target number</string>
+
+    <!-- SIM Selection Strings -->
+    <string name="sim_selection_title">SIM Card Selection</string>
+    <string name="sim_auto_mode">Automatic (Default SMS SIM)</string>
+    <string name="sim_source_mode">Source SIM (SMS receiving SIM)</string>
+    <string name="sim_specific_mode">Specific SIM Card</string>
+    <string name="sim_1">SIM 1</string>
+    <string name="sim_2">SIM 2</string>
+    <string name="sim_not_available">SIM not available</string>
+    <string name="dual_sim_not_supported">Dual SIM not supported</string>
+    <string name="sim_card_format" formatted="false">%s (%s)</string>
+    <string name="sim_slot_format">SIM %d</string>
+    <string name="sim_selection_info">Select which SIM card to use for this target</string>
+    <string name="sim_selection_dialog_info">Select the SIM card you want to use:</string>
+    <string name="sim_status_active">Active</string>
+    <string name="sim_status_inactive">Inactive</string>
+
+    <!-- Settings Dual SIM Category -->
+    <string name="settings_category_dual_sim">Dual SIM Settings</string>
+    <string name="settings_default_forwarding_sim_title">Default Forwarding SIM</string>
+    <string name="settings_default_forwarding_sim_summary">Default SIM card to use for SMS forwarding</string>
+    <string name="settings_global_sim_mode_title">Global SIM Selection Mode</string>
+    <string name="settings_global_sim_mode_summary">Default SIM selection mode for all targets</string>
+    <string name="settings_show_sim_indicators_title">Show SIM Indicators</string>
+    <string name="settings_show_sim_indicators_summary">Show SIM indicators in target list</string>
+    <string name="settings_sim_information_title">SIM Card Information</string>
+    <string name="settings_sim_information_summary">Display information about active SIM cards</string>
+
+    <!-- Settings UI Strings -->
+    <string name="sim_cards_detected">%d SIM cards detected</string>
+    <string name="selected_sim_format">Selected SIM: %1$s (Slot %2$d)</string>
+    <string name="sms_default_sim_description">SMS will be sent from default SIM card</string>
+    <string name="format_detailed">Detailed</string>
+    <string name="format_custom">Custom</string>
+    <string name="current_format_preview">Current format: %1$s - Click to preview</string>
+    <string name="template_header_turkish">[{HEADER}]\nGönderen: {SENDER}\nMesaj: {MESSAGE}\nZaman: {TIME}\n{SIM_INFO}</string>
+    <string name="template_header_english">[{HEADER}]\nFrom: {SENDER}\nMessage: {MESSAGE}\nTime: {TIME}\n{SIM_INFO}</string>
+    <string name="sample_message_turkish">Bu bir örnek SMS mesajıdır</string>
+    <string name="template_preview_error">Template preview error: %s</string>
+
 </resources>

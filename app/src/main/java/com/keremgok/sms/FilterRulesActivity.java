@@ -474,103 +474,12 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
     }
     
     /**
-     * Create formatted help text using SpannableStringBuilder
+     * Create formatted help text using string resources
      */
     private SpannableStringBuilder createFormattedHelpText() {
-        SpannableStringBuilder builder = new SpannableStringBuilder();
-        
-        // Get current language
-        String currentLanguage = getResources().getConfiguration().locale.getLanguage();
-        boolean isTurkish = "tr".equals(currentLanguage);
-        
-        if (isTurkish) {
-            // Turkish content
-            // KEYWORD BASED
-            appendBoldText(builder, "KELİME BAZLI (KEYWORD)");
-            builder.append("\nSMS içeriğinde belirli kelime veya cümleleri arar.\n");
-            builder.append("Örnek: \"banka\" kelimesi geçen SMS'leri engelle\n\n");
-            
-            // SENDER NUMBER
-            appendBoldText(builder, "GÖNDEREN NUMARASI (SENDER_NUMBER)");
-            builder.append("\nBelirli telefon numaralarından gelen SMS'leri filtreler.\n");
-            builder.append("Örnek: \"+905551234567\" numarasından gelen SMS'leri izin ver\n\n");
-            
-            // WHITELIST
-            appendBoldText(builder, "İZİN LİSTESİ (WHITELIST)");
-            builder.append("\nSadece izin verilen gönderenlerden SMS'leri iletir.\n");
-            builder.append("Örnek: Sadece \"Ahmet\" veya \"İş\" geçen SMS'leri ilet\n\n");
-            
-            // BLACKLIST
-            appendBoldText(builder, "ENGEL LİSTESİ (BLACKLIST)");
-            builder.append("\nBelirli gönderenlerden gelen SMS'leri engeller.\n");
-            builder.append("Örnek: \"Reklam\" veya \"Spam\" geçen SMS'leri engelle\n\n");
-            
-            // SIM BASED
-            appendBoldText(builder, "SIM BAZLI (SIM_BASED)");
-            builder.append("\nHangi SIM kartından gelen SMS'lerin işleneceğini belirler.\n");
-            builder.append("Örnekler:\n");
-            builder.append("• \"slot:0\" - Sadece SIM 1'den gelen SMS'ler\n");
-            builder.append("• \"turkcell\" - Turkcell SIM'inden gelen SMS'ler\n");
-            builder.append("• \"vodafone\" - Vodafone SIM'inden gelen SMS'ler\n\n");
-            
-            // ACTION TYPES
-            appendBoldText(builder, "İŞLEM TİPLERİ:");
-            builder.append("\n• ");
-            appendBoldText(builder, "İZİN VER (ALLOW):");
-            builder.append(" Filtre eşleşirse SMS'i ilet\n");
-            builder.append("• ");
-            appendBoldText(builder, "ENGELLE (BLOCK):");
-            builder.append(" Filtre eşleşirse SMS'i engelle\n\n");
-            
-            // REGEX
-            appendBoldText(builder, "REGEX:");
-            builder.append(" Gelişmiş kalıp eşleştirme için regex kullanabilirsiniz.");
-            
-        } else {
-            // English content
-            // KEYWORD BASED
-            appendBoldText(builder, "KEYWORD BASED");
-            builder.append("\nSearches for specific words or phrases in SMS content.\n");
-            builder.append("Example: Block SMS containing \"bank\"\n\n");
-            
-            // SENDER NUMBER
-            appendBoldText(builder, "SENDER NUMBER");
-            builder.append("\nFilters SMS from specific phone numbers.\n");
-            builder.append("Example: Allow SMS from \"+905551234567\"\n\n");
-            
-            // WHITELIST
-            appendBoldText(builder, "WHITELIST");
-            builder.append("\nOnly forwards SMS from allowed senders.\n");
-            builder.append("Example: Only forward SMS containing \"John\" or \"Work\"\n\n");
-            
-            // BLACKLIST
-            appendBoldText(builder, "BLACKLIST");
-            builder.append("\nBlocks SMS from specific senders.\n");
-            builder.append("Example: Block SMS containing \"Ads\" or \"Spam\"\n\n");
-            
-            // SIM BASED
-            appendBoldText(builder, "SIM BASED");
-            builder.append("\nDetermines which SIM card SMS should be processed from.\n");
-            builder.append("Examples:\n");
-            builder.append("• \"slot:0\" - Only SMS from SIM 1\n");
-            builder.append("• \"turkcell\" - SMS from Turkcell SIM\n");
-            builder.append("• \"vodafone\" - SMS from Vodafone SIM\n\n");
-            
-            // ACTION TYPES
-            appendBoldText(builder, "ACTION TYPES:");
-            builder.append("\n• ");
-            appendBoldText(builder, "ALLOW:");
-            builder.append(" Forward SMS if filter matches\n");
-            builder.append("• ");
-            appendBoldText(builder, "BLOCK:");
-            builder.append(" Block SMS if filter matches\n\n");
-            
-            // REGEX
-            appendBoldText(builder, "REGEX:");
-            builder.append(" You can use regex for advanced pattern matching.");
-        }
-        
-        return builder;
+        // Use string resource instead of hardcoded text
+        String helpContent = getString(R.string.filter_help_content);
+        return new SpannableStringBuilder(android.text.Html.fromHtml(helpContent, android.text.Html.FROM_HTML_MODE_LEGACY));
     }
     
     /**
