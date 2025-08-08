@@ -1,5 +1,16 @@
 # Changelog - Hermes SMS Forward
 
+## [2.36.0] - 2025-08-08
+
+- 🚀 **Real SMS Delivery Status Tracking:**
+  - **Callback System:** Implemented proper SMS delivery status tracking using Android callback system
+  - **PendingIntent Integration:** Added PendingIntent callbacks for both sent and delivered SMS confirmations
+  - **Accurate Status:** History now shows real SMS delivery status instead of just queue processing status
+  - **Comprehensive Error Codes:** Added support for all Android SMS error codes (network issues, no service, limit exceeded, etc.)
+  - **Network Failure Detection:** Can now properly detect when SMS fails due to network issues, insufficient credit, or carrier problems
+  - **Dual SIM Support:** Enhanced callback system works with dual SIM configurations
+  - **Background Processing:** SMS status updates handled efficiently in background threads
+
 ## [2.35.2] - 2025-08-08
 
 - 🐛 **Test Data Cleanup Fix:**

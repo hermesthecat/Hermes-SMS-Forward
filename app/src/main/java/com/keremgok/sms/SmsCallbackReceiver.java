@@ -253,13 +253,17 @@ public class SmsCallbackReceiver extends BroadcastReceiver {
     }
     
     /**
-     * Log SMS forwarding history to database
+     * Log SMS forwarding history to database with dual SIM support
      * Runs in optimized background thread to avoid blocking main thread
      */
     private void logSmsHistory(Context context, String senderNumber, String originalMessage, String targetNumber, String forwardedMessage, long timestamp, boolean success, String errorMessage) {
         ThreadManager.getInstance().executeDatabase(() -> {
             try {
                 AppDatabase database = AppDatabase.getInstance(context);
+                
+                // Create SmsHistory with dual SIM support
+                // For now, we don't have SIM info in callback, so use defaults
+                // This could be enhanced to store SIM info in the intent extras
                 SmsHistory history = new SmsHistory(
                     senderNumber,
                     originalMessage,
@@ -267,14 +271,19 @@ public class SmsCallbackReceiver extends BroadcastReceiver {
                     forwardedMessage,
                     timestamp,
                     success,
-                    errorMessage
+                    errorMessage,
+                    -1, // sourceSimSlot - could be extracted from intent extras
+                    -1, // forwardingSimSlot - could be extracted from intent extras  
+                    -1, // sourceSubscriptionId - could be extracted from intent extras
+                    -1  // forwardingSubscriptionId - could be extracted from intent extras
                 );
                 database.smsHistoryDao().insert(history);
                 
                 if (DEBUG) {
                     String status = success ? "SUCCESS" : "FAILED";
                     Log.d(TAG, "SMS history logged: " + status + " from " + maskPhoneNumber(senderNumber) + 
-                            " to " + maskPhoneNumber(targetNumber));
+                            " to " + maskPhoneNumber(targetNumber) + 
+                            (errorMessage != null && !errorMessage.isEmpty() ? " - " + errorMessage : ""));
                 }
                 
             } catch (Exception e) {

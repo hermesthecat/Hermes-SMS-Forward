@@ -1,6 +1,8 @@
 package com.keremgok.sms;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.telephony.SmsManager;
 import android.util.Log;
 import androidx.annotation.NonNull;
@@ -81,7 +83,10 @@ public class SmsQueueWorker extends Worker {
             // Validate input data
             if (originalSender == null || originalMessage == null || targetNumber == null) {
                 Log.e(TAG, "Invalid input data for SMS queue worker");
-                logSmsHistoryFailure(originalSender, originalMessage, targetNumber, timestamp, "Invalid input data", 
+                logSmsHistoryFailure(originalSender != null ? originalSender : "Unknown", 
+                                   originalMessage != null ? originalMessage : "Unknown", 
+                                   targetNumber != null ? targetNumber : "Unknown", 
+                                   timestamp, "Invalid input data", 
                                    sourceSimSlot, forwardingSimSlot, sourceSubscriptionId, forwardingSubscriptionId);
                 return Result.failure();
             }
@@ -96,12 +101,11 @@ public class SmsQueueWorker extends Worker {
             boolean success = processSmsWithPriority(forwardedMessage, targetNumber, priority, forwardingSubscriptionId);
             
             if (success) {
-                logDebug("SMS successfully processed in queue worker");
+                logDebug("SMS successfully queued for sending in queue worker");
                 long processingTime = System.currentTimeMillis() - timestamp;
                 SimLogger.logSmsForwarding(originalSender, targetNumber, sourceSimSlot, forwardingSimSlot, 
                     true, processingTime);
-                logSmsHistorySuccess(originalSender, originalMessage, targetNumber, forwardedMessage, timestamp,
-                                   sourceSimSlot, forwardingSimSlot, sourceSubscriptionId, forwardingSubscriptionId);
+                // Don't log to history here - let SmsCallbackReceiver handle the actual result
                 return Result.success();
             } else {
                 logDebug("SMS processing failed in queue worker, retry count: " + retryCount);
@@ -111,14 +115,14 @@ public class SmsQueueWorker extends Worker {
                 
                 // Check if we should retry
                 if (retryCount < MAX_RETRY_COUNT) {
-                    logSmsHistoryFailure(originalSender, originalMessage, targetNumber, timestamp, 
-                        "Processing failed, will retry (attempt " + (retryCount + 1) + "/" + MAX_RETRY_COUNT + ")",
-                        sourceSimSlot, forwardingSimSlot, sourceSubscriptionId, forwardingSubscriptionId);
+                    // Only log failure if immediate processing error, not SMS sending failure
+                    // SmsCallbackReceiver will handle actual SMS status
                     return Result.retry();
                 } else {
                     Log.e(TAG, "SMS processing failed permanently after " + MAX_RETRY_COUNT + " attempts");
+                    // Log immediate processing failure to history
                     logSmsHistoryFailure(originalSender, originalMessage, targetNumber, timestamp, 
-                        "Max retries exceeded (" + MAX_RETRY_COUNT + " attempts)",
+                        "Max retries exceeded (" + MAX_RETRY_COUNT + " attempts) - processing error",
                         sourceSimSlot, forwardingSimSlot, sourceSubscriptionId, forwardingSubscriptionId);
                     return Result.failure();
                 }
@@ -126,6 +130,22 @@ public class SmsQueueWorker extends Worker {
             
         } catch (Exception e) {
             Log.e(TAG, "Exception in SMS queue worker: " + e.getMessage(), e);
+            
+            // Log exception failure to history
+            Data inputData = getInputData();
+            String originalSender = inputData.getString(KEY_ORIGINAL_SENDER);
+            String originalMessage = inputData.getString(KEY_ORIGINAL_MESSAGE);
+            String targetNumber = inputData.getString(KEY_TARGET_NUMBER);
+            long timestamp = inputData.getLong(KEY_TIMESTAMP, System.currentTimeMillis());
+            int sourceSimSlot = inputData.getInt(KEY_SOURCE_SIM_SLOT, -1);
+            int forwardingSimSlot = inputData.getInt(KEY_FORWARDING_SIM_SLOT, -1);
+            int sourceSubscriptionId = inputData.getInt(KEY_SOURCE_SUBSCRIPTION_ID, -1);
+            int forwardingSubscriptionId = inputData.getInt(KEY_FORWARDING_SUBSCRIPTION_ID, -1);
+            
+            logSmsHistoryFailure(originalSender, originalMessage, targetNumber, timestamp, 
+                "Worker exception: " + e.getMessage(), sourceSimSlot, forwardingSimSlot, 
+                sourceSubscriptionId, forwardingSubscriptionId);
+            
             return Result.failure();
         }
     }
@@ -170,7 +190,7 @@ public class SmsQueueWorker extends Worker {
     }
     
     /**
-     * Send single SMS message with dual SIM support
+     * Send single SMS message with dual SIM support and callback tracking
      * @param smsManager The SmsManager instance to use
      * @param message The message to send
      * @param targetNumber The target phone number
@@ -179,9 +199,23 @@ public class SmsQueueWorker extends Worker {
      */
     private boolean sendSingleSms(SmsManager smsManager, String message, String targetNumber, int subscriptionId) {
         try {
-            smsManager.sendTextMessage(targetNumber, null, message, null, null);
+            // Create callback intents for SMS status tracking
+            Data inputData = getInputData();
+            String originalSender = inputData.getString(KEY_ORIGINAL_SENDER);
+            String originalMessage = inputData.getString(KEY_ORIGINAL_MESSAGE);
+            long timestamp = inputData.getLong(KEY_TIMESTAMP, System.currentTimeMillis());
+            int retryCount = inputData.getInt(KEY_RETRY_COUNT, 0);
+            
+            PendingIntent sentIntent = createSentIntent(originalSender, originalMessage, message, 
+                                                       targetNumber, timestamp, retryCount, false);
+            PendingIntent deliveredIntent = createDeliveredIntent(targetNumber);
+            
+            smsManager.sendTextMessage(targetNumber, null, message, sentIntent, deliveredIntent);
             String subscriptionInfo = subscriptionId != -1 ? " via subscription " + subscriptionId : " via default SIM";
-            logDebug("Single SMS sent successfully to " + maskPhoneNumber(targetNumber) + subscriptionInfo);
+            logDebug("Single SMS queued for sending to " + maskPhoneNumber(targetNumber) + subscriptionInfo);
+            
+            // Don't immediately return true - let the callback determine success
+            // For now, assume success as the callback will handle actual status updates
             return true;
         } catch (Exception e) {
             Log.e(TAG, "Failed to send single SMS" + (subscriptionId != -1 ? " via subscription " + subscriptionId : "") + 
@@ -191,7 +225,7 @@ public class SmsQueueWorker extends Worker {
     }
     
     /**
-     * Send multipart SMS message with dual SIM support
+     * Send multipart SMS message with dual SIM support and callback tracking
      * @param smsManager The SmsManager instance to use
      * @param message The message to send
      * @param targetNumber The target phone number
@@ -201,10 +235,33 @@ public class SmsQueueWorker extends Worker {
     private boolean sendMultipartSms(SmsManager smsManager, String message, String targetNumber, int subscriptionId) {
         try {
             ArrayList<String> parts = smsManager.divideMessage(message);
-            smsManager.sendMultipartTextMessage(targetNumber, null, parts, null, null);
+            
+            // Create callback intents for multipart SMS status tracking
+            Data inputData = getInputData();
+            String originalSender = inputData.getString(KEY_ORIGINAL_SENDER);
+            String originalMessage = inputData.getString(KEY_ORIGINAL_MESSAGE);
+            long timestamp = inputData.getLong(KEY_TIMESTAMP, System.currentTimeMillis());
+            int retryCount = inputData.getInt(KEY_RETRY_COUNT, 0);
+            
+            // Create arrays of intents for each part
+            ArrayList<PendingIntent> sentIntents = new ArrayList<>();
+            ArrayList<PendingIntent> deliveredIntents = new ArrayList<>();
+            
+            for (int i = 0; i < parts.size(); i++) {
+                PendingIntent sentIntent = createSentIntent(originalSender, originalMessage, message, 
+                                                           targetNumber, timestamp, retryCount, true);
+                PendingIntent deliveredIntent = createDeliveredIntent(targetNumber);
+                sentIntents.add(sentIntent);
+                deliveredIntents.add(deliveredIntent);
+            }
+            
+            smsManager.sendMultipartTextMessage(targetNumber, null, parts, sentIntents, deliveredIntents);
             String subscriptionInfo = subscriptionId != -1 ? " via subscription " + subscriptionId : " via default SIM";
-            logDebug("Multipart SMS sent successfully to " + maskPhoneNumber(targetNumber) + 
+            logDebug("Multipart SMS queued for sending to " + maskPhoneNumber(targetNumber) + 
                     " (" + parts.size() + " parts)" + subscriptionInfo);
+            
+            // Don't immediately return true - let the callbacks determine success
+            // For now, assume success as the callbacks will handle actual status updates
             return true;
         } catch (Exception e) {
             Log.e(TAG, "Failed to send multipart SMS" + (subscriptionId != -1 ? " via subscription " + subscriptionId : "") + 
@@ -411,5 +468,41 @@ public class SmsQueueWorker extends Worker {
      */
     public static long calculateBackoffDelay(int retryCount) {
         return INITIAL_RETRY_DELAY_MS * (long) Math.pow(2, retryCount);
+    }
+    
+    /**
+     * Create PendingIntent for SMS sent callback
+     */
+    private PendingIntent createSentIntent(String originalSender, String originalMessage, String forwardedMessage, 
+                                         String targetNumber, long timestamp, int retryCount, boolean isMultipart) {
+        Intent intent = new Intent(getApplicationContext(), SmsCallbackReceiver.class);
+        intent.setAction("SMS_SENT");
+        intent.putExtra("originalSender", originalSender);
+        intent.putExtra("originalMessage", originalMessage);
+        intent.putExtra("forwardedMessage", forwardedMessage);
+        intent.putExtra("targetNumber", targetNumber);
+        intent.putExtra("timestamp", timestamp);
+        intent.putExtra("retryCount", retryCount);
+        intent.putExtra("isMultipart", isMultipart);
+        
+        // Use timestamp and target as unique identifier
+        int requestCode = (int) ((timestamp % 100000) + targetNumber.hashCode() % 1000);
+        
+        return PendingIntent.getBroadcast(getApplicationContext(), requestCode, intent, 
+                                         PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+    }
+    
+    /**
+     * Create PendingIntent for SMS delivered callback
+     */
+    private PendingIntent createDeliveredIntent(String targetNumber) {
+        Intent intent = new Intent(getApplicationContext(), SmsCallbackReceiver.class);
+        intent.setAction("SMS_DELIVERED");
+        intent.putExtra("targetNumber", targetNumber);
+        
+        int requestCode = (int) (System.currentTimeMillis() % 100000 + targetNumber.hashCode() % 1000);
+        
+        return PendingIntent.getBroadcast(getApplicationContext(), requestCode, intent, 
+                                         PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     }
 }
