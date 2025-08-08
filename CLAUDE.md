@@ -12,7 +12,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a comprehensive Android SMS forwarding application that automatically forwards incoming SMS messages to multiple configured target phone numbers. The app features a sophisticated architecture with Room database, WorkManager for reliable background processing, privacy-first local analytics, advanced filtering rules, and comprehensive logging. It uses a BroadcastReceiver to intercept SMS messages and forwards them using Android's SmsManager with retry logic and queue management.
+This is a comprehensive Android SMS forwarding application that automatically forwards incoming SMS messages to multiple configured target phone numbers. The app features a sophisticated architecture with Room database, WorkManager for reliable background processing, privacy-first local analytics, advanced filtering rules, comprehensive logging, backup/restore functionality, and customizable SMS formatting. It uses a BroadcastReceiver to intercept SMS messages and forwards them using Android's SmsManager with retry logic and queue management.
 
 ## Development Process
 
@@ -34,7 +34,7 @@ This is a comprehensive Android SMS forwarding application that automatically fo
 # Build debug APK
 ./gradlew assembleDebug
 
-# Build release APK  
+# Build release APK
 ./gradlew assembleRelease
 
 # Build App Bundle for Play Store
@@ -74,9 +74,11 @@ This is a comprehensive Android SMS forwarding application that automatically fo
 # Clean and build debug APK
 clean-build.bat
 
-# Create signed release APK
+# Create signed release APK with automatic versioning
 create-signed-apk.bat
 ```
+
+**Note**: `create-signed-apk.bat` automatically versions output files (e.g., `sms-forward-v2.35.0-signed-YYYYMMDD-1.apk`) and archives them in the `apk_archive/` directory for release management.
 
 ### APK Output Locations
 
@@ -100,20 +102,25 @@ The application follows a **layered, component-based architecture** with clear s
 2. **FilterEngine** evaluates message against user-defined rules from database
 3. **SmsQueueManager** queues qualifying messages for background processing
 4. **SmsQueueWorker** (WorkManager) handles actual forwarding with retry logic
-5. **SmsSimSelectionHelper** manages dual-SIM routing
-6. **StatisticsManager** logs events locally for privacy-first analytics
+5. **SmsSimSelectionHelper** manages dual-SIM routing with configurable selection modes
+6. **SmsFormatter** applies user-selected formatting (standard/compact/detailed/custom template)
+7. **SmsCallbackReceiver** handles SMS_SENT/SMS_DELIVERED status updates
+8. **StatisticsManager** logs events locally for privacy-first analytics
 
 ## Core Components
 
 - **MainActivity** (`app/src/main/java/com/keremgok/sms/MainActivity.java`): Main UI for configuration, handles permission requests and navigation
 - **SmsReceiver** (`app/src/main/java/com/keremgok/sms/SmsReceiver.java`): BroadcastReceiver that intercepts incoming SMS and forwards them
 - **AppDatabase** (`app/src/main/java/com/keremgok/sms/AppDatabase.java`): Room database managing all persistent data
-- **ThreadManager** (`app/src/main/java/com/keremgok/sms/ThreadManager.java`): Centralized thread pool management for database, network, and background tasks
+- **ThreadManager** (`app/src/main/java/com/keremgok/sms/ThreadManager.java`): Centralized thread pool management with purpose-specific executors (database, network, background) to prevent blocking
 - **SmsQueueManager** & **SmsQueueWorker**: WorkManager-based reliable background SMS forwarding with retry logic
 - **StatisticsManager**: Privacy-first local analytics system with no external data transmission
 - **FilterEngine** (`app/src/main/java/com/keremgok/sms/FilterEngine.java`): Core message filtering logic with include/exclude patterns
 - **SimManager** (`app/src/main/java/com/keremgok/sms/SimManager.java`): Dual SIM support and SIM card management
 - **LanguageManager** (`app/src/main/java/com/keremgok/sms/LanguageManager.java`): Runtime language switching and localization
+- **BackupManager** (`app/src/main/java/com/keremgok/sms/BackupManager.java`): Backup and restore system for settings, target numbers, and filter rules to JSON format
+- **SmsFormatter** (`app/src/main/java/com/keremgok/sms/SmsFormatter.java`): Customizable SMS formatting with templates and placeholders
+- **SmsCallbackReceiver**: Handles SMS delivery status callbacks (SMS_SENT/SMS_DELIVERED) for message status tracking
 
 ## Feature Activities
 
@@ -123,7 +130,7 @@ The application follows a **layered, component-based architecture** with clear s
 - **HistoryActivity**: Displays comprehensive log of forwarded messages
 - **SettingsActivity**: Advanced configuration options
 - **AnalyticsActivity**: Local usage statistics dashboard
-- **SimDebugActivity**: Dual SIM debugging and diagnostics interface
+- **SimDebugActivity**: Dual SIM debugging and diagnostics interface (debug builds only via `@bool/is_debug_build`)
 
 ## Database Entities (Room)
 
@@ -159,6 +166,8 @@ The application follows a **layered, component-based architecture** with clear s
 - **Permissions**: RECEIVE_SMS, SEND_SMS (both require runtime permission requests)
 - **Build Types**: Debug (with `.debug` suffix) and Release (with ProGuard/R8 obfuscation)
 - **Threading**: Use ThreadManager for all background operations instead of creating raw threads
+- **Kotlin Version**: Forced to 1.8.10 in build.gradle to resolve dependency conflicts
+- **File Sharing**: Uses FileProvider for secure analytics file exports
 
 ## Testing
 
@@ -171,7 +180,7 @@ Comprehensive testing framework with **two-pronged strategy**:
 - **Key Test**: `SimplePhoneNumberValidatorTest.java` for validation logic
 - **Command**: `./gradlew test --tests "PhoneNumberValidatorTest"`
 
-### Instrumentation Tests (`app/src/androidTest/`)  
+### Instrumentation Tests (`app/src/androidTest/`)
 
 - **Frameworks**: AndroidX Test (JUnit4), Espresso
 - **Focus**: UI interactions and component integrations on real device/emulator
@@ -186,14 +195,18 @@ Comprehensive testing framework with **two-pronged strategy**:
 ### Essential Practices
 
 - **Database Access**: Always use Room DAOs instead of direct database operations
-- **Background Work**: Use ThreadManager's executor services (database, network, background) instead of creating threads  
+- **Background Work**: Use ThreadManager's executor services (database, network, background) instead of creating threads
 - **Privacy-First**: All analytics and data processing must remain local - no external data transmission
 - **Input Validation**: Use PhoneNumberValidator for all phone number inputs
 - **Error Handling**: Leverage WorkManager's retry logic for reliable SMS forwarding
 - **First-Time Users**: OnboardingActivity automatically launches for new users; use `OnboardingActivity.isOnboardingCompleted()` to check status
 - **Fragment-Based UI**: Onboarding uses ViewPager2 with fragments; follow established patterns for new multi-step flows
-- **Dual SIM Support**: Use SimManager for SIM card detection and selection; SmsSimSelectionHelper for SMS sending
+- **Dual SIM Support**: Use SimManager for SIM card detection and selection; SmsSimSelectionHelper for SMS sending with selection modes (auto/source SIM/specific SIM)
+- **SMS Formatting**: Use SmsFormatter for customizable message templates; supports standard/compact/detailed formats plus custom templates with placeholders
+- **Backup/Restore**: Use BackupManager for data portability; exports/imports settings, target numbers, and filters as JSON
 - **Internationalization**: Use LanguageManager for runtime language switching; support Turkish and English
+- **Debug Components**: Use `@bool/is_debug_build` pattern for conditional debug-only activities and features
+- **Secure File Access**: Use FileProvider for sharing exported data files; avoid direct file URIs
 
 ### Modern Android Patterns Used
 
@@ -207,7 +220,7 @@ Comprehensive testing framework with **two-pronged strategy**:
 ## Key Dependencies
 
 - **Room**: `androidx.room` for database operations and type-safe SQL generation
-- **WorkManager**: `androidx.work` for background task reliability and retry logic  
+- **WorkManager**: `androidx.work` for background task reliability and retry logic
 - **Material Design**: `com.google.android.material` for UI components and theming
 - **ViewPager2**: `androidx.viewpager2` for onboarding flow and fragment navigation
 - **Preferences**: `androidx.preference` for settings management with PreferenceFragmentCompat
