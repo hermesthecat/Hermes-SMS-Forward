@@ -1,5 +1,14 @@
 # Changelog - Hermes SMS Forward
 
+## [2.35.1] - 2025-08-08
+
+- 🐛 **Filter Modal Validation Fix:**
+  - **Add Button Issue:** Fixed add filter button remaining disabled even when validation passes
+  - **Dialog Reference:** Added proper reference to AlertDialog's positive button for enable/disable control
+  - **Validation Trigger:** Added checkbox listener for regex option to trigger re-validation when toggled
+  - **Button State Management:** Implemented proper enableAddButton() method with button reference storage
+  - **User Experience:** Users can now add valid filters without dialog button remaining stuck disabled
+
 ## [2.35.0] - 2025-07-29
 
 - ✅ SPAM_DETECTION Filter Removal

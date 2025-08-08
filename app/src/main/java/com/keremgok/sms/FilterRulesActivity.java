@@ -55,6 +55,7 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
     private CheckBox cbEnabled;
     private TextView tvValidationMessage;
     private Button btnAddFilter;
+    private AlertDialog currentDialog;
     
     // Data and Adapters
     private FilterRulesAdapter adapter;
@@ -139,23 +140,25 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
         // Setup validation
         setupDialogValidation();
         
-        AlertDialog dialog = new AlertDialog.Builder(this)
+        currentDialog = new AlertDialog.Builder(this)
             .setView(dialogView)
             .setPositiveButton(R.string.add_filter, null)
             .setNegativeButton(R.string.cancel, null)
             .create();
         
-        dialog.setOnShowListener(dialogInterface -> {
-            Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        currentDialog.setOnShowListener(dialogInterface -> {
+            Button positiveButton = currentDialog.getButton(AlertDialog.BUTTON_POSITIVE);
             positiveButton.setEnabled(false);
+            btnAddFilter = positiveButton; // Store reference for enableAddButton method
             positiveButton.setOnClickListener(v -> {
                 if (addFilter()) {
-                    dialog.dismiss();
+                    currentDialog.dismiss();
+                    currentDialog = null;
                 }
             });
         });
         
-        dialog.show();
+        currentDialog.show();
     }
     
     /**
@@ -177,6 +180,9 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
         
         etFilterName.addTextChangedListener(validationWatcher);
         etFilterPattern.addTextChangedListener(validationWatcher);
+        
+        // Add listeners for checkboxes that affect validation
+        cbRegex.setOnCheckedChangeListener((buttonView, isChecked) -> validateInput());
     }
     
     /**
@@ -258,8 +264,9 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
      * Helper method to enable/disable add button in dialog
      */
     private void enableAddButton(boolean enabled) {
-        // Find the dialog and enable/disable its positive button
-        // This will be handled by the dialog's onShow listener
+        if (btnAddFilter != null) {
+            btnAddFilter.setEnabled(enabled);
+        }
     }
     
     /**
