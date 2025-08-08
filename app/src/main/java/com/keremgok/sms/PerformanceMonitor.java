@@ -13,7 +13,7 @@ import java.text.DecimalFormat;
 public class PerformanceMonitor {
     
     private static final String TAG = "HermesPerformance";
-    private static final boolean ENABLE_MONITORING = true; // Set to false for production
+    private static final boolean ENABLE_MONITORING = false; // Set to false for production
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
     
     private static PerformanceMonitor instance;
@@ -159,20 +159,7 @@ public class PerformanceMonitor {
                     // Test database read
                     database.smsHistoryDao().getAllHistory();
                     
-                    // Test database write
-                    SmsHistory testHistory = new SmsHistory(
-                        "TEST_SENDER",
-                        "Performance test message",
-                        "TEST_TARGET",
-                        "Test forwarded message",
-                        System.currentTimeMillis(),
-                        true,
-                        null
-                    );
-                    database.smsHistoryDao().insert(testHistory);
-                    
-                    // Clean up test data
-                    database.smsHistoryDao().delete(testHistory);
+                    // Skip test data insertion to avoid polluting history
                     
                 } catch (Exception e) {
                     Log.e(TAG, "Database test error: " + e.getMessage());
@@ -246,9 +233,17 @@ public class PerformanceMonitor {
             ThreadManager.getInstance().executeDatabase(() -> {
                 try {
                     // Remove any test data that might have been left behind
-                    database.smsHistoryDao().deleteTestData("TEST_SENDER");
-                    database.smsHistoryDao().deleteTestData("TEST_TARGET");
-                    Log.d(TAG, "Test data cleanup completed");
+                    int deletedCount = 0;
+                    deletedCount += database.smsHistoryDao().deleteTestData("TEST_SENDER");
+                    deletedCount += database.smsHistoryDao().deleteTestData("TEST_TARGET");
+                    deletedCount += database.smsHistoryDao().deleteTestData("test sender");
+                    deletedCount += database.smsHistoryDao().deleteTestData("Test Sender");
+                    
+                    if (deletedCount > 0) {
+                        Log.i(TAG, "Test data cleanup completed: " + deletedCount + " records removed");
+                    } else {
+                        Log.d(TAG, "Test data cleanup completed: No test records found");
+                    }
                 } catch (Exception e) {
                     Log.e(TAG, "Error during test data cleanup: " + e.getMessage());
                 }

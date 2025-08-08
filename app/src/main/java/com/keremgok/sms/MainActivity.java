@@ -64,9 +64,6 @@ public class MainActivity extends AppCompatActivity {
         loadSavedNumber();
         updateUI();
         
-        // Initialize performance monitoring for Task 15 optimization testing
-        initializePerformanceMonitoring();
-        
         // Clean up any leftover test data from performance monitoring
         PerformanceMonitor.cleanupTestData(this);
         

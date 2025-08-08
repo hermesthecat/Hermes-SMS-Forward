@@ -1,5 +1,14 @@
 # Changelog - Hermes SMS Forward
 
+## [2.35.2] - 2025-08-08
+
+- 🐛 **Test Data Cleanup Fix:**
+  - **History Issue:** Fixed persistent test sender records appearing in SMS history  
+  - **Performance Monitor:** Removed test data insertion from PerformanceMonitor performance tests
+  - **Production Mode:** Disabled performance monitoring in production builds (ENABLE_MONITORING = false)
+  - **Enhanced Cleanup:** Improved cleanupTestData method to remove all test sender variations
+  - **User Experience:** History section now shows only real SMS forwarding records
+
 ## [2.35.1] - 2025-08-08
 
 - 🐛 **Filter Modal Validation Fix:**
