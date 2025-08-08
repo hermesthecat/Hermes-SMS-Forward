@@ -1,5 +1,30 @@
 # Changelog - Hermes SMS Forward
 
+## [2.37.0] - 2025-08-08
+
+- 🚀 **Major Performance & Stability Improvements:**
+  - **ANR Prevention:** Implemented async processing for SMS receiver using goAsync() with PendingResult pattern
+  - **Background Threading:** All database operations moved to background threads via ThreadManager
+  - **UI Thread Protection:** FilterEngine test operations now run in background to prevent UI blocking
+  - **Modern API Usage:** Updated deprecated SmsMessage.createFromPdu() to modern format-aware version
+  - **Memory Optimization:** Replaced HashMap caches with LruCache for automatic memory management
+
+- 🧹 **Code Quality & Dead Code Removal:**
+  - **Performance Monitor:** Completely removed unused PerformanceMonitor class (262 lines removed)
+  - **Dead Methods:** Removed unused saveFormatPreferences() method from SmsFormatter
+  - **UI Fixes:** Fixed duplicate click listeners in SimSelectionDialog causing conflicts
+  - **Clean Codebase:** Net removal of 288 lines of unused/problematic code
+
+- 🔒 **Enhanced Security & Encryption:**
+  - **Backup Encryption:** Added AES-256-GCM encryption for all backup files with device-based keys
+  - **Modern Cryptography:** Implemented secure IV generation and authenticated encryption
+  - **Backward Compatibility:** Support for both encrypted (.enc) and legacy (.json) backup files
+
+- 🌐 **Localization & UI Improvements:**
+  - **Complete Translation:** Added missing filter test error strings for Turkish and English
+  - **UI Thread Safety:** All user interactions now properly handle background operations
+  - **Error Handling:** Improved exception handling with user-friendly error messages
+
 ## [2.36.2] - 2025-08-08
 
 - 🔒 **Production Security Hardening:**

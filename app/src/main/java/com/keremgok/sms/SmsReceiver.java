@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.content.BroadcastReceiver.PendingResult;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.text.TextUtils;
@@ -74,16 +75,40 @@ public class SmsReceiver extends BroadcastReceiver {
         // Record SMS received event
         statsManager.recordSmsReceived();
         
-        // Get enabled target numbers from database
-        AppDatabase database = AppDatabase.getInstance(context);
-        TargetNumberDao targetNumberDao = database.targetNumberDao();
+        // Use goAsync() to prevent ANR and move database operations to background thread
+        final PendingResult pendingResult = goAsync();
         
-        java.util.List<TargetNumber> targetNumbers = targetNumberDao.getEnabledTargetNumbers();
-        
-        if (targetNumbers == null || targetNumbers.isEmpty()) {
-            logDebug("No enabled target numbers configured, SMS forwarding disabled");
-            return;
-        }
+        ThreadManager.getInstance().executeBackground(() -> {
+            try {
+                // Get enabled target numbers from database in background thread
+                AppDatabase database = AppDatabase.getInstance(context);
+                TargetNumberDao targetNumberDao = database.targetNumberDao();
+                
+                java.util.List<TargetNumber> targetNumbers = targetNumberDao.getEnabledTargetNumbers();
+                
+                if (targetNumbers == null || targetNumbers.isEmpty()) {
+                    logDebug("No enabled target numbers configured, SMS forwarding disabled");
+                    return;
+                }
+                
+                // Continue processing SMS in background
+                processSmsInBackground(context, intent, targetNumbers, processingStartTime, statsManager);
+                
+            } catch (Exception e) {
+                Log.e(TAG, "Error in async SMS processing: " + e.getMessage(), e);
+                statsManager.recordSmsForwardFailure(StatisticsManager.ErrorCode.UNKNOWN_ERROR, e.getMessage());
+            } finally {
+                // Always call finish() to complete the broadcast
+                pendingResult.finish();
+            }
+        });
+    }
+    
+    /**
+     * Process SMS in background thread to prevent ANR
+     */
+    private void processSmsInBackground(Context context, Intent intent, java.util.List<TargetNumber> targetNumbers, 
+                                       long processingStartTime, StatisticsManager statsManager) {
         
         // Extract SMS messages from the intent
         Bundle bundle = intent.getExtras();
@@ -156,11 +181,9 @@ public class SmsReceiver extends BroadcastReceiver {
             // Parse all SMS parts
             for (Object pdu : pdus) {
                 SmsMessage smsMessage;
-                if (format != null) {
-                    smsMessage = SmsMessage.createFromPdu((byte[]) pdu, format);
-                } else {
-                    smsMessage = SmsMessage.createFromPdu((byte[]) pdu);
-                }
+                // Always use the format parameter to avoid deprecated API
+                String messageFormat = (format != null) ? format : SmsMessage.FORMAT_3GPP;
+                smsMessage = SmsMessage.createFromPdu((byte[]) pdu, messageFormat);
                 
                 if (smsMessage != null) {
                     if (TextUtils.isEmpty(senderNumber)) {

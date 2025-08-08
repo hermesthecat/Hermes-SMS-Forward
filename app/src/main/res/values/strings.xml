@@ -522,6 +522,7 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="filter_test_title">Filtre Testi</string>
     <string name="filter_test_result_match">Filtre eşleşti: %s</string>
     <string name="filter_test_result_no_match">Filtre eşleşmedi</string>
+    <string name="filter_test_result_error">Filtre testi başarısız</string>
     
     <!-- Language Strings -->
     <string name="language_auto">Otomatik</string>

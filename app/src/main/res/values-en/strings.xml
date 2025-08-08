@@ -517,6 +517,7 @@ Examples:<br/>
     <string name="filter_test_title">Filter Test</string>
     <string name="filter_test_result_match">Filter matched: %s</string>
     <string name="filter_test_result_no_match">Filter did not match</string>
+    <string name="filter_test_result_error">Filter test failed</string>
     
     <!-- Language Strings -->
     <string name="language_auto">Automatic</string>

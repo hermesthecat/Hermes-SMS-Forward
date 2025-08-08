@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.StyleSpan;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -418,19 +419,33 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
             String testMessage = etTestMessage.getText().toString();
             String testSender = etTestSender.getText().toString();
             
-            // Test filter using FilterEngine
-            FilterEngine filterEngine = new FilterEngine(this);
-            FilterEngine.FilterResult result = filterEngine.applyFilters(testSender, testMessage, System.currentTimeMillis());
-            
-            if (result.getMatchedFilter() != null && result.getMatchedFilter().getId() == filter.getId()) {
-                String resultText = getString(R.string.filter_test_result_match, result.getMatchedFilter().getAction());
-                tvTestResult.setText(resultText);
-                tvTestResult.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
-            } else {
-                tvTestResult.setText(R.string.filter_test_result_no_match);
-                tvTestResult.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-            }
-            tvTestResult.setVisibility(View.VISIBLE);
+            // Test filter in background thread to prevent ANR
+            ThreadManager.getInstance().executeBackground(() -> {
+                try {
+                    FilterEngine filterEngine = new FilterEngine(this);
+                    FilterEngine.FilterResult result = filterEngine.applyFilters(testSender, testMessage, System.currentTimeMillis());
+                    
+                    // Update UI on main thread
+                    runOnUiThread(() -> {
+                        if (result.getMatchedFilter() != null && result.getMatchedFilter().getId() == filter.getId()) {
+                            String resultText = getString(R.string.filter_test_result_match, result.getMatchedFilter().getAction());
+                            tvTestResult.setText(resultText);
+                            tvTestResult.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+                        } else {
+                            tvTestResult.setText(R.string.filter_test_result_no_match);
+                            tvTestResult.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+                        }
+                        tvTestResult.setVisibility(View.VISIBLE);
+                    });
+                } catch (Exception e) {
+                    Log.e("FilterRulesActivity", "Error testing filter: " + e.getMessage(), e);
+                    runOnUiThread(() -> {
+                        tvTestResult.setText(R.string.filter_test_result_error);
+                        tvTestResult.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+                        tvTestResult.setVisibility(View.VISIBLE);
+                    });
+                }
+            });
         });
         
         dialog.show();

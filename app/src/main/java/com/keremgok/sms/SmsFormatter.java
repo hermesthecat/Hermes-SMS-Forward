@@ -325,21 +325,6 @@ public class SmsFormatter {
         }
     }
     
-    /**
-     * Save format preferences
-     */
-    public void saveFormatPreferences(String formatType, boolean includeTimestamp, 
-                                    boolean includeSimInfo, String customHeader, String customTemplate) {
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("sms_format_type", formatType);
-        editor.putBoolean("include_timestamp", includeTimestamp);
-        editor.putBoolean("include_sim_info", includeSimInfo);
-        editor.putString("custom_header", customHeader);
-        if (!TextUtils.isEmpty(customTemplate)) {
-            editor.putString("custom_sms_template", customTemplate);
-        }
-        editor.apply();
-    }
     
     /**
      * Get current format type

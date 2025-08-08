@@ -168,22 +168,6 @@ public class SimSelectionDialog {
             // Create adapter with dialog reference for dismissal
             SimListAdapter adapter = new SimListAdapter(dialog);
             listView.setAdapter(adapter);
-            
-            // Keep ListView click listener as backup
-            listView.setOnItemClickListener((parent, view, position, id) -> {
-                Log.d(TAG, "ListView item clicked: position=" + position);
-                if (position >= 0 && position < availableSims.size()) {
-                    SimManager.SimInfo selectedSim = availableSims.get(position);
-                    Log.d(TAG, "Selected SIM: " + selectedSim.displayName + " (slot=" + selectedSim.slotIndex + ")");
-                    if (listener != null) {
-                        Log.d(TAG, "Calling onSimSelected callback");
-                        listener.onSimSelected(selectedSim.subscriptionId, selectedSim.slotIndex, selectedSim.displayName);
-                    }
-                    // Dismiss dialog after selection
-                    Log.d(TAG, "Dismissing dialog");
-                    dialog.dismiss();
-                }
-            });
                 
             dialog.show();
         });
