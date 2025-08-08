@@ -18,7 +18,7 @@ import java.util.regex.PatternSyntaxException;
 public class FilterEngine {
     
     private static final String TAG = "FilterEngine";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false; // Production safe - no debug logs
     
     private Context context;
     private AppDatabase database;

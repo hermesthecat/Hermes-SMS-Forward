@@ -18,7 +18,7 @@ import java.util.List;
 public class SimManager {
     
     private static final String TAG = "SimManager";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false; // Production safe - no debug logs
     
     // Cache to prevent infinite loops and improve performance
     private static List<SimInfo> cachedSimList = null;

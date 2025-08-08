@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 public class SmsQueueWorker extends Worker {
     
     private static final String TAG = "SmsQueueWorker";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false; // Production safe - no debug logs
     
     // Input Data Keys
     public static final String KEY_ORIGINAL_SENDER = "original_sender";

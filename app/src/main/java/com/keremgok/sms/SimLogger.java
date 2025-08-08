@@ -19,7 +19,7 @@ public class SimLogger {
     public static final int LEVEL_ERROR = 3;
     
     // Enable debug mode based on build variant
-    private static final boolean DEBUG_ENABLED = true;
+    private static final boolean DEBUG_ENABLED = false; // Production safe - no debug logs
     
     /**
      * Log SIM operation with detailed information

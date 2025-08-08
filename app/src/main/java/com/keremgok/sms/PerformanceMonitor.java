@@ -13,7 +13,7 @@ import java.text.DecimalFormat;
 public class PerformanceMonitor {
     
     private static final String TAG = "HermesPerformance";
-    private static final boolean ENABLE_MONITORING = false; // Set to false for production
+    private static final boolean ENABLE_MONITORING = false; // Production safe - no performance monitoring
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
     
     private static PerformanceMonitor instance;

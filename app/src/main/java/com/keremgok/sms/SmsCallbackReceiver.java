@@ -16,7 +16,7 @@ public class SmsCallbackReceiver extends BroadcastReceiver {
     private static final String TAG = "HermesSmsCallback";
     private static final String ACTION_SMS_SENT = "SMS_SENT";
     private static final String ACTION_SMS_DELIVERED = "SMS_DELIVERED";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false; // Production safe - no debug logs
     
     @Override
     public void onReceive(Context context, Intent intent) {

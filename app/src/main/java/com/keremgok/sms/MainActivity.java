@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
         loadSavedNumber();
         updateUI();
         
-        // Clean up any leftover test data from performance monitoring
-        PerformanceMonitor.cleanupTestData(this);
+        // Clean up any leftover test data from performance monitoring (debug only)
+        // Performance monitoring disabled in production for security
         
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override

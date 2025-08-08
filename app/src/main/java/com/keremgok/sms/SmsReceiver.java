@@ -19,7 +19,7 @@ public class SmsReceiver extends BroadcastReceiver {
     private static final String PREFS_NAME = "HermesPrefs";
     private static final String KEY_TARGET_NUMBER = "target_number";
     // Debug flag - set based on build variant
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false; // Production safe - no debug logs
     
     // SMS Retry Configuration
     private static final int MAX_RETRY_COUNT = 3;

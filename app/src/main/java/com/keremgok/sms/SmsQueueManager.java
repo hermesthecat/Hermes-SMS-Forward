@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 public class SmsQueueManager {
     
     private static final String TAG = "SmsQueueManager";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false; // Production safe - no debug logs
     
     // Work tags for different priority levels
     private static final String WORK_TAG_HIGH_PRIORITY = "sms_queue_high";

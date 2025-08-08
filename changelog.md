@@ -1,5 +1,15 @@
 # Changelog - Hermes SMS Forward
 
+## [2.36.2] - 2025-08-08
+
+- 🔒 **Production Security Hardening:**
+  - **Debug Code Removal:** All debug logging and development code disabled in production builds
+  - **Performance Monitoring:** PerformanceMonitor completely disabled in production for security
+  - **Log Optimization:** Debug, info, and verbose logs removed from production builds via ProGuard
+  - **SimDebugActivity:** Debug-only activity properly restricted to debug builds only
+  - **Security Enhancement:** No debug information or development tools accessible in production
+  - **Clean Codebase:** All DEBUG constants set to false ensuring production safety
+
 ## [2.36.1] - 2025-08-08
 
 - 🐛 **Custom SMS Format Settings Fix:**
