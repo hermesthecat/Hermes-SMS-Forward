@@ -1,5 +1,14 @@
 # Changelog - Hermes SMS Forward
 
+## [2.36.1] - 2025-08-08
+
+- 🐛 **Custom SMS Format Settings Fix:**
+  - **SharedPreferences Issue:** Fixed custom SMS format settings not working due to mismatched SharedPreferences
+  - **Preference Manager:** Updated SmsFormatter to use default SharedPreferences matching SettingsActivity
+  - **Format Selection:** Custom format, header, timestamp, and SIM info settings now work correctly
+  - **Template System:** Custom SMS templates are now properly saved and applied
+  - **Settings Sync:** All formatting preferences now sync correctly between settings screen and SMS forwarding
+
 ## [2.36.0] - 2025-08-08
 
 - 🚀 **Real SMS Delivery Status Tracking:**

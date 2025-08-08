@@ -34,7 +34,9 @@ public class SmsFormatter {
     
     public SmsFormatter(Context context) {
         this.context = context;
-        this.prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        
+        // Use default SharedPreferences to match PreferenceFragmentCompat
+        this.prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(context);
         
         // Detect language
         String currentLanguage = context.getResources().getConfiguration().locale.getLanguage();

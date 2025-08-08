@@ -828,7 +828,7 @@ public class SettingsActivity extends AppCompatActivity {
             android.widget.Button btnResetTemplate = dialogView.findViewById(R.id.btnResetTemplate);
             
             // Load current template
-            android.content.SharedPreferences prefs = requireContext().getSharedPreferences("HermesPrefs", android.content.Context.MODE_PRIVATE);
+            android.content.SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(requireContext());
             String currentTemplate = prefs.getString("custom_sms_template", getDefaultTemplate());
             etCustomTemplate.setText(currentTemplate);
             
@@ -897,7 +897,7 @@ public class SettingsActivity extends AppCompatActivity {
                 long sampleTimestamp = System.currentTimeMillis();
                 
                 // Use SmsFormatter to generate preview with the custom template
-                android.content.SharedPreferences prefs = requireContext().getSharedPreferences("HermesPrefs", android.content.Context.MODE_PRIVATE);
+                android.content.SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(requireContext());
                 String originalTemplate = prefs.getString("custom_sms_template", "");
                 
                 // Temporarily save the new template
@@ -922,7 +922,7 @@ public class SettingsActivity extends AppCompatActivity {
          */
         private void saveCustomTemplate(String template) {
             try {
-                android.content.SharedPreferences prefs = requireContext().getSharedPreferences("HermesPrefs", android.content.Context.MODE_PRIVATE);
+                android.content.SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(requireContext());
                 prefs.edit().putString("custom_sms_template", template).apply();
                 
                 Toast.makeText(requireContext(), getString(R.string.custom_template_saved), Toast.LENGTH_SHORT).show();
