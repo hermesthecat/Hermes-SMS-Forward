@@ -42,18 +42,52 @@ public class SimSelectionDialog {
     public SimSelectionDialog(Context context, OnSimSelectedListener listener) {
         this.context = context;
         this.listener = listener;
-        loadAvailableSims();
+        // Don't load SIMs in constructor to avoid UI thread I/O
+        this.availableSims = new ArrayList<>();
     }
     
     /**
-     * Load available SIM cards
+     * Load available SIM cards in background thread
+     * @param callback Callback to run on UI thread after loading
      */
-    private void loadAvailableSims() {
-        try {
-            availableSims = SimManager.getActiveSimCards(context);
-        } catch (Exception e) {
-            availableSims = new ArrayList<>();
-        }
+    private void loadAvailableSims(Runnable callback) {
+        ThreadManager.getInstance().executeBackground(() -> {
+            try {
+                List<SimManager.SimInfo> sims = SimManager.getActiveSimCards(context);
+                
+                // Update on UI thread
+                if (context instanceof android.app.Activity) {
+                    ((android.app.Activity) context).runOnUiThread(() -> {
+                        this.availableSims = sims;
+                        if (callback != null) {
+                            callback.run();
+                        }
+                    });
+                } else {
+                    // Fallback for non-Activity contexts
+                    this.availableSims = sims;
+                    if (callback != null) {
+                        callback.run();
+                    }
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Error loading available SIMs: " + e.getMessage(), e);
+                
+                if (context instanceof android.app.Activity) {
+                    ((android.app.Activity) context).runOnUiThread(() -> {
+                        this.availableSims = new ArrayList<>();
+                        if (callback != null) {
+                            callback.run();
+                        }
+                    });
+                } else {
+                    this.availableSims = new ArrayList<>();
+                    if (callback != null) {
+                        callback.run();
+                    }
+                }
+            }
+        });
     }
     
     /**
@@ -62,64 +96,97 @@ public class SimSelectionDialog {
     public void show() {
         Log.d(TAG, "SimSelectionDialog.show() called");
         
-        if (!SimManager.isDualSimSupported(context)) {
-            Log.d(TAG, "Dual SIM not supported");
-            Toast.makeText(context, R.string.dual_sim_not_supported, Toast.LENGTH_SHORT).show();
-            if (listener != null) {
-                listener.onDialogCancelled();
+        // Check dual SIM support in background thread to prevent ANR
+        ThreadManager.getInstance().executeBackground(() -> {
+            boolean isDualSimSupported = SimManager.isDualSimSupported(context);
+            
+            // Update UI on main thread
+            if (context instanceof android.app.Activity) {
+                ((android.app.Activity) context).runOnUiThread(() -> {
+                    if (!isDualSimSupported) {
+                        Log.d(TAG, "Dual SIM not supported");
+                        Toast.makeText(context, R.string.dual_sim_not_supported, Toast.LENGTH_SHORT).show();
+                        if (listener != null) {
+                            listener.onDialogCancelled();
+                        }
+                        return;
+                    }
+                    
+                    // Load SIMs and show dialog
+                    showLoadingAndDialog();
+                });
+            } else {
+                // Fallback for non-Activity contexts
+                if (!isDualSimSupported) {
+                    Log.d(TAG, "Dual SIM not supported");
+                    Toast.makeText(context, R.string.dual_sim_not_supported, Toast.LENGTH_SHORT).show();
+                    if (listener != null) {
+                        listener.onDialogCancelled();
+                    }
+                    return;
+                }
+                
+                showLoadingAndDialog();
             }
-            return;
-        }
-        
-        if (availableSims == null || availableSims.isEmpty()) {
-            Log.d(TAG, "No available SIMs found");
-            Toast.makeText(context, R.string.sim_not_available, Toast.LENGTH_SHORT).show();
-            if (listener != null) {
-                listener.onDialogCancelled();
-            }
-            return;
-        }
-        
-        Log.d(TAG, "Found " + availableSims.size() + " available SIMs");
-        
-        // Create custom layout
-        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_sim_selection, null);
-        
-        // Setup ListView with SIM cards
-        ListView listView = dialogView.findViewById(R.id.listview_sims);
-        
-        // Create dialog first to have reference for dismissing
-        AlertDialog dialog = new AlertDialog.Builder(context)
-            .setTitle(R.string.sim_selection_title)
-            .setView(dialogView)
-            .setNegativeButton(R.string.cancel_button, (dialogInterface, which) -> {
+        });
+    }
+    
+    /**
+     * Show loading indicator and then the actual dialog
+     */
+    private void showLoadingAndDialog() {
+        // Load available SIMs in background
+        loadAvailableSims(() -> {
+            if (availableSims == null || availableSims.isEmpty()) {
+                Log.d(TAG, "No available SIMs found");
+                Toast.makeText(context, R.string.sim_not_available, Toast.LENGTH_SHORT).show();
                 if (listener != null) {
                     listener.onDialogCancelled();
                 }
-            })
-            .create();
-        
-        // Create adapter with dialog reference for dismissal
-        SimListAdapter adapter = new SimListAdapter(dialog);
-        listView.setAdapter(adapter);
-        
-        // Keep ListView click listener as backup
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            Log.d(TAG, "ListView item clicked: position=" + position);
-            if (position >= 0 && position < availableSims.size()) {
-                SimManager.SimInfo selectedSim = availableSims.get(position);
-                Log.d(TAG, "Selected SIM: " + selectedSim.displayName + " (slot=" + selectedSim.slotIndex + ")");
-                if (listener != null) {
-                    Log.d(TAG, "Calling onSimSelected callback");
-                    listener.onSimSelected(selectedSim.subscriptionId, selectedSim.slotIndex, selectedSim.displayName);
-                }
-                // Dismiss dialog after selection
-                Log.d(TAG, "Dismissing dialog");
-                dialog.dismiss();
+                return;
             }
-        });
             
-        dialog.show();
+            Log.d(TAG, "Found " + availableSims.size() + " available SIMs");
+            
+            // Create custom layout
+            View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_sim_selection, null);
+            
+            // Setup ListView with SIM cards
+            ListView listView = dialogView.findViewById(R.id.listview_sims);
+            
+            // Create dialog first to have reference for dismissing
+            AlertDialog dialog = new AlertDialog.Builder(context)
+                .setTitle(R.string.sim_selection_title)
+                .setView(dialogView)
+                .setNegativeButton(R.string.cancel_button, (dialogInterface, which) -> {
+                    if (listener != null) {
+                        listener.onDialogCancelled();
+                    }
+                })
+                .create();
+            
+            // Create adapter with dialog reference for dismissal
+            SimListAdapter adapter = new SimListAdapter(dialog);
+            listView.setAdapter(adapter);
+            
+            // Keep ListView click listener as backup
+            listView.setOnItemClickListener((parent, view, position, id) -> {
+                Log.d(TAG, "ListView item clicked: position=" + position);
+                if (position >= 0 && position < availableSims.size()) {
+                    SimManager.SimInfo selectedSim = availableSims.get(position);
+                    Log.d(TAG, "Selected SIM: " + selectedSim.displayName + " (slot=" + selectedSim.slotIndex + ")");
+                    if (listener != null) {
+                        Log.d(TAG, "Calling onSimSelected callback");
+                        listener.onSimSelected(selectedSim.subscriptionId, selectedSim.slotIndex, selectedSim.displayName);
+                    }
+                    // Dismiss dialog after selection
+                    Log.d(TAG, "Dismissing dialog");
+                    dialog.dismiss();
+                }
+            });
+                
+            dialog.show();
+        });
     }
     
     /**

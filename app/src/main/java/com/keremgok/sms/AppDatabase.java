@@ -328,7 +328,7 @@ public abstract class AppDatabase extends RoomDatabase {
                             AppDatabase.class,
                             DATABASE_NAME
                         )
-                        .allowMainThreadQueries() // For simple operations only
+                        // Removed allowMainThreadQueries() for better performance and ANR prevention
                         .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7)
                         .addCallback(new RoomDatabase.Callback() {
                             @Override
@@ -361,7 +361,7 @@ public abstract class AppDatabase extends RoomDatabase {
                                 AppDatabase.class,
                                 DATABASE_NAME + "_emergency"
                             )
-                            .allowMainThreadQueries()
+                            // Emergency DB - still requires background thread access for production safety
                             .fallbackToDestructiveMigration()
                             .build();
                             

@@ -15,10 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
+import androidx.collection.LruCache;
 
 /**
  * RecyclerView Adapter for SMS History
@@ -42,12 +41,12 @@ public class SmsHistoryAdapter extends RecyclerView.Adapter<SmsHistoryAdapter.Hi
     private String todayText;
     private String yesterdayText;
     
-    // Phone number masking cache
-    private Map<String, String> phoneNumberCache;
+    // Phone number masking cache - LruCache for better memory management
+    private LruCache<String, String> phoneNumberCache;
     
-    // Date formatting cache
-    private Map<Long, String> dateStringCache;
-    private Map<Long, String> dateGroupTextCache;
+    // Date formatting cache - LruCache for better memory management
+    private LruCache<Long, String> dateStringCache;
+    private LruCache<Long, String> dateGroupTextCache;
     
     public SmsHistoryAdapter(Context context, List<SmsHistory> historyList) {
         this.context = context;
@@ -74,10 +73,10 @@ public class SmsHistoryAdapter extends RecyclerView.Adapter<SmsHistoryAdapter.Hi
         todayText = context.getString(R.string.history_date_today);
         yesterdayText = context.getString(R.string.history_date_yesterday);
         
-        // Initialize caches with reasonable initial capacity
-        phoneNumberCache = new HashMap<>(50);
-        dateStringCache = new HashMap<>(30);
-        dateGroupTextCache = new HashMap<>(10);
+        // Initialize LruCache with reasonable maximum capacities for better memory management
+        phoneNumberCache = new LruCache<>(50); // Cache up to 50 phone numbers
+        dateStringCache = new LruCache<>(30);   // Cache up to 30 date strings
+        dateGroupTextCache = new LruCache<>(10); // Cache up to 10 date group texts
     }
     
     @NonNull
@@ -166,11 +165,6 @@ public class SmsHistoryAdapter extends RecyclerView.Adapter<SmsHistoryAdapter.Hi
         String masked = PhoneNumberValidator.maskPhoneNumber(phoneNumber);
         phoneNumberCache.put(phoneNumber, masked);
         
-        // Prevent cache from growing too large
-        if (phoneNumberCache.size() > 100) {
-            phoneNumberCache.clear();
-        }
-        
         return masked;
     }
     
@@ -218,11 +212,6 @@ public class SmsHistoryAdapter extends RecyclerView.Adapter<SmsHistoryAdapter.Hi
         String dateString = dateComparisonFormat.format(new Date(timestamp));
         dateStringCache.put(key, dateString);
         
-        // Prevent cache from growing too large
-        if (dateStringCache.size() > 50) {
-            dateStringCache.clear();
-        }
-        
         return dateString;
     }
     
@@ -238,11 +227,6 @@ public class SmsHistoryAdapter extends RecyclerView.Adapter<SmsHistoryAdapter.Hi
         
         String dateGroupText = getDateGroupText(timestamp);
         dateGroupTextCache.put(key, dateGroupText);
-        
-        // Prevent cache from growing too large
-        if (dateGroupTextCache.size() > 20) {
-            dateGroupTextCache.clear();
-        }
         
         return dateGroupText;
     }

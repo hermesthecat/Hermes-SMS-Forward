@@ -110,19 +110,7 @@ public interface SmsFilterDao {
     @Query("SELECT * FROM sms_filters WHERE filter_type = 'SENDER_NUMBER' AND is_enabled = 1 ORDER BY priority DESC")
     List<SmsFilter> getSenderFilters();
     
-    /**
-     * Get time-based filters
-     * @return List of time-based filters
-     */
-    @Query("SELECT * FROM sms_filters WHERE filter_type = 'TIME_BASED' AND is_enabled = 1 ORDER BY priority DESC")
-    List<SmsFilter> getTimeBasedFilters();
-    
-    /**
-     * Get spam detection filters
-     * @return List of spam detection filters
-     */
-    @Query("SELECT * FROM sms_filters WHERE filter_type = 'SPAM_DETECTION' AND is_enabled = 1 ORDER BY priority DESC")
-    List<SmsFilter> getSpamFilters();
+    // Removed getTimeBasedFilters() and getSpamFilters() - these filter types were removed in v2.35.0
     
     /**
      * Update filter enabled status

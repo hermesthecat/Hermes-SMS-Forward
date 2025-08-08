@@ -1,6 +1,6 @@
 package com.keremgok.sms;
 
-import android.app.ProgressDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -251,17 +251,29 @@ public class SettingsActivity extends AppCompatActivity {
          * Show restore selection dialog
          */
         private void showRestoreDialog() {
-            String[] availableBackups = backupManager.getAvailableBackupFiles();
-            
-            if (availableBackups.length == 0) {
-                new AlertDialog.Builder(requireContext())
-                    .setTitle(R.string.restore_select_title)
-                    .setMessage(R.string.restore_no_backups)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .show();
-                return;
-            }
-            
+            // Move file I/O operation to background thread to prevent ANR
+            ThreadManager.getInstance().executeBackground(() -> {
+                String[] availableBackups = backupManager.getAvailableBackupFiles();
+                
+                requireActivity().runOnUiThread(() -> {
+                    if (availableBackups.length == 0) {
+                        new AlertDialog.Builder(requireContext())
+                            .setTitle(R.string.restore_select_title)
+                            .setMessage(R.string.restore_no_backups)
+                            .setPositiveButton(android.R.string.ok, null)
+                            .show();
+                        return;
+                    }
+                    
+                    showRestoreSelectionDialog(availableBackups);
+                });
+            });
+        }
+        
+        /**
+         * Show the actual restore selection dialog with available backups
+         */
+        private void showRestoreSelectionDialog(String[] availableBackups) {
             // Create user-friendly backup names with timestamps
             String[] backupNames = new String[availableBackups.length];
             for (int i = 0; i < availableBackups.length; i++) {
@@ -341,9 +353,13 @@ public class SettingsActivity extends AppCompatActivity {
          * Create backup in background thread
          */
         private void createBackup(boolean includeHistory) {
-            ProgressDialog progressDialog = new ProgressDialog(requireContext());
-            progressDialog.setMessage(getString(R.string.backup_creating));
-            progressDialog.setCancelable(false);
+            // Create modern progress dialog with AlertDialog + ProgressBar
+            AlertDialog progressDialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.backup_create_title)
+                .setMessage(getString(R.string.backup_creating))
+                .setCancelable(false)
+                .create();
+            
             progressDialog.show();
             
             ThreadManager.getInstance().executeBackground(() -> {
@@ -373,9 +389,13 @@ public class SettingsActivity extends AppCompatActivity {
          * Restore from backup in background thread
          */
         private void restoreFromBackup(String backupFilePath, BackupManager.RestoreMode mode) {
-            ProgressDialog progressDialog = new ProgressDialog(requireContext());
-            progressDialog.setMessage(getString(R.string.restore_restoring));
-            progressDialog.setCancelable(false);
+            // Create modern progress dialog with AlertDialog
+            AlertDialog progressDialog = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.restore_confirm_title)
+                .setMessage(getString(R.string.restore_restoring))
+                .setCancelable(false)
+                .create();
+            
             progressDialog.show();
             
             ThreadManager.getInstance().executeBackground(() -> {

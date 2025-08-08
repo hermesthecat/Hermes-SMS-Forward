@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.provider.Settings;
 import androidx.preference.PreferenceManager;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,10 +13,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.GCMParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 /**
  * BackupManager - Handles backup and restore functionality for Hermes SMS Forward
@@ -35,6 +45,14 @@ public class BackupManager {
     private static final String BACKUP_VERSION = "1.0";
     private static final String BACKUP_FILE_PREFIX = "hermes_backup_";
     private static final String BACKUP_FILE_EXTENSION = ".json";
+    private static final String ENCRYPTED_BACKUP_FILE_EXTENSION = ".enc";
+    
+    // Encryption constants
+    private static final String ENCRYPTION_ALGORITHM = "AES";
+    private static final String ENCRYPTION_MODE = "AES/GCM/NoPadding";
+    private static final int GCM_IV_LENGTH = 12;
+    private static final int GCM_TAG_LENGTH = 16;
+    private static final int KEY_LENGTH = 256;
     
     private final Context context;
     private final AppDatabase database;
@@ -66,6 +84,103 @@ public class BackupManager {
     public BackupManager(Context context) {
         this.context = context.getApplicationContext();
         this.database = AppDatabase.getInstance(context);
+    }
+    
+    /**
+     * Generate encryption key based on device unique identifiers
+     * @return AES encryption key
+     */
+    private SecretKey generateEncryptionKey() {
+        try {
+            // Use Android ID as seed for key generation
+            String androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+            String packageName = context.getPackageName();
+            
+            // Combine identifiers for more entropy
+            String seed = androidId + packageName + "HermesSMSBackup";
+            
+            // Generate SHA-256 hash
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(seed.getBytes(StandardCharsets.UTF_8));
+            
+            // Use first 32 bytes for AES-256 key
+            return new SecretKeySpec(hash, ENCRYPTION_ALGORITHM);
+            
+        } catch (Exception e) {
+            android.util.Log.e(TAG, "Failed to generate encryption key", e);
+            throw new RuntimeException("Cannot generate encryption key", e);
+        }
+    }
+    
+    /**
+     * Encrypt backup data using AES-GCM
+     * @param data Plain text data to encrypt
+     * @return Encrypted data with IV prepended
+     */
+    private byte[] encryptBackupData(String data) {
+        try {
+            SecretKey key = generateEncryptionKey();
+            Cipher cipher = Cipher.getInstance(ENCRYPTION_MODE);
+            
+            // Generate random IV
+            byte[] iv = new byte[GCM_IV_LENGTH];
+            new SecureRandom().nextBytes(iv);
+            
+            // Initialize cipher with key and IV
+            GCMParameterSpec gcmSpec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, iv);
+            cipher.init(Cipher.ENCRYPT_MODE, key, gcmSpec);
+            
+            // Encrypt the data
+            byte[] encryptedData = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
+            
+            // Prepend IV to encrypted data for storage
+            byte[] result = new byte[iv.length + encryptedData.length];
+            System.arraycopy(iv, 0, result, 0, iv.length);
+            System.arraycopy(encryptedData, 0, result, iv.length, encryptedData.length);
+            
+            return result;
+            
+        } catch (Exception e) {
+            android.util.Log.e(TAG, "Failed to encrypt backup data", e);
+            throw new RuntimeException("Encryption failed", e);
+        }
+    }
+    
+    /**
+     * Decrypt backup data using AES-GCM
+     * @param encryptedData Encrypted data with IV prepended
+     * @return Decrypted plain text data
+     */
+    private String decryptBackupData(byte[] encryptedData) {
+        try {
+            if (encryptedData.length < GCM_IV_LENGTH) {
+                throw new IllegalArgumentException("Encrypted data too short");
+            }
+            
+            SecretKey key = generateEncryptionKey();
+            Cipher cipher = Cipher.getInstance(ENCRYPTION_MODE);
+            
+            // Extract IV from beginning of data
+            byte[] iv = new byte[GCM_IV_LENGTH];
+            System.arraycopy(encryptedData, 0, iv, 0, GCM_IV_LENGTH);
+            
+            // Extract encrypted content
+            byte[] cipherText = new byte[encryptedData.length - GCM_IV_LENGTH];
+            System.arraycopy(encryptedData, GCM_IV_LENGTH, cipherText, 0, cipherText.length);
+            
+            // Initialize cipher for decryption
+            GCMParameterSpec gcmSpec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, iv);
+            cipher.init(Cipher.DECRYPT_MODE, key, gcmSpec);
+            
+            // Decrypt the data
+            byte[] decryptedData = cipher.doFinal(cipherText);
+            
+            return new String(decryptedData, StandardCharsets.UTF_8);
+            
+        } catch (Exception e) {
+            android.util.Log.e(TAG, "Failed to decrypt backup data", e);
+            throw new RuntimeException("Decryption failed", e);
+        }
     }
     
     /**
@@ -108,15 +223,18 @@ public class BackupManager {
                 backup.put("sms_history", new JSONArray());
             }
             
-            // Save to file
-            String fileName = generateBackupFileName();
+            // Save to encrypted file
+            String fileName = generateBackupFileName(true); // Use encrypted filename
             File backupFile = new File(context.getExternalFilesDir(null), fileName);
             
+            // Encrypt the backup data
+            byte[] encryptedData = encryptBackupData(backup.toString(2));
+            
             FileOutputStream fos = new FileOutputStream(backupFile);
-            fos.write(backup.toString(2).getBytes());
+            fos.write(encryptedData);
             fos.close();
             
-            android.util.Log.i(TAG, "Backup created successfully: " + backupFile.getAbsolutePath());
+            android.util.Log.i(TAG, "Encrypted backup created successfully: " + backupFile.getAbsolutePath());
             return backupFile.getAbsolutePath();
             
         } catch (Exception e) {
@@ -143,7 +261,22 @@ public class BackupManager {
             fis.read(data);
             fis.close();
             
-            String jsonContent = new String(data);
+            // Determine if file is encrypted based on extension
+            boolean isEncrypted = backupFilePath.endsWith(ENCRYPTED_BACKUP_FILE_EXTENSION);
+            
+            String jsonContent;
+            if (isEncrypted) {
+                try {
+                    // Try to decrypt the file
+                    jsonContent = decryptBackupData(data);
+                } catch (Exception decryptException) {
+                    return new ValidationResult(false, "Failed to decrypt backup file: " + decryptException.getMessage());
+                }
+            } else {
+                // Legacy unencrypted backup
+                jsonContent = new String(data, StandardCharsets.UTF_8);
+            }
+            
             JSONObject backup = new JSONObject(jsonContent);
             
             // Validate required fields
@@ -190,7 +323,15 @@ public class BackupManager {
             fis.read(data);
             fis.close();
             
-            String jsonContent = new String(data);
+            // Determine if file is encrypted and decrypt if needed
+            boolean isEncrypted = backupFilePath.endsWith(ENCRYPTED_BACKUP_FILE_EXTENSION);
+            String jsonContent;
+            if (isEncrypted) {
+                jsonContent = decryptBackupData(data);
+            } else {
+                jsonContent = new String(data, StandardCharsets.UTF_8);
+            }
+            
             JSONObject backup = new JSONObject(jsonContent);
             
             // Restore in transaction-like manner
@@ -531,10 +672,18 @@ public class BackupManager {
     /**
      * Generate unique backup file name with timestamp
      */
-    private String generateBackupFileName() {
+    private String generateBackupFileName(boolean encrypted) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
         String timestamp = sdf.format(new Date());
-        return BACKUP_FILE_PREFIX + timestamp + BACKUP_FILE_EXTENSION;
+        String extension = encrypted ? ENCRYPTED_BACKUP_FILE_EXTENSION : BACKUP_FILE_EXTENSION;
+        return BACKUP_FILE_PREFIX + timestamp + extension;
+    }
+    
+    /**
+     * Legacy method for backward compatibility
+     */
+    private String generateBackupFileName() {
+        return generateBackupFileName(false);
     }
     
     /**
@@ -547,8 +696,10 @@ public class BackupManager {
             return new String[0];
         }
         
+        // Include both encrypted and unencrypted backup files
         File[] files = filesDir.listFiles((dir, name) -> 
-            name.startsWith(BACKUP_FILE_PREFIX) && name.endsWith(BACKUP_FILE_EXTENSION));
+            name.startsWith(BACKUP_FILE_PREFIX) && 
+            (name.endsWith(BACKUP_FILE_EXTENSION) || name.endsWith(ENCRYPTED_BACKUP_FILE_EXTENSION)));
         
         if (files == null) {
             return new String[0];
