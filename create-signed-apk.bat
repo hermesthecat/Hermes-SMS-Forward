@@ -70,12 +70,19 @@ if %BUILD_RESULT%==0 (
     echo.
     echo 5. Archiving APK...
     
-    REM Extract version from build.gradle using PowerShell
+    REM Extract version from build.gradle directly
     echo Getting version from build.gradle...
-    for /f %%i in ('powershell -ExecutionPolicy Bypass -File get-version.ps1') do set VERSION=%%i
+    REM Find the main versionName line (line 32)
+    for /f "skip=31 tokens=2 delims= " %%i in (app\build.gradle) do (
+        if "!VERSION!"=="" (
+            set VERSION_WITH_QUOTES=%%i
+            REM Remove quotes from version string
+            set VERSION=!VERSION_WITH_QUOTES:"=!
+        )
+    )
     if "!VERSION!"=="" (
         echo ❌ Could not extract version from build.gradle
-        echo Please check app\build.gradle format or get-version.ps1 script
+        echo Please check app\build.gradle format
         pause
         exit /b 1
     )
