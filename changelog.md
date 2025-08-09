@@ -1,5 +1,14 @@
 # Changelog - Hermes SMS Forward
 
+## [2.40.1] - 2025-08-09
+
+- 🇩🇪 **Complete German Language Implementation:**
+  - **Full String Coverage:** Added 300+ missing German translations (from 134 to 474 strings)
+  - **Feature Completeness:** All app features now fully localized in German
+  - **Advanced Features:** Analytics, backup/restore, dual SIM, filtering - all in German
+  - **Duplicate Cleanup:** Removed duplicate entries, clean XML structure
+  - **Build Validation:** Verified APK builds successfully with complete German support
+
 ## [2.40.0] - 2025-08-09
 
 - 🇩🇪 **German Language Support (Deutsch):**

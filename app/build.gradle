@@ -28,8 +28,8 @@ android {
         applicationId "com.keremgok.sms"
         minSdk = 21
         targetSdk = 34
-        versionCode 57
-        versionName "2.40.0"
+        versionCode 58
+        versionName "2.40.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
