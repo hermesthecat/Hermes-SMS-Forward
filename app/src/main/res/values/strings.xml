@@ -665,4 +665,5 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="sample_message_turkish">Bu bir örnek SMS mesajıdır</string>
     <string name="template_preview_error">Template önizleme hatası: %s</string>
 
+
 </resources>

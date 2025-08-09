@@ -1,5 +1,14 @@
 # Changelog - Hermes SMS Forward
 
+## [2.42.1] - 2025-08-09
+
+- 🔄 **Perfect Line Count Standardization:**
+  - **Identical Line Counts:** All 5 language files now have exactly 668 lines each
+  - **Identical String Counts:** All files maintain 469 strings each
+  - **Structural Consistency:** Standardized comment spacing, blank lines, and XML formatting
+  - **German File Fix:** Corrected section ordering and removed duplicate content
+  - **Build Validation:** APK builds successfully with perfectly synchronized files
+
 ## [2.42.0] - 2025-08-09
 
 - 🇫🇷 **French Language Support (Français):**
