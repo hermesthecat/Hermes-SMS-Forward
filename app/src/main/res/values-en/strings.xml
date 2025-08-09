@@ -158,18 +158,6 @@ Examples:<br/>
     <string name="settings_language_title">App Language</string>
     <string name="settings_language_summary">Choose the language for the app</string>
     
-    <string-array name="language_entries">
-        <item>Automatic (System Language)</item>
-        <item>Türkçe</item>
-        <item>English</item>
-    </string-array>
-    
-    <string-array name="language_values">
-        <item>auto</item>
-        <item>tr</item>
-        <item>en</item>
-    </string-array>
-    
     <!-- History Screen -->
     <string name="history_title">SMS History</string>
     <string name="history_menu_title">History</string>
@@ -538,6 +526,7 @@ Examples:<br/>
     <string name="language_auto">Automatic</string>
     <string name="language_turkish">Turkish</string>
     <string name="language_english">English</string>
+    <string name="language_german">German</string>
     
     <!-- Log Level Strings -->
     <string name="log_level_error">Error</string>

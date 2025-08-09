@@ -1,5 +1,15 @@
 # Changelog - Hermes SMS Forward
 
+## [2.40.0] - 2025-08-09
+
+- 🇩🇪 **German Language Support (Deutsch):**
+  - **Full Localization:** Complete German language support added to the app
+  - **String Resources:** Created `values-de/strings.xml` with comprehensive German translations
+  - **Language Selection:** Added German (Deutsch) option in Settings > App Language
+  - **LanguageManager Update:** Enhanced to support German language switching
+  - **UI Integration:** All app screens now support German localization
+  - **Arrays Configuration:** Updated language selection arrays to include German option
+
 ## [2.39.1] - 2025-08-09
 
 - 🌐 **Missed Call Messages Localization:**

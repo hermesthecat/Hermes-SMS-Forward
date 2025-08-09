@@ -1,0 +1,202 @@
+<resources>
+    <string name="app_name">Hermes SMS Forward</string>
+    <string name="description_text">Leitet alle eingehenden SMS-Nachrichten automatisch an Ihre angegebene Telefonnummer weiter.</string>
+    <string name="target_number_label">Ziel-Telefonnummer:</string>
+    <string name="target_number_hint">Beispiel: +495551234567</string>
+    <string name="save_button">Speichern und starten</string>
+    <string name="status_not_configured">Status: Nicht konfiguriert</string>
+    <string name="status_configured">Status: Aktiv - Weiterleitung funktioniert</string>
+    <string name="permissions_required">SMS-Berechtigungen erforderlich</string>
+    <string name="permissions_granted">Berechtigungen erteilt</string>
+    <string name="error_empty_number">Bitte geben Sie eine gültige Telefonnummer ein</string>
+    <string name="success_saved">Einstellungen gespeichert!</string>
+    
+    <!-- Phone Number Validation Errors -->
+    <string name="validation_empty_number">Telefonnummer darf nicht leer sein</string>
+    <string name="validation_missing_country_code">Ländercode fehlt (z.B: +49)</string>
+    <string name="validation_too_short">Telefonnummer zu kurz</string>
+    <string name="validation_too_long">Telefonnummer zu lang</string>
+    <string name="validation_invalid_format">Ungültiges Telefonnummernformat</string>
+    <string name="validation_success">Gültige Telefonnummer</string>
+    
+    <!-- SMS Error Handling -->
+    <string name="sms_send_failed">SMS-Versand fehlgeschlagen</string>
+    <string name="sms_send_retry">SMS-Versand wird wiederholt</string>
+    <string name="sms_send_final_failure">SMS-Versand endgültig fehlgeschlagen</string>
+    <string name="sms_service_unavailable">SMS-Dienst nicht verfügbar</string>
+    
+    <!-- Settings Screen -->
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_menu_title">Einstellungen</string>
+    
+    <!-- Settings Categories -->
+    <string name="settings_category_forwarding">SMS-Weiterleitung</string>
+    <string name="settings_category_notifications">Benachrichtigungen</string>
+    <string name="settings_category_advanced">Erweiterte Einstellungen</string>
+    <string name="settings_category_about">Über</string>
+    
+    <!-- Forwarding Settings -->
+    <string name="settings_forwarding_enabled_title">SMS-Weiterleitung aktivieren</string>
+    <string name="settings_forwarding_enabled_summary">Aktiviert automatische Weiterleitung eingehender SMS-Nachrichten</string>
+    <string name="settings_target_number_title">Ziel-Telefonnummer</string>
+    <string name="settings_target_number_summary">Nummer für SMS-Weiterleitung - Kann im Hauptbildschirm geändert werden</string>
+    <string name="settings_sms_format_title">SMS-Format-Stil</string>
+    <string name="settings_sms_format_summary">Wählen Sie, wie weitergeleitete SMS-Nachrichten formatiert werden</string>
+    
+    <!-- Notification Settings -->
+    <string name="settings_notifications_enabled_title">Benachrichtigungen anzeigen</string>
+    <string name="settings_notifications_enabled_summary">Benachrichtigungen für SMS-Weiterleitungsvorgänge anzeigen</string>
+    <string name="settings_notification_sound_title">Benachrichtigungston</string>
+    <string name="settings_notification_sound_summary">Ton für Weiterleitungsbenachrichtigungen abspielen</string>
+    <string name="settings_notification_vibration_title">Vibration</string>
+    <string name="settings_notification_vibration_summary">Für Weiterleitungsbenachrichtigungen vibrieren</string>
+    <string name="settings_missed_call_notifications_title">Verpasste Anruf-Benachrichtigungen</string>
+    <string name="settings_missed_call_notifications_summary">SMS-Benachrichtigungen für verpasste Anrufe an Zielnummern senden</string>
+    
+    <!-- Missed Call Messages -->
+    <string name="missed_call_notification_title">📞 Verpasster Anruf</string>
+    <string name="missed_call_caller_label">Anrufer:</string>
+    <string name="missed_call_time_label">Zeit:</string>
+    <string name="missed_call_status_not_answered">Nicht beantwortet</string>
+    <string name="missed_call_compact_prefix">Verpasster Anruf:</string>
+    <string name="missed_call_detailed_title">📞 VERPASSTER ANRUF</string>
+    <string name="missed_call_caller_icon_label">👤 Anrufer:</string>
+    <string name="missed_call_time_icon_label">🕐 Zeit:</string>
+    <string name="missed_call_status_icon_label">📱 Status:</string>
+    
+    <!-- About Section -->
+    <string name="settings_version_title">App-Version</string>
+    <string name="settings_version_summary">Hermes SMS Forward</string>
+    <string name="settings_developer_title">Entwickler</string>
+    <string name="settings_developer_summary">Kerem GÖK</string>
+    
+    <!-- Target Numbers Management -->
+    <string name="target_numbers_title">Ziel-Nummern</string>
+    <string name="target_numbers_menu_title">Ziel-Nummern</string>
+    <string name="target_numbers_description">Sie können mehrere Ziel-Nummern für die SMS-Weiterleitung hinzufügen</string>
+    <string name="add_new_target">Neue Ziel-Nummer hinzufügen</string>
+    <string name="phone_number_hint">Telefonnummer</string>
+    <string name="display_name_hint">Anzeigename (optional)</string>
+    <string name="enabled">Aktiviert</string>
+    <string name="add_target_number">Ziel-Nummer hinzufügen</string>
+    <string name="existing_targets">Vorhandene Ziel-Nummern</string>
+    <string name="no_targets_configured">Noch keine Ziel-Nummern konfiguriert</string>
+    
+    <!-- Target Number Operations -->
+    <string name="target_edit">Bearbeiten</string>
+    <string name="target_delete">Löschen</string>
+    <string name="target_add_success">Ziel-Nummer erfolgreich hinzugefügt</string>
+    <string name="target_add_error">Fehler beim Hinzufügen der Ziel-Nummer</string>
+    <string name="target_update_success">Ziel-Nummer aktualisiert</string>
+    <string name="target_update_error">Fehler beim Aktualisieren der Ziel-Nummer</string>
+    <string name="target_delete_success">Ziel-Nummer gelöscht</string>
+    <string name="target_delete_error">Fehler beim Löschen der Ziel-Nummer</string>
+    
+    <!-- History Screen -->
+    <string name="history_title">SMS-Verlauf</string>
+    <string name="history_menu_title">Verlauf</string>
+    <string name="history_empty_title">Noch kein SMS-Verlauf vorhanden</string>
+    <string name="history_empty_message">Verlauf wird hier angezeigt, wenn die SMS-Weiterleitung startet</string>
+    
+    <!-- Filter Rules Management -->
+    <string name="filter_rules_title">Filter-Regeln</string>
+    <string name="filter_rules_description">Erstellen Sie Regeln zum Filtern eingehender SMS-Nachrichten vor der Weiterleitung</string>
+    <string name="add_new_filter">Neuen Filter hinzufügen</string>
+    <string name="existing_filters">Vorhandene Filter</string>
+    <string name="no_filters_configured">Noch keine Filter konfiguriert</string>
+    
+    <!-- Filter UI Labels -->
+    <string name="filter_enabled_label">AKTIVIERT</string>
+    <string name="filter_disabled_label">DEAKTIVIERT</string>
+    <string name="filter_test">Filter testen</string>
+    <string name="filter_edit">Bearbeiten</string>
+    <string name="filter_delete">Löschen</string>
+    <string name="edit_filter_title">Filter bearbeiten</string>
+    <string name="update_filter">Aktualisieren</string>
+    
+    <!-- Filter Actions -->
+    <string name="filter_add_success">Filter erfolgreich hinzugefügt</string>
+    <string name="filter_add_error">Fehler beim Hinzufügen des Filters</string>
+    <string name="filter_update_success">Filter aktualisiert</string>
+    <string name="filter_update_error">Fehler beim Aktualisieren des Filters</string>
+    <string name="filter_delete_success">Filter gelöscht</string>
+    <string name="filter_delete_error">Fehler beim Löschen des Filters</string>
+    
+    <!-- SMS Format Options -->
+    <string-array name="sms_format_entries">
+        <item>Standard-Format</item>
+        <item>Kompaktes Format</item>
+        <item>Detailliertes Format</item>
+        <item>Benutzerdefiniertes Format</item>
+    </string-array>
+    
+    <!-- Language Selection Options -->
+    <string name="settings_language_title">App-Sprache</string>
+    <string name="settings_language_summary">Wählen Sie die Sprache für die App</string>
+    
+    <string-array name="language_entries">
+        <item>Automatisch (Systemsprache)</item>
+        <item>Türkçe</item>
+        <item>English</item>
+        <item>Deutsch</item>
+    </string-array>
+    
+    <string-array name="language_values">
+        <item>auto</item>
+        <item>tr</item>
+        <item>en</item>
+        <item>de</item>
+    </string-array>
+    
+    <!-- Onboarding System -->
+    <string name="step_indicator">%1$d / %2$d</string>
+    <string name="skip">Überspringen</string>
+    <string name="back">Zurück</string>
+    <string name="next">Weiter</string>
+    <string name="get_started">Loslegen</string>
+    
+    <!-- Welcome Fragment -->
+    <string name="welcome_title">Willkommen bei Hermes SMS Forward!</string>
+    <string name="welcome_subtitle">Leiten Sie Ihre SMS-Nachrichten sicher weiter. Die Einrichtung dauert nur wenige Schritte.</string>
+    <string name="feature_automatic_forwarding">Automatische SMS-Weiterleitung</string>
+    <string name="feature_smart_filtering">Intelligentes Filtersystem</string>
+    <string name="feature_privacy_first">Datenschutz steht an erster Stelle</string>
+    
+    <!-- Permission Explanation Fragment -->
+    <string name="permissions_title">Über Berechtigungen</string>
+    <string name="permissions_description">Wir benötigen die folgenden Berechtigungen, damit die App funktioniert:</string>
+    <string name="sms_permission_title">SMS-Leseberechtigung</string>
+    <string name="sms_permission_description">Erforderlich zur Erkennung eingehender SMS-Nachrichten</string>
+    <string name="send_sms_permission_title">SMS-Sendeberechtigung</string>
+    <string name="send_sms_permission_description">Erforderlich zur Weiterleitung von Nachrichten an Ziel-Nummern</string>
+    <string name="privacy_note">Alle Ihre Daten werden nur auf Ihrem Gerät gespeichert. Keine Informationen werden nach außen gesendet.</string>
+    
+    <!-- Target Number Setup Fragment -->
+    <string name="target_setup_title">Ziel-Nummer</string>
+    <string name="target_setup_description">Geben Sie die Telefonnummer ein, an die SMS-Nachrichten weitergeleitet werden sollen.</string>
+    <string name="onboarding_target_number_hint">Telefonnummer</string>
+    <string name="target_number_helper">Beispiel: +49 555 123 45 67</string>
+    <string name="target_setup_info">Sie können später mehrere Ziel-Nummern hinzufügen.</string>
+    
+    <!-- General Messages -->
+    <string name="cancel">Abbrechen</string>
+    <string name="permissions_granted_message">Berechtigungen erteilt. Sie können nun die Ziel-Nummer speichern.</string>
+    <string name="sms_permissions_required">SMS-Berechtigungen erforderlich!</string>
+    
+    <!-- Permission Labels -->
+    <string name="required_permissions_title">Erforderliche Berechtigungen:</string>
+    <string name="receive_sms_permission_label">SMS-Leseberechtigung</string>
+    <string name="send_sms_permission_label">SMS-Sendeberechtigung</string>
+    <string name="read_phone_state_permission_label">Telefonzustand-Leseberechtigung</string>
+    
+    <!-- Common Symbols -->
+    <string name="permission_granted_symbol">✅</string>
+    <string name="permission_denied_symbol">❌</string>
+    
+    <!-- Language Strings -->
+    <string name="language_auto">Automatisch</string>
+    <string name="language_turkish">Türkçe</string>
+    <string name="language_english">English</string>
+    <string name="language_german">Deutsch</string>
+    
+</resources>
