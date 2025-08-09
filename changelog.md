@@ -1,5 +1,14 @@
 # Changelog - Hermes SMS Forward
 
+## [2.39.1] - 2025-08-09
+
+- 🌐 **Missed Call Messages Localization:**
+  - **Proper i18n Support:** Replaced hardcoded strings with proper localization system
+  - **String Resources:** All missed call messages now use strings.xml for Turkish/English
+  - **Consistent UI:** Removed `isTurkish` conditional logic in favor of Android's localization
+  - **Maintainable Code:** Future language additions now only require strings.xml updates
+  - **Format Templates:** All missed call formats now properly localized (Standard, Compact, Detailed, Custom)
+
 ## [2.39.0] - 2025-08-09
 
 - 📞 **Cevapsız Çağrı SMS Bildirimi Özelliği:**

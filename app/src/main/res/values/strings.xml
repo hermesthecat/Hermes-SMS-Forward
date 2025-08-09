@@ -93,6 +93,17 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="settings_missed_call_notifications_title">Cevapsız Çağrı Bildirimleri</string>
     <string name="settings_missed_call_notifications_summary">Cevapsız çağrıları SMS ile hedef numaralara bildir</string>
     
+    <!-- Missed Call Messages -->
+    <string name="missed_call_notification_title">📞 Cevapsız Çağrı</string>
+    <string name="missed_call_caller_label">Arayan:</string>
+    <string name="missed_call_time_label">Zaman:</string>
+    <string name="missed_call_status_not_answered">Cevaplanmadı</string>
+    <string name="missed_call_compact_prefix">Cevapsız çağrı:</string>
+    <string name="missed_call_detailed_title">📞 CEVAPSIZ ÇAĞRI</string>
+    <string name="missed_call_caller_icon_label">👤 Arayan:</string>
+    <string name="missed_call_time_icon_label">🕐 Zaman:</string>
+    <string name="missed_call_status_icon_label">📱 Durum:</string>
+    
     <!-- Advanced Settings -->
     <string name="settings_log_level_title">Log Seviyesi</string>
     <string name="settings_log_level_summary">Hangi seviyede log kayıtlarının tutulacağını seçin</string>

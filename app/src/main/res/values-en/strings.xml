@@ -93,6 +93,17 @@ Examples:<br/>
     <string name="settings_missed_call_notifications_title">Missed Call Notifications</string>
     <string name="settings_missed_call_notifications_summary">Send SMS notifications for missed calls to target numbers</string>
     
+    <!-- Missed Call Messages -->
+    <string name="missed_call_notification_title">📞 Missed Call</string>
+    <string name="missed_call_caller_label">Caller:</string>
+    <string name="missed_call_time_label">Time:</string>
+    <string name="missed_call_status_not_answered">Not answered</string>
+    <string name="missed_call_compact_prefix">Missed call:</string>
+    <string name="missed_call_detailed_title">📞 MISSED CALL</string>
+    <string name="missed_call_caller_icon_label">👤 Caller:</string>
+    <string name="missed_call_time_icon_label">🕐 Time:</string>
+    <string name="missed_call_status_icon_label">📱 Status:</string>
+    
     <!-- Advanced Settings -->
     <string name="settings_log_level_title">Log Level</string>
     <string name="settings_log_level_summary">Select which level of log records to keep</string>

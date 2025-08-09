@@ -426,18 +426,12 @@ public class SmsFormatter {
         sb.append("[").append(header).append("]\n");
         
         // Missed call info
-        if (isTurkish) {
-            sb.append("📞 Cevapsız Çağrı\n");
-            sb.append("Arayan: ").append(phoneNumber).append("\n");
-        } else {
-            sb.append("📞 Missed Call\n");
-            sb.append("Caller: ").append(phoneNumber).append("\n");
-        }
+        sb.append(context.getString(R.string.missed_call_notification_title)).append("\n");
+        sb.append(context.getString(R.string.missed_call_caller_label)).append(" ").append(phoneNumber).append("\n");
         
         // Timestamp
         if (shouldIncludeTimestamp()) {
-            String timeLabel = isTurkish ? "Zaman: " : "Time: ";
-            sb.append(timeLabel).append(formatTimestamp(timestamp));
+            sb.append(context.getString(R.string.missed_call_time_label)).append(" ").append(formatTimestamp(timestamp));
         }
         
         return sb.toString();
@@ -447,8 +441,8 @@ public class SmsFormatter {
      * Format missed call in compact format
      */
     private String formatMissedCallCompact(String phoneNumber, long timestamp) {
-        String callLabel = isTurkish ? "Cevapsız çağrı: " : "Missed call: ";
-        return callLabel + phoneNumber + " (" + formatTimestamp(timestamp) + ")";
+        return context.getString(R.string.missed_call_compact_prefix) + " " + 
+               phoneNumber + " (" + formatTimestamp(timestamp) + ")";
     }
     
     /**
@@ -464,17 +458,10 @@ public class SmsFormatter {
         sb.append("═══════════════════════\n");
         
         // Missed call details
-        if (isTurkish) {
-            sb.append("\n📞 CEVAPSIZ ÇAĞRI\n");
-            sb.append("👤 Arayan: ").append(phoneNumber).append("\n");
-            sb.append("🕐 Zaman: ").append(formatTimestamp(timestamp)).append("\n");
-            sb.append("📱 Durum: Cevaplanmadı\n");
-        } else {
-            sb.append("\n📞 MISSED CALL\n");
-            sb.append("👤 Caller: ").append(phoneNumber).append("\n");
-            sb.append("🕐 Time: ").append(formatTimestamp(timestamp)).append("\n");
-            sb.append("📱 Status: Not answered\n");
-        }
+        sb.append("\n").append(context.getString(R.string.missed_call_detailed_title)).append("\n");
+        sb.append(context.getString(R.string.missed_call_caller_icon_label)).append(" ").append(phoneNumber).append("\n");
+        sb.append(context.getString(R.string.missed_call_time_icon_label)).append(" ").append(formatTimestamp(timestamp)).append("\n");
+        sb.append(context.getString(R.string.missed_call_status_icon_label)).append(" ").append(context.getString(R.string.missed_call_status_not_answered)).append("\n");
         
         // Footer
         sb.append("\n").append("━━━━━━━━━━━━━━━━━━━━━━━");
@@ -503,11 +490,10 @@ public class SmsFormatter {
      * Get default missed call template
      */
     private String getDefaultMissedCallTemplate() {
-        if (isTurkish) {
-            return "[{HEADER}]\n📞 Cevapsız Çağrı\nArayan: {CALLER}\nZaman: {TIME}";
-        } else {
-            return "[{HEADER}]\n📞 Missed Call\nCaller: {CALLER}\nTime: {TIME}";
-        }
+        return "[{HEADER}]\n" + 
+               context.getString(R.string.missed_call_notification_title) + "\n" +
+               context.getString(R.string.missed_call_caller_label) + " {CALLER}\n" +
+               context.getString(R.string.missed_call_time_label) + " {TIME}";
     }
     
     /**
