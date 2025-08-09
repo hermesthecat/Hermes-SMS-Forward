@@ -1,5 +1,14 @@
 # Changelog - Hermes SMS Forward
 
+## [2.40.3] - 2025-08-09
+
+- 🔄 **Perfect Language Files Synchronization:**
+  - **Identical String Counts:** All 3 language files now have exactly 467 strings each
+  - **Complete Synchronization:** Turkish: 467, English: 467, German: 467 ✅
+  - **Duplicate Cleanup:** Removed duplicate arrays from strings.xml files
+  - **Centralized Arrays:** All string-arrays now properly located in values/arrays.xml
+  - **Build Validation:** APK builds successfully with perfectly synchronized files
+
 ## [2.40.2] - 2025-08-09
 
 - 🇩🇪 **German Strings File Completion:**

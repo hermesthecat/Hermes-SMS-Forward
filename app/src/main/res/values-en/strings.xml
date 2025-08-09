@@ -140,23 +140,11 @@ Examples:<br/>
     </string-array>
     
     <!-- Log Level Options -->
-    <string-array name="log_level_entries">
-        <item>Errors Only</item>
-        <item>Errors and Warnings</item>
-        <item>All Activities</item>
-        <item>Debug Information</item>
-    </string-array>
-    
-    <string-array name="log_level_values">
-        <item>error</item>
-        <item>warning</item>
-        <item>info</item>
-        <item>debug</item>
-    </string-array>
     
     <!-- Language Selection Options -->
     <string name="settings_language_title">App Language</string>
     <string name="settings_language_summary">Choose the language for the app</string>
+    
     
     <!-- History Screen -->
     <string name="history_title">SMS History</string>

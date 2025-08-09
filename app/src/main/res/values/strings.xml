@@ -160,6 +160,7 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="settings_language_title">Uygulama Dili</string>
     <string name="settings_language_summary">Uygulamada kullanılacak dili seçin</string>
     
+    
     <!-- History Screen -->
     <string name="history_title">SMS Geçmişi</string>
     <string name="history_menu_title">Geçmiş</string>
@@ -550,6 +551,7 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="log_level_warning">Uyarı</string>
     <string name="log_level_info">Bilgi</string>
     <string name="log_level_debug">Debug</string>
+    
     
     <!-- SIM Selection Mode Strings -->
     <string name="sim_selection_auto">Otomatik</string>

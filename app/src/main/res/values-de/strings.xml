@@ -124,30 +124,11 @@
     <string name="filter_delete_error">Fehler beim Löschen des Filters</string>
     
     <!-- SMS Format Options -->
-    <string-array name="sms_format_entries">
-        <item>Standard-Format</item>
-        <item>Kompaktes Format</item>
-        <item>Detailliertes Format</item>
-        <item>Benutzerdefiniertes Format</item>
-    </string-array>
     
     <!-- Language Selection Options -->
     <string name="settings_language_title">App-Sprache</string>
     <string name="settings_language_summary">Wählen Sie die Sprache für die App</string>
     
-    <string-array name="language_entries">
-        <item>Automatisch (Systemsprache)</item>
-        <item>Türkçe</item>
-        <item>English</item>
-        <item>Deutsch</item>
-    </string-array>
-    
-    <string-array name="language_values">
-        <item>auto</item>
-        <item>tr</item>
-        <item>en</item>
-        <item>de</item>
-    </string-array>
     
     <!-- Onboarding System -->
     <string name="step_indicator">%1$d / %2$d</string>
@@ -243,29 +224,8 @@ Beispiele:<br/>
     <string name="settings_feedback_summary">Teilen Sie Ihre Vorschläge und Probleme mit uns</string>
 
     <!-- SMS Format Options Values -->
-    <string-array name="sms_format_values">
-        <item>standard</item>
-        <item>compact</item>
-        <item>detailed</item>
-        <item>custom</item>
-    </string-array>
     
     <!-- Date Format Options -->
-    <string-array name="date_format_entries">
-        <item>dd/MM/yyyy HH:mm:ss</item>
-        <item>yyyy-MM-dd HH:mm:ss</item>
-        <item>dd.MM.yyyy HH:mm</item>
-        <item>MM/dd/yyyy h:mm a</item>
-        <item>HH:mm dd/MM/yyyy</item>
-    </string-array>
-    
-    <string-array name="date_format_values">
-        <item>dd/MM/yyyy HH:mm:ss</item>
-        <item>yyyy-MM-dd HH:mm:ss</item>
-        <item>dd.MM.yyyy HH:mm</item>
-        <item>MM/dd/yyyy h:mm a</item>
-        <item>HH:mm dd/MM/yyyy</item>
-    </string-array>
 
     <!-- History Search -->
     <string name="history_search_hint">Absender oder Nachrichteninhalt durchsuchen...</string>
@@ -322,15 +282,6 @@ Beispiele:<br/>
     
     <!-- Sending Mode Options -->
     <string name="sending_mode">Sendemodus</string>
-    <string-array name="sending_mode_entries">
-        <item>Sequenzielles Senden (Sicher)</item>
-        <item>Paralleles Senden (Schnell)</item>
-    </string-array>
-    
-    <string-array name="sending_mode_values">
-        <item>sequential</item>
-        <item>parallel</item>
-    </string-array>
 
     <!-- Backup & Restore -->
     <string name="backup_create_title">Einstellungen sichern</string>
@@ -629,19 +580,6 @@ Beispiele:<br/>
     <string name="settings_forwarding_delay_instant">Sofort senden (keine Verzögerung)</string>
 
     <!-- Log Level Options -->
-    <string-array name="log_level_entries">
-        <item>Nur Fehler</item>
-        <item>Fehler und Warnungen</item>
-        <item>Alle Aktivitäten</item>
-        <item>Debug-Informationen</item>
-    </string-array>
-    
-    <string-array name="log_level_values">
-        <item>error</item>
-        <item>warning</item>
-        <item>info</item>
-        <item>debug</item>
-    </string-array>
 
     <!-- Hardcoded Text Fixes -->
     <string name="main_target_default_name">Hauptziel</string>
@@ -704,5 +642,48 @@ Beispiele:<br/>
     <string name="language_turkish">Türkçe</string>
     <string name="language_english">English</string>
     <string name="language_german">Deutsch</string>
+    
+    <!-- SMS Format Options -->
+    <string-array name="sms_format_entries">
+        <item>Standard Format</item>
+        <item>Kompakt Format</item>
+        <item>Detailliert Format</item>
+        <item>Benutzerdefiniert Format</item>
+    </string-array>
+    
+    <string-array name="sms_format_values">
+        <item>standard</item>
+        <item>compact</item>
+        <item>detailed</item>
+        <item>custom</item>
+    </string-array>
+    
+    <!-- Sending Mode Options -->
+    <string-array name="sending_mode_entries">
+        <item>Sequenzielle Sendung (Sicher)</item>
+        <item>Parallele Sendung (Schnell)</item>
+    </string-array>
+    
+    <string-array name="sending_mode_values">
+        <item>sequential</item>
+        <item>parallel</item>
+    </string-array>
+    
+    <!-- Date Format Options -->
+    <string-array name="date_format_entries">
+        <item>dd/MM/yyyy HH:mm:ss</item>
+        <item>yyyy-MM-dd HH:mm:ss</item>
+        <item>dd.MM.yyyy HH:mm</item>
+        <item>MM/dd/yyyy h:mm a</item>
+        <item>HH:mm dd/MM/yyyy</item>
+    </string-array>
+    
+    <string-array name="date_format_values">
+        <item>dd/MM/yyyy HH:mm:ss</item>
+        <item>yyyy-MM-dd HH:mm:ss</item>
+        <item>dd.MM.yyyy HH:mm</item>
+        <item>MM/dd/yyyy h:mm a</item>
+        <item>HH:mm dd/MM/yyyy</item>
+    </string-array>
     
 </resources>
