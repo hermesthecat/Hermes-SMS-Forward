@@ -1,5 +1,14 @@
 # Changelog - Hermes SMS Forward
 
+## [2.38.1] - 2025-08-09
+
+- 📱 **Enhanced SIM Display in SMS Messages:**
+  - **Carrier Names in SMS:** SMS messages now show actual carrier names (e.g., "Turkcell → Vodafone") instead of generic "SIM2 to SIM1"
+  - **Smart SIM Detection:** Enhanced SIM name resolution using subscription IDs and SimManager integration
+  - **All Format Support:** Carrier names displayed in Standard, Compact, Detailed, and Custom SMS formats
+  - **Fallback System:** Graceful fallback to SIM1/SIM2 when carrier names unavailable
+  - **User Experience:** More meaningful and personalized SMS forwarding notifications
+
 ## [2.38.0] - 2025-08-09
 
 - 🔧 **Filter Management Enhancement:**

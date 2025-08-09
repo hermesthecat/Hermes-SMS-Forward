@@ -54,7 +54,8 @@ public class SmsFormatter {
         
         switch (formatType) {
             case FORMAT_COMPACT:
-                return formatCompact(originalSender, originalMessage, timestamp, sourceSimSlot, forwardingSimSlot);
+                return formatCompact(originalSender, originalMessage, timestamp, 
+                                   sourceSimSlot, forwardingSimSlot, sourceSubscriptionId, forwardingSubscriptionId);
             case FORMAT_DETAILED:
                 return formatDetailed(originalSender, originalMessage, timestamp, 
                                     sourceSimSlot, forwardingSimSlot, sourceSubscriptionId, forwardingSubscriptionId);
@@ -63,7 +64,8 @@ public class SmsFormatter {
                                   sourceSimSlot, forwardingSimSlot, sourceSubscriptionId, forwardingSubscriptionId);
             case FORMAT_STANDARD:
             default:
-                return formatStandard(originalSender, originalMessage, timestamp, sourceSimSlot, forwardingSimSlot);
+                return formatStandard(originalSender, originalMessage, timestamp, 
+                                    sourceSimSlot, forwardingSimSlot, sourceSubscriptionId, forwardingSubscriptionId);
         }
     }
     
@@ -78,7 +80,8 @@ public class SmsFormatter {
      * Standard format - similar to current format but with multilingual support
      */
     private String formatStandard(String originalSender, String originalMessage, long timestamp, 
-                                int sourceSimSlot, int forwardingSimSlot) {
+                                int sourceSimSlot, int forwardingSimSlot, 
+                                int sourceSubscriptionId, int forwardingSubscriptionId) {
         StringBuilder sb = new StringBuilder();
         
         // Header
@@ -107,7 +110,7 @@ public class SmsFormatter {
         
         // SIM info
         if (shouldIncludeSimInfo() && (sourceSimSlot != -1 || forwardingSimSlot != -1)) {
-            sb.append("\n").append(formatSimInfo(sourceSimSlot, forwardingSimSlot));
+            sb.append("\n").append(formatSimInfoWithSubscriptions(sourceSimSlot, forwardingSimSlot, sourceSubscriptionId, forwardingSubscriptionId));
         }
         
         return sb.toString();
@@ -117,7 +120,8 @@ public class SmsFormatter {
      * Compact format - minimal information
      */
     private String formatCompact(String originalSender, String originalMessage, long timestamp,
-                               int sourceSimSlot, int forwardingSimSlot) {
+                               int sourceSimSlot, int forwardingSimSlot,
+                               int sourceSubscriptionId, int forwardingSubscriptionId) {
         StringBuilder sb = new StringBuilder();
         
         // Just sender and message
@@ -125,7 +129,8 @@ public class SmsFormatter {
         
         // Add SIM info if available and enabled
         if (shouldIncludeSimInfo() && sourceSimSlot != -1) {
-            sb.append(" (SIM").append(sourceSimSlot + 1).append(")");
+            String simName = getSimDisplayName(sourceSimSlot, sourceSubscriptionId);
+            sb.append(" (").append(simName).append(")");
         }
         
         return sb.toString();
@@ -184,7 +189,7 @@ public class SmsFormatter {
             .replace("{SENDER}", originalSender != null ? originalSender : "")
             .replace("{MESSAGE}", originalMessage != null ? originalMessage : "")
             .replace("{TIME}", formatTimestamp(timestamp))
-            .replace("{SIM_INFO}", formatSimInfo(sourceSimSlot, forwardingSimSlot))
+            .replace("{SIM_INFO}", formatSimInfoWithSubscriptions(sourceSimSlot, forwardingSimSlot, sourceSubscriptionId, forwardingSubscriptionId))
             .replace("{APP_NAME}", context.getString(R.string.app_name));
         
         return formatted;
@@ -194,6 +199,14 @@ public class SmsFormatter {
      * Format SIM information for standard/compact formats
      */
     private String formatSimInfo(int sourceSimSlot, int forwardingSimSlot) {
+        return formatSimInfoWithSubscriptions(sourceSimSlot, forwardingSimSlot, -1, -1);
+    }
+    
+    /**
+     * Format SIM information with subscription IDs for enhanced display
+     */
+    private String formatSimInfoWithSubscriptions(int sourceSimSlot, int forwardingSimSlot, 
+                                                 int sourceSubscriptionId, int forwardingSubscriptionId) {
         if (sourceSimSlot == -1 && forwardingSimSlot == -1) {
             return "";
         }
@@ -202,16 +215,73 @@ public class SmsFormatter {
         String simLabel = isTurkish ? "SIM: " : "SIM: ";
         
         if (sourceSimSlot != -1 && forwardingSimSlot != -1 && sourceSimSlot != forwardingSimSlot) {
-            // Different SIMs
-            String fromLabel = isTurkish ? "dan " : " to ";
-            sb.append(simLabel).append("SIM").append(sourceSimSlot + 1).append(fromLabel).append("SIM").append(forwardingSimSlot + 1);
+            // Different SIMs - show carrier to carrier
+            String sourceSimName = getSimDisplayName(sourceSimSlot, sourceSubscriptionId);
+            String forwardingSimName = getSimDisplayName(forwardingSimSlot, forwardingSubscriptionId);
+            String fromLabel = isTurkish ? " → " : " → ";
+            sb.append(simLabel).append(sourceSimName).append(fromLabel).append(forwardingSimName);
         } else if (sourceSimSlot != -1) {
-            sb.append(simLabel).append("SIM").append(sourceSimSlot + 1);
+            String simName = getSimDisplayName(sourceSimSlot, sourceSubscriptionId);
+            sb.append(simLabel).append(simName);
         } else if (forwardingSimSlot != -1) {
-            sb.append(simLabel).append("SIM").append(forwardingSimSlot + 1);
+            String simName = getSimDisplayName(forwardingSimSlot, forwardingSubscriptionId);
+            sb.append(simLabel).append(simName);
         }
         
         return sb.toString();
+    }
+    
+    /**
+     * Get display name for SIM (carrier name if available, otherwise SIM1/SIM2)
+     */
+    private String getSimDisplayName(int simSlot, int subscriptionId) {
+        try {
+            // If we have subscriptionId, use it to get carrier name
+            if (subscriptionId != -1) {
+                String carrierName = getCarrierName(subscriptionId);
+                if (!TextUtils.isEmpty(carrierName) && !carrierName.equals("Unknown")) {
+                    return carrierName;
+                }
+            }
+            
+            // If no subscription ID, try to get it from SIM slot
+            if (simSlot != -1 && subscriptionId == -1) {
+                int derivedSubscriptionId = getSubscriptionIdFromSlot(simSlot);
+                if (derivedSubscriptionId != -1) {
+                    String carrierName = getCarrierName(derivedSubscriptionId);
+                    if (!TextUtils.isEmpty(carrierName) && !carrierName.equals("Unknown")) {
+                        return carrierName;
+                    }
+                }
+            }
+            
+            // Fallback to SIM slot display
+            if (simSlot != -1) {
+                return "SIM" + (simSlot + 1);
+            }
+            
+            return "SIM";
+        } catch (Exception e) {
+            // Fallback on any error
+            return simSlot != -1 ? "SIM" + (simSlot + 1) : "SIM";
+        }
+    }
+    
+    /**
+     * Get subscription ID from SIM slot index
+     */
+    private int getSubscriptionIdFromSlot(int simSlot) {
+        try {
+            java.util.List<SimManager.SimInfo> availableSims = SimManager.getActiveSimCards(context);
+            for (SimManager.SimInfo sim : availableSims) {
+                if (sim.slotIndex == simSlot) {
+                    return sim.subscriptionId;
+                }
+            }
+        } catch (Exception e) {
+            // Ignore errors
+        }
+        return -1;
     }
     
     /**
