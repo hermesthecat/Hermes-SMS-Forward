@@ -397,6 +397,120 @@ public class SmsFormatter {
     
     
     /**
+     * Format missed call notification message
+     */
+    public String formatMissedCall(String phoneNumber, long timestamp) {
+        String formatType = prefs.getString("sms_format_type", DEFAULT_FORMAT_TYPE);
+        
+        switch (formatType) {
+            case FORMAT_COMPACT:
+                return formatMissedCallCompact(phoneNumber, timestamp);
+            case FORMAT_DETAILED:
+                return formatMissedCallDetailed(phoneNumber, timestamp);
+            case FORMAT_CUSTOM:
+                return formatMissedCallCustom(phoneNumber, timestamp);
+            case FORMAT_STANDARD:
+            default:
+                return formatMissedCallStandard(phoneNumber, timestamp);
+        }
+    }
+    
+    /**
+     * Format missed call in standard format
+     */
+    private String formatMissedCallStandard(String phoneNumber, long timestamp) {
+        StringBuilder sb = new StringBuilder();
+        
+        // Header
+        String header = getCustomHeader();
+        sb.append("[").append(header).append("]\n");
+        
+        // Missed call info
+        if (isTurkish) {
+            sb.append("📞 Cevapsız Çağrı\n");
+            sb.append("Arayan: ").append(phoneNumber).append("\n");
+        } else {
+            sb.append("📞 Missed Call\n");
+            sb.append("Caller: ").append(phoneNumber).append("\n");
+        }
+        
+        // Timestamp
+        if (shouldIncludeTimestamp()) {
+            String timeLabel = isTurkish ? "Zaman: " : "Time: ";
+            sb.append(timeLabel).append(formatTimestamp(timestamp));
+        }
+        
+        return sb.toString();
+    }
+    
+    /**
+     * Format missed call in compact format
+     */
+    private String formatMissedCallCompact(String phoneNumber, long timestamp) {
+        String callLabel = isTurkish ? "Cevapsız çağrı: " : "Missed call: ";
+        return callLabel + phoneNumber + " (" + formatTimestamp(timestamp) + ")";
+    }
+    
+    /**
+     * Format missed call in detailed format
+     */
+    private String formatMissedCallDetailed(String phoneNumber, long timestamp) {
+        StringBuilder sb = new StringBuilder();
+        
+        // Header with decoration
+        String header = getCustomHeader();
+        sb.append("═══════════════════════\n");
+        sb.append("  ").append(header).append("\n");
+        sb.append("═══════════════════════\n");
+        
+        // Missed call details
+        if (isTurkish) {
+            sb.append("\n📞 CEVAPSIZ ÇAĞRI\n");
+            sb.append("👤 Arayan: ").append(phoneNumber).append("\n");
+            sb.append("🕐 Zaman: ").append(formatTimestamp(timestamp)).append("\n");
+            sb.append("📱 Durum: Cevaplanmadı\n");
+        } else {
+            sb.append("\n📞 MISSED CALL\n");
+            sb.append("👤 Caller: ").append(phoneNumber).append("\n");
+            sb.append("🕐 Time: ").append(formatTimestamp(timestamp)).append("\n");
+            sb.append("📱 Status: Not answered\n");
+        }
+        
+        // Footer
+        sb.append("\n").append("━━━━━━━━━━━━━━━━━━━━━━━");
+        
+        return sb.toString();
+    }
+    
+    /**
+     * Format missed call using custom template
+     */
+    private String formatMissedCallCustom(String phoneNumber, long timestamp) {
+        // Get custom template or use default missed call template
+        String customTemplate = prefs.getString("custom_missed_call_template", getDefaultMissedCallTemplate());
+        
+        // Replace placeholders
+        String formatted = customTemplate
+            .replace("{HEADER}", getCustomHeader())
+            .replace("{CALLER}", phoneNumber != null ? phoneNumber : "")
+            .replace("{TIME}", formatTimestamp(timestamp))
+            .replace("{APP_NAME}", context.getString(R.string.app_name));
+        
+        return formatted;
+    }
+    
+    /**
+     * Get default missed call template
+     */
+    private String getDefaultMissedCallTemplate() {
+        if (isTurkish) {
+            return "[{HEADER}]\n📞 Cevapsız Çağrı\nArayan: {CALLER}\nZaman: {TIME}";
+        } else {
+            return "[{HEADER}]\n📞 Missed Call\nCaller: {CALLER}\nTime: {TIME}";
+        }
+    }
+    
+    /**
      * Get current format type
      */
     public String getCurrentFormatType() {

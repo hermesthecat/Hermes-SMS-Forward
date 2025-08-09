@@ -4,6 +4,7 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
 
     <application
         android:allowBackup="true"
@@ -112,6 +113,15 @@
             <intent-filter>
                 <action android:name="SMS_SENT" />
                 <action android:name="SMS_DELIVERED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Missed Call Receiver for detecting missed calls -->
+        <receiver 
+            android:name=".MissedCallReceiver"
+            android:exported="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
 

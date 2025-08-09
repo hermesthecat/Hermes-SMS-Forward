@@ -103,6 +103,13 @@
             android:defaultValue="false"
             android:dependency="pref_show_notifications" />
 
+        <!-- Missed Call Notifications -->
+        <SwitchPreferenceCompat
+            android:key="missed_call_notifications_enabled"
+            android:title="@string/settings_missed_call_notifications_title"
+            android:summary="@string/settings_missed_call_notifications_summary"
+            android:defaultValue="false" />
+
     </PreferenceCategory>
 
     <!-- Advanced Settings Category -->

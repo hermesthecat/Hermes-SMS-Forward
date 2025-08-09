@@ -1,5 +1,18 @@
 # Changelog - Hermes SMS Forward
 
+## [2.39.0] - 2025-08-09
+
+- 📞 **Cevapsız Çağrı SMS Bildirimi Özelliği:**
+  - **Missed Call Detection:** Cevapsız çağrıları otomatik tespit eden sistem
+  - **Settings Integration:** Ayarlardan açılıp kapatılabilen missed call bildirimleri
+  - **Smart Call Tracking:** CallStateManager ile gelişmiş çağrı durumu takibi
+  - **SMS Notification:** Cevapsız çağrıları tüm hedef numaralara SMS ile bildirim
+  - **Multi-Format Support:** Standart, Compact, Detailed formatlarında cevapsız çağrı mesajları
+  - **Duplicate Prevention:** Aynı çağrı için birden fazla bildirim önleme sistemi
+  - **Call Log Verification:** Android Call Log ile çapraz doğrulama
+  - **Permission Management:** READ_CALL_LOG izni ile güvenli çağrı erişimi
+  - **High Priority Queue:** Cevapsız çağrı bildirimleri yüksek öncelikli SMS kuyruğu
+
 ## [2.38.1] - 2025-08-09
 
 - 📱 **Enhanced SIM Display in SMS Messages:**

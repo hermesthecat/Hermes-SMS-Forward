@@ -90,6 +90,8 @@ Examples:<br/>
     <string name="settings_notification_sound_summary">Play sound for forwarding notifications</string>
     <string name="settings_notification_vibration_title">Vibration</string>
     <string name="settings_notification_vibration_summary">Vibrate for forwarding notifications</string>
+    <string name="settings_missed_call_notifications_title">Missed Call Notifications</string>
+    <string name="settings_missed_call_notifications_summary">Send SMS notifications for missed calls to target numbers</string>
     
     <!-- Advanced Settings -->
     <string name="settings_log_level_title">Log Level</string>

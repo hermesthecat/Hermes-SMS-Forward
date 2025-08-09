@@ -90,6 +90,8 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="settings_notification_sound_summary">Yönlendirme bildirimlerinde ses çıkar</string>
     <string name="settings_notification_vibration_title">Titreşim</string>
     <string name="settings_notification_vibration_summary">Yönlendirme bildirimlerinde titreşim yap</string>
+    <string name="settings_missed_call_notifications_title">Cevapsız Çağrı Bildirimleri</string>
+    <string name="settings_missed_call_notifications_summary">Cevapsız çağrıları SMS ile hedef numaralara bildir</string>
     
     <!-- Advanced Settings -->
     <string name="settings_log_level_title">Log Seviyesi</string>

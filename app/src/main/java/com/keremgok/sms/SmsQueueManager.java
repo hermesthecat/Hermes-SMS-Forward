@@ -175,6 +175,46 @@ public class SmsQueueManager {
     }
     
     /**
+     * Queue missed call notification to all target numbers
+     * @param callerNumber The phone number that made the missed call
+     * @param formattedMessage Pre-formatted missed call message
+     * @param timestamp Timestamp of the missed call
+     */
+    public void queueMissedCallNotification(String callerNumber, String formattedMessage, long timestamp) {
+        try {
+            // Get all active target numbers
+            ThreadManager.getInstance().executeDatabase(() -> {
+                try {
+                    AppDatabase database = AppDatabase.getInstance(context);
+                    TargetNumberDao targetDao = database.targetNumberDao();
+                    List<TargetNumber> targetNumbers = targetDao.getAllTargetNumbers();
+                    
+                    if (targetNumbers.isEmpty()) {
+                        Log.w(TAG, "No target numbers configured for missed call notification");
+                        return;
+                    }
+                    
+                    // Queue missed call notification to each target number
+                    for (TargetNumber target : targetNumbers) {
+                        UUID workId = queueSms("MISSED_CALL", formattedMessage, target.getPhoneNumber(), 
+                                             timestamp, 0, SmsQueueWorker.PRIORITY_HIGH, 
+                                             -1, -1, -1, -1);
+                        
+                        logDebug("Queued missed call notification to: " + target.getPhoneNumber() + 
+                               ", work ID: " + workId);
+                    }
+                    
+                } catch (Exception e) {
+                    Log.e(TAG, "Failed to queue missed call notifications: " + e.getMessage(), e);
+                }
+            });
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error in queueMissedCallNotification: " + e.getMessage(), e);
+        }
+    }
+    
+    /**
      * Get queue status and statistics
      */
     public QueueStatus getQueueStatus() {
