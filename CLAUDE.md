@@ -162,7 +162,7 @@ The application follows a **layered, component-based architecture** with clear s
 - **App ID**: `com.keremgok.sms`
 - **Min SDK**: 21 (Android 5.0)
 - **Target SDK**: 34 (Android 14)
-- **Current Version**: 2.40.3 (versionCode 60) - Update these values when releasing new versions
+- **Current Version**: 2.41.0 (versionCode 61) - Update these values when releasing new versions
 - **Permissions**: RECEIVE_SMS, SEND_SMS (both require runtime permission requests)
 - **Build Types**: Debug (with `.debug` suffix) and Release (with ProGuard/R8 obfuscation)
 - **Threading**: Use ThreadManager for all background operations instead of creating raw threads

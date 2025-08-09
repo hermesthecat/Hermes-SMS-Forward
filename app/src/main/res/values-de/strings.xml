@@ -642,6 +642,7 @@ Beispiele:<br/>
     <string name="language_turkish">Türkçe</string>
     <string name="language_english">English</string>
     <string name="language_german">Deutsch</string>
+    <string name="language_italian">Italiano</string>
     
     <!-- SMS Format Options -->
     <string-array name="sms_format_entries">

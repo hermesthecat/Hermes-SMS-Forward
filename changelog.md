@@ -1,5 +1,15 @@
 # Changelog - Hermes SMS Forward
 
+## [2.41.0] - 2025-08-09
+
+- 🇮🇹 **Italian Language Support (Italiano):**
+  - **Complete Italian Localization:** Added full Italian language support with professional SMS forwarding terminology
+  - **468 String Translations:** All app features, settings, and UI elements fully translated to Italian
+  - **SMS Terminology:** Proper Italian terms - "inoltro SMS", "numero di destinazione", "mittente"
+  - **Italian Phone Format:** Adapted phone number examples to Italian format (+39 prefix)
+  - **Language Selection:** Added "Italiano" option in Settings > App Language
+  - **Perfect Synchronization:** All 4 language files now have identical 468 string counts
+
 ## [2.40.3] - 2025-08-09
 
 - 🔄 **Perfect Language Files Synchronization:**
