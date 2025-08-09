@@ -1,5 +1,15 @@
 # Changelog - Hermes SMS Forward
 
+## [2.43.0] - 2025-08-09
+
+- 🇪🇸 **Spanish Language Support (Español):**
+  - **Complete Spanish Localization:** Added full Spanish language support with professional SMS terminology
+  - **470 String Translations:** All app features, settings, and UI elements fully translated to Spanish
+  - **SMS Terminology:** Proper Spanish terms - "reenvío SMS", "número de destino", "remitente"
+  - **Spanish Phone Format:** Adapted phone number examples to Spanish format (+34 prefix)
+  - **Language Selection:** Added "Español" option in Settings > App Language
+  - **Perfect 6-Language Synchronization:** All language files now have identical 669 lines and 470 strings
+
 ## [2.42.1] - 2025-08-09
 
 - 🔄 **Perfect Line Count Standardization:**

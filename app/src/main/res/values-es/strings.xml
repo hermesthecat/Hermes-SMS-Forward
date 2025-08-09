@@ -1,0 +1,670 @@
+<resources>
+    <string name="app_name">Hermes SMS Forward</string>
+    <string name="description_text">Reenvía automáticamente todos los mensajes SMS entrantes al número de teléfono especificado.</string>
+    <string name="target_number_label">Número de teléfono de destino:</string>
+    <string name="target_number_hint">Ejemplo: +34612345678</string>
+    <string name="save_button">Guardar e iniciar</string>
+    <string name="status_not_configured">Estado: No configurado</string>
+    <string name="status_configured">Estado: Activo - El reenvío está funcionando</string>
+    <string name="permissions_required">Permisos SMS requeridos</string>
+    <string name="permissions_granted">Permisos otorgados</string>
+    <string name="error_empty_number">Por favor, introduzca un número de teléfono válido</string>
+    <string name="success_saved">¡Configuración guardada!</string>
+    
+    <!-- Phone Number Validation Errors -->
+    <string name="validation_empty_number">El número de teléfono no puede estar vacío</string>
+    <string name="validation_missing_country_code">Falta el código de país (ej: +34)</string>
+    <string name="validation_too_short">Número de teléfono demasiado corto</string>
+    <string name="validation_too_long">Número de teléfono demasiado largo</string>
+    <string name="validation_invalid_format">Formato de número de teléfono inválido</string>
+    <string name="validation_success">Número de teléfono válido</string>
+    
+    <!-- SMS Error Handling -->
+    <string name="sms_send_failed">Error en el envío de SMS</string>
+    <string name="sms_send_retry">Reintentando envío de SMS</string>
+    <string name="sms_send_final_failure">Error permanente en el envío de SMS</string>
+    <string name="sms_service_unavailable">Servicio SMS no disponible</string>
+    
+    <!-- Single SIM Messages -->
+    <string name="single_sim_device_info">Este dispositivo soporta SIM única</string>
+    
+    <!-- Filter Help -->
+    <string name="filter_help_title">Acerca de los tipos de filtros</string>
+    <string name="filter_help_content">
+<b>BASADO EN PALABRAS CLAVE</b><br/>
+Busca palabras o frases específicas en el contenido del SMS.<br/>
+Ejemplo: Bloquear SMS que contengan \"banco\"<br/><br/>
+
+<b>NÚMERO DE REMITENTE</b><br/>
+Filtra SMS de números de teléfono específicos.<br/>
+Ejemplo: Permitir SMS de \"+34612345678\"<br/><br/>
+
+<b>LISTA BLANCA</b><br/>
+Solo reenvía SMS de remitentes permitidos.<br/>
+Ejemplo: Solo reenviar SMS que contengan \"Juan\" o \"Trabajo\"<br/><br/>
+
+<b>LISTA NEGRA</b><br/>
+Bloquea SMS de remitentes específicos.<br/>
+Ejemplo: Bloquear SMS que contengan \"Anuncios\" o \"Spam\"<br/><br/>
+
+<b>BASADO EN SIM</b><br/>
+Determina de qué tarjeta SIM se deben procesar los SMS.<br/>
+Ejemplos:<br/>
+• \"slot:0\" - Solo SMS de SIM 1<br/>
+• \"movistar\" - SMS de SIM Movistar<br/>
+• \"vodafone\" - SMS de SIM Vodafone<br/><br/>
+
+<b>TIPOS DE ACCIÓN:</b><br/>
+• <b>PERMITIR:</b> Reenviar SMS si coincide el filtro<br/>
+• <b>BLOQUEAR:</b> Bloquear SMS si coincide el filtro<br/><br/>
+
+<b>REGEX:</b> Puedes usar regex para coincidencias de patrones avanzadas.
+    </string>
+    
+    <!-- Settings Screen -->
+    <string name="settings_title">Configuración</string>
+    <string name="settings_menu_title">Configuración</string>
+    
+    <!-- Settings Categories -->
+    <string name="settings_category_forwarding">Reenvío de SMS</string>
+    <string name="settings_category_notifications">Notificaciones</string>
+    <string name="settings_category_advanced">Configuración avanzada</string>
+    <string name="settings_category_about">Acerca de</string>
+    
+    <!-- Forwarding Settings -->
+    <string name="settings_forwarding_enabled_title">Habilitar reenvío de SMS</string>
+    <string name="settings_forwarding_enabled_summary">Activa el reenvío automático de mensajes SMS entrantes</string>
+    <string name="settings_target_number_title">Número de teléfono de destino</string>
+    <string name="settings_target_number_summary">Número al que reenviar SMS - Se puede cambiar en la pantalla principal</string>
+    <string name="settings_sms_format_title">Estilo de formato SMS</string>
+    <string name="settings_sms_format_summary">Elige cómo se formatearán los mensajes SMS reenviados</string>
+    <string name="settings_forwarding_delay_title">Retraso de reenvío</string>
+    <string name="settings_forwarding_delay_summary">Tiempo de espera antes de reenviar SMS</string>
+    <string name="settings_forwarding_delay_format">Retraso de %d segundos</string>
+    <string name="settings_forwarding_delay_instant">Enviar instantáneamente (sin retraso)</string>
+    
+    <!-- Notification Settings -->
+    <string name="settings_notifications_enabled_title">Mostrar notificaciones</string>
+    <string name="settings_notifications_enabled_summary">Mostrar notificaciones para operaciones de reenvío de SMS</string>
+    <string name="settings_notification_sound_title">Sonido de notificación</string>
+    <string name="settings_notification_sound_summary">Reproducir sonido para notificaciones de reenvío</string>
+    <string name="settings_notification_vibration_title">Vibración</string>
+    <string name="settings_notification_vibration_summary">Vibrar para notificaciones de reenvío</string>
+    <string name="settings_missed_call_notifications_title">Notificaciones de llamadas perdidas</string>
+    <string name="settings_missed_call_notifications_summary">Enviar notificaciones SMS para llamadas perdidas a números de destino</string>
+    
+    <!-- Missed Call Messages -->
+    <string name="missed_call_notification_title">📞 Llamada perdida</string>
+    <string name="missed_call_caller_label">Llamante:</string>
+    <string name="missed_call_time_label">Hora:</string>
+    <string name="missed_call_status_not_answered">No contestada</string>
+    <string name="missed_call_compact_prefix">Llamada perdida:</string>
+    <string name="missed_call_detailed_title">📞 LLAMADA PERDIDA</string>
+    <string name="missed_call_caller_icon_label">👤 Llamante:</string>
+    <string name="missed_call_time_icon_label">🕐 Hora:</string>
+    <string name="missed_call_status_icon_label">📱 Estado:</string>
+    
+    <!-- Advanced Settings -->
+    <string name="settings_log_level_title">Nivel de registro</string>
+    <string name="settings_log_level_summary">Selecciona qué nivel de registros mantener</string>
+    <string name="settings_backup_title">Copia de seguridad</string>
+    <string name="settings_backup_summary">Guardar configuración actual en archivo</string>
+    <string name="settings_restore_title">Restaurar configuración</string>
+    <string name="settings_restore_summary">Restaurar configuración previamente guardada</string>
+    
+    <!-- About Section -->
+    <string name="settings_version_title">Versión de la aplicación</string>
+    <string name="settings_version_summary">Hermes SMS Forward</string>
+    <string name="settings_developer_title">Desarrollador</string>
+    <string name="settings_developer_summary">Kerem GÖK</string>
+    <string name="settings_privacy_title">Política de privacidad</string>
+    <string name="settings_privacy_summary">Ver nuestra política de procesamiento de datos y privacidad</string>
+    <string name="settings_github_title">Código fuente</string>
+    <string name="settings_github_summary">Ver repositorio del proyecto en GitHub</string>
+    <string name="settings_feedback_title">Enviar comentarios</string>
+    <string name="settings_feedback_summary">Comparte tus sugerencias y problemas con nosotros</string>
+    
+    <!-- SMS Format Options -->
+    <string-array name="sms_format_entries">
+        <item>Formato estándar</item>
+        <item>Formato compacto</item>
+        <item>Formato detallado</item>
+        <item>Formato personalizado</item>
+    </string-array>
+    
+    <string-array name="sms_format_values">
+        <item>standard</item>
+        <item>compact</item>
+        <item>detailed</item>
+        <item>custom</item>
+    </string-array>
+    
+    <!-- Log Level Options -->
+    
+    <!-- Language Selection Options -->
+    <string name="settings_language_title">Idioma de la aplicación</string>
+    <string name="settings_language_summary">Elige el idioma para la aplicación</string>
+    
+    
+    <!-- History Screen -->
+    <string name="history_title">Historial de SMS</string>
+    <string name="history_menu_title">Historial</string>
+    <string name="history_empty_title">Sin historial de SMS aún</string>
+    <string name="history_empty_message">El historial aparecerá aquí cuando comience el reenvío de SMS</string>
+    <string name="history_empty_icon_description">Icono de historial vacío</string>
+    <string name="history_refresh_button">Actualizar</string>
+    <string name="history_scroll_to_top">Ir arriba</string>
+    
+    <!-- History Search -->
+    <string name="history_search_hint">Buscar remitente o contenido del mensaje...</string>
+    <string name="history_search_no_results">No se encontraron resultados</string>
+    <string name="history_search_error">Error durante la búsqueda</string>
+    
+    <!-- History Filter Messages -->
+    <string name="history_showing_successful">Mostrando solo reenvíos exitosos</string>
+    <string name="history_showing_failed">Mostrando solo reenvíos fallidos</string>
+    <string name="history_show_all">Mostrar todo</string>
+    <string name="history_filter_error">Error durante el filtrado</string>
+    
+    <!-- History Loading Messages -->
+    <string name="history_load_error">Error al cargar historial</string>
+    <string name="history_no_records_message">No se encontró historial de SMS</string>
+    
+    <!-- History Clear Operations -->
+    <string name="history_clear_title">Limpiar historial</string>
+    <string name="history_clear_message">¿Está seguro de que desea eliminar todo el historial de SMS? Esta acción no se puede deshacer.</string>
+    <string name="history_clear_confirm">Eliminar</string>
+    <string name="history_cleared_success">Historial de SMS eliminado correctamente</string>
+    <string name="history_clear_error">Error al limpiar historial</string>
+    <string name="cancel">Cancelar</string>
+    
+    <!-- History Item Display -->
+    <string name="history_original_message_label">Mensaje original:</string>
+    <string name="history_target_label">Destino:</string>
+    <string name="history_error_label">Error:</string>
+    <string name="history_status_success">Exitoso</string>
+    <string name="history_status_failed">Fallido</string>
+    <string name="history_status_icon_description">Icono de estado</string>
+    
+    <!-- History Date Grouping -->
+    <string name="history_date_today">Hoy</string>
+    <string name="history_date_yesterday">Ayer</string>
+    
+    <!-- Target Numbers Management -->
+    <string name="target_numbers_title">Números de destino</string>
+    <string name="target_numbers_menu_title">Números de destino</string>
+    <string name="target_numbers_description">Puedes agregar múltiples números de destino para el reenvío de SMS</string>
+    <string name="add_new_target">Agregar nuevo número de destino</string>
+    <string name="phone_number_hint">Número de teléfono</string>
+    <string name="display_name_hint">Nombre a mostrar (opcional)</string>
+    <string name="set_as_primary">Establecer como destino principal</string>
+    <string name="enabled">Habilitado</string>
+    <string name="add_target_number">Agregar número de destino</string>
+    <string name="existing_targets">Números de destino existentes</string>
+    <string name="no_targets_configured">Sin números de destino configurados aún</string>
+    <string name="sending_mode">Modo de envío</string>
+    
+    <!-- Target Number Operations -->
+    <string name="target_edit">Editar</string>
+    <string name="target_delete">Eliminar</string>
+    <string name="target_set_primary">Establecer principal</string>
+    <string name="target_toggle_enabled">Alternar habilitado</string>
+    <string name="target_primary_label">PRINCIPAL</string>
+    <string name="target_disabled_label">DESHABILITADO</string>
+    
+    <!-- Target Number Validation -->
+    <string name="target_duplicate_number">Este número de teléfono ya existe</string>
+    <string name="target_add_success">Número de destino agregado correctamente</string>
+    <string name="target_add_error">Error al agregar número de destino</string>
+    <string name="target_update_success">Número de destino actualizado</string>
+    <string name="target_update_error">Error al actualizar número de destino</string>
+    <string name="target_delete_success">Número de destino eliminado</string>
+    <string name="target_delete_error">Error al eliminar número de destino</string>
+    
+    <!-- Target Number Delete Confirmation -->
+    <string name="target_delete_title">Eliminar número de destino</string>
+    <string name="target_delete_message">¿Está seguro de que desea eliminar este número de destino?</string>
+    <string name="target_delete_confirm">Eliminar</string>
+    
+    <!-- Sending Mode Options -->
+    <string-array name="sending_mode_entries">
+        <item>Envío secuencial (seguro)</item>
+        <item>Envío paralelo (rápido)</item>
+    </string-array>
+    
+    <string-array name="sending_mode_values">
+        <item>sequential</item>
+        <item>parallel</item>
+    </string-array>
+    
+    <!-- SMS Filter Rules Management -->
+    
+    <!-- Backup & Restore -->
+    <string name="backup_create_title">Copia de seguridad</string>
+    <string name="backup_create_message">¿Desea hacer una copia de seguridad de toda la configuración de la aplicación, números de destino y reglas de filtro?</string>
+    <string name="backup_include_history">Incluir historial de SMS</string>
+    <string name="backup_create_confirm">Copia de seguridad</string>
+    <string name="backup_creating">Creando copia de seguridad...</string>
+    <string name="backup_success">Copia de seguridad creada correctamente</string>
+    <string name="backup_success_path">Archivo de copia: %s</string>
+    <string name="backup_error">Error al crear copia de seguridad</string>
+    
+    <string name="restore_select_title">Restaurar copia de seguridad</string>
+    <string name="restore_select_message">Selecciona el archivo de copia que deseas restaurar:</string>
+    <string name="restore_no_backups">No se encontraron archivos de copia aún</string>
+    <string name="restore_mode_title">Modo de restauración</string>
+    <string name="restore_mode_message">¿Cómo se deben manejar los datos existentes?</string>
+    <string name="restore_mode_replace">Reemplazar (los datos existentes se eliminarán)</string>
+    <string name="restore_mode_merge">Combinar (los datos existentes se conservarán)</string>
+    <string name="restore_confirm_title">Confirmar restauración</string>
+    <string name="restore_confirm_message">Esta operación puede afectar su configuración actual. ¿Está seguro de que desea continuar?</string>
+    <string name="restore_confirm">Restaurar</string>
+    <string name="restore_restoring">Restaurando configuración...</string>
+    <string name="restore_success">Configuración restaurada correctamente</string>
+    <string name="restore_error">Error durante la restauración</string>
+    <string name="restore_validation_error">Archivo de copia inválido: %s</string>
+    
+    <string name="backup_file_browser_title">Seleccionar archivo de copia</string>
+    <string name="backup_file_not_found">Archivo no encontrado</string>
+    <string name="backup_permission_error">Error de permisos de archivo</string>
+    
+    <!-- Accessibility Content Descriptions -->
+    <string name="cd_app_logo">Logo de la aplicación Hermes SMS Forward</string>
+    <string name="cd_target_number_input">Campo de entrada de número de teléfono de destino</string>
+    <string name="cd_save_button">Guardar configuración e iniciar reenvío</string>
+    <string name="cd_menu_button">Abrir menú principal</string>
+    <string name="cd_back_button">Volver a la pantalla anterior</string>
+    <string name="cd_refresh_button">Actualizar contenido actual</string>
+    <string name="cd_search_button">Buscar contenido</string>
+    <string name="cd_filter_button">Filtrar contenido</string>
+    <string name="cd_add_button">Agregar nuevo elemento</string>
+    <string name="cd_edit_button">Editar este elemento</string>
+    <string name="cd_delete_button">Eliminar este elemento</string>
+    <string name="cd_toggle_button">Alternar esta opción</string>
+    <string name="cd_export_button">Exportar datos</string>
+    <string name="cd_import_button">Importar datos</string>
+    <string name="cd_status_indicator">Indicador de estado actual</string>
+    <string name="cd_permission_indicator">Indicador de estado de permisos</string>
+    <string name="cd_validation_message">Mensaje de validación de entrada</string>
+    <string name="cd_progress_bar">Indicador de progreso de operación</string>
+    <string name="cd_success_icon">Icono de estado exitoso</string>
+    <string name="cd_error_icon">Icono de estado de error</string>
+    <string name="cd_warning_icon">Icono de advertencia</string>
+    <string name="cd_info_icon">Icono de información</string>
+    <string name="cd_analytics_chart">Gráfico de datos de análisis</string>
+    <string name="cd_statistics_card">Tarjeta de información estadística</string>
+    
+    <!-- Onboarding System -->
+    <string name="step_indicator">%1$d / %2$d</string>
+    <string name="skip">Omitir</string>
+    <string name="back">Atrás</string>
+    <string name="next">Siguiente</string>
+    <string name="get_started">Comenzar</string>
+    
+    <!-- Welcome Fragment -->
+    <string name="welcome_title">¡Bienvenido a Hermes SMS Forward!</string>
+    <string name="welcome_subtitle">Reenvía tus mensajes SMS de forma segura. La configuración toma solo unos pocos pasos.</string>
+    <string name="feature_automatic_forwarding">Reenvío automático de SMS</string>
+    <string name="feature_smart_filtering">Sistema de filtrado inteligente</string>
+    <string name="feature_privacy_first">Diseño con privacidad prioritaria</string>
+    
+    <!-- Permission Explanation Fragment -->
+    <string name="permissions_title">Acerca de los permisos</string>
+    <string name="permissions_description">Necesitamos los siguientes permisos para que la aplicación funcione:</string>
+    <string name="sms_permission_title">Permiso de lectura de SMS</string>
+    <string name="sms_permission_description">Requerido para detectar mensajes SMS entrantes</string>
+    <string name="send_sms_permission_title">Permiso de envío de SMS</string>
+    <string name="send_sms_permission_description">Requerido para reenviar mensajes a números de destino</string>
+    <string name="privacy_note">Todos tus datos se almacenan solo en tu dispositivo. No se envía información al exterior.</string>
+    
+    <!-- Target Number Setup Fragment -->
+    <string name="target_setup_title">Número de destino</string>
+    <string name="target_setup_description">Introduce el número de teléfono al que se reenviarán los mensajes SMS.</string>
+    <string name="onboarding_target_number_hint">Número de teléfono</string>
+    <string name="target_number_helper">Ejemplo: +34 612 34 56 78</string>
+    <string name="target_setup_info">Puedes agregar múltiples números de destino más tarde.</string>
+    
+    <!-- Filter Intro Fragment -->
+    <string name="filter_intro_title">Filtros inteligentes</string>
+    <string name="filter_intro_description">Puedes usar filtros para determinar qué mensajes se reenviarán.</string>
+    <string name="filter_example_bank">Mensajes del banco</string>
+    <string name="filter_example_bank_desc">Reenviar solo SMS del banco</string>
+    <string name="filter_example_work">Mensajes de trabajo</string>
+    <string name="filter_example_work_desc">Reenviar solo mensajes de números de trabajo</string>
+    <string name="filter_intro_tip">Puedes configurar filtros más tarde desde el menú de configuración.</string>
+    
+    <!-- Completion Fragment -->
+    <string name="completion_title">¡Enhorabuena!</string>
+    <string name="completion_subtitle">Hermes SMS Forward se ha configurado correctamente y está listo para usar.</string>
+    <string name="whats_next_title">Próximos pasos:</string>
+    <string name="completion_step_1">Explora funciones avanzadas desde el menú de configuración</string>
+    <string name="completion_step_2">Crea reglas de filtro para personalizar el reenvío</string>
+    <string name="completion_step_3">Usa la pestaña de historial para seguir el historial de mensajes</string>
+    <string name="completion_support">¿Necesitas ayuda? Puedes obtener soporte desde Configuración > Sección Acerca de.</string>
+    
+    <!-- Analytics Dashboard -->
+    <string name="analytics_dashboard_title">Panel de análisis</string>
+    <string name="analytics_dashboard_menu">Panel de análisis</string>
+    <string name="refresh_button">Actualizar</string>
+    <string name="export_button">Exportar</string>
+    <string name="last_updated_placeholder">Última actualización: --:--:--</string>
+    <string name="overall_statistics_title">Estadísticas generales</string>
+    <string name="zero_count">0</string>
+    <string name="received_label">Recibidos</string>
+    <string name="forwarded_label">Reenviados</string>
+    <string name="errors_label">Errores</string>
+    <string name="success_rate_label">Tasa de éxito</string>
+    <string name="zero_percent">0%</string>
+    <string name="avg_processing_time_label">Tiempo de procesamiento promedio</string>
+    <string name="zero_milliseconds">0 ms</string>
+    <string name="app_opens_label">Aperturas de aplicación</string>
+    <string name="most_common_error_label">Error más común</string>
+    <string name="none_label">Ninguno</string>
+    <string name="period_statistics_title">Estadísticas por período</string>
+    <string name="today_label">Hoy</string>
+    <string name="this_week_label">Esta semana</string>
+    <string name="this_month_label">Este mes</string>
+    
+    <!-- Analytics Menu -->
+    <string name="clear_analytics_data_menu">Limpiar datos de análisis</string>
+    <string name="settings_menu">Configuración</string>
+    
+    <!-- Analytics Toast Messages -->
+    <string name="statistics_refreshed">Estadísticas actualizadas</string>
+    <string name="error_loading_statistics">Error al cargar estadísticas</string>
+    <string name="export_failed">Error en la exportación</string>
+    <string name="statistics_exported_successfully">Estadísticas exportadas correctamente</string>
+    <string name="export_completed_sharing_failed">Exportación completada pero error al compartir</string>
+    <string name="analytics_data_cleared">Datos de análisis eliminados</string>
+    <string name="error_clearing_data">Error al eliminar datos</string>
+    
+    <!-- Analytics Dialog -->
+    <string name="clear_analytics_data_title">Limpiar datos de análisis</string>
+    <string name="clear_analytics_confirmation_message">¿Está seguro de que desea eliminar todos los datos de análisis? Esta acción no se puede deshacer.</string>
+    <string name="clear_button">Limpiar</string>
+    <string name="cancel_button">Cancelar</string>
+    <string name="last_updated_format">Última actualización: %s</string>
+    
+    <!-- Filter Placeholders -->
+    <string name="filter_name_placeholder">Nombre del filtro</string>
+    <string name="filter_action_allow">PERMITIR</string>
+    <string name="filter_pattern_placeholder">Patrón: spam|publicidad</string>
+    
+    <!-- Target Number Placeholders -->
+    <string name="target_display_name_placeholder">Nombre a mostrar</string>
+    <string name="target_phone_placeholder">+34612345678</string>
+    <string name="target_last_used_placeholder">Último uso: hace 2 horas</string>
+    
+    <!-- Target Number Dynamic Text -->
+    <string name="target_last_used_prefix">Último uso: </string>
+    <string name="target_not_used_yet">Sin usar aún</string>
+    <string name="target_enable">Habilitar</string>
+    <string name="target_disable">Deshabilitar</string>
+    
+    <!-- Filter Adapter Dynamic Text -->
+    <string name="filter_no_pattern_specified">Sin patrón especificado</string>
+    <string name="filter_pattern_prefix">Patrón: </string>
+    <string name="filter_regex_suffix"> (regex)</string>
+    <string name="filter_last_prefix">Último: </string>
+    <string name="filter_last_never_text">Último: Nunca</string>
+    <string name="filter_case_sensitive_suffix"> (sensible a mayúsculas)</string>
+    <string name="filter_last_never">Último: Nunca</string>
+    <string name="no_pattern_specified">Sin patrón especificado</string>
+    <string name="last_matched_format">Último: %s</string>
+    <string name="last_matched_never">Último: Nunca</string>
+    <string name="disable_button">Deshabilitar</string>
+    <string name="enable_button">Habilitar</string>
+    
+    <!-- Target Number Placeholders -->
+    <string name="display_name_placeholder">Nombre a mostrar</string>
+    <string name="phone_number_placeholder">+34612345678</string>
+    <string name="last_used_placeholder">Último uso: hace 2 horas</string>
+    <string name="last_used_format">Último uso: %s</string>
+    <string name="not_used_yet">Sin usar aún</string>
+    
+    <!-- Onboarding Placeholders -->
+    <string name="step_number_one">1</string>
+    <string name="step_number_two">2</string>
+    <string name="step_number_three">3</string>
+    <string name="progress_indicator_placeholder">1 / 5</string>
+    
+    <!-- Permission Labels -->
+    <string name="required_permissions_title">Permisos requeridos:</string>
+    <string name="receive_sms_permission_label">Permiso de lectura de SMS</string>
+    <string name="send_sms_permission_label">Permiso de envío de SMS</string>
+    <string name="read_phone_state_permission_label">Permiso de lectura de estado del teléfono</string>
+    
+    <!-- General Messages -->
+    <string name="permissions_granted_message">Permisos otorgados. Ahora puedes guardar el número de destino.</string>
+    <string name="sms_permissions_required">¡Permisos SMS requeridos!</string>
+    <string name="edit_functionality_coming_soon">Funcionalidad de edición próximamente</string>
+    
+    <!-- Additional Dual SIM Strings (AŞAMA 8.3) - Spanish -->
+    <string name="sim_auto">Automático</string>
+    <string name="sim_source">SIM de origen</string>
+    <string name="sim_specific">SIM específica</string>
+    
+    <!-- Filter Type Strings -->
+    <string name="filter_type_keyword">Palabra clave</string>
+    <string name="filter_type_sender_number">Número de remitente</string>
+    <string name="filter_type_whitelist">Lista blanca</string>
+    <string name="filter_type_blacklist">Lista negra</string>
+    <string name="filter_type_spam_detection">Detección de spam</string>
+    <string name="filter_type_sim_based">Basado en SIM</string>
+    
+    <!-- Filter Related Strings -->
+    <string name="filter_rules_title">Reglas de filtro</string>
+    <string name="filter_rules_description">Crea reglas para filtrar mensajes SMS entrantes antes del reenvío</string>
+    <string name="add_new_filter">Agregar nuevo filtro</string>
+    <string name="existing_filters">Filtros existentes</string>
+    <string name="no_filters_configured">Sin filtros configurados aún</string>
+    
+    <!-- Filter UI Labels -->
+    <string name="filter_enabled_label">HABILITADO</string>
+    <string name="filter_disabled_label">DESHABILITADO</string>
+    <string name="filter_priority_label">Prioridad:</string>
+    <string name="filter_matches_label">Coincidencias:</string>
+    <string name="filter_test">Probar filtro</string>
+    <string name="filter_toggle_enabled">Alternar habilitado</string>
+    <string name="filter_edit">Editar</string>
+    <string name="filter_delete">Eliminar</string>
+    <string name="filter_rules_menu_title">Reglas de filtro</string>
+    
+    <!-- Filter Test Dialog -->
+    <string name="filter_test_sender_hint">Introduce número de remitente de prueba</string>
+    <string name="filter_test_message_hint">Introduce mensaje de prueba</string>
+    <string name="filter_test_run">Ejecutar prueba</string>
+    <string name="filter_name_hint">Nombre del filtro</string>
+    <string name="filter_type_label">Tipo de filtro</string>
+    <string name="filter_pattern_hint">Patrón de filtro</string>
+    <string name="filter_action_label">Acción del filtro</string>
+    <string name="action_allow">Permitir</string>
+    <string name="action_block">Bloquear</string>
+    <string name="case_sensitive">Sensible a mayúsculas</string>
+    <string name="use_regex">Usar regex</string>
+    <string name="add_filter">Agregar filtro</string>
+    <string name="edit_filter_title">Editar filtro</string>
+    <string name="update_filter">Actualizar</string>
+    
+    <!-- Filter Validation Messages -->
+    <string name="filter_name_required">Se requiere nombre del filtro</string>
+    <string name="filter_pattern_required">Se requiere patrón del filtro</string>
+    <string name="filter_name_exists">Este nombre de filtro ya existe</string>
+    <string name="filter_invalid_regex">Patrón regex inválido</string>
+    <string name="filter_validation_passed">Validación superada</string>
+    
+    <!-- Filter Actions -->
+    <string name="filter_add_success">Filtro agregado correctamente</string>
+    <string name="filter_add_error">Error al agregar filtro</string>
+    <string name="filter_update_success">Filtro actualizado</string>
+    <string name="filter_update_error">Error al actualizar filtro</string>
+    <string name="filter_delete_title">Eliminar filtro</string>
+    <string name="filter_delete_message">¿Está seguro de que desea eliminar este filtro?</string>
+    <string name="filter_delete_confirm">Eliminar</string>
+    <string name="filter_delete_success">Filtro eliminado</string>
+    <string name="filter_delete_error">Error al eliminar filtro</string>
+    
+    <!-- Filter Test -->
+    <string name="filter_test_title">Prueba de filtro</string>
+    <string name="filter_test_result_match">Filtro coincide: %s</string>
+    <string name="filter_test_result_no_match">El filtro no coincide</string>
+    <string name="filter_test_result_error">Error en la prueba del filtro</string>
+    
+    <!-- Language Strings -->
+    <string name="language_auto">Automático</string>
+    <string name="language_turkish">Turco</string>
+    <string name="language_english">Inglés</string>
+    <string name="language_german">Alemán</string>
+    <string name="language_italian">Italiano</string>
+    <string name="language_french">Francés</string>
+    <string name="language_spanish">Español</string>
+    
+    <!-- Log Level Strings -->
+    <string name="log_level_error">Error</string>
+    <string name="log_level_warning">Advertencia</string>
+    <string name="log_level_info">Información</string>
+    <string name="log_level_debug">Depuración</string>
+    
+    <!-- SIM Selection Mode Strings -->
+    <string name="sim_selection_auto">Automático</string>
+    <string name="sim_selection_source">SIM de origen</string>
+    <string name="sim_selection_specific">SIM específica</string>
+    
+    <!-- History SIM Filter Strings -->
+    <string name="history_filter_sim1">Enviado vía SIM 1</string>
+    <string name="history_filter_sim2">Enviado vía SIM 2</string>
+    <string name="history_filter_by_source_sim">Filtrar por SIM de origen</string>
+    <string name="history_filter_by_source_sim_title">Seleccionar SIM de origen</string>
+    <string name="history_showing_sim_filter">Mostrando mensajes enviados vía %s</string>
+    <string name="history_showing_source_sim_filter">Mostrando mensajes de SIM de origen %s</string>
+    
+    <!-- SMS Formatting Settings -->
+    <string name="settings_category_sms_formatting">Formato de SMS</string>
+    <string name="settings_sms_format_type_title">Tipo de formato SMS</string>
+    <string name="settings_sms_format_type_summary">Elige el tipo de formato para los mensajes SMS reenviados</string>
+    <string name="settings_custom_header_title">Encabezado personalizado</string>
+    <string name="settings_custom_header_summary">Encabezado personalizado para aparecer en los mensajes SMS</string>
+    <string name="settings_include_timestamp_title">Incluir marca de tiempo</string>
+    <string name="settings_include_timestamp_summary">Agregar información de fecha y hora al SMS reenviado</string>
+    <string name="settings_include_sim_info_title">Incluir información de SIM</string>
+    <string name="settings_include_sim_info_summary">Agregar información sobre qué SIM recibió y envió el mensaje</string>
+    <string name="settings_date_format_title">Formato de fecha</string>
+    <string name="settings_date_format_summary">Formato a usar para la marca de tiempo</string>
+    <string name="settings_custom_template_title">Plantilla personalizada</string>
+    <string name="settings_custom_template_summary">Etiquetas disponibles: \{HEADER\}, \{SENDER\}, \{MESSAGE\}, \{TIME\}, \{SIM_INFO\}</string>
+    <string name="settings_format_preview_title">Vista previa del formato</string>
+    <string name="settings_format_preview_summary">Previsualiza cómo se verá el formato seleccionado</string>
+    
+    <!-- Custom Template Dialog -->
+    <string name="custom_template_keys_title">Etiquetas disponibles:</string>
+    <string name="custom_template_keys_list">\{HEADER\} - Encabezado personalizado\n\{SENDER\} - Número del remitente\n\{MESSAGE\} - Mensaje original\n\{TIME\} - Fecha y hora\n\{SIM_INFO\} - Información de SIM\n\{APP_NAME\} - Nombre de la aplicación</string>
+    <string name="custom_template_input_label">Plantilla personalizada:</string>
+    <string name="custom_template_hint">[\{HEADER\}]\nDe: \{SENDER\}\nMensaje: \{MESSAGE\}\nHora: \{TIME\}\n\{SIM_INFO\}</string>
+    <string name="custom_template_preview_title">Vista previa:</string>
+    <string name="custom_template_preview_placeholder">Introduce una plantilla y presiona el botón Vista previa</string>
+    <string name="preview_button">Vista previa</string>
+    <string name="reset_button">Restablecer</string>
+    
+    <!-- Date Format Options -->
+    <string-array name="date_format_entries">
+        <item>dd/MM/yyyy HH:mm:ss</item>
+        <item>yyyy-MM-dd HH:mm:ss</item>
+        <item>dd.MM.yyyy HH:mm</item>
+        <item>MM/dd/yyyy h:mm a</item>
+        <item>HH:mm dd/MM/yyyy</item>
+    </string-array>
+    
+    <string-array name="date_format_values">
+        <item>dd/MM/yyyy HH:mm:ss</item>
+        <item>yyyy-MM-dd HH:mm:ss</item>
+        <item>dd.MM.yyyy HH:mm</item>
+        <item>MM/dd/yyyy h:mm a</item>
+        <item>HH:mm dd/MM/yyyy</item>
+    </string-array>
+    
+    <!-- Hardcoded Text Fixes -->
+    <string name="main_target_default_name">Destino principal</string>
+    <string name="permission_granted_symbol">✅</string>
+    <string name="permission_denied_symbol">❌</string>
+    <string name="language_change_dialog_title">Cambio de idioma</string>
+    <string name="language_change_dialog_message">El cambio de idioma se aplicará después del reinicio de la aplicación.</string>
+    <string name="language_change_confirm">Aceptar</string>
+    <string name="language_change_cancel">Cancelar</string>
+    <string name="format_compact_button">Compacto</string>
+    <string name="format_preview_error">Error de vista previa del formato: </string>
+    <string name="format_preview_title_template">Vista previa del formato %s</string>
+    <string name="custom_template_saved">Plantilla personalizada guardada</string>
+    <string name="template_save_error">Error al guardar plantilla: </string>
+    <string name="error_none">Ninguno</string>
+    <string name="error_unknown">Desconocido</string>
+    <string name="last_updated_prefix">Última actualización: </string>
+    <string name="default_zero">0</string>
+    <string name="default_zero_percent">0%</string>
+    <string name="csv_export_header">Hermes SMS Forward - Exportación de análisis</string>
+    <string name="csv_generated_prefix">Generado: </string>
+    <string name="csv_overall_statistics">ESTADÍSTICAS GENERALES</string>
+    <string name="csv_metric_value_header">Métrica,Valor</string>
+    <string name="csv_total_received">Total SMS recibidos,</string>
+    <string name="csv_total_forwarded">Total SMS reenviados,</string>
+    <string name="csv_successful_forwards">Reenvíos exitosos,</string>
+    <string name="csv_failed_forwards">Reenvíos fallidos,</string>
+    <string name="csv_success_rate">Tasa de éxito,</string>
+    <string name="csv_total_errors">Total de errores,</string>
+    <string name="csv_app_opens">Aperturas de aplicación,</string>
+    <string name="csv_daily_stats_header">ESTADÍSTICAS DIARIAS (Últimos 30 días)</string>
+    <string name="csv_daily_columns">Fecha,Recibidos,Reenviados,Exitosos,Fallidos,Tasa de éxito,Errores</string>
+    <string name="csv_error_analysis_header">ANÁLISIS DE ERRORES (Últimos 30 días)</string>
+    <string name="csv_error_columns">Código de error,Cantidad</string>
+    <string name="csv_no_error_data">No hay datos de error disponibles</string>
+    <string name="analytics_email_subject">Hermes SMS Forward - Exportación de análisis</string>
+    <string name="analytics_email_body">Datos de análisis exportados desde la aplicación Hermes SMS Forward.</string>
+    <string name="share_analytics_title">Compartir exportación de análisis</string>
+    <string name="migrated_target_name">Destino migrado</string>
+    <string name="backup_app_name">Hermes SMS Forward</string>
+    <string name="sim_debug_title">Información de depuración SIM</string>
+    <string name="primary_target_name">Destino principal</string>
+
+    <!-- Target Number Operations -->
+    <string name="target_number_saved_successfully">Número de destino guardado correctamente</string>
+    <string name="error_saving_target_number">Error al guardar el número de destino</string>
+
+    <!-- SIM Selection Strings -->
+    <string name="sim_selection_title">Selección de tarjeta SIM</string>
+    <string name="sim_auto_mode">Automático (SIM SMS predeterminada)</string>
+    <string name="sim_source_mode">SIM de origen (SIM receptora de SMS)</string>
+    <string name="sim_specific_mode">Tarjeta SIM específica</string>
+    <string name="sim_1">SIM 1</string>
+    <string name="sim_2">SIM 2</string>
+    <string name="sim_not_available">SIM no disponible</string>
+    <string name="dual_sim_not_supported">SIM dual no compatible</string>
+    <string name="sim_card_format" formatted="false">%s (%s)</string>
+    <string name="sim_slot_format">SIM %d</string>
+    <string name="sim_selection_info">Selecciona qué tarjeta SIM usar para este destino</string>
+    <string name="sim_selection_dialog_info">Selecciona la tarjeta SIM que deseas usar:</string>
+    <string name="sim_status_active">Activa</string>
+    <string name="sim_status_inactive">Inactiva</string>
+
+    <!-- Settings Dual SIM Category -->
+    <string name="settings_category_dual_sim">Configuración SIM dual</string>
+    <string name="settings_default_forwarding_sim_title">SIM de reenvío predeterminada</string>
+    <string name="settings_default_forwarding_sim_summary">Tarjeta SIM predeterminada para usar en el reenvío de SMS</string>
+    <string name="settings_global_sim_mode_title">Modo de selección SIM global</string>
+    <string name="settings_global_sim_mode_summary">Modo de selección SIM predeterminado para todos los destinos</string>
+    <string name="settings_show_sim_indicators_title">Mostrar indicadores SIM</string>
+    <string name="settings_show_sim_indicators_summary">Mostrar indicadores SIM en la lista de destinos</string>
+    <string name="settings_sim_information_title">Información de tarjeta SIM</string>
+    <string name="settings_sim_information_summary">Mostrar información sobre las tarjetas SIM activas</string>
+
+    <!-- Settings UI Strings -->
+    <string name="sim_cards_detected">%d tarjetas SIM detectadas</string>
+    <string name="selected_sim_format">SIM seleccionada: %1$s (Ranura %2$d)</string>
+    <string name="sms_default_sim_description">El SMS se enviará desde la tarjeta SIM predeterminada</string>
+    <string name="format_detailed">Detallado</string>
+    <string name="format_custom">Personalizado</string>
+    <string name="current_format_preview">Formato actual: %1$s - Haz clic para previsualizar</string>
+    <string name="template_header_turkish">[{HEADER}]\nGönderen: {SENDER}\nMesaj: {MESSAGE}\nZaman: {TIME}\n{SIM_INFO}</string>
+    <string name="template_header_english">[{HEADER}]\nFrom: {SENDER}\nMessage: {MESSAGE}\nTime: {TIME}\n{SIM_INFO}</string>
+    <string name="sample_message_turkish">Bu bir örnek SMS mesajıdır</string>
+    <string name="template_preview_error">Error de vista previa de plantilla: %s</string>
+
+</resources>

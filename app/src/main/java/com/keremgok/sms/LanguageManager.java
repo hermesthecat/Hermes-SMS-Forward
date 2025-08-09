@@ -9,7 +9,7 @@ import java.util.Locale;
 
 /**
  * Helper class to manage app language settings
- * Handles switching between Turkish, English, German, Italian, French, and automatic (system) language
+ * Handles switching between Turkish, English, German, Italian, French, Spanish, and automatic (system) language
  */
 public class LanguageManager {
     
@@ -20,6 +20,7 @@ public class LanguageManager {
     private static final String LANGUAGE_GERMAN = "de";
     private static final String LANGUAGE_ITALIAN = "it";
     private static final String LANGUAGE_FRENCH = "fr";
+    private static final String LANGUAGE_SPANISH = "es";
     
     /**
      * Apply the selected language to the context
@@ -52,7 +53,7 @@ public class LanguageManager {
     /**
      * Get the currently selected language code
      * @param context The context to get preferences from
-     * @return Language code (auto, tr, en, de, it, fr)
+     * @return Language code (auto, tr, en, de, it, fr, es)
      */
     public static String getCurrentLanguage(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -62,7 +63,7 @@ public class LanguageManager {
     /**
      * Set the app language
      * @param context The context to save preferences to
-     * @param languageCode The language code to set (auto, tr, en, de, it, fr)
+     * @param languageCode The language code to set (auto, tr, en, de, it, fr, es)
      */
     public static void setLanguage(Context context, String languageCode) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
