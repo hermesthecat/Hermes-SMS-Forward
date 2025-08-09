@@ -101,7 +101,7 @@ Examples:<br/>
     
     <!-- About Section -->
     <string name="settings_version_title">App Version</string>
-    <string name="settings_version_summary">Hermes SMS Forward v2.11.0</string>
+    <string name="settings_version_summary">Hermes SMS Forward</string>
     <string name="settings_developer_title">Developer</string>
     <string name="settings_developer_summary">Kerem GÖK</string>
     <string name="settings_privacy_title">Privacy Policy</string>
@@ -494,6 +494,8 @@ Examples:<br/>
     <string name="case_sensitive">Case Sensitive</string>
     <string name="use_regex">Use Regex</string>
     <string name="add_filter">Add Filter</string>
+    <string name="edit_filter_title">Edit Filter</string>
+    <string name="update_filter">Update</string>
     
     <!-- Filter Validation Messages -->
     <string name="filter_name_required">Filter name is required</string>

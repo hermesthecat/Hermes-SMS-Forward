@@ -101,7 +101,7 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     
     <!-- About Section -->
     <string name="settings_version_title">Uygulama Sürümü</string>
-    <string name="settings_version_summary">Hermes SMS Forward v2.11.0</string>
+    <string name="settings_version_summary">Hermes SMS Forward</string>
     <string name="settings_developer_title">Geliştirici</string>
     <string name="settings_developer_summary">Kerem GÖK</string>
     <string name="settings_privacy_title">Gizlilik Politikası</string>
@@ -499,6 +499,8 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="case_sensitive">Büyük/Küçük Harf Duyarlı</string>
     <string name="use_regex">Regex Kullan</string>
     <string name="add_filter">Filtre Ekle</string>
+    <string name="edit_filter_title">Filtre Düzenle</string>
+    <string name="update_filter">Güncelle</string>
     
     <!-- Filter Validation Messages -->
     <string name="filter_name_required">Filtre adı gerekli</string>

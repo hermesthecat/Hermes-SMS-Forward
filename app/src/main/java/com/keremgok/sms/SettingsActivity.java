@@ -146,7 +146,26 @@ public class SettingsActivity extends AppCompatActivity {
          * Initialize about section with version and developer info
          */
         private void initializeAboutSection() {
-            // Implementation will be added when we create the preferences XML
+            // Set dynamic version information
+            Preference versionPref = findPreference("pref_app_version");
+            if (versionPref != null) {
+                try {
+                    android.content.pm.PackageManager pm = requireContext().getPackageManager();
+                    android.content.pm.PackageInfo packageInfo = pm.getPackageInfo(requireContext().getPackageName(), 0);
+                    String versionName = packageInfo.versionName;
+                    long versionCode;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                        versionCode = packageInfo.getLongVersionCode();
+                    } else {
+                        versionCode = packageInfo.versionCode;
+                    }
+                    String versionText = getString(R.string.settings_version_summary) + " v" + versionName + " (" + versionCode + ")";
+                    versionPref.setSummary(versionText);
+                } catch (android.content.pm.PackageManager.NameNotFoundException e) {
+                    // Fallback to simple text if package info not found
+                    versionPref.setSummary(getString(R.string.settings_version_summary));
+                }
+            }
         }
         
         /**

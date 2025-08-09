@@ -163,6 +163,199 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
     }
     
     /**
+     * Show edit filter dialog
+     */
+    private void showEditFilterDialog(SmsFilter filter) {
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_filter, null);
+        
+        // Initialize dialog components
+        etFilterName = dialogView.findViewById(R.id.etFilterName);
+        spinnerFilterType = dialogView.findViewById(R.id.spinnerFilterType);
+        etFilterPattern = dialogView.findViewById(R.id.etFilterPattern);
+        rgFilterAction = dialogView.findViewById(R.id.rgFilterAction);
+        rbActionAllow = dialogView.findViewById(R.id.rbActionAllow);
+        rbActionBlock = dialogView.findViewById(R.id.rbActionBlock);
+        cbCaseSensitive = dialogView.findViewById(R.id.cbCaseSensitive);
+        cbRegex = dialogView.findViewById(R.id.cbRegex);
+        cbEnabled = dialogView.findViewById(R.id.cbEnabled);
+        tvValidationMessage = dialogView.findViewById(R.id.tvValidationMessage);
+        
+        // Populate dialog with existing filter data
+        etFilterName.setText(filter.getFilterName());
+        etFilterPattern.setText(filter.getPattern());
+        
+        // Set filter type in spinner
+        String[] filterTypeValues = getResources().getStringArray(R.array.filter_type_values);
+        for (int i = 0; i < filterTypeValues.length; i++) {
+            if (filterTypeValues[i].equals(filter.getFilterType())) {
+                spinnerFilterType.setSelection(i);
+                break;
+            }
+        }
+        
+        // Setup spinner
+        ArrayAdapter<CharSequence> filterTypeAdapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.filter_type_entries,
+            android.R.layout.simple_spinner_item
+        );
+        filterTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerFilterType.setAdapter(filterTypeAdapter);
+        
+        // Set action radio button
+        if (SmsFilter.ACTION_ALLOW.equals(filter.getAction())) {
+            rbActionAllow.setChecked(true);
+        } else {
+            rbActionBlock.setChecked(true);
+        }
+        
+        // Set checkboxes
+        cbCaseSensitive.setChecked(filter.isCaseSensitive());
+        cbRegex.setChecked(filter.isRegex());
+        cbEnabled.setChecked(filter.isEnabled());
+        
+        // Setup validation
+        setupEditDialogValidation(filter);
+        
+        currentDialog = new AlertDialog.Builder(this)
+            .setTitle(R.string.edit_filter_title)
+            .setView(dialogView)
+            .setPositiveButton(R.string.update_filter, null)
+            .setNegativeButton(R.string.cancel, null)
+            .create();
+        
+        currentDialog.setOnShowListener(dialogInterface -> {
+            Button positiveButton = currentDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            btnAddFilter = positiveButton; // Reuse reference
+            positiveButton.setOnClickListener(v -> {
+                if (updateFilter(filter)) {
+                    currentDialog.dismiss();
+                    currentDialog = null;
+                }
+            });
+            // Start with button enabled since we have existing valid data
+            positiveButton.setEnabled(true);
+        });
+        
+        currentDialog.show();
+    }
+    
+    /**
+     * Setup real-time validation for edit dialog inputs
+     */
+    private void setupEditDialogValidation(SmsFilter originalFilter) {
+        TextWatcher validationWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateEditInput(originalFilter);
+            }
+        };
+        
+        etFilterName.addTextChangedListener(validationWatcher);
+        etFilterPattern.addTextChangedListener(validationWatcher);
+        
+        // Add listeners for checkboxes that affect validation
+        cbRegex.setOnCheckedChangeListener((buttonView, isChecked) -> validateEditInput(originalFilter));
+    }
+    
+    /**
+     * Validate edit form input and update UI
+     */
+    private void validateEditInput(SmsFilter originalFilter) {
+        String filterName = etFilterName.getText().toString().trim();
+        String pattern = etFilterPattern.getText().toString().trim();
+        
+        if (TextUtils.isEmpty(filterName)) {
+            showValidationError(getString(R.string.filter_name_required));
+            enableAddButton(false);
+            return;
+        }
+        
+        if (TextUtils.isEmpty(pattern)) {
+            showValidationError(getString(R.string.filter_pattern_required));
+            enableAddButton(false);
+            return;
+        }
+        
+        // Check for duplicate filter name (excluding current filter)
+        ThreadManager.getInstance().executeBackground(() -> {
+            boolean exists = filterDao.isFilterNameExistsExcluding(filterName, originalFilter.getId());
+            runOnUiThread(() -> {
+                if (exists) {
+                    showValidationError(getString(R.string.filter_name_exists));
+                    enableAddButton(false);
+                } else {
+                    // Validate regex if enabled
+                    if (cbRegex.isChecked()) {
+                        if (isValidRegex(pattern)) {
+                            showValidationSuccess();
+                            enableAddButton(true);
+                        } else {
+                            showValidationError(getString(R.string.filter_invalid_regex));
+                            enableAddButton(false);
+                        }
+                    } else {
+                        showValidationSuccess();
+                        enableAddButton(true);
+                    }
+                }
+            });
+        });
+    }
+    
+    /**
+     * Update existing filter
+     * @return true if filter was updated successfully, false otherwise
+     */
+    private boolean updateFilter(SmsFilter originalFilter) {
+        String filterName = etFilterName.getText().toString().trim();
+        String pattern = etFilterPattern.getText().toString().trim();
+        
+        // Get filter type from spinner
+        String[] filterTypeValues = getResources().getStringArray(R.array.filter_type_values);
+        int selectedTypeIndex = spinnerFilterType.getSelectedItemPosition();
+        String filterType = filterTypeValues[selectedTypeIndex];
+        
+        // Get action from radio group
+        String action = rbActionAllow.isChecked() ? SmsFilter.ACTION_ALLOW : SmsFilter.ACTION_BLOCK;
+        
+        boolean isEnabled = cbEnabled.isChecked();
+        
+        // Update existing filter object
+        originalFilter.setFilterName(filterName);
+        originalFilter.setFilterType(filterType);
+        originalFilter.setPattern(pattern);
+        originalFilter.setAction(action);
+        originalFilter.setEnabled(isEnabled);
+        originalFilter.setCaseSensitive(cbCaseSensitive.isChecked());
+        originalFilter.setRegex(cbRegex.isChecked());
+        originalFilter.setModifiedTimestamp(System.currentTimeMillis());
+        
+        // Update in database
+        ThreadManager.getInstance().executeDatabase(() -> {
+            try {
+                filterDao.update(originalFilter);
+                runOnUiThread(() -> {
+                    Toast.makeText(this, R.string.filter_update_success, Toast.LENGTH_SHORT).show();
+                    loadFilterRules();
+                });
+            } catch (Exception e) {
+                runOnUiThread(() -> {
+                    Toast.makeText(this, R.string.filter_update_error, Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+        
+        return true;
+    }
+    
+    /**
      * Setup real-time validation for dialog inputs
      */
     private void setupDialogValidation() {
@@ -363,8 +556,7 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
     
     @Override
     public void onEditFilter(SmsFilter filter) {
-        // For now, just show a toast. Full edit functionality would require a separate dialog/activity
-        Toast.makeText(this, getString(R.string.edit_functionality_coming_soon), Toast.LENGTH_SHORT).show();
+        showEditFilterDialog(filter);
     }
     
     @Override

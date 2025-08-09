@@ -1,5 +1,17 @@
 # Changelog - Hermes SMS Forward
 
+## [2.38.0] - 2025-08-09
+
+- 🔧 **Filter Management Enhancement:**
+  - **Edit Filter Functionality:** Implemented complete filter editing functionality in FilterRulesActivity
+  - **Dynamic Version Display:** App version now automatically displays from build.gradle (no manual string updates needed)
+  - **Edit Dialog System:** Full-featured edit dialog with form validation and real-time feedback
+  - **Database Enhancement:** Added `isFilterNameExistsExcluding()` method for edit validation
+  - **UI Improvements:** Edit button now opens comprehensive filter editing dialog with pre-populated fields
+  - **Multilingual Support:** Added Turkish and English strings for edit functionality
+  - **Input Validation:** Real-time validation for filter names, patterns, and regex syntax during editing
+  - **User Experience:** Seamless filter modification with success/error feedback messages
+
 ## [2.37.0] - 2025-08-08
 
 - 🚀 **Major Performance & Stability Improvements:**

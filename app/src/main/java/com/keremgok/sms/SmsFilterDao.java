@@ -75,6 +75,15 @@ public interface SmsFilterDao {
     boolean isFilterNameExists(String filterName);
     
     /**
+     * Check if a filter with the same name already exists (excluding specified filter)
+     * @param filterName The name to check
+     * @param excludeFilterId The filter ID to exclude from the check
+     * @return True if a filter with the name exists, false otherwise
+     */
+    @Query("SELECT COUNT(*) > 0 FROM sms_filters WHERE filter_name = :filterName AND id != :excludeFilterId")
+    boolean isFilterNameExistsExcluding(String filterName, int excludeFilterId);
+    
+    /**
      * Get filter by name
      * @param filterName The name of the filter
      * @return The filter with the specified name, or null if not found
