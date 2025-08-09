@@ -24,6 +24,7 @@
         <item>@string/language_english</item>
         <item>@string/language_german</item>
         <item>@string/language_italian</item>
+        <item>@string/language_french</item>
     </string-array>
 
     <string-array name="language_values">
@@ -32,6 +33,7 @@
         <item>en</item>
         <item>de</item>
         <item>it</item>
+        <item>fr</item>
     </string-array>
 
     <!-- Log Level entries and values for settings -->

@@ -546,6 +546,7 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="language_english">İngilizce</string>
     <string name="language_german">Almanca</string>
     <string name="language_italian">İtalyanca</string>
+    <string name="language_french">Fransızca</string>
     
     <!-- Log Level Strings -->
     <string name="log_level_error">Hata</string>

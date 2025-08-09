@@ -516,6 +516,7 @@ Examples:<br/>
     <string name="language_english">English</string>
     <string name="language_german">German</string>
     <string name="language_italian">Italian</string>
+    <string name="language_french">French</string>
     
     <!-- Log Level Strings -->
     <string name="log_level_error">Error</string>

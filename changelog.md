@@ -1,5 +1,15 @@
 # Changelog - Hermes SMS Forward
 
+## [2.42.0] - 2025-08-09
+
+- 🇫🇷 **French Language Support (Français):**
+  - **Complete French Localization:** Added full French language support with professional SMS terminology
+  - **469 String Translations:** All app features, settings, and UI elements fully translated to French
+  - **SMS Terminology:** Proper French terms - "transfert SMS", "redirection SMS", "numéro de destination"
+  - **French Phone Format:** Adapted phone number examples to French format (+33 prefix)
+  - **Language Selection:** Added "Français" option in Settings > App Language
+  - **Perfect 5-Language Synchronization:** All language files now have identical 469 string counts
+
 ## [2.41.0] - 2025-08-09
 
 - 🇮🇹 **Italian Language Support (Italiano):**
