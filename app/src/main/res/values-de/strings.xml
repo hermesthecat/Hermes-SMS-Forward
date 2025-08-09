@@ -77,6 +77,7 @@
     <string name="add_new_target">Neue Ziel-Nummer hinzufügen</string>
     <string name="phone_number_hint">Telefonnummer</string>
     <string name="display_name_hint">Anzeigename (optional)</string>
+    <string name="set_as_primary">Als primäres Ziel setzen</string>
     <string name="enabled">Aktiviert</string>
     <string name="add_target_number">Ziel-Nummer hinzufügen</string>
     <string name="existing_targets">Vorhandene Ziel-Nummern</string>

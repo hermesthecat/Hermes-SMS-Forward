@@ -1,5 +1,13 @@
 # Changelog - Hermes SMS Forward
 
+## [2.40.2] - 2025-08-09
+
+- 🇩🇪 **German Strings File Completion:**
+  - **Missing String Added:** Added `set_as_primary` → "Als primäres Ziel setzen"
+  - **100% Coverage:** German now has 471 strings (complete coverage)
+  - **String Count Status:** Turkish: 467, English: 469, German: 471 ✅
+  - **Build Validation:** APK builds successfully with complete German support
+
 ## [2.40.1] - 2025-08-09
 
 - 🇩🇪 **Complete German Language Implementation:**

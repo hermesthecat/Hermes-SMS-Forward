@@ -40,7 +40,8 @@
       "Bash(rg:*)",
       "Bash(for name in \"add_new_filter\" \"existing_filters\" \"filter_add_error\" \"filter_add_success\" \"filter_delete_error\" \"filter_delete_success\" \"filter_disabled_label\" \"filter_enabled_label\" \"filter_rules_description\" \"filter_test\" \"filter_update_error\" \"filter_update_success\" \"no_filters_configured\")",
       "Bash(do echo \"=== Duplicate: $name ===\")",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(comm:*)"
     ],
     "deny": []
   }
