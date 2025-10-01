@@ -67,17 +67,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean hasRequiredPermissions() {
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED &&
+        boolean hasBasicPermissions = ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED &&
                ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED &&
                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED &&
                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED;
+
+        // For Android 13+, also check notification permission
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            return hasBasicPermissions &&
+                   ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED;
+        }
+
+        return hasBasicPermissions;
     }
 
     private void requestPermissions() {
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.SEND_SMS,
-                           Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CALL_LOG},
-                SMS_PERMISSION_REQUEST_CODE);
+        // Build permission array based on Android version
+        String[] permissions;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            permissions = new String[]{
+                Manifest.permission.RECEIVE_SMS,
+                Manifest.permission.SEND_SMS,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.READ_CALL_LOG,
+                Manifest.permission.POST_NOTIFICATIONS
+            };
+        } else {
+            permissions = new String[]{
+                Manifest.permission.RECEIVE_SMS,
+                Manifest.permission.SEND_SMS,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.READ_CALL_LOG
+            };
+        }
+
+        ActivityCompat.requestPermissions(this, permissions, SMS_PERMISSION_REQUEST_CODE);
     }
 
     private void checkPermissions() {

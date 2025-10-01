@@ -666,4 +666,19 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="error_database_init_failed">Database initialization failed. Please restart the app.</string>
     <string name="error_database_unavailable">Database is currently unavailable. Please try again.</string>
     <string name="error_sim_permission_denied">SIM card access denied. Please grant READ_PHONE_STATE permission in Settings.</string>
+
+    <!-- Notification Strings -->
+    <string name="notification_channel_sms_success">SMS Yönlendirme Başarılı</string>
+    <string name="notification_channel_sms_success_desc">SMS başarıyla yönlendirildiğinde bildirim gösterir</string>
+    <string name="notification_channel_sms_error">SMS Yönlendirme Hatası</string>
+    <string name="notification_channel_sms_error_desc">SMS yönlendirme hatalarında bildirim gösterir</string>
+    <string name="notification_channel_missed_call">Cevapsız Aramalar</string>
+    <string name="notification_channel_missed_call_desc">Cevapsız arama olduğunda bildirim gösterir</string>
+    <string name="notification_sms_forwarded_title">SMS Yönlendirildi</string>
+    <string name="notification_sms_forwarded_body">%1$s numarasından gelen SMS %2$s numarasına iletildi</string>
+    <string name="notification_sms_error_title">SMS Yönlendirme Hatası</string>
+    <string name="notification_sms_error_body">%1$s numarasına SMS gönderilemedi</string>
+    <string name="notification_missed_call_title">Cevapsız Arama</string>
+    <string name="notification_missed_call_body">%1$s numarasından cevapsız arama</string>
+
 </resources>

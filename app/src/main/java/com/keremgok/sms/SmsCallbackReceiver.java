@@ -226,7 +226,15 @@ public class SmsCallbackReceiver extends BroadcastReceiver {
         
         // Log to database in background thread
         logSmsHistory(context, originalSender, originalMessage, targetNumber, forwardedMessage, timestamp, success, errorMessage);
-        
+
+        // Show notification based on success/failure
+        NotificationHelper notificationHelper = new NotificationHelper(context);
+        if (success) {
+            notificationHelper.showSmsSuccessNotification(targetNumber, originalSender);
+        } else {
+            notificationHelper.showSmsErrorNotification(targetNumber, errorMessage);
+        }
+
         // Handle retry if SMS failed and retries available
         if (!success && retryCount < 3) { // MAX_RETRY_COUNT = 3
             if (DEBUG) {
