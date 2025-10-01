@@ -613,8 +613,6 @@ Esempi:<br/>
     <string name="format_detailed">Dettagliato</string>
     <string name="format_custom">Personalizzato</string>
     <string name="current_format_preview">Formato corrente: %1$s - Clicca per l\'anteprima</string>
-    <string name="template_header_turkish">[{HEADER}]\nGönderen: {SENDER}\nMesaj: {MESSAGE}\nZaman: {TIME}\n{SIM_INFO}</string>
-    <string name="template_header_english">[{HEADER}]\nFrom: {SENDER}\nMessage: {MESSAGE}\nTime: {TIME}\n{SIM_INFO}</string>
     <string name="default_sms_template">[{HEADER}]\nDa: {SENDER}\nMessaggio: {MESSAGE}\nOra: {TIME}\n{SIM_INFO}</string>
     <string name="sample_message_turkish">Bu bir örnek SMS mesajıdır</string>
     <string name="template_preview_error">Errore anteprima modello: %s</string>
