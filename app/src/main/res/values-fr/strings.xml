@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Hermes SMS Forward</string>
+    <string name="app_name">Hermes SMS Transfert</string>
     <string name="description_text">Transfère automatiquement tous les messages SMS entrants vers le numéro de téléphone spécifié.</string>
     <string name="target_number_label">Numéro de téléphone cible :</string>
     <string name="target_number_hint">Exemple : +33123456789</string>
@@ -191,6 +191,8 @@ Exemples :<br/>
     
     <!-- Target Number Operations -->
     <string name="target_delete">Supprimer</string>
+    <string name="target_edit">Modifier</string>
+    <string name="target_update">Mettre à jour</string>
     <string name="target_set_primary">Définir principal</string>
     <string name="target_toggle_enabled">Basculer activé</string>
     <string name="target_primary_label">PRINCIPAL</string>
@@ -262,6 +264,7 @@ Exemples :<br/>
     <string name="cd_progress_bar">Indicateur de progression de l\'opération</string>
     <string name="cd_success_icon">Icône d\'état de succès</string>
     <string name="cd_error_icon">Icône d\'état d\'erreur</string>
+    <string name="cd_blocked_icon">Icône de message bloqué</string>
     <string name="cd_info_icon">Icône d\'information</string>
     <string name="cd_statistics_card">Carte d\'informations statistiques</string>
     
@@ -324,6 +327,7 @@ Exemples :<br/>
     <string name="received_label">Reçus</string>
     <string name="forwarded_label">Transférés</string>
     <string name="errors_label">Erreurs</string>
+    <string name="blocked_label">Bloqués</string>
     <string name="success_rate_label">Taux de réussite</string>
     <string name="zero_percent">0%</string>
     <string name="avg_processing_time_label">Temps de traitement moyen</string>
@@ -472,6 +476,49 @@ Exemples :<br/>
     <string name="language_italian">Italien</string>
     <string name="language_french">Français</string>
     <string name="language_spanish">Espagnol</string>
+
+    <!-- Retention Period Settings -->
+    <string name="settings_sms_retention_title">Période de conservation historique SMS</string>
+    <string name="settings_sms_retention_summary">Les anciens enregistrements SMS seront automatiquement supprimés</string>
+    <string name="settings_analytics_retention_title">Période de conservation données analytiques</string>
+    <string name="settings_analytics_retention_summary">Les anciens enregistrements analytiques seront automatiquement supprimés</string>
+
+    <!-- Retention Period Values -->
+    <string-array name="retention_period_entries">
+        <item>7 jours</item>
+        <item>15 jours</item>
+        <item>30 jours (Recommandé)</item>
+        <item>60 jours</item>
+        <item>90 jours</item>
+        <item>Jamais</item>
+    </string-array>
+
+    <string-array name="retention_period_values">
+        <item>7</item>
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>90</item>
+        <item>0</item>
+    </string-array>
+
+    <string-array name="analytics_retention_entries">
+        <item>30 jours</item>
+        <item>60 jours</item>
+        <item>90 jours (Recommandé)</item>
+        <item>180 jours</item>
+        <item>365 jours</item>
+        <item>Jamais</item>
+    </string-array>
+
+    <string-array name="analytics_retention_values">
+        <item>30</item>
+        <item>60</item>
+        <item>90</item>
+        <item>180</item>
+        <item>365</item>
+        <item>0</item>
+    </string-array>
     
     <!-- Log Level Strings -->
     <string name="log_level_error">Erreur</string>
@@ -501,8 +548,10 @@ Exemples :<br/>
     <string name="settings_include_sim_info_summary">Ajouter des informations sur quelle SIM a reçu et envoyé le message</string>
     <string name="settings_date_format_title">Format de date</string>
     <string name="settings_date_format_summary">Format à utiliser pour l\'horodatage</string>
-    <string name="settings_custom_template_title">Modèle personnalisé</string>
+    <string name="settings_custom_template_title">Modèle SMS personnalisé</string>
     <string name="settings_custom_template_summary">Balises disponibles : \{HEADER\}, \{SENDER\}, \{MESSAGE\}, \{TIME\}, \{SIM_INFO\}</string>
+    <string name="settings_custom_missed_call_template_title">Modèle appel manqué personnalisé</string>
+    <string name="settings_custom_missed_call_template_summary">Balises disponibles : \{HEADER\}, \{CALLER\}, \{TIME\}</string>
     <string name="settings_format_preview_title">Aperçu du format</string>
     <string name="settings_format_preview_summary">Aperçu de l\'apparence du format sélectionné</string>
     
@@ -616,5 +665,24 @@ Exemples :<br/>
     <string name="default_sms_template">[{HEADER}]\nDe : {SENDER}\nMessage : {MESSAGE}\nHeure : {TIME}\n{SIM_INFO}</string>
     <string name="sample_message">Ceci est un exemple de message SMS</string>
     <string name="template_preview_error">Erreur d\'aperçu du modèle : %s</string>
+
+    <!-- Error Messages -->
+    <string name="error_database_init_failed">Échec de l\'initialisation de la base de données. Veuillez redémarrer l\'application.</string>
+    <string name="error_database_unavailable">Base de données actuellement indisponible. Veuillez réessayer.</string>
+    <string name="error_sim_permission_denied">Accès à la carte SIM refusé. Veuillez accorder la permission READ_PHONE_STATE dans les Paramètres.</string>
+
+    <!-- Notification Strings -->
+    <string name="notification_channel_sms_success">Transfert SMS réussi</string>
+    <string name="notification_channel_sms_success_desc">Affiche des notifications lorsque le SMS est transféré avec succès</string>
+    <string name="notification_channel_sms_error">Erreur de transfert SMS</string>
+    <string name="notification_channel_sms_error_desc">Affiche des notifications pour les erreurs de transfert SMS</string>
+    <string name="notification_channel_missed_call">Appels manqués</string>
+    <string name="notification_channel_missed_call_desc">Affiche des notifications lorsqu\'il y a un appel manqué</string>
+    <string name="notification_sms_forwarded_title">SMS transféré</string>
+    <string name="notification_sms_forwarded_body">SMS de %1$s transféré à %2$s</string>
+    <string name="notification_sms_error_title">Erreur de transfert SMS</string>
+    <string name="notification_sms_error_body">Échec de l\'envoi du SMS à %1$s</string>
+    <string name="notification_missed_call_title">Appel manqué</string>
+    <string name="notification_missed_call_body">Appel manqué de %1$s</string>
 
 </resources>

@@ -191,6 +191,8 @@ Examples:<br/>
     
     <!-- Target Number Operations -->
     <string name="target_delete">Delete</string>
+    <string name="target_edit">Edit</string>
+    <string name="target_update">Update</string>
     <string name="target_set_primary">Set Primary</string>
     <string name="target_toggle_enabled">Toggle Enabled</string>
     <string name="target_primary_label">PRIMARY</string>
@@ -262,6 +264,7 @@ Examples:<br/>
     <string name="cd_progress_bar">Operation progress indicator</string>
     <string name="cd_success_icon">Success status icon</string>
     <string name="cd_error_icon">Error status icon</string>
+    <string name="cd_blocked_icon">Blocked message icon</string>
     <string name="cd_info_icon">Information icon</string>
     <string name="cd_statistics_card">Statistics information card</string>
     
@@ -324,6 +327,7 @@ Examples:<br/>
     <string name="received_label">Received</string>
     <string name="forwarded_label">Forwarded</string>
     <string name="errors_label">Errors</string>
+    <string name="blocked_label">Blocked</string>
     <string name="success_rate_label">Success Rate</string>
     <string name="zero_percent">0%</string>
     <string name="avg_processing_time_label">Avg Processing Time</string>
@@ -472,6 +476,49 @@ Examples:<br/>
     <string name="language_italian">Italian</string>
     <string name="language_french">French</string>
     <string name="language_spanish">Spanish</string>
+
+    <!-- Retention Period Settings -->
+    <string name="settings_sms_retention_title">SMS History Retention Period</string>
+    <string name="settings_sms_retention_summary">Old SMS records will be automatically deleted</string>
+    <string name="settings_analytics_retention_title">Analytics Data Retention Period</string>
+    <string name="settings_analytics_retention_summary">Old analytics records will be automatically deleted</string>
+
+    <!-- Retention Period Values -->
+    <string-array name="retention_period_entries">
+        <item>7 Days</item>
+        <item>15 Days</item>
+        <item>30 Days (Recommended)</item>
+        <item>60 Days</item>
+        <item>90 Days</item>
+        <item>Never</item>
+    </string-array>
+
+    <string-array name="retention_period_values">
+        <item>7</item>
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>90</item>
+        <item>0</item>
+    </string-array>
+
+    <string-array name="analytics_retention_entries">
+        <item>30 Days</item>
+        <item>60 Days</item>
+        <item>90 Days (Recommended)</item>
+        <item>180 Days</item>
+        <item>365 Days</item>
+        <item>Never</item>
+    </string-array>
+
+    <string-array name="analytics_retention_values">
+        <item>30</item>
+        <item>60</item>
+        <item>90</item>
+        <item>180</item>
+        <item>365</item>
+        <item>0</item>
+    </string-array>
     
     <!-- Log Level Strings -->
     <string name="log_level_error">Error</string>
@@ -501,8 +548,10 @@ Examples:<br/>
     <string name="settings_include_sim_info_summary">Add information about which SIM received and sent the message</string>
     <string name="settings_date_format_title">Date Format</string>
     <string name="settings_date_format_summary">Format to use for timestamp</string>
-    <string name="settings_custom_template_title">Custom Template</string>
+    <string name="settings_custom_template_title">Custom SMS Template</string>
     <string name="settings_custom_template_summary">Available tags: \{HEADER\}, \{SENDER\}, \{MESSAGE\}, \{TIME\}, \{SIM_INFO\}</string>
+    <string name="settings_custom_missed_call_template_title">Custom Missed Call Template</string>
+    <string name="settings_custom_missed_call_template_summary">Available tags: \{HEADER\}, \{CALLER\}, \{TIME\}</string>
     <string name="settings_format_preview_title">Format Preview</string>
     <string name="settings_format_preview_summary">Preview how the selected format will look</string>
     
@@ -616,5 +665,24 @@ Examples:<br/>
     <string name="default_sms_template">[{HEADER}]\nFrom: {SENDER}\nMessage: {MESSAGE}\nTime: {TIME}\n{SIM_INFO}</string>
     <string name="sample_message">This is a sample SMS message</string>
     <string name="template_preview_error">Template preview error: %s</string>
+
+    <!-- Error Messages -->
+    <string name="error_database_init_failed">Database initialization failed. Please restart the app.</string>
+    <string name="error_database_unavailable">Database is currently unavailable. Please try again.</string>
+    <string name="error_sim_permission_denied">SIM card access denied. Please grant READ_PHONE_STATE permission in Settings.</string>
+
+    <!-- Notification Strings -->
+    <string name="notification_channel_sms_success">SMS Forwarding Success</string>
+    <string name="notification_channel_sms_success_desc">Shows notifications when SMS is successfully forwarded</string>
+    <string name="notification_channel_sms_error">SMS Forwarding Error</string>
+    <string name="notification_channel_sms_error_desc">Shows notifications for SMS forwarding errors</string>
+    <string name="notification_channel_missed_call">Missed Calls</string>
+    <string name="notification_channel_missed_call_desc">Shows notifications when there is a missed call</string>
+    <string name="notification_sms_forwarded_title">SMS Forwarded</string>
+    <string name="notification_sms_forwarded_body">SMS from %1$s forwarded to %2$s</string>
+    <string name="notification_sms_error_title">SMS Forwarding Error</string>
+    <string name="notification_sms_error_body">Failed to send SMS to %1$s</string>
+    <string name="notification_missed_call_title">Missed Call</string>
+    <string name="notification_missed_call_body">Missed call from %1$s</string>
 
 </resources>

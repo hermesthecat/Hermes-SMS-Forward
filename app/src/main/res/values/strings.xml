@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Hermes SMS Forward</string>
+    <string name="app_name">Hermes SMS İletici</string>
     <string name="description_text">Gelen tüm SMS mesajlarını belirlediğiniz telefon numarasına otomatik olarak yönlendirir.</string>
     <string name="target_number_label">Hedef Telefon Numarası:</string>
     <string name="target_number_hint">Örnek: +905551234567</string>
@@ -568,6 +568,8 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="settings_category_dual_sim">Dual SIM Ayarları</string>
     <string name="settings_default_forwarding_sim_title">Varsayılan İletim SIM\'i</string>
     <string name="settings_default_forwarding_sim_summary">SMS iletimi için kullanılacak varsayılan SIM kartı</string>
+    <string name="settings_global_sim_mode_title">Global SIM Seçim Modu</string>
+    <string name="settings_global_sim_mode_summary">Tüm hedefler için varsayılan SIM seçim modu</string>
     <string name="settings_show_sim_indicators_title">SIM Göstergelerini Göster</string>
     <string name="settings_show_sim_indicators_summary">Hedef listesinde SIM göstergelerini göster</string>
     <string name="settings_sim_information_title">SIM Kartı Bilgisi</string>

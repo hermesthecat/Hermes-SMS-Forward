@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Hermes SMS Forward</string>
+    <string name="app_name">Hermes SMS Reenvío</string>
     <string name="description_text">Reenvía automáticamente todos los mensajes SMS entrantes al número de teléfono especificado.</string>
     <string name="target_number_label">Número de teléfono de destino:</string>
     <string name="target_number_hint">Ejemplo: +34612345678</string>
@@ -191,6 +191,8 @@ Ejemplos:<br/>
     
     <!-- Target Number Operations -->
     <string name="target_delete">Eliminar</string>
+    <string name="target_edit">Editar</string>
+    <string name="target_update">Actualizar</string>
     <string name="target_set_primary">Establecer principal</string>
     <string name="target_toggle_enabled">Alternar habilitado</string>
     <string name="target_primary_label">PRINCIPAL</string>
@@ -262,6 +264,7 @@ Ejemplos:<br/>
     <string name="cd_progress_bar">Indicador de progreso de operación</string>
     <string name="cd_success_icon">Icono de estado exitoso</string>
     <string name="cd_error_icon">Icono de estado de error</string>
+    <string name="cd_blocked_icon">Icono de mensaje bloqueado</string>
     <string name="cd_info_icon">Icono de información</string>
     <string name="cd_statistics_card">Tarjeta de información estadística</string>
     
@@ -324,6 +327,7 @@ Ejemplos:<br/>
     <string name="received_label">Recibidos</string>
     <string name="forwarded_label">Reenviados</string>
     <string name="errors_label">Errores</string>
+    <string name="blocked_label">Bloqueados</string>
     <string name="success_rate_label">Tasa de éxito</string>
     <string name="zero_percent">0%</string>
     <string name="avg_processing_time_label">Tiempo de procesamiento promedio</string>
@@ -472,6 +476,49 @@ Ejemplos:<br/>
     <string name="language_italian">Italiano</string>
     <string name="language_french">Francés</string>
     <string name="language_spanish">Español</string>
+
+    <!-- Retention Period Settings -->
+    <string name="settings_sms_retention_title">Período de retención historial SMS</string>
+    <string name="settings_sms_retention_summary">Los registros SMS antiguos se eliminarán automáticamente</string>
+    <string name="settings_analytics_retention_title">Período de retención datos analíticos</string>
+    <string name="settings_analytics_retention_summary">Los registros analíticos antiguos se eliminarán automáticamente</string>
+
+    <!-- Retention Period Values -->
+    <string-array name="retention_period_entries">
+        <item>7 días</item>
+        <item>15 días</item>
+        <item>30 días (Recomendado)</item>
+        <item>60 días</item>
+        <item>90 días</item>
+        <item>Nunca</item>
+    </string-array>
+
+    <string-array name="retention_period_values">
+        <item>7</item>
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>90</item>
+        <item>0</item>
+    </string-array>
+
+    <string-array name="analytics_retention_entries">
+        <item>30 días</item>
+        <item>60 días</item>
+        <item>90 días (Recomendado)</item>
+        <item>180 días</item>
+        <item>365 días</item>
+        <item>Nunca</item>
+    </string-array>
+
+    <string-array name="analytics_retention_values">
+        <item>30</item>
+        <item>60</item>
+        <item>90</item>
+        <item>180</item>
+        <item>365</item>
+        <item>0</item>
+    </string-array>
     
     <!-- Log Level Strings -->
     <string name="log_level_error">Error</string>
@@ -501,8 +548,10 @@ Ejemplos:<br/>
     <string name="settings_include_sim_info_summary">Agregar información sobre qué SIM recibió y envió el mensaje</string>
     <string name="settings_date_format_title">Formato de fecha</string>
     <string name="settings_date_format_summary">Formato a usar para la marca de tiempo</string>
-    <string name="settings_custom_template_title">Plantilla personalizada</string>
+    <string name="settings_custom_template_title">Plantilla SMS personalizada</string>
     <string name="settings_custom_template_summary">Etiquetas disponibles: \{HEADER\}, \{SENDER\}, \{MESSAGE\}, \{TIME\}, \{SIM_INFO\}</string>
+    <string name="settings_custom_missed_call_template_title">Plantilla llamada perdida personalizada</string>
+    <string name="settings_custom_missed_call_template_summary">Etiquetas disponibles: \{HEADER\}, \{CALLER\}, \{TIME\}</string>
     <string name="settings_format_preview_title">Vista previa del formato</string>
     <string name="settings_format_preview_summary">Previsualiza cómo se verá el formato seleccionado</string>
     
@@ -616,5 +665,24 @@ Ejemplos:<br/>
     <string name="default_sms_template">[{HEADER}]\nDe: {SENDER}\nMensaje: {MESSAGE}\nHora: {TIME}\n{SIM_INFO}</string>
     <string name="sample_message">Este es un mensaje SMS de ejemplo</string>
     <string name="template_preview_error">Error de vista previa de plantilla: %s</string>
+
+    <!-- Error Messages -->
+    <string name="error_database_init_failed">Error al inicializar la base de datos. Por favor reinicia la aplicación.</string>
+    <string name="error_database_unavailable">Base de datos no disponible actualmente. Por favor inténtalo de nuevo.</string>
+    <string name="error_sim_permission_denied">Acceso a la tarjeta SIM denegado. Por favor concede el permiso READ_PHONE_STATE en Configuración.</string>
+
+    <!-- Notification Strings -->
+    <string name="notification_channel_sms_success">Reenvío SMS exitoso</string>
+    <string name="notification_channel_sms_success_desc">Muestra notificaciones cuando el SMS se reenvía con éxito</string>
+    <string name="notification_channel_sms_error">Error de reenvío SMS</string>
+    <string name="notification_channel_sms_error_desc">Muestra notificaciones para errores de reenvío SMS</string>
+    <string name="notification_channel_missed_call">Llamadas perdidas</string>
+    <string name="notification_channel_missed_call_desc">Muestra notificaciones cuando hay una llamada perdida</string>
+    <string name="notification_sms_forwarded_title">SMS reenviado</string>
+    <string name="notification_sms_forwarded_body">SMS de %1$s reenviado a %2$s</string>
+    <string name="notification_sms_error_title">Error de reenvío SMS</string>
+    <string name="notification_sms_error_body">Error al enviar SMS a %1$s</string>
+    <string name="notification_missed_call_title">Llamada perdida</string>
+    <string name="notification_missed_call_body">Llamada perdida de %1$s</string>
 
 </resources>
