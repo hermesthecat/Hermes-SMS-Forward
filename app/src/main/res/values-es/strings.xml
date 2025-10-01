@@ -94,7 +94,8 @@ Ejemplos:<br/>
     <string name="missed_call_caller_icon_label">👤 Llamante:</string>
     <string name="missed_call_time_icon_label">🕐 Hora:</string>
     <string name="missed_call_status_icon_label">📱 Estado:</string>
-    
+    <string name="default_missed_call_template">{HEADER}\n📞 Llamada perdida\n👤 Llamante: {CALLER}\n🕐 Hora: {TIME}</string>
+
     <!-- Advanced Settings -->
     <string name="settings_log_level_title">Nivel de registro</string>
     <string name="settings_log_level_summary">Selecciona qué nivel de registros mantener</string>

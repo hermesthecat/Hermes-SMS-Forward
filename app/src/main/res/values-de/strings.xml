@@ -94,7 +94,8 @@ Beispiele:<br/>
     <string name="missed_call_caller_icon_label">👤 Anrufer:</string>
     <string name="missed_call_time_icon_label">🕐 Zeit:</string>
     <string name="missed_call_status_icon_label">📱 Status:</string>
-    
+    <string name="default_missed_call_template">{HEADER}\n📞 Verpasster Anruf\n👤 Anrufer: {CALLER}\n🕐 Zeit: {TIME}</string>
+
     <!-- Advanced Settings -->
     <string name="settings_log_level_title">Log-Stufe</string>
     <string name="settings_log_level_summary">Wählen Sie welche Stufe der Log-Aufzeichnungen aufbewahrt werden soll</string>

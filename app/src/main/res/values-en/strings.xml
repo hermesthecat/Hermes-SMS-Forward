@@ -94,7 +94,8 @@ Examples:<br/>
     <string name="missed_call_caller_icon_label">👤 Caller:</string>
     <string name="missed_call_time_icon_label">🕐 Time:</string>
     <string name="missed_call_status_icon_label">📱 Status:</string>
-    
+    <string name="default_missed_call_template">{HEADER}\n📞 Missed Call\n👤 Caller: {CALLER}\n🕐 Time: {TIME}</string>
+
     <!-- Advanced Settings -->
     <string name="settings_log_level_title">Log Level</string>
     <string name="settings_log_level_summary">Select which level of log records to keep</string>

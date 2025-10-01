@@ -94,7 +94,8 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="missed_call_caller_icon_label">👤 Arayan:</string>
     <string name="missed_call_time_icon_label">🕐 Zaman:</string>
     <string name="missed_call_status_icon_label">📱 Durum:</string>
-    
+    <string name="default_missed_call_template">{HEADER}\n📞 Cevapsız Arama\n👤 Arayan: {CALLER}\n🕐 Saat: {TIME}</string>
+
     <!-- Advanced Settings -->
     <string name="settings_log_level_title">Log Seviyesi</string>
     <string name="settings_log_level_summary">Hangi seviyede log kayıtlarının tutulacağını seçin</string>

@@ -490,7 +490,7 @@ public class SmsFormatter {
      * Get default missed call template
      */
     private String getDefaultMissedCallTemplate() {
-        return "{HEADER}\n📞 Cevapsız Arama\n👤 Arayan: {CALLER}\n🕐 Saat: {TIME}";
+        return context.getString(R.string.default_missed_call_template);
     }
     
     /**

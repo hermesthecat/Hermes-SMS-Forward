@@ -993,7 +993,7 @@ public class SettingsActivity extends AppCompatActivity {
          * Get default missed call template
          */
         private String getDefaultMissedCallTemplate() {
-            return "{HEADER}\n📞 Cevapsız Arama\n👤 Arayan: {CALLER}\n🕐 Saat: {TIME}";
+            return getString(R.string.default_missed_call_template);
         }
 
         /**
