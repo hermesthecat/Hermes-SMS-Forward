@@ -72,7 +72,17 @@ public interface TargetNumberDao {
      */
     @Query("SELECT COUNT(*) > 0 FROM target_numbers WHERE phone_number = :phoneNumber")
     boolean isPhoneNumberExists(String phoneNumber);
-    
+
+    /**
+     * Check if a phone number exists excluding a specific target number ID
+     * Used for edit validation to allow keeping the same number
+     * @param phoneNumber The phone number to check
+     * @param excludeId The ID to exclude from the check (current target being edited)
+     * @return True if the phone number exists in another record, false otherwise
+     */
+    @Query("SELECT COUNT(*) > 0 FROM target_numbers WHERE phone_number = :phoneNumber AND id != :excludeId")
+    boolean isPhoneNumberExistsExcept(String phoneNumber, int excludeId);
+
     /**
      * Set a target number as primary (and unset others)
      * @param targetNumberId The ID of the target number to set as primary

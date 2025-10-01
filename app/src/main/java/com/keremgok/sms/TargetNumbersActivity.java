@@ -599,6 +599,7 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
         RadioButton rbSimSource = dialogView.findViewById(R.id.radio_source);
         RadioButton rbSimSpecific = dialogView.findViewById(R.id.radio_specific);
         Spinner spinnerSimSelection = dialogView.findViewById(R.id.spinner_sim_selection);
+        TextView tvValidationMessage = dialogView.findViewById(R.id.tvValidationMessage);
 
         // Pre-fill existing values
         etPhoneNumber.setText(targetNumber.getPhoneNumber());
@@ -650,6 +651,9 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
             radioGroupSimMode.setVisibility(View.VISIBLE);
         }
 
+        // Setup real-time validation for edit dialog
+        setupEditDialogValidation(etPhoneNumber, tvValidationMessage, targetNumber);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(dialogView)
                 .setTitle(R.string.target_edit)
@@ -658,8 +662,15 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
 
         AlertDialog dialog = builder.create();
         dialog.setOnShowListener(dialogInterface -> {
-            Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-            button.setOnClickListener(view -> {
+            Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+
+            // Enable button initially since we have valid existing data
+            positiveButton.setEnabled(true);
+
+            // Store button reference for validation updates
+            final Button[] updateButton = {positiveButton};
+
+            positiveButton.setOnClickListener(view -> {
                 String phoneNumber = etPhoneNumber.getText().toString().trim();
                 String displayName = etDisplayName.getText().toString().trim();
                 boolean isPrimary = cbSetPrimary.isChecked();
@@ -680,9 +691,83 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
                     dialog.dismiss();
                 }
             });
+
+            // Update validation with button reference
+            etPhoneNumber.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    validateEditInput(s.toString().trim(), tvValidationMessage, updateButton[0], targetNumber);
+                }
+            });
         });
 
         dialog.show();
+    }
+
+    /**
+     * Setup real-time validation for edit dialog
+     */
+    private void setupEditDialogValidation(EditText etPhoneNumber, TextView tvValidationMessage, TargetNumber targetNumber) {
+        // Initial validation is done after dialog is shown (in onShowListener)
+        // This method can be used for additional setup if needed
+    }
+
+    /**
+     * Validate phone number input for edit dialog
+     */
+    private void validateEditInput(String phoneNumber, TextView tvValidationMessage, Button updateButton, TargetNumber targetNumber) {
+        if (TextUtils.isEmpty(phoneNumber)) {
+            tvValidationMessage.setVisibility(View.GONE);
+            updateButton.setEnabled(false);
+            return;
+        }
+
+        // Validate phone number format
+        PhoneNumberValidator.ValidationResult result = PhoneNumberValidator.validate(phoneNumber);
+
+        if (result.isValid()) {
+            // Check for duplicates (excluding current target)
+            ThreadManager.getInstance().executeBackground(() -> {
+                boolean exists = targetNumberDao.isPhoneNumberExistsExcept(phoneNumber, targetNumber.getId());
+                runOnUiThread(() -> {
+                    if (exists) {
+                        showEditValidationError(getString(R.string.target_duplicate_number), tvValidationMessage);
+                        updateButton.setEnabled(false);
+                    } else {
+                        showEditValidationSuccess(tvValidationMessage);
+                        updateButton.setEnabled(true);
+                    }
+                });
+            });
+        } else {
+            String errorMessage = getValidationMessage(result.getErrorCode());
+            showEditValidationError(errorMessage, tvValidationMessage);
+            updateButton.setEnabled(false);
+        }
+    }
+
+    /**
+     * Show validation success message for edit dialog
+     */
+    private void showEditValidationSuccess(TextView tvValidationMessage) {
+        tvValidationMessage.setText(R.string.validation_success);
+        tvValidationMessage.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_dark));
+        tvValidationMessage.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Show validation error message for edit dialog
+     */
+    private void showEditValidationError(String message, TextView tvValidationMessage) {
+        tvValidationMessage.setText(message);
+        tvValidationMessage.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
+        tvValidationMessage.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -699,28 +784,41 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
             return false;
         }
 
-        // Update the target number object with new values
-        targetNumber.setPhoneNumber(phoneNumber);
-        targetNumber.setDisplayName(displayName);
-        targetNumber.setPrimary(isPrimary);
-        targetNumber.setEnabled(isEnabled);
-        targetNumber.setSimSelectionMode(simSelectionMode);
-        targetNumber.setPreferredSimSlot(preferredSimSlot);
-
-        // Update in database
+        // Check for duplicate phone number (excluding current target)
         ThreadManager.getInstance().executeDatabase(() -> {
-            // If setting as primary, unset all others first
-            if (isPrimary) {
-                targetNumberDao.setPrimaryTargetNumber(-1);
-                targetNumberDao.update(targetNumber);
-                targetNumberDao.setPrimaryTargetNumber(targetNumber.getId());
-            } else {
-                targetNumberDao.update(targetNumber);
-            }
+            boolean duplicateExists = targetNumberDao.isPhoneNumberExistsExcept(phoneNumber, targetNumber.getId());
 
             runOnUiThread(() -> {
-                loadTargetNumbers();
-                Toast.makeText(this, R.string.target_update_success, Toast.LENGTH_SHORT).show();
+                if (duplicateExists) {
+                    Toast.makeText(this, R.string.target_duplicate_number, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Update the target number object with new values
+                targetNumber.setPhoneNumber(phoneNumber);
+                targetNumber.setDisplayName(displayName);
+                targetNumber.setPrimary(isPrimary);
+                targetNumber.setEnabled(isEnabled);
+                targetNumber.setSimSelectionMode(simSelectionMode);
+                targetNumber.setPreferredSimSlot(preferredSimSlot);
+                targetNumber.setModifiedTimestamp(System.currentTimeMillis());
+
+                // Perform update in database
+                ThreadManager.getInstance().executeDatabase(() -> {
+                    // If setting as primary, unset all others first
+                    if (isPrimary) {
+                        targetNumberDao.setPrimaryTargetNumber(-1);
+                        targetNumberDao.update(targetNumber);
+                        targetNumberDao.setPrimaryTargetNumber(targetNumber.getId());
+                    } else {
+                        targetNumberDao.update(targetNumber);
+                    }
+
+                    runOnUiThread(() -> {
+                        loadTargetNumbers();
+                        Toast.makeText(this, R.string.target_update_success, Toast.LENGTH_SHORT).show();
+                    });
+                });
             });
         });
 

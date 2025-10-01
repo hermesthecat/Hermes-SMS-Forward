@@ -29,10 +29,13 @@ public class TargetNumber {
     
     @ColumnInfo(name = "created_timestamp")
     private long createdTimestamp;
-    
+
     @ColumnInfo(name = "last_used_timestamp")
     private long lastUsedTimestamp;
-    
+
+    @ColumnInfo(name = "modified_timestamp")
+    private long modifiedTimestamp;
+
     @ColumnInfo(name = "preferred_sim_slot")
     private int preferredSimSlot = -1; // -1 = auto, 0 = SIM 1, 1 = SIM 2
     
@@ -48,6 +51,7 @@ public class TargetNumber {
         this.isEnabled = isEnabled;
         this.createdTimestamp = System.currentTimeMillis();
         this.lastUsedTimestamp = 0;
+        this.modifiedTimestamp = System.currentTimeMillis();
         this.preferredSimSlot = -1; // Default to auto
         this.simSelectionMode = "auto"; // Default to auto mode
     }
@@ -60,6 +64,7 @@ public class TargetNumber {
         this.isEnabled = isEnabled;
         this.createdTimestamp = System.currentTimeMillis();
         this.lastUsedTimestamp = 0;
+        this.modifiedTimestamp = System.currentTimeMillis();
         this.preferredSimSlot = preferredSimSlot;
         this.simSelectionMode = simSelectionMode != null ? simSelectionMode : "auto";
     }
@@ -120,7 +125,15 @@ public class TargetNumber {
     public void setLastUsedTimestamp(long lastUsedTimestamp) {
         this.lastUsedTimestamp = lastUsedTimestamp;
     }
-    
+
+    public long getModifiedTimestamp() {
+        return modifiedTimestamp;
+    }
+
+    public void setModifiedTimestamp(long modifiedTimestamp) {
+        this.modifiedTimestamp = modifiedTimestamp;
+    }
+
     public int getPreferredSimSlot() {
         return preferredSimSlot;
     }

@@ -15,7 +15,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
  */
 @Database(
     entities = {SmsHistory.class, TargetNumber.class, SmsFilter.class, AnalyticsEvent.class, StatisticsSummary.class},
-    version = 7,
+    version = 8,
     exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
@@ -299,19 +299,43 @@ public abstract class AppDatabase extends RoomDatabase {
         public void migrate(@NonNull SupportSQLiteDatabase database) {
             try {
                 android.util.Log.i("AppDatabase", "Starting migration from version 6 to 7 (removing SPAM_DETECTION filters)");
-                
+
                 // Remove all SPAM_DETECTION filters from the database
                 database.execSQL("DELETE FROM sms_filters WHERE filter_type = 'SPAM_DETECTION'");
-                
+
                 android.util.Log.i("AppDatabase", "Successfully completed migration from version 6 to 7");
-                
+
             } catch (Exception e) {
                 android.util.Log.e("AppDatabase", "Migration 6->7 failed: " + e.getMessage(), e);
                 throw e; // Re-throw to trigger fallback
             }
         }
     };
-    
+
+    /**
+     * Migration from version 7 to 8: Add modified_timestamp to target_numbers
+     */
+    static final Migration MIGRATION_7_8 = new Migration(7, 8) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            try {
+                android.util.Log.i("AppDatabase", "Starting migration from version 7 to 8 (adding modified_timestamp to target_numbers)");
+
+                // Add modified_timestamp column with default value of created_timestamp
+                database.execSQL("ALTER TABLE target_numbers ADD COLUMN modified_timestamp INTEGER NOT NULL DEFAULT 0");
+
+                // Set modified_timestamp to created_timestamp for existing records
+                database.execSQL("UPDATE target_numbers SET modified_timestamp = created_timestamp");
+
+                android.util.Log.i("AppDatabase", "Successfully completed migration from version 7 to 8");
+
+            } catch (Exception e) {
+                android.util.Log.e("AppDatabase", "Migration 7->8 failed: " + e.getMessage(), e);
+                throw e; // Re-throw to trigger fallback
+            }
+        }
+    };
+
     /**
      * Get singleton instance of the database
      * Thread-safe implementation with double-checked locking
@@ -329,7 +353,7 @@ public abstract class AppDatabase extends RoomDatabase {
                             DATABASE_NAME
                         )
                         // Removed allowMainThreadQueries() for better performance and ANR prevention
-                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7)
+                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8)
                         .addCallback(new RoomDatabase.Callback() {
                             @Override
                             public void onCreate(@NonNull SupportSQLiteDatabase db) {
