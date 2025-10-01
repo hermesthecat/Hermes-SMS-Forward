@@ -251,7 +251,7 @@ Beispiele:<br/>
     
     
     <!-- Accessibility Content Descriptions -->
-    <string name="cd_app_logo">Hermes SMS Forward Anwendungslogo</string>
+    <string name="cd_app_logo">Hermes SMS Weiterleitung Anwendungslogo</string>
     <string name="cd_target_number_input">Ziel-Telefonnummer Eingabefeld</string>
     <string name="cd_save_button">Einstellungen speichern und Weiterleitung starten</string>
     <string name="cd_refresh_button">Aktuellen Inhalt aktualisieren</string>
@@ -276,7 +276,7 @@ Beispiele:<br/>
     <string name="get_started">Loslegen</string>
     
     <!-- Welcome Fragment -->
-    <string name="welcome_title">Willkommen bei Hermes SMS Forward!</string>
+    <string name="welcome_title">Willkommen bei Hermes SMS Weiterleitung!</string>
     <string name="welcome_subtitle">Leiten Sie Ihre SMS-Nachrichten sicher weiter. Die Einrichtung dauert nur wenige Schritte.</string>
     <string name="feature_automatic_forwarding">Automatische SMS-Weiterleitung</string>
     <string name="feature_smart_filtering">Intelligentes Filtersystem</string>
@@ -309,7 +309,7 @@ Beispiele:<br/>
     
     <!-- Completion Fragment -->
     <string name="completion_title">Herzlichen Glückwunsch!</string>
-    <string name="completion_subtitle">Hermes SMS Forward wurde erfolgreich eingerichtet und ist einsatzbereit.</string>
+    <string name="completion_subtitle">Hermes SMS Weiterleitung wurde erfolgreich eingerichtet und ist einsatzbereit.</string>
     <string name="whats_next_title">Nächste Schritte:</string>
     <string name="completion_step_1">Entdecken Sie erweiterte Funktionen im Einstellungsmenü</string>
     <string name="completion_step_2">Erstellen Sie Filterregeln zur Anpassung der Weiterleitung</string>
@@ -600,7 +600,7 @@ Beispiele:<br/>
     <string name="last_updated_prefix">Zuletzt aktualisiert: </string>
     <string name="default_zero">0</string>
     <string name="default_zero_percent">0%</string>
-    <string name="csv_export_header">Hermes SMS Forward - Analytics-Export</string>
+    <string name="csv_export_header">Hermes SMS Weiterleitung - Analytics-Export</string>
     <string name="csv_generated_prefix">Generiert: </string>
     <string name="csv_overall_statistics">GESAMTSTATISTIKEN</string>
     <string name="csv_metric_value_header">Metrik,Wert</string>
@@ -616,8 +616,8 @@ Beispiele:<br/>
     <string name="csv_error_analysis_header">FEHLERANALYSE (Letzte 30 Tage)</string>
     <string name="csv_error_columns">Fehlercode,Anzahl</string>
     <string name="csv_no_error_data">Keine Fehlerdaten verfügbar</string>
-    <string name="analytics_email_subject">Hermes SMS Forward - Analytics-Export</string>
-    <string name="analytics_email_body">Analytics-Daten aus der Hermes SMS Forward App exportiert.</string>
+    <string name="analytics_email_subject">Hermes SMS Weiterleitung - Analytics-Export</string>
+    <string name="analytics_email_body">Analytics-Daten aus der Hermes SMS Weiterleitung App exportiert.</string>
     <string name="share_analytics_title">Analytics-Export teilen</string>
     <string name="migrated_target_name">Migriertes Ziel</string>
     <string name="backup_app_name">Hermes SMS Forward</string>

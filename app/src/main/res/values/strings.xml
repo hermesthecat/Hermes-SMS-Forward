@@ -266,7 +266,7 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     
     
     <!-- Accessibility Content Descriptions -->
-    <string name="cd_app_logo">Hermes SMS Forward uygulama logosu</string>
+    <string name="cd_app_logo">Hermes SMS İletici uygulama logosu</string>
     <string name="cd_target_number_input">Hedef telefon numarası giriş alanı</string>
     <string name="cd_save_button">Ayarları kaydet ve yönlendirmeyi başlat</string>
     <string name="cd_refresh_button">Mevcut içeriği yenile</string>
@@ -291,7 +291,7 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="get_started">Başlayalım</string>
     
     <!-- Welcome Fragment -->
-    <string name="welcome_title">Hermes SMS Forward\'a Hoş Geldiniz!</string>
+    <string name="welcome_title">Hermes SMS İletici\'ye Hoş Geldiniz!</string>
     <string name="welcome_subtitle">SMS mesajlarınızı güvenle yönlendirin. Kurulum sadece birkaç adım.</string>
     <string name="feature_automatic_forwarding">Otomatik SMS yönlendirme</string>
     <string name="feature_smart_filtering">Akıllı filtreleme sistemi</string>
@@ -408,7 +408,7 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     
     <!-- Completion Fragment -->
     <string name="completion_title">Tebrikler!</string>
-    <string name="completion_subtitle">Hermes SMS Forward başarıyla kuruldu ve kullanıma hazır.</string>
+    <string name="completion_subtitle">Hermes SMS İletici başarıyla kuruldu ve kullanıma hazır.</string>
     <string name="whats_next_title">Sıradaki Adımlar:</string>
     <string name="completion_step_1">Ayarlar menüsünden ileri düzey özellikler keşfedin</string>
     <string name="completion_step_2">Filter kuralları oluşturarak yönlendirmeyi özelleştirin</string>
@@ -630,7 +630,7 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="last_updated_prefix">Son güncelleme: </string>
     <string name="default_zero">0</string>
     <string name="default_zero_percent">0%</string>
-    <string name="csv_export_header">Hermes SMS Forward - Analitik Dışa Aktarım</string>
+    <string name="csv_export_header">Hermes SMS İletici - Analitik Dışa Aktarım</string>
     <string name="csv_generated_prefix">Oluşturulma: </string>
     <string name="csv_overall_statistics">GENEL İSTATİSTİKLER</string>
     <string name="csv_metric_value_header">Metrik,Değer</string>
@@ -646,8 +646,8 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="csv_error_analysis_header">HATA ANALİZİ (Son 30 Gün)</string>
     <string name="csv_error_columns">Hata Kodu,Sayı</string>
     <string name="csv_no_error_data">Hata verisi mevcut değil</string>
-    <string name="analytics_email_subject">Hermes SMS Forward - Analitik Dışa Aktarım</string>
-    <string name="analytics_email_body">Hermes SMS Forward uygulamasından analitik verileri dışa aktarıldı.</string>
+    <string name="analytics_email_subject">Hermes SMS İletici - Analitik Dışa Aktarım</string>
+    <string name="analytics_email_body">Hermes SMS İletici uygulamasından analitik verileri dışa aktarıldı.</string>
     <string name="share_analytics_title">Analitik Dışa Aktarımı Paylaş</string>
     <string name="migrated_target_name">Taşınan Hedef</string>
     <string name="backup_app_name">Hermes SMS Forward</string>

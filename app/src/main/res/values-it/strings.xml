@@ -251,7 +251,7 @@ Esempi:<br/>
     
     
     <!-- Accessibility Content Descriptions -->
-    <string name="cd_app_logo">Logo dell\'applicazione Hermes SMS Forward</string>
+    <string name="cd_app_logo">Logo dell\'applicazione Hermes SMS Inoltra</string>
     <string name="cd_target_number_input">Campo di inserimento numero di telefono di destinazione</string>
     <string name="cd_save_button">Salva impostazioni e avvia inoltro</string>
     <string name="cd_refresh_button">Aggiorna contenuto corrente</string>
@@ -276,7 +276,7 @@ Esempi:<br/>
     <string name="get_started">Inizia</string>
     
     <!-- Welcome Fragment -->
-    <string name="welcome_title">Benvenuto in Hermes SMS Forward!</string>
+    <string name="welcome_title">Benvenuto in Hermes SMS Inoltra!</string>
     <string name="welcome_subtitle">Inoltra i tuoi messaggi SMS in sicurezza. La configurazione richiede solo pochi passaggi.</string>
     <string name="feature_automatic_forwarding">Inoltro SMS automatico</string>
     <string name="feature_smart_filtering">Sistema di filtro intelligente</string>
@@ -309,7 +309,7 @@ Esempi:<br/>
     
     <!-- Completion Fragment -->
     <string name="completion_title">Congratulazioni!</string>
-    <string name="completion_subtitle">Hermes SMS Forward è stato configurato con successo ed è pronto per l\'uso.</string>
+    <string name="completion_subtitle">Hermes SMS Inoltra è stato configurato con successo ed è pronto per l\'uso.</string>
     <string name="whats_next_title">Prossimi passi:</string>
     <string name="completion_step_1">Esplora le funzionalità avanzate dal menu impostazioni</string>
     <string name="completion_step_2">Crea regole di filtro per personalizzare l\'inoltro</string>
@@ -600,7 +600,7 @@ Esempi:<br/>
     <string name="last_updated_prefix">Ultimo aggiornamento: </string>
     <string name="default_zero">0</string>
     <string name="default_zero_percent">0%</string>
-    <string name="csv_export_header">Hermes SMS Forward - Esportazione analitici</string>
+    <string name="csv_export_header">Hermes SMS Inoltra - Esportazione analitici</string>
     <string name="csv_generated_prefix">Generato: </string>
     <string name="csv_overall_statistics">STATISTICHE COMPLESSIVE</string>
     <string name="csv_metric_value_header">Metrica,Valore</string>
@@ -616,8 +616,8 @@ Esempi:<br/>
     <string name="csv_error_analysis_header">ANALISI ERRORI (Ultimi 30 giorni)</string>
     <string name="csv_error_columns">Codice errore,Conteggio</string>
     <string name="csv_no_error_data">Nessun dato errore disponibile</string>
-    <string name="analytics_email_subject">Hermes SMS Forward - Esportazione analitici</string>
-    <string name="analytics_email_body">Dati analitici esportati dall\'app Hermes SMS Forward.</string>
+    <string name="analytics_email_subject">Hermes SMS Inoltra - Esportazione analitici</string>
+    <string name="analytics_email_body">Dati analitici esportati dall\'app Hermes SMS Inoltra.</string>
     <string name="share_analytics_title">Condividi esportazione analitici</string>
     <string name="migrated_target_name">Destinazione migrata</string>
     <string name="backup_app_name">Hermes SMS Forward</string>
