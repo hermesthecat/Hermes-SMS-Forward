@@ -85,16 +85,16 @@ Ejemplos:<br/>
     <string name="settings_missed_call_notifications_summary">Enviar notificaciones SMS para llamadas perdidas a números de destino</string>
     
     <!-- Missed Call Messages -->
-    <string name="missed_call_notification_title">📞 Llamada perdida</string>
+    <string name="missed_call_notification_title">Llamada perdida</string>
     <string name="missed_call_caller_label">Llamante:</string>
     <string name="missed_call_time_label">Hora:</string>
     <string name="missed_call_status_not_answered">No contestada</string>
     <string name="missed_call_compact_prefix">Llamada perdida:</string>
-    <string name="missed_call_detailed_title">📞 LLAMADA PERDIDA</string>
-    <string name="missed_call_caller_icon_label">👤 Llamante:</string>
-    <string name="missed_call_time_icon_label">🕐 Hora:</string>
-    <string name="missed_call_status_icon_label">📱 Estado:</string>
-    <string name="default_missed_call_template">{HEADER}\n📞 Llamada perdida\n👤 Llamante: {CALLER}\n🕐 Hora: {TIME}</string>
+    <string name="missed_call_detailed_title">LLAMADA PERDIDA</string>
+    <string name="missed_call_caller_icon_label">Llamante:</string>
+    <string name="missed_call_time_icon_label">Hora:</string>
+    <string name="missed_call_status_icon_label">Estado:</string>
+    <string name="default_missed_call_template">{HEADER}\nLlamada perdida\nLlamante: {CALLER}\nHora: {TIME}</string>
 
     <!-- Advanced Settings -->
     <string name="settings_log_level_title">Nivel de registro</string>
@@ -289,6 +289,8 @@ Ejemplos:<br/>
     <string name="sms_permission_description">Requerido para detectar mensajes SMS entrantes</string>
     <string name="send_sms_permission_title">Permiso de envío de SMS</string>
     <string name="send_sms_permission_description">Requerido para reenviar mensajes a números de destino</string>
+    <string name="notification_permission_title">Permiso Notificaciones</string>
+    <string name="notification_permission_description">Necesario para notificaciones de estado de reenvío SMS (Android 13+)</string>
     <string name="privacy_note">Todos tus datos se almacenan solo en tu dispositivo. No se envía información al exterior.</string>
     
     <!-- Target Number Setup Fragment -->

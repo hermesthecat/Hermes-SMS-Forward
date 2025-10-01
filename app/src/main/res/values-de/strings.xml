@@ -85,16 +85,16 @@ Beispiele:<br/>
     <string name="settings_missed_call_notifications_summary">SMS-Benachrichtigungen für verpasste Anrufe an Zielnummern senden</string>
     
     <!-- Missed Call Messages -->
-    <string name="missed_call_notification_title">📞 Verpasster Anruf</string>
+    <string name="missed_call_notification_title">Verpasster Anruf</string>
     <string name="missed_call_caller_label">Anrufer:</string>
     <string name="missed_call_time_label">Zeit:</string>
     <string name="missed_call_status_not_answered">Nicht beantwortet</string>
     <string name="missed_call_compact_prefix">Verpasster Anruf:</string>
-    <string name="missed_call_detailed_title">📞 VERPASSTER ANRUF</string>
-    <string name="missed_call_caller_icon_label">👤 Anrufer:</string>
-    <string name="missed_call_time_icon_label">🕐 Zeit:</string>
-    <string name="missed_call_status_icon_label">📱 Status:</string>
-    <string name="default_missed_call_template">{HEADER}\n📞 Verpasster Anruf\n👤 Anrufer: {CALLER}\n🕐 Zeit: {TIME}</string>
+    <string name="missed_call_detailed_title">VERPASSTER ANRUF</string>
+    <string name="missed_call_caller_icon_label">Anrufer:</string>
+    <string name="missed_call_time_icon_label">Zeit:</string>
+    <string name="missed_call_status_icon_label">Status:</string>
+    <string name="default_missed_call_template">{HEADER}\nVerpasster Anruf\nAnrufer: {CALLER}\nZeit: {TIME}</string>
 
     <!-- Advanced Settings -->
     <string name="settings_log_level_title">Log-Stufe</string>
@@ -289,6 +289,8 @@ Beispiele:<br/>
     <string name="sms_permission_description">Erforderlich zur Erkennung eingehender SMS-Nachrichten</string>
     <string name="send_sms_permission_title">SMS-Sendeberechtigung</string>
     <string name="send_sms_permission_description">Erforderlich zur Weiterleitung von Nachrichten an Ziel-Nummern</string>
+    <string name="notification_permission_title">Benachrichtigungsberechtigung</string>
+    <string name="notification_permission_description">Erforderlich für SMS-Weiterleitungsstatusbenachrichtigungen (Android 13+)</string>
     <string name="privacy_note">Alle Ihre Daten werden nur auf Ihrem Gerät gespeichert. Keine Informationen werden nach außen gesendet.</string>
     
     <!-- Target Number Setup Fragment -->

@@ -1,5 +1,61 @@
 # Changelog - Hermes SMS Forward
 
+## [2.44.0] - 2025-10-02
+
+- 🌐 **Complete Multi-Language App Name Localization:**
+  - **Localized App Names:** App name now displays in user's language across all interfaces
+  - **6 Language Support:**
+    - 🇹🇷 Turkish: "Hermes SMS İletici"
+    - 🇬🇧 English: "Hermes SMS Forward"
+    - 🇩🇪 German: "Hermes SMS Weiterleitung"
+    - 🇮🇹 Italian: "Hermes SMS Inoltra"
+    - 🇫🇷 French: "Hermes SMS Transfert"
+    - 🇪🇸 Spanish: "Hermes SMS Reenvío"
+  - **UI Consistency:** Localized app name in welcome screen, completion screen, analytics exports, and email subjects
+  - **Preserved Brand:** "Hermes" prefix remains constant across all languages for brand recognition
+
+- 🔧 **Language Files Synchronization & Cleanup:**
+  - **Perfect Sync:** All 6 language files now have identical 439 strings each
+  - **Template Cleanup:** Removed obsolete `template_header_turkish` and `template_header_english` strings
+  - **Sample Messages:** Localized `sample_message` for template preview in each language
+  - **Missing Strings Added:** Added 29 missing strings to all non-Turkish files:
+    - Notification channel descriptions (sms_success, sms_error, missed_call)
+    - Retention period settings and arrays
+    - Error messages (database, SIM permissions)
+    - Custom missed call template settings
+    - Target number edit/update operations
+  - **Global SIM Mode:** Added missing `settings_global_sim_mode_title` and `settings_global_sim_mode_summary` to Turkish
+  - **Build Validation:** Clean build with no resource warnings
+
+- 📱 **Notification System Implementation:**
+  - **NotificationHelper:** Created centralized notification management system
+  - **Android 13+ Support:** Added POST_NOTIFICATIONS permission for Android 13+
+  - **Permission Handling:** Runtime permission request in MainActivity for notification access
+  - **Notification Channels:** 3 separate channels with appropriate importance levels:
+    - SMS Success (LOW priority) - Green notifications for successful forwards
+    - SMS Error (HIGH priority) - Red notifications for failures
+    - Missed Calls (DEFAULT priority) - Call notifications
+  - **Preference Integration:** All notifications respect user preferences:
+    - Show/hide notifications toggle
+    - Notification sound on/off
+    - Notification vibration on/off
+  - **SmsCallbackReceiver Integration:** Real-time notifications after SMS send status
+
+- 🎨 **Custom Template System Enhancement:**
+  - **Missed Call Templates:** Added custom template editor for missed call notifications
+  - **Settings Integration:** New "Custom Missed Call Template" preference in Settings
+  - **Template Dialog:** Full-featured dialog with:
+    - Available placeholders: {HEADER}, {CALLER}, {TIME}
+    - Live preview functionality
+    - Reset to default option
+  - **Multi-Language Defaults:** Each language has its own localized default template
+  - **Consistent UX:** Matches existing SMS custom template system
+
+- 🔒 **Git Configuration:**
+  - **Ignored Files:** Excluded Claude Code configuration from version control
+  - **.gitignore Update:** Added `.claude/`, `CLAUDE.md`, and `BUG_CHECKLIST.md`
+  - **Clean Repository:** Development tools no longer tracked in git
+
 ## [2.43.0] - 2025-08-09
 
 - 🇪🇸 **Spanish Language Support (Español):**

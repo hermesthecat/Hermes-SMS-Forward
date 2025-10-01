@@ -85,16 +85,16 @@ Exemples :<br/>
     <string name="settings_missed_call_notifications_summary">Envoyer des notifications SMS pour les appels manqués aux numéros cibles</string>
     
     <!-- Missed Call Messages -->
-    <string name="missed_call_notification_title">📞 Appel manqué</string>
+    <string name="missed_call_notification_title">Appel manqué</string>
     <string name="missed_call_caller_label">Appelant :</string>
     <string name="missed_call_time_label">Heure :</string>
     <string name="missed_call_status_not_answered">Non répondu</string>
     <string name="missed_call_compact_prefix">Appel manqué :</string>
-    <string name="missed_call_detailed_title">📞 APPEL MANQUÉ</string>
-    <string name="missed_call_caller_icon_label">👤 Appelant :</string>
-    <string name="missed_call_time_icon_label">🕐 Heure :</string>
-    <string name="missed_call_status_icon_label">📱 État :</string>
-    <string name="default_missed_call_template">{HEADER}\n📞 Appel manqué\n👤 Appelant : {CALLER}\n🕐 Heure : {TIME}</string>
+    <string name="missed_call_detailed_title">APPEL MANQUÉ</string>
+    <string name="missed_call_caller_icon_label">Appelant :</string>
+    <string name="missed_call_time_icon_label">Heure :</string>
+    <string name="missed_call_status_icon_label">État :</string>
+    <string name="default_missed_call_template">{HEADER}\nAppel manqué\nAppelant : {CALLER}\nHeure : {TIME}</string>
 
     <!-- Advanced Settings -->
     <string name="settings_log_level_title">Niveau de journal</string>
@@ -289,6 +289,8 @@ Exemples :<br/>
     <string name="sms_permission_description">Requise pour détecter les messages SMS entrants</string>
     <string name="send_sms_permission_title">Autorisation d\'envoi SMS</string>
     <string name="send_sms_permission_description">Requise pour transférer les messages vers les numéros cibles</string>
+    <string name="notification_permission_title">Permission Notifications</string>
+    <string name="notification_permission_description">Nécessaire pour les notifications d\'état de transfert SMS (Android 13+)</string>
     <string name="privacy_note">Toutes vos données sont stockées uniquement sur votre appareil. Aucune information n\'est envoyée à l\'extérieur.</string>
     
     <!-- Target Number Setup Fragment -->

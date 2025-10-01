@@ -85,16 +85,16 @@ Examples:<br/>
     <string name="settings_missed_call_notifications_summary">Send SMS notifications for missed calls to target numbers</string>
     
     <!-- Missed Call Messages -->
-    <string name="missed_call_notification_title">📞 Missed Call</string>
+    <string name="missed_call_notification_title">Missed Call</string>
     <string name="missed_call_caller_label">Caller:</string>
     <string name="missed_call_time_label">Time:</string>
     <string name="missed_call_status_not_answered">Not answered</string>
     <string name="missed_call_compact_prefix">Missed call:</string>
-    <string name="missed_call_detailed_title">📞 MISSED CALL</string>
-    <string name="missed_call_caller_icon_label">👤 Caller:</string>
-    <string name="missed_call_time_icon_label">🕐 Time:</string>
-    <string name="missed_call_status_icon_label">📱 Status:</string>
-    <string name="default_missed_call_template">{HEADER}\n📞 Missed Call\n👤 Caller: {CALLER}\n🕐 Time: {TIME}</string>
+    <string name="missed_call_detailed_title">MISSED CALL</string>
+    <string name="missed_call_caller_icon_label">Caller:</string>
+    <string name="missed_call_time_icon_label">Time:</string>
+    <string name="missed_call_status_icon_label">Status:</string>
+    <string name="default_missed_call_template">{HEADER}\nMissed Call\nCaller: {CALLER}\nTime: {TIME}</string>
 
     <!-- Advanced Settings -->
     <string name="settings_log_level_title">Log Level</string>
@@ -289,6 +289,8 @@ Examples:<br/>
     <string name="sms_permission_description">Required to detect incoming SMS messages</string>
     <string name="send_sms_permission_title">SMS Sending Permission</string>
     <string name="send_sms_permission_description">Required to forward messages to target numbers</string>
+    <string name="notification_permission_title">Notification Permission</string>
+    <string name="notification_permission_description">Required for SMS forwarding status notifications (Android 13+)</string>
     <string name="privacy_note">All your data is stored only on your device. No information is sent outside.</string>
     
     <!-- Target Number Setup Fragment -->

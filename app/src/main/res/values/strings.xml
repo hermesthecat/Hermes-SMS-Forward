@@ -85,16 +85,16 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="settings_missed_call_notifications_summary">Cevapsız çağrıları SMS ile hedef numaralara bildir</string>
     
     <!-- Missed Call Messages -->
-    <string name="missed_call_notification_title">📞 Cevapsız Çağrı</string>
+    <string name="missed_call_notification_title">Cevapsız Çağrı</string>
     <string name="missed_call_caller_label">Arayan:</string>
     <string name="missed_call_time_label">Zaman:</string>
     <string name="missed_call_status_not_answered">Cevaplanmadı</string>
     <string name="missed_call_compact_prefix">Cevapsız çağrı:</string>
-    <string name="missed_call_detailed_title">📞 CEVAPSIZ ÇAĞRI</string>
-    <string name="missed_call_caller_icon_label">👤 Arayan:</string>
-    <string name="missed_call_time_icon_label">🕐 Zaman:</string>
-    <string name="missed_call_status_icon_label">📱 Durum:</string>
-    <string name="default_missed_call_template">{HEADER}\n📞 Cevapsız Arama\n👤 Arayan: {CALLER}\n🕐 Saat: {TIME}</string>
+    <string name="missed_call_detailed_title">CEVAPSIZ ÇAĞRI</string>
+    <string name="missed_call_caller_icon_label">Arayan:</string>
+    <string name="missed_call_time_icon_label">Zaman:</string>
+    <string name="missed_call_status_icon_label">Durum:</string>
+    <string name="default_missed_call_template">{HEADER}\nCevapsız Arama\nArayan: {CALLER}\nSaat: {TIME}</string>
 
     <!-- Advanced Settings -->
     <string name="settings_log_level_title">Log Seviyesi</string>
@@ -304,6 +304,8 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="sms_permission_description">Gelen SMS mesajlarını algılamak için gerekli</string>
     <string name="send_sms_permission_title">SMS Gönderme İzni</string>
     <string name="send_sms_permission_description">Mesajları hedef numaralara yönlendirmek için gerekli</string>
+    <string name="notification_permission_title">Bildirim İzni</string>
+    <string name="notification_permission_description">SMS iletim durumu bildirimleri için gerekli (Android 13+)</string>
     <string name="privacy_note">Tüm verileriniz sadece cihazınızda saklanır. Hiçbir bilgi dışarı gönderilmez.</string>
     
     <!-- Target Number Setup Fragment -->

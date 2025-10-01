@@ -85,16 +85,16 @@ Esempi:<br/>
     <string name="settings_missed_call_notifications_summary">Invia notifiche SMS per chiamate perse ai numeri di destinazione</string>
     
     <!-- Missed Call Messages -->
-    <string name="missed_call_notification_title">📞 Chiamata persa</string>
+    <string name="missed_call_notification_title">Chiamata persa</string>
     <string name="missed_call_caller_label">Chiamante:</string>
     <string name="missed_call_time_label">Ora:</string>
     <string name="missed_call_status_not_answered">Non risposta</string>
     <string name="missed_call_compact_prefix">Chiamata persa:</string>
-    <string name="missed_call_detailed_title">📞 CHIAMATA PERSA</string>
-    <string name="missed_call_caller_icon_label">👤 Chiamante:</string>
-    <string name="missed_call_time_icon_label">🕐 Ora:</string>
-    <string name="missed_call_status_icon_label">📱 Stato:</string>
-    <string name="default_missed_call_template">{HEADER}\n📞 Chiamata persa\n👤 Chiamante: {CALLER}\n🕐 Ora: {TIME}</string>
+    <string name="missed_call_detailed_title">CHIAMATA PERSA</string>
+    <string name="missed_call_caller_icon_label">Chiamante:</string>
+    <string name="missed_call_time_icon_label">Ora:</string>
+    <string name="missed_call_status_icon_label">Stato:</string>
+    <string name="default_missed_call_template">{HEADER}\nChiamata persa\nChiamante: {CALLER}\nOra: {TIME}</string>
 
     <!-- Advanced Settings -->
     <string name="settings_log_level_title">Livello di registro</string>
@@ -289,6 +289,8 @@ Esempi:<br/>
     <string name="sms_permission_description">Necessario per rilevare i messaggi SMS in arrivo</string>
     <string name="send_sms_permission_title">Permesso invio SMS</string>
     <string name="send_sms_permission_description">Necessario per inoltrare i messaggi ai numeri di destinazione</string>
+    <string name="notification_permission_title">Permesso Notifiche</string>
+    <string name="notification_permission_description">Necessario per notifiche stato inoltro SMS (Android 13+)</string>
     <string name="privacy_note">Tutti i tuoi dati sono memorizzati solo sul tuo dispositivo. Nessuna informazione viene inviata all\'esterno.</string>
     
     <!-- Target Number Setup Fragment -->
