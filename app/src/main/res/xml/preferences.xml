@@ -61,11 +61,17 @@
             android:entryValues="@array/date_format_values"
             android:defaultValue="dd/MM/yyyy HH:mm:ss" />
 
-        <!-- Custom Template -->
+        <!-- Custom SMS Template -->
         <Preference
             android:key="custom_sms_template"
             android:title="@string/settings_custom_template_title"
             android:summary="@string/settings_custom_template_summary" />
+
+        <!-- Custom Missed Call Template -->
+        <Preference
+            android:key="custom_missed_call_template"
+            android:title="@string/settings_custom_missed_call_template_title"
+            android:summary="@string/settings_custom_missed_call_template_summary" />
 
         <!-- Format Preview -->
         <Preference

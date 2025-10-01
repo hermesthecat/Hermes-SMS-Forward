@@ -592,8 +592,10 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="settings_include_sim_info_summary">Hangi SIM\'den geldiği ve hangisinden gönderildiği bilgisini ekle</string>
     <string name="settings_date_format_title">Tarih Formatı</string>
     <string name="settings_date_format_summary">Zaman damgası için kullanılacak format</string>
-    <string name="settings_custom_template_title">Özel Şablon</string>
+    <string name="settings_custom_template_title">Özel SMS Şablonu</string>
     <string name="settings_custom_template_summary">Kullanılabilir etiketler: \{HEADER\}, \{SENDER\}, \{MESSAGE\}, \{TIME\}, \{SIM_INFO\}</string>
+    <string name="settings_custom_missed_call_template_title">Özel Cevapsız Arama Şablonu</string>
+    <string name="settings_custom_missed_call_template_summary">Kullanılabilir etiketler: \{HEADER\}, \{CALLER\}, \{TIME\}</string>
     <string name="settings_format_preview_title">Format Önizleme</string>
     <string name="settings_format_preview_summary">Seçili formatın nasıl görüneceğini önizle</string>
     

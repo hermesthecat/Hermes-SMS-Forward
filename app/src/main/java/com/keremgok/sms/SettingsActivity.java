@@ -698,7 +698,7 @@ public class SettingsActivity extends AppCompatActivity {
                 });
             }
             
-            // Initialize custom template preference
+            // Initialize custom SMS template preference
             Preference customTemplatePref = findPreference("custom_sms_template");
             if (customTemplatePref != null) {
                 customTemplatePref.setOnPreferenceClickListener(preference -> {
@@ -706,7 +706,16 @@ public class SettingsActivity extends AppCompatActivity {
                     return true;
                 });
             }
-            
+
+            // Initialize custom missed call template preference
+            Preference customMissedCallTemplatePref = findPreference("custom_missed_call_template");
+            if (customMissedCallTemplatePref != null) {
+                customMissedCallTemplatePref.setOnPreferenceClickListener(preference -> {
+                    showCustomMissedCallTemplateDialog();
+                    return true;
+                });
+            }
+
             // Listen for other formatting preference changes
             String[] formatPrefs = {"custom_header", "include_timestamp", "include_sim_info", "date_format"};
             for (String prefKey : formatPrefs) {
@@ -913,12 +922,120 @@ public class SettingsActivity extends AppCompatActivity {
             try {
                 android.content.SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(requireContext());
                 prefs.edit().putString("custom_sms_template", template).apply();
-                
+
                 Toast.makeText(requireContext(), getString(R.string.custom_template_saved), Toast.LENGTH_SHORT).show();
-                
+
                 // Update format preview
                 updateFormatPreviewSummary();
-                
+
+            } catch (Exception e) {
+                Toast.makeText(requireContext(), getString(R.string.template_save_error) + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        /**
+         * Show custom missed call template dialog
+         */
+        private void showCustomMissedCallTemplateDialog() {
+            View dialogView = getLayoutInflater().inflate(R.layout.dialog_custom_template, null);
+
+            android.widget.EditText etCustomTemplate = dialogView.findViewById(R.id.etCustomTemplate);
+            android.widget.TextView tvTemplatePreview = dialogView.findViewById(R.id.tvTemplatePreview);
+            android.widget.Button btnPreviewTemplate = dialogView.findViewById(R.id.btnPreviewTemplate);
+            android.widget.Button btnResetTemplate = dialogView.findViewById(R.id.btnResetTemplate);
+
+            // Load current template
+            android.content.SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(requireContext());
+            String currentTemplate = prefs.getString("custom_missed_call_template", getDefaultMissedCallTemplate());
+            etCustomTemplate.setText(currentTemplate);
+
+            // Preview button functionality
+            btnPreviewTemplate.setOnClickListener(v -> {
+                String template = etCustomTemplate.getText().toString();
+                if (!android.text.TextUtils.isEmpty(template)) {
+                    String preview = generateMissedCallTemplatePreview(template);
+                    tvTemplatePreview.setText(preview);
+                    tvTemplatePreview.setTextColor(getResources().getColor(android.R.color.black));
+                } else {
+                    tvTemplatePreview.setText(getString(R.string.custom_template_preview_placeholder));
+                    tvTemplatePreview.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                }
+            });
+
+            // Reset button functionality
+            btnResetTemplate.setOnClickListener(v -> {
+                etCustomTemplate.setText(getDefaultMissedCallTemplate());
+                tvTemplatePreview.setText(getString(R.string.custom_template_preview_placeholder));
+                tvTemplatePreview.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            });
+
+            // Show initial preview
+            if (!android.text.TextUtils.isEmpty(currentTemplate)) {
+                String preview = generateMissedCallTemplatePreview(currentTemplate);
+                tvTemplatePreview.setText(preview);
+                tvTemplatePreview.setTextColor(getResources().getColor(android.R.color.black));
+            }
+
+            AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setTitle(getString(R.string.settings_custom_missed_call_template_title))
+                .setView(dialogView)
+                .setPositiveButton(android.R.string.ok, (d, which) -> {
+                    String newTemplate = etCustomTemplate.getText().toString();
+                    saveCustomMissedCallTemplate(newTemplate);
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .create();
+
+            dialog.show();
+        }
+
+        /**
+         * Get default missed call template
+         */
+        private String getDefaultMissedCallTemplate() {
+            return "{HEADER}\n📞 Cevapsız Arama\n👤 Arayan: {CALLER}\n🕐 Saat: {TIME}";
+        }
+
+        /**
+         * Generate missed call template preview
+         */
+        private String generateMissedCallTemplatePreview(String template) {
+            try {
+                // Sample data for preview
+                String sampleCaller = "+905551234567";
+                long sampleTimestamp = System.currentTimeMillis();
+
+                // Use SmsFormatter to generate preview with the custom template
+                android.content.SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(requireContext());
+                String originalTemplate = prefs.getString("custom_missed_call_template", "");
+
+                // Temporarily save the new template
+                prefs.edit().putString("custom_missed_call_template", template).apply();
+
+                // Generate preview
+                SmsFormatter formatter = new SmsFormatter(requireContext());
+                String preview = formatter.formatMissedCall(sampleCaller, sampleTimestamp);
+
+                // Restore original template
+                prefs.edit().putString("custom_missed_call_template", originalTemplate).apply();
+
+                return preview;
+
+            } catch (Exception e) {
+                return getString(R.string.template_preview_error, e.getMessage());
+            }
+        }
+
+        /**
+         * Save custom missed call template
+         */
+        private void saveCustomMissedCallTemplate(String template) {
+            try {
+                android.content.SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(requireContext());
+                prefs.edit().putString("custom_missed_call_template", template).apply();
+
+                Toast.makeText(requireContext(), getString(R.string.custom_template_saved), Toast.LENGTH_SHORT).show();
+
             } catch (Exception e) {
                 Toast.makeText(requireContext(), getString(R.string.template_save_error) + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
