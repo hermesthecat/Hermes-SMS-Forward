@@ -577,7 +577,156 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
             }
         });
     }
-    
+    @Override
+    public void onEdit(TargetNumber targetNumber) {
+        showEditTargetDialog(targetNumber);
+    }
+
+    /**
+     * Show dialog to edit an existing target number
+     * Reuses the same layout as add dialog but pre-fills with existing values
+     */
+    private void showEditTargetDialog(TargetNumber targetNumber) {
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_target_number, null);
+
+        // Get all form fields
+        EditText etPhoneNumber = dialogView.findViewById(R.id.etNewPhoneNumber);
+        EditText etDisplayName = dialogView.findViewById(R.id.etNewDisplayName);
+        CheckBox cbSetPrimary = dialogView.findViewById(R.id.cbSetAsPrimary);
+        CheckBox cbEnabledCheck = dialogView.findViewById(R.id.cbEnabled);
+        RadioGroup radioGroupSimMode = dialogView.findViewById(R.id.radio_group_sim_mode);
+        RadioButton rbSimAuto = dialogView.findViewById(R.id.radio_auto);
+        RadioButton rbSimSource = dialogView.findViewById(R.id.radio_source);
+        RadioButton rbSimSpecific = dialogView.findViewById(R.id.radio_specific);
+        Spinner spinnerSimSelection = dialogView.findViewById(R.id.spinner_sim_selection);
+
+        // Pre-fill existing values
+        etPhoneNumber.setText(targetNumber.getPhoneNumber());
+        etDisplayName.setText(targetNumber.getDisplayName());
+        cbSetPrimary.setChecked(targetNumber.isPrimary());
+        cbEnabledCheck.setChecked(targetNumber.isEnabled());
+
+        // Pre-select SIM mode
+        String simMode = targetNumber.getSimSelectionMode();
+        if (simMode == null || simMode.isEmpty()) {
+            simMode = "auto";
+        }
+
+        switch (simMode.toLowerCase()) {
+            case "source_sim":
+                rbSimSource.setChecked(true);
+                spinnerSimSelection.setVisibility(View.GONE);
+                break;
+            case "specific_sim":
+                rbSimSpecific.setChecked(true);
+                spinnerSimSelection.setVisibility(View.VISIBLE);
+                // Set selected SIM slot
+                int preferredSlot = targetNumber.getPreferredSimSlot();
+                if (preferredSlot >= 0 && preferredSlot < spinnerSimSelection.getCount()) {
+                    spinnerSimSelection.setSelection(preferredSlot);
+                }
+                break;
+            default: // "auto"
+                rbSimAuto.setChecked(true);
+                spinnerSimSelection.setVisibility(View.GONE);
+                break;
+        }
+
+        // Setup radio button listeners
+        radioGroupSimMode.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.radio_specific) {
+                spinnerSimSelection.setVisibility(View.VISIBLE);
+            } else {
+                spinnerSimSelection.setVisibility(View.GONE);
+            }
+        });
+
+        // Check if dual SIM is supported
+        boolean isDualSim = cachedDualSimSupported != null ? cachedDualSimSupported : SimManager.isDualSimSupported(this);
+        if (!isDualSim) {
+            radioGroupSimMode.setVisibility(View.GONE);
+            spinnerSimSelection.setVisibility(View.GONE);
+        } else {
+            radioGroupSimMode.setVisibility(View.VISIBLE);
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView)
+                .setTitle(R.string.target_edit)
+                .setPositiveButton(R.string.target_update, null)
+                .setNegativeButton(android.R.string.cancel, null);
+
+        AlertDialog dialog = builder.create();
+        dialog.setOnShowListener(dialogInterface -> {
+            Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            button.setOnClickListener(view -> {
+                String phoneNumber = etPhoneNumber.getText().toString().trim();
+                String displayName = etDisplayName.getText().toString().trim();
+                boolean isPrimary = cbSetPrimary.isChecked();
+                boolean isEnabled = cbEnabledCheck.isChecked();
+
+                String simSelectionMode = "auto";
+                int preferredSimSlot = -1;
+
+                int checkedRadioId = radioGroupSimMode.getCheckedRadioButtonId();
+                if (checkedRadioId == R.id.radio_source) {
+                    simSelectionMode = "source_sim";
+                } else if (checkedRadioId == R.id.radio_specific) {
+                    simSelectionMode = "specific_sim";
+                    preferredSimSlot = spinnerSimSelection.getSelectedItemPosition();
+                }
+
+                if (updateTargetNumber(targetNumber, phoneNumber, displayName, isPrimary, isEnabled, simSelectionMode, preferredSimSlot)) {
+                    dialog.dismiss();
+                }
+            });
+        });
+
+        dialog.show();
+    }
+
+    /**
+     * Update an existing target number with new values
+     * @return true if update initiated successfully, false if validation failed
+     */
+    private boolean updateTargetNumber(TargetNumber targetNumber, String phoneNumber, String displayName,
+                                       boolean isPrimary, boolean isEnabled, String simSelectionMode, int preferredSimSlot) {
+        // Validate phone number
+        PhoneNumberValidator.ValidationResult result = PhoneNumberValidator.validate(phoneNumber);
+        if (!result.isValid()) {
+            String errorMessage = getValidationMessage(result.getErrorCode());
+            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        // Update the target number object with new values
+        targetNumber.setPhoneNumber(phoneNumber);
+        targetNumber.setDisplayName(displayName);
+        targetNumber.setPrimary(isPrimary);
+        targetNumber.setEnabled(isEnabled);
+        targetNumber.setSimSelectionMode(simSelectionMode);
+        targetNumber.setPreferredSimSlot(preferredSimSlot);
+
+        // Update in database
+        ThreadManager.getInstance().executeDatabase(() -> {
+            // If setting as primary, unset all others first
+            if (isPrimary) {
+                targetNumberDao.setPrimaryTargetNumber(-1);
+                targetNumberDao.update(targetNumber);
+                targetNumberDao.setPrimaryTargetNumber(targetNumber.getId());
+            } else {
+                targetNumberDao.update(targetNumber);
+            }
+
+            runOnUiThread(() -> {
+                loadTargetNumbers();
+                Toast.makeText(this, R.string.target_update_success, Toast.LENGTH_SHORT).show();
+            });
+        });
+
+        return true;
+    }
+
     /**
      * Show single SIM device information in dialog
      */

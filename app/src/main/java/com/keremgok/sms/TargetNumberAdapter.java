@@ -32,6 +32,7 @@ public class TargetNumberAdapter extends RecyclerView.Adapter<TargetNumberAdapte
         void onSetPrimary(TargetNumber targetNumber);
         void onToggleEnabled(TargetNumber targetNumber);
         void onDelete(TargetNumber targetNumber);
+        void onEdit(TargetNumber targetNumber);
     }
 
     public TargetNumberAdapter(Context context, OnTargetNumberActionListener listener) {
@@ -82,6 +83,7 @@ public class TargetNumberAdapter extends RecyclerView.Adapter<TargetNumberAdapte
         private TextView tvSimBadge;
         private Button btnSetPrimary;
         private Button btnToggleEnabled;
+        private Button btnEdit;
         private Button btnDelete;
 
         public TargetNumberViewHolder(@NonNull View itemView) {
@@ -94,6 +96,7 @@ public class TargetNumberAdapter extends RecyclerView.Adapter<TargetNumberAdapte
             tvDisabledBadge = itemView.findViewById(R.id.tvDisabledBadge);
             tvSimBadge = itemView.findViewById(R.id.tvSimBadge);
             btnSetPrimary = itemView.findViewById(R.id.btnSetPrimary);
+            btnEdit = itemView.findViewById(R.id.btnEdit);
             btnToggleEnabled = itemView.findViewById(R.id.btnToggleEnabled);
             btnDelete = itemView.findViewById(R.id.btnDelete);
         }
@@ -151,6 +154,12 @@ public class TargetNumberAdapter extends RecyclerView.Adapter<TargetNumberAdapte
             btnToggleEnabled.setOnClickListener(v -> {
                 if (listener != null) {
                     listener.onToggleEnabled(targetNumber);
+                }
+            });
+            
+            btnEdit.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onEdit(targetNumber);
                 }
             });
             
