@@ -3,6 +3,10 @@ package com.keremgok.sms;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Main Activity - Dashboard for SMS Forwarding App
@@ -46,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize StatisticsManager for analytics tracking
         StatisticsManager.getInstance(this);
+
+        // Schedule periodic database cleanup
+        schedulePeriodicCleanup();
 
         initViews();
         checkPermissions();
@@ -180,5 +188,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         StatisticsManager.getInstance(this).endSession();
+    }
+
+    /**
+     * Schedule periodic database cleanup using WorkManager
+     * Runs once per day to delete old SMS history and analytics events
+     * based on retention period configured in Settings
+     */
+    private void schedulePeriodicCleanup() {
+        // Create constraints: don't run on low battery
+        Constraints constraints = new Constraints.Builder()
+                .setRequiresBatteryNotLow(true)
+                .build();
+
+        // Create periodic work request (runs once per day)
+        PeriodicWorkRequest cleanupWork = new PeriodicWorkRequest.Builder(
+                CleanupWorker.class,
+                1, TimeUnit.DAYS  // Repeat every 24 hours
+        )
+        .setConstraints(constraints)
+        .build();
+
+        // Schedule the work (KEEP policy means don't restart if already scheduled)
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+                "database_cleanup",
+                ExistingPeriodicWorkPolicy.KEEP,
+                cleanupWork
+        );
+
+        android.util.Log.i("MainActivity", "Periodic database cleanup scheduled (runs daily)");
     }
 }

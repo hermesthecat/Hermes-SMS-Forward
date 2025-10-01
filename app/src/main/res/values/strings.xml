@@ -506,6 +506,49 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="language_french">Fransızca</string>
     <string name="language_spanish">İspanyolca</string>
     
+    <!-- Retention Period Settings -->
+    <string name="settings_sms_retention_title">SMS Geçmişi Saklama Süresi</string>
+    <string name="settings_sms_retention_summary">Eski SMS kayıtları otomatik olarak silinir</string>
+    <string name="settings_analytics_retention_title">Analitik Verisi Saklama Süresi</string>
+    <string name="settings_analytics_retention_summary">Eski analitik kayıtları otomatik olarak silinir</string>
+
+    <!-- Retention Period Values -->
+    <string-array name="retention_period_entries">
+        <item>7 Gün</item>
+        <item>15 Gün</item>
+        <item>30 Gün (Önerilen)</item>
+        <item>60 Gün</item>
+        <item>90 Gün</item>
+        <item>Hiçbir Zaman</item>
+    </string-array>
+
+    <string-array name="retention_period_values">
+        <item>7</item>
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>90</item>
+        <item>0</item>
+    </string-array>
+
+    <string-array name="analytics_retention_entries">
+        <item>30 Gün</item>
+        <item>60 Gün</item>
+        <item>90 Gün (Önerilen)</item>
+        <item>180 Gün</item>
+        <item>365 Gün</item>
+        <item>Hiçbir Zaman</item>
+    </string-array>
+
+    <string-array name="analytics_retention_values">
+        <item>30</item>
+        <item>60</item>
+        <item>90</item>
+        <item>180</item>
+        <item>365</item>
+        <item>0</item>
+    </string-array>
+
     <!-- Log Level Strings -->
     <string name="log_level_error">Hata</string>
     <string name="log_level_warning">Uyarı</string>

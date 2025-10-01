@@ -36,9 +36,6 @@ public class HistoryActivity extends AppCompatActivity {
         setupRecyclerView();
         setupSwipeRefresh();
         loadHistoryData();
-        
-        // Perform auto cleanup on history view
-        AppDatabase.performAutoCleanup(this);
     }
     
     /**

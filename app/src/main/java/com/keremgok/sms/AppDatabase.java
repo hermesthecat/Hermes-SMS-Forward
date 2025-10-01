@@ -410,27 +410,55 @@ public abstract class AppDatabase extends RoomDatabase {
     }
     
     /**
-     * Perform automatic cleanup of old records (30+ days old)
+     * Perform automatic cleanup of old records with configurable retention periods
      * Should be called periodically in optimized background thread
      * @param context Application context
+     * @deprecated Use CleanupWorker with WorkManager for scheduled cleanup instead
      */
+    @Deprecated
     public static void performAutoCleanup(Context context) {
         ThreadManager.getInstance().executeBackground(() -> {
+            android.util.Log.i("AppDatabase", "performAutoCleanup is deprecated - use CleanupWorker instead");
+
             AppDatabase db = getInstance(context);
-            long thirtyDaysAgo = System.currentTimeMillis() - (30L * 24 * 60 * 60 * 1000); // 30 days in milliseconds
-            
-            // Clean up SMS history
-            int deletedSmsCount = db.smsHistoryDao().deleteOldRecords(thirtyDaysAgo);
-            
-            // Clean up analytics events (keep 90 days for analytics)
-            long ninetyDaysAgo = System.currentTimeMillis() - (90L * 24 * 60 * 60 * 1000);
-            int deletedAnalyticsCount = db.analyticsEventDao().deleteOldEvents(ninetyDaysAgo);
-            
-            if (deletedSmsCount > 0) {
-                android.util.Log.i("AppDatabase", "Auto cleanup: Deleted " + deletedSmsCount + " old SMS history records");
+            android.content.SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(context);
+
+            // Get retention periods from settings (default: 30 days for SMS, 90 days for analytics)
+            String smsRetentionStr = prefs.getString("pref_sms_retention_days", "30");
+            String analyticsRetentionStr = prefs.getString("pref_analytics_retention_days", "90");
+
+            int smsRetentionDays = 30;
+            int analyticsRetentionDays = 90;
+
+            try {
+                smsRetentionDays = Integer.parseInt(smsRetentionStr);
+            } catch (NumberFormatException e) {
+                android.util.Log.w("AppDatabase", "Invalid SMS retention value, using default: 30");
             }
-            if (deletedAnalyticsCount > 0) {
-                android.util.Log.i("AppDatabase", "Auto cleanup: Deleted " + deletedAnalyticsCount + " old analytics events");
+
+            try {
+                analyticsRetentionDays = Integer.parseInt(analyticsRetentionStr);
+            } catch (NumberFormatException e) {
+                android.util.Log.w("AppDatabase", "Invalid analytics retention value, using default: 90");
+            }
+
+            // Skip cleanup if retention is set to 0 (never delete)
+            if (smsRetentionDays > 0) {
+                long smsRetentionTimestamp = System.currentTimeMillis() - (smsRetentionDays * 24L * 60 * 60 * 1000);
+                int deletedSmsCount = db.smsHistoryDao().deleteOldRecords(smsRetentionTimestamp);
+
+                if (deletedSmsCount > 0) {
+                    android.util.Log.i("AppDatabase", "Auto cleanup: Deleted " + deletedSmsCount + " old SMS history records (>" + smsRetentionDays + " days)");
+                }
+            }
+
+            if (analyticsRetentionDays > 0) {
+                long analyticsRetentionTimestamp = System.currentTimeMillis() - (analyticsRetentionDays * 24L * 60 * 60 * 1000);
+                int deletedAnalyticsCount = db.analyticsEventDao().deleteOldEvents(analyticsRetentionTimestamp);
+
+                if (deletedAnalyticsCount > 0) {
+                    android.util.Log.i("AppDatabase", "Auto cleanup: Deleted " + deletedAnalyticsCount + " old analytics events (>" + analyticsRetentionDays + " days)");
+                }
             }
         });
     }

@@ -147,6 +147,24 @@
             android:title="@string/settings_restore_title"
             android:summary="@string/settings_restore_summary" />
 
+        <!-- SMS History Retention Period -->
+        <ListPreference
+            android:key="pref_sms_retention_days"
+            android:title="@string/settings_sms_retention_title"
+            android:summary="@string/settings_sms_retention_summary"
+            android:entries="@array/retention_period_entries"
+            android:entryValues="@array/retention_period_values"
+            android:defaultValue="30" />
+
+        <!-- Analytics Retention Period -->
+        <ListPreference
+            android:key="pref_analytics_retention_days"
+            android:title="@string/settings_analytics_retention_title"
+            android:summary="@string/settings_analytics_retention_summary"
+            android:entries="@array/analytics_retention_entries"
+            android:entryValues="@array/analytics_retention_values"
+            android:defaultValue="90" />
+
     </PreferenceCategory>
 
     <!-- Dual SIM Settings Category -->
