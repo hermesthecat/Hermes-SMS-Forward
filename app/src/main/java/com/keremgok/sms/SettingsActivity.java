@@ -884,7 +884,7 @@ public class SettingsActivity extends AppCompatActivity {
             try {
                 // Sample data for preview
                 String sampleSender = "+905551234567";
-                String sampleMessage = getString(R.string.sample_message_turkish);
+                String sampleMessage = getString(R.string.sample_message);
                 long sampleTimestamp = System.currentTimeMillis();
                 
                 // Use SmsFormatter to generate preview with the custom template

@@ -614,7 +614,7 @@ Examples:<br/>
     <string name="format_custom">Custom</string>
     <string name="current_format_preview">Current format: %1$s - Click to preview</string>
     <string name="default_sms_template">[{HEADER}]\nFrom: {SENDER}\nMessage: {MESSAGE}\nTime: {TIME}\n{SIM_INFO}</string>
-    <string name="sample_message_turkish">Bu bir örnek SMS mesajıdır</string>
+    <string name="sample_message">This is a sample SMS message</string>
     <string name="template_preview_error">Template preview error: %s</string>
 
 </resources>
