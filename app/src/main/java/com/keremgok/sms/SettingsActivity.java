@@ -874,14 +874,7 @@ public class SettingsActivity extends AppCompatActivity {
          * Get default template based on language
          */
         private String getDefaultTemplate() {
-            String currentLanguage = getResources().getConfiguration().locale.getLanguage();
-            boolean isTurkish = "tr".equals(currentLanguage);
-            
-            if (isTurkish) {
-                return getString(R.string.template_header_turkish);
-            } else {
-                return getString(R.string.template_header_english);
-            }
+            return getString(R.string.default_sms_template);
         }
         
         /**

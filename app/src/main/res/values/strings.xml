@@ -661,6 +661,7 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="current_format_preview">Mevcut format: %1$s - Önizleme için tıklayın</string>
     <string name="template_header_turkish">[{HEADER}]\nGönderen: {SENDER}\nMesaj: {MESSAGE}\nZaman: {TIME}\n{SIM_INFO}</string>
     <string name="template_header_english">[{HEADER}]\nFrom: {SENDER}\nMessage: {MESSAGE}\nTime: {TIME}\n{SIM_INFO}</string>
+    <string name="default_sms_template">[{HEADER}]\nGönderen: {SENDER}\nMesaj: {MESSAGE}\nZaman: {TIME}\n{SIM_INFO}</string>
     <string name="sample_message_turkish">Bu bir örnek SMS mesajıdır</string>
     <string name="template_preview_error">Template önizleme hatası: %s</string>
 

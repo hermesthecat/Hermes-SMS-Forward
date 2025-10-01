@@ -615,6 +615,7 @@ Beispiele:<br/>
     <string name="current_format_preview">Aktuelles Format: %1$s - Klicken für Vorschau</string>
     <string name="template_header_turkish">[{HEADER}]\nGönderen: {SENDER}\nMesaj: {MESSAGE}\nZaman: {TIME}\n{SIM_INFO}</string>
     <string name="template_header_english">[{HEADER}]\nVon: {SENDER}\nNachricht: {MESSAGE}\nZeit: {TIME}\n{SIM_INFO}</string>
+    <string name="default_sms_template">[{HEADER}]\nVon: {SENDER}\nNachricht: {MESSAGE}\nZeit: {TIME}\n{SIM_INFO}</string>
     <string name="sample_message_turkish">Das ist eine Beispiel-SMS-Nachricht</string>
     <string name="template_preview_error">Vorlagen-Vorschaufehler: %s</string>
 
