@@ -6,9 +6,6 @@
     <string name="save_button">Save and Start</string>
     <string name="status_not_configured">Status: Not Configured</string>
     <string name="status_configured">Status: Active - Forwarding is working</string>
-    <string name="permissions_required">SMS permissions required</string>
-    <string name="permissions_granted">Permissions granted</string>
-    <string name="error_empty_number">Please enter a valid phone number</string>
     <string name="success_saved">Settings saved!</string>
     
     <!-- Phone Number Validation Errors -->
@@ -20,10 +17,6 @@
     <string name="validation_success">Valid phone number</string>
     
     <!-- SMS Error Handling -->
-    <string name="sms_send_failed">SMS send failed</string>
-    <string name="sms_send_retry">Retrying SMS send</string>
-    <string name="sms_send_final_failure">SMS send permanently failed</string>
-    <string name="sms_service_unavailable">SMS service unavailable</string>
     
     <!-- Single SIM Messages -->
     <string name="single_sim_device_info">This device supports single SIM</string>
@@ -74,8 +67,6 @@ Examples:<br/>
     <!-- Forwarding Settings -->
     <string name="settings_forwarding_enabled_title">Enable SMS Forwarding</string>
     <string name="settings_forwarding_enabled_summary">Activates automatic forwarding of incoming SMS messages</string>
-    <string name="settings_target_number_title">Target Phone Number</string>
-    <string name="settings_target_number_summary">Number to forward SMS to - Can be changed on main screen</string>
     <string name="settings_sms_format_title">SMS Format Style</string>
     <string name="settings_sms_format_summary">Choose how forwarded SMS messages will be formatted</string>
     <string name="settings_forwarding_delay_title">Forwarding Delay</string>
@@ -117,12 +108,6 @@ Examples:<br/>
     <string name="settings_version_summary">Hermes SMS Forward</string>
     <string name="settings_developer_title">Developer</string>
     <string name="settings_developer_summary">Kerem GÖK</string>
-    <string name="settings_privacy_title">Privacy Policy</string>
-    <string name="settings_privacy_summary">View our data processing and privacy policy</string>
-    <string name="settings_github_title">Source Code</string>
-    <string name="settings_github_summary">View project repository on GitHub</string>
-    <string name="settings_feedback_title">Send Feedback</string>
-    <string name="settings_feedback_summary">Share your suggestions and issues with us</string>
     
     <!-- SMS Format Options -->
     <string-array name="sms_format_entries">
@@ -168,7 +153,6 @@ Examples:<br/>
     
     <!-- History Loading Messages -->
     <string name="history_load_error">Error loading history</string>
-    <string name="history_no_records_message">No SMS history found</string>
     
     <!-- History Clear Operations -->
     <string name="history_clear_title">Clear History</string>
@@ -205,7 +189,6 @@ Examples:<br/>
     <string name="sending_mode">Sending Mode</string>
     
     <!-- Target Number Operations -->
-    <string name="target_edit">Edit</string>
     <string name="target_delete">Delete</string>
     <string name="target_set_primary">Set Primary</string>
     <string name="target_toggle_enabled">Toggle Enabled</string>
@@ -250,7 +233,6 @@ Examples:<br/>
     <string name="backup_error">Error creating backup</string>
     
     <string name="restore_select_title">Restore Backup</string>
-    <string name="restore_select_message">Select the backup file you want to restore:</string>
     <string name="restore_no_backups">No backup files found yet</string>
     <string name="restore_mode_title">Restore Mode</string>
     <string name="restore_mode_message">How should existing data be handled?</string>
@@ -264,34 +246,22 @@ Examples:<br/>
     <string name="restore_error">Error during restore</string>
     <string name="restore_validation_error">Invalid backup file: %s</string>
     
-    <string name="backup_file_browser_title">Select Backup File</string>
-    <string name="backup_file_not_found">File not found</string>
-    <string name="backup_permission_error">File permission error</string>
     
     <!-- Accessibility Content Descriptions -->
     <string name="cd_app_logo">Hermes SMS Forward application logo</string>
     <string name="cd_target_number_input">Target phone number input field</string>
     <string name="cd_save_button">Save settings and start forwarding</string>
-    <string name="cd_menu_button">Open main menu</string>
-    <string name="cd_back_button">Go back to previous screen</string>
     <string name="cd_refresh_button">Refresh current content</string>
-    <string name="cd_search_button">Search content</string>
-    <string name="cd_filter_button">Filter content</string>
-    <string name="cd_add_button">Add new item</string>
     <string name="cd_edit_button">Edit this item</string>
     <string name="cd_delete_button">Delete this item</string>
     <string name="cd_toggle_button">Toggle this option</string>
     <string name="cd_export_button">Export data</string>
-    <string name="cd_import_button">Import data</string>
     <string name="cd_status_indicator">Current status indicator</string>
-    <string name="cd_permission_indicator">Permission status indicator</string>
     <string name="cd_validation_message">Input validation message</string>
     <string name="cd_progress_bar">Operation progress indicator</string>
     <string name="cd_success_icon">Success status icon</string>
     <string name="cd_error_icon">Error status icon</string>
-    <string name="cd_warning_icon">Warning status icon</string>
     <string name="cd_info_icon">Information icon</string>
-    <string name="cd_analytics_chart">Analytics data chart</string>
     <string name="cd_statistics_card">Statistics information card</string>
     
     <!-- Onboarding System -->
@@ -383,7 +353,6 @@ Examples:<br/>
     <string name="clear_analytics_confirmation_message">Are you sure you want to clear all analytics data? This action cannot be undone.</string>
     <string name="clear_button">Clear</string>
     <string name="cancel_button">Cancel</string>
-    <string name="last_updated_format">Last updated: %s</string>
     
     <!-- Filter Placeholders -->
     <string name="filter_name_placeholder">Filter Name</string>
@@ -402,7 +371,6 @@ Examples:<br/>
     <string name="target_disable">Disable</string>
     
     <!-- Filter Adapter Dynamic Text -->
-    <string name="filter_no_pattern_specified">No pattern specified</string>
     <string name="filter_pattern_prefix">Pattern: </string>
     <string name="filter_regex_suffix"> (regex)</string>
     <string name="filter_last_prefix">Last: </string>
@@ -410,23 +378,12 @@ Examples:<br/>
     <string name="filter_case_sensitive_suffix"> (case-sensitive)</string>
     <string name="filter_last_never">Last: Never</string>
     <string name="no_pattern_specified">No pattern specified</string>
-    <string name="last_matched_format">Last: %s</string>
-    <string name="last_matched_never">Last: Never</string>
     <string name="disable_button">Disable</string>
     <string name="enable_button">Enable</string>
     
     <!-- Target Number Placeholders -->
-    <string name="display_name_placeholder">Display Name</string>
-    <string name="phone_number_placeholder">+905551234567</string>
-    <string name="last_used_placeholder">Last used: 2 hours ago</string>
-    <string name="last_used_format">Last used: %s</string>
-    <string name="not_used_yet">Not used yet</string>
     
     <!-- Onboarding Placeholders -->
-    <string name="step_number_one">1</string>
-    <string name="step_number_two">2</string>
-    <string name="step_number_three">3</string>
-    <string name="progress_indicator_placeholder">1 / 5</string>
     
     <!-- Permission Labels -->
     <string name="required_permissions_title">Required Permissions:</string>
@@ -437,19 +394,15 @@ Examples:<br/>
     <!-- General Messages -->
     <string name="permissions_granted_message">Permissions granted. You can now save the target number.</string>
     <string name="sms_permissions_required">SMS permissions required!</string>
-    <string name="edit_functionality_coming_soon">Edit functionality coming soon</string>
     
     <!-- Additional Dual SIM Strings (AŞAMA 8.3) - English -->
     <string name="sim_auto">Automatic</string>
-    <string name="sim_source">Source SIM</string>
-    <string name="sim_specific">Specific SIM</string>
     
     <!-- Filter Type Strings -->
     <string name="filter_type_keyword">Keyword</string>
     <string name="filter_type_sender_number">Sender Number</string>
     <string name="filter_type_whitelist">Whitelist</string>
     <string name="filter_type_blacklist">Blacklist</string>
-    <string name="filter_type_spam_detection">Spam Detection</string>
     <string name="filter_type_sim_based">SIM Based</string>
     
     <!-- Filter Related Strings -->
@@ -539,9 +492,6 @@ Examples:<br/>
     <string name="history_showing_source_sim_filter">Showing messages from %s source SIM</string>
     
     <!-- SMS Formatting Settings -->
-    <string name="settings_category_sms_formatting">SMS Formatting</string>
-    <string name="settings_sms_format_type_title">SMS Format Type</string>
-    <string name="settings_sms_format_type_summary">Choose the formatting type for forwarded SMS messages</string>
     <string name="settings_custom_header_title">Custom Header</string>
     <string name="settings_custom_header_summary">Custom header to appear in SMS messages</string>
     <string name="settings_include_timestamp_title">Include Timestamp</string>
@@ -637,7 +587,7 @@ Examples:<br/>
     <string name="sim_2">SIM 2</string>
     <string name="sim_not_available">SIM not available</string>
     <string name="dual_sim_not_supported">Dual SIM not supported</string>
-    <string name="sim_card_format" formatted="false">%s (%s)</string>
+    <string name="sim_card_format">%1$s (%2$s)</string>
     <string name="sim_slot_format">SIM %d</string>
     <string name="sim_selection_info">Select which SIM card to use for this target</string>
     <string name="sim_selection_dialog_info">Select the SIM card you want to use:</string>

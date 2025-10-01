@@ -3,6 +3,7 @@ package com.keremgok.sms;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.text.Editable;
@@ -86,6 +87,11 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
      */
     private void initDatabase() {
         database = AppDatabase.getInstance(this);
+        if (database == null) {
+            Toast.makeText(this, R.string.error_database_init_failed, Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
         filterDao = database.smsFilterDao();
     }
     
@@ -441,7 +447,7 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
      */
     private void showValidationSuccess() {
         tvValidationMessage.setText(getString(R.string.filter_validation_passed));
-        tvValidationMessage.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+        tvValidationMessage.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_dark));
         tvValidationMessage.setVisibility(View.VISIBLE);
     }
     
@@ -450,7 +456,7 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
      */
     private void showValidationError(String message) {
         tvValidationMessage.setText(message);
-        tvValidationMessage.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+        tvValidationMessage.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
         tvValidationMessage.setVisibility(View.VISIBLE);
     }
     
@@ -622,10 +628,10 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
                         if (result.getMatchedFilter() != null && result.getMatchedFilter().getId() == filter.getId()) {
                             String resultText = getString(R.string.filter_test_result_match, result.getMatchedFilter().getAction());
                             tvTestResult.setText(resultText);
-                            tvTestResult.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+                            tvTestResult.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_dark));
                         } else {
                             tvTestResult.setText(R.string.filter_test_result_no_match);
-                            tvTestResult.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+                            tvTestResult.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
                         }
                         tvTestResult.setVisibility(View.VISIBLE);
                     });
@@ -633,7 +639,7 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
                     Log.e("FilterRulesActivity", "Error testing filter: " + e.getMessage(), e);
                     runOnUiThread(() -> {
                         tvTestResult.setText(R.string.filter_test_result_error);
-                        tvTestResult.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+                        tvTestResult.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
                         tvTestResult.setVisibility(View.VISIBLE);
                     });
                 }
@@ -693,7 +699,12 @@ public class FilterRulesActivity extends AppCompatActivity implements FilterRule
     private SpannableStringBuilder createFormattedHelpText() {
         // Use string resource instead of hardcoded text
         String helpContent = getString(R.string.filter_help_content);
-        return new SpannableStringBuilder(android.text.Html.fromHtml(helpContent, android.text.Html.FROM_HTML_MODE_LEGACY));
+        // API level check for Html.fromHtml
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            return new SpannableStringBuilder(android.text.Html.fromHtml(helpContent, android.text.Html.FROM_HTML_MODE_LEGACY));
+        } else {
+            return new SpannableStringBuilder(android.text.Html.fromHtml(helpContent));
+        }
     }
     
     /**

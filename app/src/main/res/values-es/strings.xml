@@ -6,9 +6,6 @@
     <string name="save_button">Guardar e iniciar</string>
     <string name="status_not_configured">Estado: No configurado</string>
     <string name="status_configured">Estado: Activo - El reenvío está funcionando</string>
-    <string name="permissions_required">Permisos SMS requeridos</string>
-    <string name="permissions_granted">Permisos otorgados</string>
-    <string name="error_empty_number">Por favor, introduzca un número de teléfono válido</string>
     <string name="success_saved">¡Configuración guardada!</string>
     
     <!-- Phone Number Validation Errors -->
@@ -20,10 +17,6 @@
     <string name="validation_success">Número de teléfono válido</string>
     
     <!-- SMS Error Handling -->
-    <string name="sms_send_failed">Error en el envío de SMS</string>
-    <string name="sms_send_retry">Reintentando envío de SMS</string>
-    <string name="sms_send_final_failure">Error permanente en el envío de SMS</string>
-    <string name="sms_service_unavailable">Servicio SMS no disponible</string>
     
     <!-- Single SIM Messages -->
     <string name="single_sim_device_info">Este dispositivo soporta SIM única</string>
@@ -74,8 +67,6 @@ Ejemplos:<br/>
     <!-- Forwarding Settings -->
     <string name="settings_forwarding_enabled_title">Habilitar reenvío de SMS</string>
     <string name="settings_forwarding_enabled_summary">Activa el reenvío automático de mensajes SMS entrantes</string>
-    <string name="settings_target_number_title">Número de teléfono de destino</string>
-    <string name="settings_target_number_summary">Número al que reenviar SMS - Se puede cambiar en la pantalla principal</string>
     <string name="settings_sms_format_title">Estilo de formato SMS</string>
     <string name="settings_sms_format_summary">Elige cómo se formatearán los mensajes SMS reenviados</string>
     <string name="settings_forwarding_delay_title">Retraso de reenvío</string>
@@ -117,12 +108,6 @@ Ejemplos:<br/>
     <string name="settings_version_summary">Hermes SMS Forward</string>
     <string name="settings_developer_title">Desarrollador</string>
     <string name="settings_developer_summary">Kerem GÖK</string>
-    <string name="settings_privacy_title">Política de privacidad</string>
-    <string name="settings_privacy_summary">Ver nuestra política de procesamiento de datos y privacidad</string>
-    <string name="settings_github_title">Código fuente</string>
-    <string name="settings_github_summary">Ver repositorio del proyecto en GitHub</string>
-    <string name="settings_feedback_title">Enviar comentarios</string>
-    <string name="settings_feedback_summary">Comparte tus sugerencias y problemas con nosotros</string>
     
     <!-- SMS Format Options -->
     <string-array name="sms_format_entries">
@@ -168,7 +153,6 @@ Ejemplos:<br/>
     
     <!-- History Loading Messages -->
     <string name="history_load_error">Error al cargar historial</string>
-    <string name="history_no_records_message">No se encontró historial de SMS</string>
     
     <!-- History Clear Operations -->
     <string name="history_clear_title">Limpiar historial</string>
@@ -205,7 +189,6 @@ Ejemplos:<br/>
     <string name="sending_mode">Modo de envío</string>
     
     <!-- Target Number Operations -->
-    <string name="target_edit">Editar</string>
     <string name="target_delete">Eliminar</string>
     <string name="target_set_primary">Establecer principal</string>
     <string name="target_toggle_enabled">Alternar habilitado</string>
@@ -250,7 +233,6 @@ Ejemplos:<br/>
     <string name="backup_error">Error al crear copia de seguridad</string>
     
     <string name="restore_select_title">Restaurar copia de seguridad</string>
-    <string name="restore_select_message">Selecciona el archivo de copia que deseas restaurar:</string>
     <string name="restore_no_backups">No se encontraron archivos de copia aún</string>
     <string name="restore_mode_title">Modo de restauración</string>
     <string name="restore_mode_message">¿Cómo se deben manejar los datos existentes?</string>
@@ -264,34 +246,22 @@ Ejemplos:<br/>
     <string name="restore_error">Error durante la restauración</string>
     <string name="restore_validation_error">Archivo de copia inválido: %s</string>
     
-    <string name="backup_file_browser_title">Seleccionar archivo de copia</string>
-    <string name="backup_file_not_found">Archivo no encontrado</string>
-    <string name="backup_permission_error">Error de permisos de archivo</string>
     
     <!-- Accessibility Content Descriptions -->
     <string name="cd_app_logo">Logo de la aplicación Hermes SMS Forward</string>
     <string name="cd_target_number_input">Campo de entrada de número de teléfono de destino</string>
     <string name="cd_save_button">Guardar configuración e iniciar reenvío</string>
-    <string name="cd_menu_button">Abrir menú principal</string>
-    <string name="cd_back_button">Volver a la pantalla anterior</string>
     <string name="cd_refresh_button">Actualizar contenido actual</string>
-    <string name="cd_search_button">Buscar contenido</string>
-    <string name="cd_filter_button">Filtrar contenido</string>
-    <string name="cd_add_button">Agregar nuevo elemento</string>
     <string name="cd_edit_button">Editar este elemento</string>
     <string name="cd_delete_button">Eliminar este elemento</string>
     <string name="cd_toggle_button">Alternar esta opción</string>
     <string name="cd_export_button">Exportar datos</string>
-    <string name="cd_import_button">Importar datos</string>
     <string name="cd_status_indicator">Indicador de estado actual</string>
-    <string name="cd_permission_indicator">Indicador de estado de permisos</string>
     <string name="cd_validation_message">Mensaje de validación de entrada</string>
     <string name="cd_progress_bar">Indicador de progreso de operación</string>
     <string name="cd_success_icon">Icono de estado exitoso</string>
     <string name="cd_error_icon">Icono de estado de error</string>
-    <string name="cd_warning_icon">Icono de advertencia</string>
     <string name="cd_info_icon">Icono de información</string>
-    <string name="cd_analytics_chart">Gráfico de datos de análisis</string>
     <string name="cd_statistics_card">Tarjeta de información estadística</string>
     
     <!-- Onboarding System -->
@@ -383,7 +353,6 @@ Ejemplos:<br/>
     <string name="clear_analytics_confirmation_message">¿Está seguro de que desea eliminar todos los datos de análisis? Esta acción no se puede deshacer.</string>
     <string name="clear_button">Limpiar</string>
     <string name="cancel_button">Cancelar</string>
-    <string name="last_updated_format">Última actualización: %s</string>
     
     <!-- Filter Placeholders -->
     <string name="filter_name_placeholder">Nombre del filtro</string>
@@ -402,7 +371,6 @@ Ejemplos:<br/>
     <string name="target_disable">Deshabilitar</string>
     
     <!-- Filter Adapter Dynamic Text -->
-    <string name="filter_no_pattern_specified">Sin patrón especificado</string>
     <string name="filter_pattern_prefix">Patrón: </string>
     <string name="filter_regex_suffix"> (regex)</string>
     <string name="filter_last_prefix">Último: </string>
@@ -410,23 +378,12 @@ Ejemplos:<br/>
     <string name="filter_case_sensitive_suffix"> (sensible a mayúsculas)</string>
     <string name="filter_last_never">Último: Nunca</string>
     <string name="no_pattern_specified">Sin patrón especificado</string>
-    <string name="last_matched_format">Último: %s</string>
-    <string name="last_matched_never">Último: Nunca</string>
     <string name="disable_button">Deshabilitar</string>
     <string name="enable_button">Habilitar</string>
     
     <!-- Target Number Placeholders -->
-    <string name="display_name_placeholder">Nombre a mostrar</string>
-    <string name="phone_number_placeholder">+34612345678</string>
-    <string name="last_used_placeholder">Último uso: hace 2 horas</string>
-    <string name="last_used_format">Último uso: %s</string>
-    <string name="not_used_yet">Sin usar aún</string>
     
     <!-- Onboarding Placeholders -->
-    <string name="step_number_one">1</string>
-    <string name="step_number_two">2</string>
-    <string name="step_number_three">3</string>
-    <string name="progress_indicator_placeholder">1 / 5</string>
     
     <!-- Permission Labels -->
     <string name="required_permissions_title">Permisos requeridos:</string>
@@ -437,19 +394,15 @@ Ejemplos:<br/>
     <!-- General Messages -->
     <string name="permissions_granted_message">Permisos otorgados. Ahora puedes guardar el número de destino.</string>
     <string name="sms_permissions_required">¡Permisos SMS requeridos!</string>
-    <string name="edit_functionality_coming_soon">Funcionalidad de edición próximamente</string>
     
     <!-- Additional Dual SIM Strings (AŞAMA 8.3) - Spanish -->
     <string name="sim_auto">Automático</string>
-    <string name="sim_source">SIM de origen</string>
-    <string name="sim_specific">SIM específica</string>
     
     <!-- Filter Type Strings -->
     <string name="filter_type_keyword">Palabra clave</string>
     <string name="filter_type_sender_number">Número de remitente</string>
     <string name="filter_type_whitelist">Lista blanca</string>
     <string name="filter_type_blacklist">Lista negra</string>
-    <string name="filter_type_spam_detection">Detección de spam</string>
     <string name="filter_type_sim_based">Basado en SIM</string>
     
     <!-- Filter Related Strings -->
@@ -539,9 +492,6 @@ Ejemplos:<br/>
     <string name="history_showing_source_sim_filter">Mostrando mensajes de SIM de origen %s</string>
     
     <!-- SMS Formatting Settings -->
-    <string name="settings_category_sms_formatting">Formato de SMS</string>
-    <string name="settings_sms_format_type_title">Tipo de formato SMS</string>
-    <string name="settings_sms_format_type_summary">Elige el tipo de formato para los mensajes SMS reenviados</string>
     <string name="settings_custom_header_title">Encabezado personalizado</string>
     <string name="settings_custom_header_summary">Encabezado personalizado para aparecer en los mensajes SMS</string>
     <string name="settings_include_timestamp_title">Incluir marca de tiempo</string>
@@ -637,7 +587,7 @@ Ejemplos:<br/>
     <string name="sim_2">SIM 2</string>
     <string name="sim_not_available">SIM no disponible</string>
     <string name="dual_sim_not_supported">SIM dual no compatible</string>
-    <string name="sim_card_format" formatted="false">%s (%s)</string>
+    <string name="sim_card_format">%1$s (%2$s)</string>
     <string name="sim_slot_format">SIM %d</string>
     <string name="sim_selection_info">Selecciona qué tarjeta SIM usar para este destino</string>
     <string name="sim_selection_dialog_info">Selecciona la tarjeta SIM que deseas usar:</string>

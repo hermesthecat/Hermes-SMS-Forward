@@ -19,76 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvTargetLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/target_number_label"
-        android:textSize="16sp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvDescription" />
-
-    <EditText
-        android:id="@+id/etTargetNumber"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/target_number_hint"
-        android:inputType="phone"
-        android:layout_marginTop="8dp"
-        android:contentDescription="@string/cd_target_number_input"
-        android:importantForAccessibility="yes"
-        android:accessibilityTraversalAfter="@id/tvTargetLabel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTargetLabel" />
-
-    <TextView
-        android:id="@+id/tvValidation"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="12sp"
-        android:textColor="@color/hermes_error"
-        android:gravity="start"
-        android:layout_marginTop="4dp"
-        android:visibility="gone"
-        android:contentDescription="@string/cd_validation_message"
-        android:importantForAccessibility="yes"
-        android:accessibilityLiveRegion="polite"
-        android:accessibilityTraversalAfter="@id/etTargetNumber"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etTargetNumber" />
-
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/save_button"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/cd_save_button"
-        android:importantForAccessibility="yes"
-        android:accessibilityTraversalAfter="@id/etTargetNumber"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvValidation" />
-
-    <TextView
-        android:id="@+id/tvStatus"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/status_not_configured"
-        android:textSize="14sp"
-        android:gravity="center"
-        android:layout_marginTop="24dp"
-        android:contentDescription="@string/cd_status_indicator"
-        android:importantForAccessibility="yes"
-        android:accessibilityLiveRegion="polite"
-        android:accessibilityTraversalAfter="@id/btnSave"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnSave" />
 
     <LinearLayout
         android:id="@+id/llPermissions"
@@ -100,7 +30,7 @@
         android:background="@drawable/rounded_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvStatus">
+        app:layout_constraintTop_toBottomOf="@id/tvDescription">
 
         <TextView
             android:id="@+id/tvPermissionsTitle"

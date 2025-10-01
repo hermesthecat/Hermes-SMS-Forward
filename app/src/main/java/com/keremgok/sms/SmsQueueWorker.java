@@ -488,8 +488,11 @@ public class SmsQueueWorker extends Worker {
         // Use timestamp and target as unique identifier
         int requestCode = (int) ((timestamp % 100000) + targetNumber.hashCode() % 1000);
         
-        return PendingIntent.getBroadcast(getApplicationContext(), requestCode, intent, 
-                                         PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            flags |= PendingIntent.FLAG_IMMUTABLE;
+        }
+        return PendingIntent.getBroadcast(getApplicationContext(), requestCode, intent, flags);
     }
     
     /**
@@ -499,10 +502,11 @@ public class SmsQueueWorker extends Worker {
         Intent intent = new Intent(getApplicationContext(), SmsCallbackReceiver.class);
         intent.setAction("SMS_DELIVERED");
         intent.putExtra("targetNumber", targetNumber);
-        
         int requestCode = (int) (System.currentTimeMillis() % 100000 + targetNumber.hashCode() % 1000);
-        
-        return PendingIntent.getBroadcast(getApplicationContext(), requestCode, intent, 
-                                         PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            flags |= PendingIntent.FLAG_IMMUTABLE;
+        }
+        return PendingIntent.getBroadcast(getApplicationContext(), requestCode, intent, flags);
     }
 }

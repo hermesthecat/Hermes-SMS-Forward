@@ -181,10 +181,15 @@ public class SmsReceiver extends BroadcastReceiver {
             // Parse all SMS parts
             for (Object pdu : pdus) {
                 SmsMessage smsMessage;
-                // Always use the format parameter to avoid deprecated API
-                String messageFormat = (format != null) ? format : SmsMessage.FORMAT_3GPP;
-                smsMessage = SmsMessage.createFromPdu((byte[]) pdu, messageFormat);
-                
+                // API 23+ required for createFromPdu with format parameter
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                    String messageFormat = (format != null) ? format : SmsMessage.FORMAT_3GPP;
+                    smsMessage = SmsMessage.createFromPdu((byte[]) pdu, messageFormat);
+                } else {
+                    // Use deprecated API for older versions
+                    smsMessage = SmsMessage.createFromPdu((byte[]) pdu);
+                }
+
                 if (smsMessage != null) {
                     if (TextUtils.isEmpty(senderNumber)) {
                         senderNumber = smsMessage.getOriginatingAddress();

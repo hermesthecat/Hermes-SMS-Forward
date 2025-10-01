@@ -6,9 +6,6 @@
     <string name="save_button">Kaydet ve Başlat</string>
     <string name="status_not_configured">Durum: Yapılandırılmamış</string>
     <string name="status_configured">Durum: Aktif - Yönlendirme çalışıyor</string>
-    <string name="permissions_required">SMS izinleri gerekli</string>
-    <string name="permissions_granted">İzinler verildi</string>
-    <string name="error_empty_number">Lütfen geçerli bir telefon numarası girin</string>
     <string name="success_saved">Ayarlar kaydedildi!</string>
     
     <!-- Phone Number Validation Errors -->
@@ -20,10 +17,6 @@
     <string name="validation_success">Geçerli telefon numarası</string>
     
     <!-- SMS Error Handling -->
-    <string name="sms_send_failed">SMS gönderimi başarısız</string>
-    <string name="sms_send_retry">SMS tekrar gönderiliyor</string>
-    <string name="sms_send_final_failure">SMS gönderimi kalıcı olarak başarısız</string>
-    <string name="sms_service_unavailable">SMS servisi kullanılamıyor</string>
     
     <!-- Single SIM Messages -->
     <string name="single_sim_device_info">Bu cihaz tek SIM destekliyor</string>
@@ -74,8 +67,6 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <!-- Forwarding Settings -->
     <string name="settings_forwarding_enabled_title">SMS Yönlendirmeyi Etkinleştir</string>
     <string name="settings_forwarding_enabled_summary">Gelen SMS\'lerin otomatik olarak yönlendirilmesini aktif eder</string>
-    <string name="settings_target_number_title">Hedef Telefon Numarası</string>
-    <string name="settings_target_number_summary">SMS\'lerin yönlendirileceği numara - Ana ekranda değiştirilebilir</string>
     <string name="settings_sms_format_title">SMS Format Stili</string>
     <string name="settings_sms_format_summary">Yönlendirilen SMS\'lerin nasıl formatlanacağını seçin</string>
     <string name="settings_forwarding_delay_title">Yönlendirme Gecikmesi</string>
@@ -117,12 +108,6 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="settings_version_summary">Hermes SMS Forward</string>
     <string name="settings_developer_title">Geliştirici</string>
     <string name="settings_developer_summary">Kerem GÖK</string>
-    <string name="settings_privacy_title">Gizlilik Politikası</string>
-    <string name="settings_privacy_summary">Veri işleme ve gizlilik politikamızı görüntüle</string>
-    <string name="settings_github_title">Kaynak Kod</string>
-    <string name="settings_github_summary">GitHub\'da proje deposunu görüntüle</string>
-    <string name="settings_feedback_title">Geri Bildirim Gönder</string>
-    <string name="settings_feedback_summary">Önerilerinizi ve sorunlarınızı bizimle paylaşın</string>
     
     <!-- SMS Format Options -->
     <string-array name="sms_format_entries">
@@ -183,7 +168,6 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     
     <!-- History Loading Messages -->
     <string name="history_load_error">Geçmiş yüklenirken hata oluştu</string>
-    <string name="history_no_records_message">SMS geçmişi bulunamadı</string>
     
     <!-- History Clear Operations -->
     <string name="history_clear_title">Geçmişi Temizle</string>
@@ -220,7 +204,6 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="sending_mode">Gönderim Modu</string>
     
     <!-- Target Number Operations -->
-    <string name="target_edit">Düzenle</string>
     <string name="target_delete">Sil</string>
     <string name="target_set_primary">Ana Yap</string>
     <string name="target_toggle_enabled">Etkinlik Durumunu Değiştir</string>
@@ -265,7 +248,6 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="backup_error">Yedek oluşturulurken hata oluştu</string>
     
     <string name="restore_select_title">Yedeği Geri Yükle</string>
-    <string name="restore_select_message">Geri yüklemek istediğiniz yedek dosyasını seçin:</string>
     <string name="restore_no_backups">Henüz hiç yedek dosyası bulunamadı</string>
     <string name="restore_mode_title">Geri Yükleme Modu</string>
     <string name="restore_mode_message">Mevcut verilerle nasıl işlem yapılsın?</string>
@@ -279,34 +261,22 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="restore_error">Geri yükleme sırasında hata oluştu</string>
     <string name="restore_validation_error">Yedek dosyası geçersiz: %s</string>
     
-    <string name="backup_file_browser_title">Yedek Dosyası Seç</string>
-    <string name="backup_file_not_found">Dosya bulunamadı</string>
-    <string name="backup_permission_error">Dosya izinleri hatası</string>
     
     <!-- Accessibility Content Descriptions -->
     <string name="cd_app_logo">Hermes SMS Forward uygulama logosu</string>
     <string name="cd_target_number_input">Hedef telefon numarası giriş alanı</string>
     <string name="cd_save_button">Ayarları kaydet ve yönlendirmeyi başlat</string>
-    <string name="cd_menu_button">Ana menüyü aç</string>
-    <string name="cd_back_button">Önceki ekrana geri dön</string>
     <string name="cd_refresh_button">Mevcut içeriği yenile</string>
-    <string name="cd_search_button">İçerikte arama yap</string>
-    <string name="cd_filter_button">İçeriği filtrele</string>
-    <string name="cd_add_button">Yeni öğe ekle</string>
     <string name="cd_edit_button">Bu öğeyi düzenle</string>
     <string name="cd_delete_button">Bu öğeyi sil</string>
     <string name="cd_toggle_button">Bu seçeneği aç/kapat</string>
     <string name="cd_export_button">Veriyi dışa aktar</string>
-    <string name="cd_import_button">Veriyi içe aktar</string>
     <string name="cd_status_indicator">Mevcut durum göstergesi</string>
-    <string name="cd_permission_indicator">İzin durumu göstergesi</string>
     <string name="cd_validation_message">Girdi doğrulama mesajı</string>
     <string name="cd_progress_bar">İşlem ilerleme göstergesi</string>
     <string name="cd_success_icon">Başarı durumu ikonu</string>
     <string name="cd_error_icon">Hata durumu ikonu</string>
-    <string name="cd_warning_icon">Uyarı durumu ikonu</string>
     <string name="cd_info_icon">Bilgi ikonu</string>
-    <string name="cd_analytics_chart">Analitik veri grafiği</string>
     <string name="cd_statistics_card">İstatistik bilgi kartı</string>
     
     <!-- Onboarding Strings -->
@@ -389,7 +359,6 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="clear_analytics_confirmation_message">Tüm analitik verileri temizlemek istediğinizden emin misiniz? Bu işlem geri alınamaz.</string>
     <string name="clear_button">Temizle</string>
     <string name="cancel_button">İptal</string>
-    <string name="last_updated_format">Son güncelleme: %s</string>
     
     <!-- Filter Placeholders -->
     <string name="filter_name_placeholder">Filtre Adı</string>
@@ -408,7 +377,6 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="target_disable">Devre Dışı Bırak</string>
     <string name="filter_last_never">Son: Hiçbir zaman</string>
     <string name="no_pattern_specified">Desen belirtilmedi</string>
-    <string name="filter_no_pattern_specified">Desen belirtilmedi</string>
     
     <!-- Filter Adapter Dynamic Text -->
     <string name="filter_pattern_prefix">Desen: </string>
@@ -416,23 +384,12 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="filter_case_sensitive_suffix"> (büyük/küçük harf duyarlı)</string>
     <string name="filter_last_prefix">Son: </string>
     <string name="filter_last_never_text">Son: Hiçbir zaman</string>
-    <string name="last_matched_format">Son: %s</string>
-    <string name="last_matched_never">Son: Hiçbir zaman</string>
     <string name="disable_button">Devre Dışı Bırak</string>
     <string name="enable_button">Etkinleştir</string>
     
     <!-- Target Number Placeholders -->
-    <string name="display_name_placeholder">Görünen Ad</string>
-    <string name="phone_number_placeholder">+905551234567</string>
-    <string name="last_used_placeholder">Son kullanım: 2 saat önce</string>
-    <string name="last_used_format">Son kullanım: %s</string>
-    <string name="not_used_yet">Henüz kullanılmadı</string>
     
     <!-- Onboarding Placeholders -->
-    <string name="step_number_one">1</string>
-    <string name="step_number_two">2</string>
-    <string name="step_number_three">3</string>
-    <string name="progress_indicator_placeholder">1 / 5</string>
     
     <!-- Permission Labels -->
     <string name="required_permissions_title">Gerekli İzinler:</string>
@@ -443,7 +400,6 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <!-- General Messages -->
     <string name="permissions_granted_message">İzinler verildi. Şimdi hedef numarayı kaydedebilirsiniz.</string>
     <string name="sms_permissions_required">SMS izinleri gerekli!</string>
-    <string name="edit_functionality_coming_soon">Düzenleme özelliği yakında gelecek</string>
     
     <!-- Completion Fragment -->
     <string name="completion_title">Tebrikler!</string>
@@ -467,7 +423,7 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="sim_2">SIM 2</string>
     <string name="sim_not_available">SIM mevcut değil</string>
     <string name="dual_sim_not_supported">Dual SIM desteklenmiyor</string>
-    <string name="sim_card_format" formatted="false">%s (%s)</string>
+    <string name="sim_card_format">%1$s (%2$s)</string>
     <string name="sim_slot_format">SIM %d</string>
     <string name="sim_selection_info">Bu hedef için hangi SIM kartının kullanılacağını seçin</string>
     <string name="sim_selection_dialog_info">Kullanmak istediğiniz SIM kartını seçin:</string>
@@ -479,7 +435,6 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="filter_type_sender_number">Gönderen Numarası</string>
     <string name="filter_type_whitelist">Beyaz Liste</string>
     <string name="filter_type_blacklist">Kara Liste</string>
-    <string name="filter_type_spam_detection">Spam Algılama</string>
     <string name="filter_type_sim_based">SIM Tabanlı</string>
     
     <!-- Filter Related Strings -->
@@ -582,13 +537,8 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     
     <!-- Additional Dual SIM Strings (AŞAMA 8.3) -->
     <string name="sim_auto">Otomatik</string>
-    <string name="sim_source">Kaynak SIM</string>
-    <string name="sim_specific">Belirli SIM</string>
     
     <!-- SMS Formatting Settings -->
-    <string name="settings_category_sms_formatting">SMS Biçimlendirme</string>
-    <string name="settings_sms_format_type_title">SMS Format Türü</string>
-    <string name="settings_sms_format_type_summary">Yönlendirilen SMS mesajlarının biçimlendirme türünü seçin</string>
     <string name="settings_custom_header_title">Özel Başlık</string>
     <string name="settings_custom_header_summary">SMS mesajlarında görünecek özel başlık</string>
     <string name="settings_include_timestamp_title">Zaman Damgası Ekle</string>
@@ -667,4 +617,8 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="template_preview_error">Template önizleme hatası: %s</string>
 
 
+    <!-- Error Messages -->
+    <string name="error_database_init_failed">Database initialization failed. Please restart the app.</string>
+    <string name="error_database_unavailable">Database is currently unavailable. Please try again.</string>
+    <string name="error_sim_permission_denied">SIM card access denied. Please grant READ_PHONE_STATE permission in Settings.</string>
 </resources>

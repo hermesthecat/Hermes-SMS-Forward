@@ -6,9 +6,6 @@
     <string name="save_button">Speichern und starten</string>
     <string name="status_not_configured">Status: Nicht konfiguriert</string>
     <string name="status_configured">Status: Aktiv - Weiterleitung funktioniert</string>
-    <string name="permissions_required">SMS-Berechtigungen erforderlich</string>
-    <string name="permissions_granted">Berechtigungen erteilt</string>
-    <string name="error_empty_number">Bitte geben Sie eine gültige Telefonnummer ein</string>
     <string name="success_saved">Einstellungen gespeichert!</string>
     
     <!-- Phone Number Validation Errors -->
@@ -20,10 +17,6 @@
     <string name="validation_success">Gültige Telefonnummer</string>
     
     <!-- SMS Error Handling -->
-    <string name="sms_send_failed">SMS-Versand fehlgeschlagen</string>
-    <string name="sms_send_retry">SMS-Versand wird wiederholt</string>
-    <string name="sms_send_final_failure">SMS-Versand endgültig fehlgeschlagen</string>
-    <string name="sms_service_unavailable">SMS-Dienst nicht verfügbar</string>
     
     <!-- Single SIM Messages -->
     <string name="single_sim_device_info">Dieses Gerät unterstützt nur eine SIM-Karte</string>
@@ -74,8 +67,6 @@ Beispiele:<br/>
     <!-- Forwarding Settings -->
     <string name="settings_forwarding_enabled_title">SMS-Weiterleitung aktivieren</string>
     <string name="settings_forwarding_enabled_summary">Aktiviert automatische Weiterleitung eingehender SMS-Nachrichten</string>
-    <string name="settings_target_number_title">Ziel-Telefonnummer</string>
-    <string name="settings_target_number_summary">Nummer für SMS-Weiterleitung - Kann im Hauptbildschirm geändert werden</string>
     <string name="settings_sms_format_title">SMS-Format-Stil</string>
     <string name="settings_sms_format_summary">Wählen Sie, wie weitergeleitete SMS-Nachrichten formatiert werden</string>
     <string name="settings_forwarding_delay_title">Weiterleitungsverzögerung</string>
@@ -117,12 +108,6 @@ Beispiele:<br/>
     <string name="settings_version_summary">Hermes SMS Forward</string>
     <string name="settings_developer_title">Entwickler</string>
     <string name="settings_developer_summary">Kerem GÖK</string>
-    <string name="settings_privacy_title">Datenschutzrichtlinie</string>
-    <string name="settings_privacy_summary">Unsere Datenverarbeitungs- und Datenschutzrichtlinie anzeigen</string>
-    <string name="settings_github_title">Quellcode</string>
-    <string name="settings_github_summary">Projekt-Repository auf GitHub anzeigen</string>
-    <string name="settings_feedback_title">Feedback senden</string>
-    <string name="settings_feedback_summary">Teilen Sie Ihre Vorschläge und Probleme mit uns</string>
     
     <!-- SMS Format Options -->
     <string-array name="sms_format_entries">
@@ -168,7 +153,6 @@ Beispiele:<br/>
     
     <!-- History Loading Messages -->
     <string name="history_load_error">Fehler beim Laden des Verlaufs</string>
-    <string name="history_no_records_message">Kein SMS-Verlauf gefunden</string>
     
     <!-- History Clear Operations -->
     <string name="history_clear_title">Verlauf löschen</string>
@@ -205,7 +189,6 @@ Beispiele:<br/>
     <string name="sending_mode">Sendemodus</string>
     
     <!-- Target Number Operations -->
-    <string name="target_edit">Bearbeiten</string>
     <string name="target_delete">Löschen</string>
     <string name="target_set_primary">Als primär setzen</string>
     <string name="target_toggle_enabled">Aktiviert umschalten</string>
@@ -250,7 +233,6 @@ Beispiele:<br/>
     <string name="backup_error">Fehler beim Erstellen der Sicherung</string>
     
     <string name="restore_select_title">Sicherung wiederherstellen</string>
-    <string name="restore_select_message">Wählen Sie die Sicherungsdatei aus, die Sie wiederherstellen möchten:</string>
     <string name="restore_no_backups">Noch keine Sicherungsdateien gefunden</string>
     <string name="restore_mode_title">Wiederherstellungsmodus</string>
     <string name="restore_mode_message">Wie sollen vorhandene Daten behandelt werden?</string>
@@ -264,34 +246,22 @@ Beispiele:<br/>
     <string name="restore_error">Fehler bei der Wiederherstellung</string>
     <string name="restore_validation_error">Ungültige Sicherungsdatei: %s</string>
     
-    <string name="backup_file_browser_title">Sicherungsdatei auswählen</string>
-    <string name="backup_file_not_found">Datei nicht gefunden</string>
-    <string name="backup_permission_error">Dateiberechtigungsfehler</string>
     
     <!-- Accessibility Content Descriptions -->
     <string name="cd_app_logo">Hermes SMS Forward Anwendungslogo</string>
     <string name="cd_target_number_input">Ziel-Telefonnummer Eingabefeld</string>
     <string name="cd_save_button">Einstellungen speichern und Weiterleitung starten</string>
-    <string name="cd_menu_button">Hauptmenü öffnen</string>
-    <string name="cd_back_button">Zurück zum vorherigen Bildschirm</string>
     <string name="cd_refresh_button">Aktuellen Inhalt aktualisieren</string>
-    <string name="cd_search_button">Inhalt durchsuchen</string>
-    <string name="cd_filter_button">Inhalt filtern</string>
-    <string name="cd_add_button">Neues Element hinzufügen</string>
     <string name="cd_edit_button">Dieses Element bearbeiten</string>
     <string name="cd_delete_button">Dieses Element löschen</string>
     <string name="cd_toggle_button">Diese Option umschalten</string>
     <string name="cd_export_button">Daten exportieren</string>
-    <string name="cd_import_button">Daten importieren</string>
     <string name="cd_status_indicator">Aktueller Status-Indikator</string>
-    <string name="cd_permission_indicator">Berechtigungsstatus-Indikator</string>
     <string name="cd_validation_message">Eingabevalidierungsnachricht</string>
     <string name="cd_progress_bar">Vorgangsfortschritt-Indikator</string>
     <string name="cd_success_icon">Erfolgsstatus-Symbol</string>
     <string name="cd_error_icon">Fehlerstatus-Symbol</string>
-    <string name="cd_warning_icon">Warnstatus-Symbol</string>
     <string name="cd_info_icon">Informationssymbol</string>
-    <string name="cd_analytics_chart">Analytikdaten-Diagramm</string>
     <string name="cd_statistics_card">Statistikinformations-Karte</string>
     
     <!-- Onboarding System -->
@@ -383,7 +353,6 @@ Beispiele:<br/>
     <string name="clear_analytics_confirmation_message">Sind Sie sicher, dass Sie alle Analytics-Daten löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.</string>
     <string name="clear_button">Löschen</string>
     <string name="cancel_button">Abbrechen</string>
-    <string name="last_updated_format">Zuletzt aktualisiert: %s</string>
     
     <!-- Filter Placeholders -->
     <string name="filter_name_placeholder">Filtername</string>
@@ -402,7 +371,6 @@ Beispiele:<br/>
     <string name="target_disable">Deaktivieren</string>
     
     <!-- Filter Adapter Dynamic Text -->
-    <string name="filter_no_pattern_specified">Kein Muster angegeben</string>
     <string name="filter_pattern_prefix">Muster: </string>
     <string name="filter_regex_suffix"> (regex)</string>
     <string name="filter_last_prefix">Zuletzt: </string>
@@ -410,23 +378,12 @@ Beispiele:<br/>
     <string name="filter_case_sensitive_suffix"> (groß-/kleinschreibungsabhängig)</string>
     <string name="filter_last_never">Zuletzt: Nie</string>
     <string name="no_pattern_specified">Kein Muster angegeben</string>
-    <string name="last_matched_format">Zuletzt: %s</string>
-    <string name="last_matched_never">Zuletzt: Nie</string>
     <string name="disable_button">Deaktivieren</string>
     <string name="enable_button">Aktivieren</string>
     
     <!-- Target Number Placeholders -->
-    <string name="display_name_placeholder">Anzeigename</string>
-    <string name="phone_number_placeholder">+495551234567</string>
-    <string name="last_used_placeholder">Zuletzt verwendet: vor 2 Stunden</string>
-    <string name="last_used_format">Zuletzt verwendet: %s</string>
-    <string name="not_used_yet">Noch nicht verwendet</string>
     
     <!-- Onboarding Placeholders -->
-    <string name="step_number_one">1</string>
-    <string name="step_number_two">2</string>
-    <string name="step_number_three">3</string>
-    <string name="progress_indicator_placeholder">1 / 5</string>
     
     <!-- Permission Labels -->
     <string name="required_permissions_title">Erforderliche Berechtigungen:</string>
@@ -437,19 +394,15 @@ Beispiele:<br/>
     <!-- General Messages -->
     <string name="permissions_granted_message">Berechtigungen erteilt. Sie können nun die Ziel-Nummer speichern.</string>
     <string name="sms_permissions_required">SMS-Berechtigungen erforderlich!</string>
-    <string name="edit_functionality_coming_soon">Bearbeitungsfunktionalität kommt bald</string>
     
     <!-- Additional Dual SIM Strings (AŞAMA 8.3) - German -->
     <string name="sim_auto">Automatisch</string>
-    <string name="sim_source">Quell-SIM</string>
-    <string name="sim_specific">Spezifische SIM</string>
     
     <!-- Filter Type Strings -->
     <string name="filter_type_keyword">Schlüsselwort</string>
     <string name="filter_type_sender_number">Absendernummer</string>
     <string name="filter_type_whitelist">Whitelist</string>
     <string name="filter_type_blacklist">Blacklist</string>
-    <string name="filter_type_spam_detection">Spam-Erkennung</string>
     <string name="filter_type_sim_based">SIM-basiert</string>
     
     <!-- Filter Related Strings -->
@@ -539,9 +492,6 @@ Beispiele:<br/>
     <string name="history_showing_source_sim_filter">Zeige Nachrichten von %s Quell-SIM</string>
     
     <!-- SMS Formatting Settings -->
-    <string name="settings_category_sms_formatting">SMS-Formatierung</string>
-    <string name="settings_sms_format_type_title">SMS-Formattyp</string>
-    <string name="settings_sms_format_type_summary">Wählen Sie den Formatierungstyp für weitergeleitete SMS-Nachrichten</string>
     <string name="settings_custom_header_title">Benutzerdefinierte Kopfzeile</string>
     <string name="settings_custom_header_summary">Benutzerdefinierte Kopfzeile für SMS-Nachrichten</string>
     <string name="settings_include_timestamp_title">Zeitstempel einschließen</string>
@@ -637,7 +587,7 @@ Beispiele:<br/>
     <string name="sim_2">SIM 2</string>
     <string name="sim_not_available">SIM nicht verfügbar</string>
     <string name="dual_sim_not_supported">Dual-SIM nicht unterstützt</string>
-    <string name="sim_card_format" formatted="false">%s (%s)</string>
+    <string name="sim_card_format">%1$s (%2$s)</string>
     <string name="sim_slot_format">SIM %d</string>
     <string name="sim_selection_info">Wählen Sie welche SIM-Karte für dieses Ziel verwendet werden soll</string>
     <string name="sim_selection_dialog_info">Wählen Sie die SIM-Karte aus, die Sie verwenden möchten:</string>

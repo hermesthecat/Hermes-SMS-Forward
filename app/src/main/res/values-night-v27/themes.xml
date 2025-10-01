@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base Hermes Dark Theme for API 27+ -->
+    <style name="Theme.HermesSmsForward" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <!-- Status bar light icons (API 23+) -->
+        <item name="android:windowLightStatusBar">false</item>
+        <!--  Navigation bar light icons (API 27+) -->
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
+</resources>

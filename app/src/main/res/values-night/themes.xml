@@ -24,9 +24,7 @@
         <!-- Status bar and navigation bar -->
         <item name="android:statusBarColor">@color/hermes_background</item>
         <item name="android:navigationBarColor">@color/hermes_background</item>
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:windowLightNavigationBar">false</item>
-        
+
         <!-- Action bar customization -->
         <item name="actionBarStyle">@style/Hermes.ActionBar.Dark</item>
         <item name="android:actionBarStyle">@style/Hermes.ActionBar.Dark</item>

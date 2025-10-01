@@ -3,6 +3,7 @@ package com.keremgok.sms;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -49,6 +50,7 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
     private TextView tvValidationMessage;
     private Button btnAddTarget;
     
+    private Button dialogPositiveButton;
     // SIM selection components
     private RadioGroup radioGroupSimMode;
     private RadioButton radioAuto;
@@ -90,6 +92,11 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
      */
     private void initDatabase() {
         database = AppDatabase.getInstance(this);
+        if (database == null) {
+            Toast.makeText(this, R.string.error_database_init_failed, Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
         targetNumberDao = database.targetNumberDao();
         prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
     }
@@ -149,6 +156,7 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
         
         dialog.setOnShowListener(dialogInterface -> {
             Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            dialogPositiveButton = positiveButton;
             positiveButton.setEnabled(false);
             positiveButton.setOnClickListener(v -> {
                 if (addTargetNumber()) {
@@ -342,7 +350,7 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
      */
     private void showValidationSuccess() {
         tvValidationMessage.setText(R.string.validation_success);
-        tvValidationMessage.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+        tvValidationMessage.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_dark));
         tvValidationMessage.setVisibility(View.VISIBLE);
     }
     
@@ -352,7 +360,7 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
      */
     private void showValidationError(String message) {
         tvValidationMessage.setText(message);
-        tvValidationMessage.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+        tvValidationMessage.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
         tvValidationMessage.setVisibility(View.VISIBLE);
     }
     
@@ -384,8 +392,9 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
      * Helper method to enable/disable add button in dialog
      */
     private void enableAddButton(boolean enabled) {
-        // Find the dialog and enable/disable its positive button
-        // This will be handled by the dialog's onShow listener
+        if (dialogPositiveButton != null) {
+            dialogPositiveButton.setEnabled(enabled);
+        }
     }
     
     /**
@@ -585,7 +594,7 @@ public class TargetNumbersActivity extends AppCompatActivity implements TargetNu
                 simInfoText.setTag("single_sim_info");
                 simInfoText.setText(R.string.single_sim_device_info);
                 simInfoText.setTextSize(14);
-                simInfoText.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                simInfoText.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray));
                 simInfoText.setPadding(16, 8, 16, 8);
                 simInfoText.setGravity(android.view.Gravity.CENTER);
                 

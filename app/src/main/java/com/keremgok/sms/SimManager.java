@@ -6,6 +6,7 @@ import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +105,7 @@ public class SimManager {
             
             return isDualSupported;
         } catch (SecurityException e) {
+            notifyUserAboutPermissionIssue(context, R.string.error_sim_permission_denied);
             Log.e(TAG, "Permission denied while checking dual SIM support: " + e.getMessage());
             cachedDualSimSupported = false;
             lastDualSimCheckTime = currentTime;
@@ -162,6 +164,7 @@ public class SimManager {
             
         } catch (SecurityException e) {
             Log.e(TAG, "Permission denied accessing SIM information: " + e.getMessage());
+            notifyUserAboutPermissionIssue(context, R.string.error_sim_permission_denied);
         } catch (Exception e) {
             Log.e(TAG, "Error getting active SIM cards: " + e.getMessage(), e);
         }
@@ -233,9 +236,14 @@ public class SimManager {
         }
         
         try {
-            int defaultSubId = SubscriptionManager.getDefaultSmsSubscriptionId();
-            logDebug("Default SMS subscription ID: " + defaultSubId);
-            return defaultSubId;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                int defaultSubId = SubscriptionManager.getDefaultSmsSubscriptionId();
+                logDebug("Default SMS subscription ID: " + defaultSubId);
+                return defaultSubId;
+            } else {
+                logDebug("getDefaultSmsSubscriptionId requires API 24+");
+                return -1;
+            }
         } catch (Exception e) {
             Log.e(TAG, "Error getting default SMS subscription ID: " + e.getMessage(), e);
             return -1;
@@ -547,6 +555,19 @@ public class SimManager {
     private static void logDebug(String message) {
         if (DEBUG) {
             Log.d(TAG, message);
+        }
+    }
+    /**
+     * Notify user about SIM permission issue
+     * @param context Application context
+     * @param messageResId String resource ID for error message
+     */
+    private static void notifyUserAboutPermissionIssue(Context context, int messageResId) {
+        if (context != null) {
+            android.os.Handler mainHandler = new android.os.Handler(context.getMainLooper());
+            mainHandler.post(() -> {
+                Toast.makeText(context.getApplicationContext(), messageResId, Toast.LENGTH_LONG).show();
+            });
         }
     }
 }

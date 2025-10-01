@@ -6,34 +6,24 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Main Activity - Dashboard for SMS Forwarding App
+ * Displays app status and provides quick access to all features
+ */
 public class MainActivity extends AppCompatActivity {
-    
+
     private static final int SMS_PERMISSION_REQUEST_CODE = 123;
-    private static final String PREFS_NAME = "HermesPrefs";
-    private static final String KEY_TARGET_NUMBER = "target_number";
-    
-    private EditText etTargetNumber;
-    private Button btnSave;
-    private TextView tvStatus;
+
     private TextView tvReceiveSmsStatus;
     private TextView tvSendSmsStatus;
     private TextView tvReadPhoneStateStatus;
-    private TextView tvValidation;
-    private SharedPreferences prefs;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -43,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         // Check if onboarding is completed
         if (!OnboardingActivity.isOnboardingCompleted(this)) {
             Intent onboardingIntent = new Intent(this, OnboardingActivity.class);
@@ -51,355 +41,144 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return;
         }
-        
+
         setContentView(R.layout.activity_main);
-        
+
         // Initialize StatisticsManager for analytics tracking
-        StatisticsManager statsManager = StatisticsManager.getInstance(this);
-        
+        StatisticsManager.getInstance(this);
+
         initViews();
-        setupPreferences();
-        setupValidation();
         checkPermissions();
-        loadSavedNumber();
         updateUI();
-        
-        // Clean up any leftover test data from performance monitoring (debug only)
-        // Performance monitoring disabled in production for security
-        
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveTargetNumber();
-            }
-        });
     }
-    
+
     private void initViews() {
-        etTargetNumber = findViewById(R.id.etTargetNumber);
-        btnSave = findViewById(R.id.btnSave);
-        tvStatus = findViewById(R.id.tvStatus);
         tvReceiveSmsStatus = findViewById(R.id.tvReceiveSmsStatus);
         tvSendSmsStatus = findViewById(R.id.tvSendSmsStatus);
         tvReadPhoneStateStatus = findViewById(R.id.tvReadPhoneStateStatus);
-        tvValidation = findViewById(R.id.tvValidation);
     }
-    
-    private void setupPreferences() {
-        prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-    }
-    
-    private void setupValidation() {
-        etTargetNumber.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // Not used
-            }
-            
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Not used
-            }
-            
-            @Override
-            public void afterTextChanged(Editable s) {
-                validatePhoneNumber();
-            }
-        });
-    }
-    
-    private void validatePhoneNumber() {
-        String phoneNumber = etTargetNumber.getText().toString().trim();
-        PhoneNumberValidator.ValidationResult result = PhoneNumberValidator.validate(phoneNumber);
-        
-        updateValidationUI(result);
-        updateSaveButtonState(result);
-    }
-    
-    private void updateValidationUI(PhoneNumberValidator.ValidationResult result) {
-        if (TextUtils.isEmpty(etTargetNumber.getText().toString().trim())) {
-            // Don't show validation message for empty input
-            tvValidation.setVisibility(View.GONE);
-            return;
-        }
-        
-        if (result.isValid()) {
-            tvValidation.setText(R.string.validation_success);
-            tvValidation.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
-            tvValidation.setVisibility(View.VISIBLE);
-        } else {
-            String errorMessage = getValidationMessage(result.getErrorCode());
-            tvValidation.setText(errorMessage);
-            tvValidation.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-            tvValidation.setVisibility(View.VISIBLE);
-        }
-    }
-    
-    private void updateSaveButtonState(PhoneNumberValidator.ValidationResult result) {
-        btnSave.setEnabled(result.isValid() && hasRequiredPermissions());
-    }
-    
-    private String getValidationMessage(String errorCode) {
-        if (errorCode == null) return "";
-        
-        switch (errorCode) {
-            case "EMPTY_NUMBER":
-                return getString(R.string.validation_empty_number);
-            case "MISSING_COUNTRY_CODE":
-                return getString(R.string.validation_missing_country_code);
-            case "TOO_SHORT":
-                return getString(R.string.validation_too_short);
-            case "TOO_LONG":
-                return getString(R.string.validation_too_long);
-            case "INVALID_FORMAT":
-                return getString(R.string.validation_invalid_format);
-            default:
-                return getString(R.string.validation_invalid_format);
-        }
-    }
-    
-    private void loadSavedNumber() {
-        // Load from database first, fallback to SharedPreferences for backward compatibility
-        AppDatabase database = AppDatabase.getInstance(this);
-        TargetNumberDao targetNumberDao = database.targetNumberDao();
-        
-        ThreadManager.getInstance().executeDatabase(() -> {
-            try {
-                TargetNumber primaryTarget = targetNumberDao.getPrimaryTargetNumber();
-                String numberToLoad = null;
-                
-                if (primaryTarget != null) {
-                    numberToLoad = primaryTarget.getPhoneNumber();
-                } else {
-                    // Fallback to SharedPreferences for backward compatibility
-                    numberToLoad = prefs.getString(KEY_TARGET_NUMBER, "");
-                }
-                
-                // Update UI on main thread
-                final String finalNumber = numberToLoad != null ? numberToLoad : "";
-                runOnUiThread(() -> {
-                    etTargetNumber.setText(finalNumber);
-                });
-                
-            } catch (Exception e) {
-                // Fallback to SharedPreferences on error
-                runOnUiThread(() -> {
-                    String savedNumber = prefs.getString(KEY_TARGET_NUMBER, "");
-                    etTargetNumber.setText(savedNumber);
-                });
-            }
-        });
-    }
-    
-    private void saveTargetNumber() {
-        String targetNumber = etTargetNumber.getText().toString().trim();
-        
-        // Validate phone number using PhoneNumberValidator
-        PhoneNumberValidator.ValidationResult result = PhoneNumberValidator.validate(targetNumber);
-        
-        if (!result.isValid()) {
-            String errorMessage = getValidationMessage(result.getErrorCode());
-            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
-            return;
-        }
-        
-        if (!hasRequiredPermissions()) {
-            requestPermissions();
-            return;
-        }
-        
-        // Use formatted number if available (for domestic Turkey numbers)
-        String numberToSave = result.getFormattedNumber() != null ? 
-                              result.getFormattedNumber() : targetNumber;
-        
-        // Save to database instead of SharedPreferences
-        AppDatabase database = AppDatabase.getInstance(this);
-        TargetNumberDao targetNumberDao = database.targetNumberDao();
-        
-        // Save to database in background thread
-        ThreadManager.getInstance().executeDatabase(() -> {
-            try {
-                // Check if this number already exists
-                TargetNumber existingNumber = targetNumberDao.getTargetNumberByPhone(numberToSave);
-                
-                if (existingNumber != null) {
-                    // Update existing number - make sure it's enabled and primary
-                    existingNumber.setEnabled(true);
-                    existingNumber.setPrimary(true);
-                    targetNumberDao.update(existingNumber);
-                } else {
-                    // Create new target number as primary
-                    TargetNumber newTargetNumber = new TargetNumber(
-                        numberToSave,
-                        getString(R.string.main_target_default_name), // Display name
-                        true, // isPrimary
-                        true  // isEnabled
-                    );
-                    targetNumberDao.insert(newTargetNumber);
-                }
-                
-                // Also keep SharedPreferences for backward compatibility
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString(KEY_TARGET_NUMBER, numberToSave);
-                editor.apply();
-                
-                // Show success message on UI thread
-                runOnUiThread(() -> {
-                    Toast.makeText(this, R.string.success_saved, Toast.LENGTH_SHORT).show();
-                    updateUI();
-                });
-                
-            } catch (Exception e) {
-                // Handle error on UI thread
-                runOnUiThread(() -> {
-                    Toast.makeText(this, getString(R.string.error_saving_target_number), Toast.LENGTH_SHORT).show();
-                });
-            }
-        });
-    }
-    
+
     private boolean hasRequiredPermissions() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED &&
                ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED &&
                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED &&
                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED;
     }
-    
+
     private void requestPermissions() {
         ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.SEND_SMS, 
+                new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.SEND_SMS,
                            Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CALL_LOG},
                 SMS_PERMISSION_REQUEST_CODE);
     }
-    
+
     private void checkPermissions() {
         if (!hasRequiredPermissions()) {
             requestPermissions();
         }
     }
-    
+
     private void updateUI() {
-        String savedNumber = prefs.getString(KEY_TARGET_NUMBER, "");
         boolean hasReceiveSmsPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED;
         boolean hasSendSmsPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED;
         boolean hasReadPhoneStatePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED;
-        boolean hasReadCallLogPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED;
-        boolean hasAllPermissions = hasReceiveSmsPermission && hasSendSmsPermission && hasReadPhoneStatePermission && hasReadCallLogPermission;
-        
+
         // Update individual permission status indicators
         if (hasReceiveSmsPermission) {
             tvReceiveSmsStatus.setText(getString(R.string.permission_granted_symbol));
-            tvReceiveSmsStatus.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+            tvReceiveSmsStatus.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_dark));
         } else {
             tvReceiveSmsStatus.setText(getString(R.string.permission_denied_symbol));
-            tvReceiveSmsStatus.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+            tvReceiveSmsStatus.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
         }
 
         if (hasSendSmsPermission) {
             tvSendSmsStatus.setText(getString(R.string.permission_granted_symbol));
-            tvSendSmsStatus.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+            tvSendSmsStatus.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_dark));
         } else {
             tvSendSmsStatus.setText(getString(R.string.permission_denied_symbol));
-            tvSendSmsStatus.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+            tvSendSmsStatus.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
         }
-        
+
         if (hasReadPhoneStatePermission) {
             tvReadPhoneStateStatus.setText(getString(R.string.permission_granted_symbol));
-            tvReadPhoneStateStatus.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+            tvReadPhoneStateStatus.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_dark));
         } else {
             tvReadPhoneStateStatus.setText(getString(R.string.permission_denied_symbol));
-            tvReadPhoneStateStatus.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-        }
-        
-        if (!TextUtils.isEmpty(savedNumber) && hasAllPermissions) {
-            tvStatus.setText(R.string.status_configured);
-            tvStatus.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
-        } else {
-            tvStatus.setText(R.string.status_not_configured);
-            tvStatus.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+            tvReadPhoneStateStatus.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
         }
     }
-    
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        
+
         if (requestCode == SMS_PERMISSION_REQUEST_CODE) {
             StatisticsManager statsManager = StatisticsManager.getInstance(this);
-            
+
             boolean allPermissionsGranted = true;
             for (int i = 0; i < permissions.length; i++) {
                 boolean granted = i < grantResults.length && grantResults[i] == PackageManager.PERMISSION_GRANTED;
-                
+
                 // Record each permission result
                 statsManager.recordPermissionRequest(permissions[i], granted);
-                
+
                 if (!granted) {
                     allPermissionsGranted = false;
                 }
             }
-            
+
             if (allPermissionsGranted) {
                 Toast.makeText(this, getString(R.string.permissions_granted_message), Toast.LENGTH_LONG).show();
-                saveTargetNumber();
             } else {
                 Toast.makeText(this, getString(R.string.sms_permissions_required), Toast.LENGTH_LONG).show();
             }
-            
+
             updateUI();
         }
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        
+
         if (itemId == R.id.action_target_numbers) {
-            // Launch Target Numbers Activity
-            Intent targetNumbersIntent = new Intent(this, TargetNumbersActivity.class);
-            startActivity(targetNumbersIntent);
+            startActivity(new Intent(this, TargetNumbersActivity.class));
             return true;
         } else if (itemId == R.id.action_filter_rules) {
-            // Launch Filter Rules Activity
-            Intent filterRulesIntent = new Intent(this, FilterRulesActivity.class);
-            startActivity(filterRulesIntent);
+            startActivity(new Intent(this, FilterRulesActivity.class));
             return true;
         } else if (itemId == R.id.action_history) {
-            // Launch History Activity
-            Intent historyIntent = new Intent(this, HistoryActivity.class);
-            startActivity(historyIntent);
+            startActivity(new Intent(this, HistoryActivity.class));
             return true;
         } else if (itemId == R.id.action_analytics) {
-            // Launch Analytics Activity
-            Intent analyticsIntent = new Intent(this, AnalyticsActivity.class);
-            startActivity(analyticsIntent);
+            startActivity(new Intent(this, AnalyticsActivity.class));
             return true;
         } else if (itemId == R.id.action_settings) {
-            // Launch Settings Activity
-            Intent settingsIntent = new Intent(this, SettingsActivity.class);
-            startActivity(settingsIntent);
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         } else if (itemId == R.id.action_sim_debug) {
-            // Launch SIM Debug Activity (debug builds only)
             SimDebugActivity.launch(this);
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-    
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        
-        // Clean up StatisticsManager when app is destroyed
-        StatisticsManager statsManager = StatisticsManager.getInstance(this);
-        statsManager.endSession();
+        StatisticsManager.getInstance(this).endSession();
     }
-    
 }

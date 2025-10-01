@@ -122,13 +122,18 @@ public class SmsQueueManager {
             );
             
             // Create constraints for SMS processing
-            Constraints constraints = new Constraints.Builder()
+            Constraints.Builder constraintsBuilder = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.NOT_REQUIRED) // SMS doesn't require internet
                 .setRequiresBatteryNotLow(false) // Allow even on low battery for SMS forwarding
                 .setRequiresCharging(false)
-                .setRequiresDeviceIdle(false)
-                .setRequiresStorageNotLow(true) // Require storage for database operations
-                .build();
+                .setRequiresStorageNotLow(true); // Require storage for database operations
+
+            // API 23+ required for setRequiresDeviceIdle
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                constraintsBuilder.setRequiresDeviceIdle(false);
+            }
+
+            Constraints constraints = constraintsBuilder.build();
             
             // Calculate delay and backoff based on priority and retry count
             long initialDelay = calculateInitialDelay(priority, retryCount);
