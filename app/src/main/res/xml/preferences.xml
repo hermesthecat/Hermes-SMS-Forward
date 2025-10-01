@@ -163,14 +163,6 @@
             android:entryValues="@array/default_sim_values"
             android:defaultValue="auto" />
 
-        <!-- Global SIM Selection Mode -->
-        <ListPreference
-            android:key="pref_global_sim_mode"
-            android:title="@string/settings_global_sim_mode_title"
-            android:summary="@string/settings_global_sim_mode_summary"
-            android:entries="@array/sim_selection_entries"
-            android:entryValues="@array/sim_selection_values"
-            android:defaultValue="auto" />
 
         <!-- Show SIM Indicators -->
         <SwitchPreferenceCompat

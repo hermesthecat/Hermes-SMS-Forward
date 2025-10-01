@@ -16,11 +16,8 @@
       "Bash(sed:*)",
       "Bash(echo $PATH)",
       "Bash(where flutter)",
-      "Bash(\"S:/Download/flutter_windows_3.32.7-stable/flutter/bin/flutter.bat\" --version)",
-      "Bash(FLUTTER_ROOT=\"S:/Download/flutter_windows_3.32.7-stable/flutter\" ./gradlew assembleDebug)",
       "Bash(dart:*)",
       "Bash(cmd /c:*)",
-      "Bash(timeout 300 flutter build apk --debug --verbose)",
       "Bash(gemini:*)",
       "Bash(grep:*)",
       "Bash(build.bat)",
@@ -38,10 +35,12 @@
       "Bash(where adb)",
       "Bash(diff:*)",
       "Bash(rg:*)",
-      "Bash(for name in \"add_new_filter\" \"existing_filters\" \"filter_add_error\" \"filter_add_success\" \"filter_delete_error\" \"filter_delete_success\" \"filter_disabled_label\" \"filter_enabled_label\" \"filter_rules_description\" \"filter_test\" \"filter_update_error\" \"filter_update_success\" \"no_filters_configured\")",
-      "Bash(do echo \"=== Duplicate: $name ===\")",
-      "Bash(done)",
-      "Bash(comm:*)"
+      "Bash(comm:*)",
+      "mcp__sequential-thinking__sequentialthinking",
+      "Bash(cat:*)",
+      "Bash(tasklist)",
+      "Bash(for:*)",
+      "Bash(tee:*)"
     ],
     "deny": []
   }

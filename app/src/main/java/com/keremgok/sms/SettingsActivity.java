@@ -457,12 +457,10 @@ public class SettingsActivity extends AppCompatActivity {
         private void initializeDualSimSettings() {
             // Hide all SIM preferences initially to prevent ANR
             androidx.preference.ListPreference defaultSimPref = findPreference("pref_default_forwarding_sim");
-            androidx.preference.ListPreference globalSimModePref = findPreference("pref_global_sim_mode");
             androidx.preference.SwitchPreferenceCompat simIndicatorsPref = findPreference("pref_show_sim_indicators");
             Preference simInfoPref = findPreference("pref_sim_information");
             
             if (defaultSimPref != null) defaultSimPref.setVisible(false);
-            if (globalSimModePref != null) globalSimModePref.setVisible(false);
             if (simIndicatorsPref != null) simIndicatorsPref.setVisible(false);
             if (simInfoPref != null) simInfoPref.setVisible(false);
             
@@ -483,7 +481,6 @@ public class SettingsActivity extends AppCompatActivity {
                         if (finalIsDualSimSupported) {
                             // Initialize dual SIM preferences
                             initializeDefaultForwardingSim(finalAvailableSims);
-                            initializeGlobalSimMode();
                             initializeSimIndicators();
                             initializeSimInformation(finalAvailableSims);
                         } else {
@@ -573,53 +570,6 @@ public class SettingsActivity extends AppCompatActivity {
             // Fallback
             preference.setSummary(getString(R.string.sim_auto_mode));
         }
-        
-        /**
-         * Initialize global SIM mode preference
-         */
-        private void initializeGlobalSimMode() {
-            androidx.preference.ListPreference globalSimModePref = findPreference("pref_global_sim_mode");
-            if (globalSimModePref != null) {
-                // Update summary based on current value
-                updateGlobalSimModeSummary(globalSimModePref, globalSimModePref.getValue());
-                
-                // Add change listener
-                globalSimModePref.setOnPreferenceChangeListener((preference, newValue) -> {
-                    updateGlobalSimModeSummary((androidx.preference.ListPreference) preference, (String) newValue);
-                    
-                    // Update global setting in SmsSimSelectionHelper
-                    SmsSimSelectionHelper.setGlobalSimSelectionMode(requireContext(), (String) newValue);
-                    
-                    return true;
-                });
-                
-                // Show the preference
-                globalSimModePref.setVisible(true);
-            }
-        }
-        
-        /**
-         * Update global SIM mode preference summary
-         */
-        private void updateGlobalSimModeSummary(androidx.preference.ListPreference preference, String value) {
-            if (preference == null || value == null) return;
-            
-            CharSequence[] entries = preference.getEntries();
-            CharSequence[] entryValues = preference.getEntryValues();
-            
-            if (entries != null && entryValues != null) {
-                for (int i = 0; i < entryValues.length; i++) {
-                    if (entryValues[i].toString().equals(value)) {
-                        preference.setSummary(entries[i]);
-                        return;
-                    }
-                }
-            }
-            
-            // Fallback
-            preference.setSummary(getString(R.string.sim_auto_mode));
-        }
-        
         /**
          * Initialize SIM indicators preference
          */

@@ -204,7 +204,7 @@ Comprehensive testing framework with **two-pronged strategy**:
 - **Dual SIM Support**: Use SimManager for SIM card detection and selection; SmsSimSelectionHelper for SMS sending with selection modes (auto/source SIM/specific SIM)
 - **SMS Formatting**: Use SmsFormatter for customizable message templates; supports standard/compact/detailed formats plus custom templates with placeholders
 - **Backup/Restore**: Use BackupManager for data portability; exports/imports settings, target numbers, and filters as JSON
-- **Internationalization**: Use LanguageManager for runtime language switching; support Turkish and English
+- **Internationalization**: Use LanguageManager for runtime language switching; supports 6 languages (Turkish, English, German, Italian, French, Spanish)
 - **Debug Components**: Use `@bool/is_debug_build` pattern for conditional debug-only activities and features
 - **Secure File Access**: Use FileProvider for sharing exported data files; avoid direct file URIs
 
@@ -233,7 +233,7 @@ Comprehensive testing framework with **two-pronged strategy**:
 - `keystore.properties`: Release signing configuration (gitignored)
 - `app/src/main/AndroidManifest.xml`: Component declarations and permissions
 - `app/src/main/res/xml/preferences.xml`: Settings screen configuration
-- `changelog.md`: Version history and release notes
+- `changelog.md`: Version history and release notes (uses emoji-based versioning with detailed feature descriptions)
 - `clean-build.bat` / `create-signed-apk.bat`: Windows build scripts for easier development
 
 ## Code Quality

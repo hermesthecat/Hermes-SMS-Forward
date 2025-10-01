@@ -223,36 +223,6 @@ public class SmsSimSelectionHelper {
     }
     
     /**
-     * Get global SIM selection preference from settings
-     * @param context Application context
-     * @return Global SIM selection mode preference
-     */
-    public static String getGlobalSimSelectionMode(Context context) {
-        try {
-            SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-            return prefs.getString("pref_global_sim_mode", "auto");
-        } catch (Exception e) {
-            Log.e(TAG, "Error getting global SIM selection mode: " + e.getMessage(), e);
-            return "auto";
-        }
-    }
-    
-    /**
-     * Set global SIM selection preference in settings
-     * @param context Application context
-     * @param mode SIM selection mode ("auto", "source_sim", "specific_sim")
-     */
-    public static void setGlobalSimSelectionMode(Context context, String mode) {
-        try {
-            SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-            prefs.edit().putString("pref_global_sim_mode", mode).apply();
-            logDebug("Global SIM selection mode set to: " + mode);
-        } catch (Exception e) {
-            Log.e(TAG, "Error setting global SIM selection mode: " + e.getMessage(), e);
-        }
-    }
-    
-    /**
      * Mask phone number for secure logging
      */
     private static String maskPhoneNumber(String phoneNumber) {
