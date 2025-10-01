@@ -15,7 +15,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
  */
 @Database(
     entities = {SmsHistory.class, TargetNumber.class, SmsFilter.class, AnalyticsEvent.class, StatisticsSummary.class},
-    version = 8,
+    version = 9,
     exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
@@ -337,6 +337,26 @@ public abstract class AppDatabase extends RoomDatabase {
     };
 
     /**
+     * Migration from version 8 to 9: Add total_blocked_count to statistics_summary
+     */
+    static final Migration MIGRATION_8_9 = new Migration(8, 9) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            try {
+                android.util.Log.i("AppDatabase", "Starting migration from version 8 to 9 (adding total_blocked_count to statistics_summary)");
+
+                // Add total_blocked_count column with default value
+                database.execSQL("ALTER TABLE statistics_summary ADD COLUMN total_blocked_count INTEGER NOT NULL DEFAULT 0");
+
+                android.util.Log.i("AppDatabase", "Successfully completed migration from version 8 to 9");
+            } catch (Exception e) {
+                android.util.Log.e("AppDatabase", "Migration 8->9 failed: " + e.getMessage(), e);
+                throw e;
+            }
+        }
+    };
+
+    /**
      * Get singleton instance of the database
      * Thread-safe implementation with double-checked locking
      * @param context Application context
@@ -353,7 +373,7 @@ public abstract class AppDatabase extends RoomDatabase {
                             DATABASE_NAME
                         )
                         // Removed allowMainThreadQueries() for better performance and ANR prevention
-                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8)
+                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9)
                         .addCallback(new RoomDatabase.Callback() {
                             @Override
                             public void onCreate(@NonNull SupportSQLiteDatabase db) {

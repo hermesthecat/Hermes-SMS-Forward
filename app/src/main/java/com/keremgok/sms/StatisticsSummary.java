@@ -41,7 +41,10 @@ public class StatisticsSummary {
     
     @ColumnInfo(name = "error_count")
     private int errorCount;
-    
+
+    @ColumnInfo(name = "total_blocked_count")
+    private int totalBlockedCount;
+
     @ColumnInfo(name = "most_common_error")
     private String mostCommonError;
     
@@ -61,11 +64,12 @@ public class StatisticsSummary {
     private long lastUpdated;
     
     // Constructor
-    public StatisticsSummary(String date, String summaryType, int totalSmsReceived, 
+    public StatisticsSummary(String date, String summaryType, int totalSmsReceived,
                            int totalSmsForwarded, int successfulForwards, int failedForwards,
-                           double successRate, double avgProcessingTimeMs, int errorCount, 
-                           String mostCommonError, int appOpens, long sessionDurationTotalMs,
-                           double avgSessionDurationMs, long createdTimestamp, long lastUpdated) {
+                           double successRate, double avgProcessingTimeMs, int errorCount,
+                           int totalBlockedCount, String mostCommonError, int appOpens,
+                           long sessionDurationTotalMs, double avgSessionDurationMs,
+                           long createdTimestamp, long lastUpdated) {
         this.date = date;
         this.summaryType = summaryType;
         this.totalSmsReceived = totalSmsReceived;
@@ -75,6 +79,7 @@ public class StatisticsSummary {
         this.successRate = successRate;
         this.avgProcessingTimeMs = avgProcessingTimeMs;
         this.errorCount = errorCount;
+        this.totalBlockedCount = totalBlockedCount;
         this.mostCommonError = mostCommonError;
         this.appOpens = appOpens;
         this.sessionDurationTotalMs = sessionDurationTotalMs;
@@ -163,7 +168,15 @@ public class StatisticsSummary {
     public void setErrorCount(int errorCount) {
         this.errorCount = errorCount;
     }
-    
+
+    public int getTotalBlockedCount() {
+        return totalBlockedCount;
+    }
+
+    public void setTotalBlockedCount(int totalBlockedCount) {
+        this.totalBlockedCount = totalBlockedCount;
+    }
+
     public String getMostCommonError() {
         return mostCommonError;
     }

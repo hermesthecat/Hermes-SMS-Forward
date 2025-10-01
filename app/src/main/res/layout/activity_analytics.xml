@@ -175,6 +175,32 @@
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tvTotalBlocked"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/zero_count"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/holo_orange_dark"
+                            android:contentDescription="@string/cd_blocked_icon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/blocked_label"
+                            android:textSize="12sp"
+                            android:textColor="@color/hermes_text_secondary" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <!-- Success Rate Section -->

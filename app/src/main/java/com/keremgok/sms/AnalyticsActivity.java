@@ -30,6 +30,7 @@ public class AnalyticsActivity extends AppCompatActivity {
     private TextView tvTotalForwarded;
     private TextView tvSuccessRate;
     private TextView tvTotalErrors;
+    private TextView tvTotalBlocked;
     private TextView tvAvgProcessingTime;
     private TextView tvAppOpens;
     private TextView tvMostCommonError;
@@ -106,6 +107,7 @@ public class AnalyticsActivity extends AppCompatActivity {
         tvTotalForwarded = findViewById(R.id.tvTotalForwarded);
         tvSuccessRate = findViewById(R.id.tvSuccessRate);
         tvTotalErrors = findViewById(R.id.tvTotalErrors);
+        tvTotalBlocked = findViewById(R.id.tvTotalBlocked);
         tvAvgProcessingTime = findViewById(R.id.tvAvgProcessingTime);
         tvAppOpens = findViewById(R.id.tvAppOpens);
         tvMostCommonError = findViewById(R.id.tvMostCommonError);
@@ -186,6 +188,7 @@ public class AnalyticsActivity extends AppCompatActivity {
                 // Load analytics events for additional metrics
                 AnalyticsEventDao analyticsDao = database.analyticsEventDao();
                 int totalErrors = analyticsDao.getEventCountByType("SMS_ERROR");
+                int totalBlocked = analyticsDao.getEventCountByType("SMS_BLOCKED");
                 final int appOpens = analyticsDao.getEventCountByType("APP_OPEN");
                 
                 // Get average processing time from analytics events
@@ -224,7 +227,7 @@ public class AnalyticsActivity extends AppCompatActivity {
                 // Update UI on main thread
                 runOnUiThread(() -> updateUI(
                     totalReceived, successCount, failedCount, overallSuccessRate,
-                    totalErrors, appOpens, finalAvgProcessingTime, mostCommonError,
+                    totalErrors, totalBlocked, appOpens, finalAvgProcessingTime, mostCommonError,
                     todayStats, weekStats, monthStats
                 ));
                 
@@ -239,15 +242,16 @@ public class AnalyticsActivity extends AppCompatActivity {
      * Update UI with loaded statistics
      */
     private void updateUI(int totalReceived, int successCount, int failedCount, double overallSuccessRate,
-                         int totalErrors, int appOpens, double avgProcessingTime, String mostCommonError,
-                         StatisticsSummary todayStats, List<StatisticsSummary> weekStats, 
-                         List<StatisticsSummary> monthStats) {
+                         int totalErrors, int totalBlocked, int appOpens, double avgProcessingTime,
+                         String mostCommonError, StatisticsSummary todayStats,
+                         List<StatisticsSummary> weekStats, List<StatisticsSummary> monthStats) {
         
         // Overall statistics
         tvTotalReceived.setText(String.valueOf(totalReceived));
         tvTotalForwarded.setText(String.valueOf(successCount + failedCount));
         tvSuccessRate.setText(String.format(Locale.US, "%.1f%%", overallSuccessRate));
         tvTotalErrors.setText(String.valueOf(totalErrors));
+        tvTotalBlocked.setText(String.valueOf(totalBlocked));
         tvAvgProcessingTime.setText(String.format(Locale.US, "%.0f ms", avgProcessingTime));
         tvAppOpens.setText(String.valueOf(appOpens));
         tvMostCommonError.setText(mostCommonError);

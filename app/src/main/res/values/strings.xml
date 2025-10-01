@@ -278,6 +278,7 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="cd_progress_bar">İşlem ilerleme göstergesi</string>
     <string name="cd_success_icon">Başarı durumu ikonu</string>
     <string name="cd_error_icon">Hata durumu ikonu</string>
+    <string name="cd_blocked_icon">Bloklanan mesaj ikonu</string>
     <string name="cd_info_icon">Bilgi ikonu</string>
     <string name="cd_statistics_card">İstatistik bilgi kartı</string>
     
@@ -331,6 +332,7 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="received_label">Alınan</string>
     <string name="forwarded_label">Yönlendirilen</string>
     <string name="errors_label">Hatalar</string>
+    <string name="blocked_label">Bloklandı</string>
     <string name="success_rate_label">Başarı Oranı</string>
     <string name="zero_percent">0%</string>
     <string name="avg_processing_time_label">Ort. İşlem Süresi</string>

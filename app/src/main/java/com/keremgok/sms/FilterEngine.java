@@ -99,11 +99,30 @@ public class FilterEngine {
             // Apply filters in priority order
             for (SmsFilter filter : enabledFilters) {
                 FilterResult result = applyFilter(filter, senderNumber, messageContent, timestamp, sourceSubscriptionId, sourceSimSlot);
-                
+
                 if (result != null) {
-                    // Filter matched, update match count and return result
+                    // Filter matched, update match count
                     updateFilterMatchCount(filter.getId());
                     logDebug("Filter matched: " + filter.getFilterName() + " -> " + result.getReason());
+
+                    // Record blocked SMS in analytics if message is blocked
+                    if (!result.shouldForward()) {
+                        StatisticsManager statsManager = StatisticsManager.getInstance(context);
+                        if (sourceSimSlot != -1) {
+                            statsManager.recordSmsBlockedWithSim(
+                                filter.getFilterName(),
+                                filter.getFilterType(),
+                                sourceSimSlot,
+                                senderNumber
+                            );
+                        } else {
+                            statsManager.recordSmsBlocked(
+                                filter.getFilterName(),
+                                filter.getFilterType()
+                            );
+                        }
+                    }
+
                     return result;
                 }
             }

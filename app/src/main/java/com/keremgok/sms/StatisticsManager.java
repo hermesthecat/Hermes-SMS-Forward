@@ -36,6 +36,7 @@ public class StatisticsManager {
         public static final String SMS_RECEIVED = "SMS_RECEIVED";
         public static final String SMS_FORWARD = "SMS_FORWARD";
         public static final String SMS_ERROR = "SMS_ERROR";
+        public static final String SMS_BLOCKED = "SMS_BLOCKED";
         public static final String APP_OPEN = "APP_OPEN";
         public static final String APP_CLOSE = "APP_CLOSE";
         public static final String PERMISSION_REQUEST = "PERMISSION_REQUEST";
@@ -261,16 +262,51 @@ public class StatisticsManager {
      */
     public void recordSmsReceivedWithSim(int sourceSimSlot, int sourceSubscriptionId, String senderNumber) {
         // Hash sender number for privacy (only last 4 digits)
-        String hashedSender = senderNumber != null && senderNumber.length() > 4 ? 
+        String hashedSender = senderNumber != null && senderNumber.length() > 4 ?
             "****" + senderNumber.substring(senderNumber.length() - 4) : "unknown";
-        
+
         String metadata = String.format(
             "{\"source_sim_slot\":%d,\"source_subscription_id\":%d,\"hashed_sender\":\"%s\"}",
             sourceSimSlot, sourceSubscriptionId, hashedSender);
         recordEvent(EventType.SMS_RECEIVED, EventCategory.MESSAGING, EventAction.SUCCESS,
                    0, null, metadata, getAppVersion());
     }
-    
+
+    /**
+     * Record SMS blocked by filter rule
+     * @param filterName Name of the filter that blocked the message
+     * @param filterType Type of filter (e.g., SENDER, CONTENT)
+     */
+    public void recordSmsBlocked(String filterName, String filterType) {
+        String metadata = String.format(
+            "{\"filter_name\":\"%s\",\"filter_type\":\"%s\"}",
+            filterName != null ? filterName : "unknown",
+            filterType != null ? filterType : "unknown");
+        recordEvent(EventType.SMS_BLOCKED, EventCategory.MESSAGING, EventAction.FILTERED,
+                   0, null, metadata, getAppVersion());
+    }
+
+    /**
+     * Record SMS blocked with SIM information
+     * @param filterName Name of the filter that blocked the message
+     * @param filterType Type of filter
+     * @param sourceSimSlot Source SIM slot (-1 if unknown)
+     * @param senderNumber Sender phone number (hashed for privacy)
+     */
+    public void recordSmsBlockedWithSim(String filterName, String filterType, int sourceSimSlot, String senderNumber) {
+        // Hash sender number for privacy (only last 4 digits)
+        String hashedSender = senderNumber != null && senderNumber.length() > 4 ?
+            "****" + senderNumber.substring(senderNumber.length() - 4) : "unknown";
+
+        String metadata = String.format(
+            "{\"filter_name\":\"%s\",\"filter_type\":\"%s\",\"source_sim_slot\":%d,\"hashed_sender\":\"%s\"}",
+            filterName != null ? filterName : "unknown",
+            filterType != null ? filterType : "unknown",
+            sourceSimSlot, hashedSender);
+        recordEvent(EventType.SMS_BLOCKED, EventCategory.MESSAGING, EventAction.FILTERED,
+                   0, null, metadata, getAppVersion());
+    }
+
     /**
      * Record permission request result
      * @param permission Permission name
@@ -352,7 +388,10 @@ public class StatisticsManager {
                 
                 int errorCount = analyticsDao.getEventCountByTypeAndAction(
                     EventType.SMS_ERROR, EventAction.FAILURE, startTime, endTime);
-                
+
+                int totalBlockedCount = analyticsDao.getEventCountByTypeAndAction(
+                    EventType.SMS_BLOCKED, EventAction.FILTERED, startTime, endTime);
+
                 int appOpens = analyticsDao.getEventCountByTypeAndAction(
                     EventType.APP_OPEN, EventAction.STARTED, startTime, endTime);
                 
@@ -376,8 +415,8 @@ public class StatisticsManager {
                 StatisticsSummary summary = new StatisticsSummary(
                     date, "DAILY", totalSmsReceived, totalForwards, successfulForwards,
                     failedForwards, successRate, avgProcessingTime, errorCount,
-                    mostCommonError, appOpens, totalSessionDuration, avgSessionDuration,
-                    System.currentTimeMillis(), System.currentTimeMillis()
+                    totalBlockedCount, mostCommonError, appOpens, totalSessionDuration,
+                    avgSessionDuration, System.currentTimeMillis(), System.currentTimeMillis()
                 );
                 
                 // Check if summary already exists
@@ -393,6 +432,7 @@ public class StatisticsManager {
                         existing.setSuccessRate(successRate);
                         existing.setAvgProcessingTimeMs(avgProcessingTime);
                         existing.setErrorCount(errorCount);
+                        existing.setTotalBlockedCount(totalBlockedCount);
                         existing.setMostCommonError(mostCommonError);
                         existing.setAppOpens(appOpens);
                         existing.setLastUpdated(System.currentTimeMillis());
