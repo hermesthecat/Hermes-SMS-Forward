@@ -1,92 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <!-- Header Section -->
+    <!-- Main Content -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="8dp">
-        
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/filter_rules_title"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="?android:attr/textColorPrimary"
-            android:contentDescription="@string/filter_rules_title" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <ImageButton
-            android:id="@+id/btnFilterHelp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@android:drawable/ic_menu_help"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Filter help"
-            android:scaleType="centerInside"
-            android:layout_marginStart="8dp" />
-            
+        <!-- Header Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/filter_rules_title"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="?android:attr/textColorPrimary"
+                android:contentDescription="@string/filter_rules_title" />
+
+            <ImageButton
+                android:id="@+id/btnFilterHelp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_menu_help"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Filter help"
+                android:scaleType="centerInside"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_rules_description"
+            android:textSize="14sp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/filter_rules_description" />
+
+        <!-- Filter Rules List Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/existing_filters"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvEmptyState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_filters_configured"
+            android:textSize="14sp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:gravity="center"
+            android:padding="24dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"
+            android:contentDescription="@string/no_filters_configured" />
+
+        <!-- RecyclerView for Filter Rules -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFilterRules"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="vertical"
+            android:contentDescription="@string/filter_rules_title"
+            android:importantForAccessibility="yes" />
+
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/filter_rules_description"
-        android:textSize="14sp"
-        android:textColor="?android:attr/textColorSecondary"
-        android:layout_marginBottom="16dp"
-        android:contentDescription="@string/filter_rules_description" />
-
-
-    <!-- Add Filter Button -->
+    <!-- Floating Action Button - Fixed at bottom right -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginBottom="16dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
         android:src="@android:drawable/ic_input_add"
         android:contentDescription="@string/add_filter"
         app:tint="@android:color/white" />
 
-    <!-- Filter Rules List Section -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/existing_filters"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp" />
-
-    <TextView
-        android:id="@+id/tvEmptyState"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/no_filters_configured"
-        android:textSize="14sp"
-        android:textColor="?android:attr/textColorSecondary"
-        android:gravity="center"
-        android:padding="24dp"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone"
-        android:contentDescription="@string/no_filters_configured" />
-
-    <!-- RecyclerView for Filter Rules -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvFilterRules"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:scrollbars="vertical"
-        android:contentDescription="@string/filter_rules_title"
-        android:importantForAccessibility="yes" />
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
