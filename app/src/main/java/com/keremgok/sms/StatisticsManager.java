@@ -84,6 +84,12 @@ public class StatisticsManager {
     private StatisticsManager(Context context) {
         this.context = context.getApplicationContext();
         this.database = AppDatabase.getInstance(context);
+        
+        if (this.database == null) {
+            Log.e(TAG, "Critical: Database instance is null in StatisticsManager constructor");
+            // StatisticsManager will still work but won't be able to persist events
+        }
+        
         this.prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         initializeSession();
     }
@@ -176,7 +182,16 @@ public class StatisticsManager {
                     currentSessionId.get()
                 );
                 
-                database.analyticsEventDao().insert(event);
+                if (database != null) {
+                    AnalyticsEventDao dao = database.analyticsEventDao();
+                    if (dao != null) {
+                        dao.insert(event);
+                    } else {
+                        Log.w(TAG, "AnalyticsEventDao is null, event not persisted");
+                    }
+                } else {
+                    Log.w(TAG, "Database is null, analytics event not persisted");
+                }
                 
                 // Debug logging removed for compatibility
                 
