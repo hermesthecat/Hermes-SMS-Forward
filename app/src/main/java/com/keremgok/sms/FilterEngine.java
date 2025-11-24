@@ -97,27 +97,38 @@ public class FilterEngine {
             
             // Apply filters in priority order
             for (SmsFilter filter : enabledFilters) {
+                // Skip null or invalid filters (defensive programming)
+                if (filter == null) {
+                    Log.w(TAG, "Skipping null filter in enabled filters list");
+                    continue;
+                }
+                
                 FilterResult result = applyFilter(filter, senderNumber, messageContent, timestamp, sourceSubscriptionId, sourceSimSlot);
 
                 if (result != null) {
                     // Filter matched, update match count
                     updateFilterMatchCount(filter.getId());
-                    logDebug("Filter matched: " + filter.getFilterName() + " -> " + result.getReason());
+                    
+                    // Safe access to filter properties with null checks
+                    String filterName = filter.getFilterName() != null ? filter.getFilterName() : "Unknown Filter";
+                    String filterType = filter.getFilterType() != null ? filter.getFilterType() : "UNKNOWN";
+                    
+                    logDebug("Filter matched: " + filterName + " -> " + result.getReason());
 
                     // Record blocked SMS in analytics if message is blocked
                     if (!result.shouldForward()) {
                         StatisticsManager statsManager = StatisticsManager.getInstance(context);
                         if (sourceSimSlot != -1) {
                             statsManager.recordSmsBlockedWithSim(
-                                filter.getFilterName(),
-                                filter.getFilterType(),
+                                filterName,
+                                filterType,
                                 sourceSimSlot,
                                 senderNumber
                             );
                         } else {
                             statsManager.recordSmsBlocked(
-                                filter.getFilterName(),
-                                filter.getFilterType()
+                                filterName,
+                                filterType
                             );
                         }
                     }
