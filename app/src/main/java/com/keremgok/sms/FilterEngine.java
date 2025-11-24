@@ -55,7 +55,16 @@ public class FilterEngine {
     public FilterEngine(Context context) {
         this.context = context;
         this.database = AppDatabase.getInstance(context);
-        this.filterDao = database.smsFilterDao();
+        
+        if (this.database == null) {
+            Log.e(TAG, "Critical: Database instance is null in FilterEngine constructor");
+            this.filterDao = null;
+        } else {
+            this.filterDao = database.smsFilterDao();
+            if (this.filterDao == null) {
+                Log.e(TAG, "Critical: SmsFilterDao is null");
+            }
+        }
     }
     
     /**
@@ -80,6 +89,12 @@ public class FilterEngine {
      */
     public FilterResult applyFilters(String senderNumber, String messageContent, long timestamp, int sourceSubscriptionId, int sourceSimSlot) {
         try {
+            // Check if filterDao is available
+            if (filterDao == null) {
+                Log.e(TAG, "FilterDao is null, cannot apply filters - allowing SMS by default");
+                return new FilterResult(true, "Filter system unavailable", null);
+            }
+            
             // Get all enabled filters ordered by priority
             List<SmsFilter> enabledFilters = filterDao.getEnabledFilters();
             
@@ -376,7 +391,11 @@ public class FilterEngine {
     private void updateFilterMatchCount(int filterId) {
         ThreadManager.getInstance().executeDatabase(() -> {
             try {
-                filterDao.incrementMatchCount(filterId, System.currentTimeMillis());
+                if (filterDao != null) {
+                    filterDao.incrementMatchCount(filterId, System.currentTimeMillis());
+                } else {
+                    Log.e(TAG, "FilterDao is null, cannot update match count");
+                }
             } catch (Exception e) {
                 Log.e(TAG, "Error updating filter match count: " + e.getMessage());
             }
