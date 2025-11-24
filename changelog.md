@@ -1,5 +1,45 @@
 # Changelog - Hermes SMS Forward
 
+## [2.46.0] - 2025-11-24
+
+- 🐛 **Additional High Priority Bug Fixes:**
+  - **B012: WorkManager Exception Handling** ⚠️ **HIGH**
+    - Added comprehensive error handling in SmsQueueManager constructor
+    - Implements fallback to direct SMS sending if WorkManager unavailable
+    - Fixed exception handling in SmsReceiver and CallStateManager
+    - Graceful degradation ensures app continues working
+    - Impact: Prevents crashes from WorkManager initialization failures
+  
+  - **B048: ThreadManager Lifecycle Management** ⚠️ **HIGH**
+    - Created HermesApplication class for proper app lifecycle management
+    - Implements onTerminate() to shutdown ThreadManager thread pools
+    - Added SimManager.clearCache() for memory management
+    - Implements onTrimMemory() for low memory situations
+    - Impact: Prevents resource leaks, improves shutdown behavior
+  
+  - **B009: Database Null Safety (Partial)** ⚠️ **HIGH**
+    - Added null checks in SmsReceiver (3 locations)
+    - Added null checks in FilterEngine (3 locations)
+    - Added null checks in StatisticsManager (2 locations)
+    - Added null checks in SmsQueueWorker (2 locations)
+    - Total: 10+ critical locations protected with null checks
+    - Graceful degradation: app continues working if database unavailable
+    - Impact: Prevents NullPointerException crashes throughout SMS pipeline
+
+- 📊 **Cumulative Bug Fix Summary (v2.45.0 + v2.46.0):**
+  - **10 Critical/High bugs fixed** across 13 commits
+  - **Memory leaks eliminated**: Handler, Cursor, Thread pools
+  - **Thread safety improved**: Volatile keywords, proper synchronization
+  - **Exception handling**: WorkManager, Database, null safety
+  - **API compatibility**: Deprecated methods replaced
+  - **Defensive programming**: Null checks, fallback mechanisms
+
+- 🏗️ **Architecture Improvements:**
+  - Application lifecycle management with HermesApplication
+  - Comprehensive error handling throughout SMS processing pipeline
+  - Multiple fallback mechanisms for critical failures
+  - Enhanced logging for debugging and monitoring
+
 ## [2.45.0] - 2025-11-24
 
 - 🐛 **Critical Bug Fixes (High Priority):**
