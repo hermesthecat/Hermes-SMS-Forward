@@ -149,20 +149,21 @@ public abstract class AppDatabase extends RoomDatabase {
                 
                 // Add dual SIM fields to target_numbers table with error handling
                 try {
-                    // Check if columns already exist first
-                    android.database.Cursor cursor = database.query("PRAGMA table_info(target_numbers)");
+                    // Check if columns already exist first (using try-with-resources to prevent cursor leak)
                     boolean hasPreferredSimSlot = false;
                     boolean hasSimSelectionMode = false;
                     
-                    while (cursor.moveToNext()) {
-                        String columnName = cursor.getString(1); // Column name is at index 1
-                        if ("preferred_sim_slot".equals(columnName)) {
-                            hasPreferredSimSlot = true;
-                        } else if ("sim_selection_mode".equals(columnName)) {
-                            hasSimSelectionMode = true;
+                    try (android.database.Cursor cursor = database.query("PRAGMA table_info(target_numbers)")) {
+                        while (cursor.moveToNext()) {
+                            String columnName = cursor.getString(1); // Column name is at index 1
+                            if ("preferred_sim_slot".equals(columnName)) {
+                                hasPreferredSimSlot = true;
+                            } else if ("sim_selection_mode".equals(columnName)) {
+                                hasSimSelectionMode = true;
+                            }
                         }
+                        // Cursor automatically closed by try-with-resources
                     }
-                    cursor.close();
                     
                     if (!hasPreferredSimSlot) {
                         database.execSQL("ALTER TABLE target_numbers ADD COLUMN preferred_sim_slot INTEGER DEFAULT -1");
@@ -181,31 +182,32 @@ public abstract class AppDatabase extends RoomDatabase {
                 
                 // Add dual SIM fields to sms_history table with error handling
                 try {
-                    // Check if columns already exist first
-                    android.database.Cursor cursor = database.query("PRAGMA table_info(sms_history)");
+                    // Check if columns already exist first (using try-with-resources to prevent cursor leak)
                     boolean hasSourceSimSlot = false;
                     boolean hasForwardingSimSlot = false;
                     boolean hasSourceSubscriptionId = false;
                     boolean hasForwardingSubscriptionId = false;
                     
-                    while (cursor.moveToNext()) {
-                        String columnName = cursor.getString(1); // Column name is at index 1
-                        switch (columnName) {
-                            case "source_sim_slot":
-                                hasSourceSimSlot = true;
-                                break;
-                            case "forwarding_sim_slot":
-                                hasForwardingSimSlot = true;
-                                break;
-                            case "source_subscription_id":
-                                hasSourceSubscriptionId = true;
-                                break;
-                            case "forwarding_subscription_id":
-                                hasForwardingSubscriptionId = true;
-                                break;
+                    try (android.database.Cursor cursor = database.query("PRAGMA table_info(sms_history)")) {
+                        while (cursor.moveToNext()) {
+                            String columnName = cursor.getString(1); // Column name is at index 1
+                            switch (columnName) {
+                                case "source_sim_slot":
+                                    hasSourceSimSlot = true;
+                                    break;
+                                case "forwarding_sim_slot":
+                                    hasForwardingSimSlot = true;
+                                    break;
+                                case "source_subscription_id":
+                                    hasSourceSubscriptionId = true;
+                                    break;
+                                case "forwarding_subscription_id":
+                                    hasForwardingSubscriptionId = true;
+                                    break;
+                            }
                         }
+                        // Cursor automatically closed by try-with-resources
                     }
-                    cursor.close();
                     
                     if (!hasSourceSimSlot) {
                         database.execSQL("ALTER TABLE sms_history ADD COLUMN source_sim_slot INTEGER DEFAULT -1");
