@@ -34,6 +34,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
         release {
             minifyEnabled true
@@ -42,12 +46,18 @@ android {
             zipAlignEnabled true
             signingConfig = signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            // Disable debug logging in release builds
+            buildConfigField "boolean", "ENABLE_DEBUG_LOGS", "false"
         }
         debug {
             minifyEnabled false
             debuggable true
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
+
+            // Enable debug logging in debug builds
+            buildConfigField "boolean", "ENABLE_DEBUG_LOGS", "true"
         }
     }
     

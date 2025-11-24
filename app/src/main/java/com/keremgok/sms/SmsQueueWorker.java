@@ -19,7 +19,6 @@ import java.util.concurrent.TimeUnit;
 public class SmsQueueWorker extends Worker {
     
     private static final String TAG = "SmsQueueWorker";
-    private static final boolean DEBUG = false; // Production safe - no debug logs
     
     // Input Data Keys
     public static final String KEY_ORIGINAL_SENDER = "original_sender";
@@ -304,7 +303,7 @@ public class SmsQueueWorker extends Worker {
             );
             database.smsHistoryDao().insert(history);
             
-            if (DEBUG) {
+            if (BuildConfig.ENABLE_DEBUG_LOGS) {
                 logDebug("SMS history logged: SUCCESS from " + maskPhoneNumber(originalSender) + 
                         " to " + maskPhoneNumber(targetNumber));
             }
@@ -336,7 +335,7 @@ public class SmsQueueWorker extends Worker {
             );
             database.smsHistoryDao().insert(history);
             
-            if (DEBUG) {
+            if (BuildConfig.ENABLE_DEBUG_LOGS) {
                 logDebug("SMS history logged: FAILURE from " + maskPhoneNumber(originalSender) + 
                         " to " + maskPhoneNumber(targetNumber) + " - " + errorMessage);
             }
@@ -428,7 +427,7 @@ public class SmsQueueWorker extends Worker {
      * Secure debug logging
      */
     private void logDebug(String message) {
-        if (DEBUG) {
+        if (BuildConfig.ENABLE_DEBUG_LOGS) {
             Log.d(TAG, message);
         }
     }

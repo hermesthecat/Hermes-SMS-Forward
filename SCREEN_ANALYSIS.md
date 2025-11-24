@@ -25,10 +25,12 @@
 **Launcher**: ✅ Evet (Uygulama açılışta bu ekran açılır)
 **Parent**: Yok (Root activity)
 
-### Amaç:
+### Amaç
+
 Ana kontrol paneli - Uygulama durumu ve izinleri gösterir.
 
-### Özellikler:
+### Özellikler
+
 - ✅ **İzin Durumu Göstergesi**: 3 izin için real-time durum
   - RECEIVE_SMS: SMS alma izni (✓/✗)
   - SEND_SMS: SMS gönderme izni (✓/✗)
@@ -39,8 +41,9 @@ Ana kontrol paneli - Uygulama durumu ve izinleri gösterir.
 - ✅ **StatisticsManager**: Oturum takibi ve analitik
 - ✅ **Dil Desteği**: LanguageManager entegrasyonu
 
-### UI Bileşenleri:
-```
+### UI Bileşenleri
+
+```text
 ┌─────────────────────────────────────┐
 │ Hermes SMS Forward      [⋮ Menu]    │
 ├─────────────────────────────────────┤
@@ -59,7 +62,8 @@ Ana kontrol paneli - Uygulama durumu ve izinleri gösterir.
 └─────────────────────────────────────┘
 ```
 
-### Menü Öğeleri:
+### Menü Öğeleri
+
 1. **Hedef Numaralar** → TargetNumbersActivity
 2. **Filtre Kuralları** → FilterRulesActivity
 3. **Geçmiş** → HistoryActivity
@@ -67,7 +71,8 @@ Ana kontrol paneli - Uygulama durumu ve izinleri gösterir.
 5. **Ayarlar** → SettingsActivity
 6. **SIM Debug** → SimDebugActivity (Debug only)
 
-### Yaşam Döngüsü:
+### Yaşam Döngüsü
+
 ```java
 onCreate() →
   Onboarding kontrolü →
@@ -87,10 +92,12 @@ onCreate() →
 **Launcher**: ❌ Hayır (MainActivity'den redirect)
 **Parent**: Yok (finish sonrası MainActivity açılır)
 
-### Amaç:
+### Amaç
+
 Yeni kullanıcılar için 5 adımlı onboarding süreci.
 
-### Özellikler:
+### Özellikler
+
 - ✅ **ViewPager2**: Swipe ile sayfa geçişi
 - ✅ **5 Fragment**: Her adım ayrı fragment
 - ✅ **Progress Indicator**: Adım göstergesi (1/5, 2/5, etc.)
@@ -100,45 +107,56 @@ Yeni kullanıcılar için 5 adımlı onboarding süreci.
 - ✅ **SharedPreferences**: `onboarding_completed` flag
 - ✅ **Portrait Mode**: Sadece dikey ekran
 
-### Fragment Sırası:
+### Fragment Sırası
 
 #### **Fragment 1: WelcomeFragment**
+
 **Layout**: `fragment_welcome.xml`
 **Dosya**: `onboarding/WelcomeFragment.java`
+
 - Uygulama hoş geldin mesajı
 - Uygulama tanıtımı
 - İkon ve başlık
 
 #### **Fragment 2: PermissionExplanationFragment**
+
 **Layout**: `fragment_permission_explanation.xml`
 **Dosya**: `onboarding/PermissionExplanationFragment.java`
+
 - İzinlerin neden gerekli olduğunu açıklar
 - RECEIVE_SMS, SEND_SMS, READ_PHONE_STATE açıklamaları
 - Güvenlik bilgisi
 
 #### **Fragment 3: TargetNumberSetupFragment**
+
 **Layout**: `fragment_target_number_setup.xml`
 **Dosya**: `onboarding/TargetNumberSetupFragment.java` (6391 satır - en kompleks)
+
 - İlk hedef numarası ekleme
 - Numarası validation
 - Database'e kaydetme
 
 #### **Fragment 4: FilterIntroFragment**
+
 **Layout**: `fragment_filter_intro.xml`
 **Dosya**: `onboarding/FilterIntroFragment.java`
+
 - Filtre sisteminin tanıtımı
 - Include/Exclude pattern açıklaması
 - Örnek kullanım senaryoları
 
 #### **Fragment 5: CompletionFragment**
+
 **Layout**: `fragment_completion.xml`
 **Dosya**: `onboarding/CompletionFragment.java`
+
 - Tebrikler mesajı
 - Onboarding tamamlandı
 - "Başla" butonu → MainActivity
 
-### UI Yapısı:
-```
+### UI Yapısı
+
+```text
 ┌─────────────────────────────────────┐
 │ ────────────────────── 40%          │ ← Progress Bar
 │                                     │
@@ -152,8 +170,9 @@ Yeni kullanıcılar için 5 adımlı onboarding süreci.
 └─────────────────────────────────────┘
 ```
 
-### Veri Akışı:
-```
+### Veri Akışı
+
+```text
 onboarding_completed = false (default)
     ↓
 WelcomeFragment → PermissionExplanationFragment →
@@ -174,10 +193,12 @@ MainActivity
 **Dosya**: `TargetNumbersActivity.java` | **Layout**: `activity_target_numbers.xml`
 **Parent**: MainActivity
 
-### Amaç:
+### Amaç
+
 SMS yönlendirilecek hedef telefon numaralarını yönetir.
 
-### Özellikler:
+### Özellikler
+
 - ✅ **RecyclerView**: Hedef numaraları listesi
 - ✅ **FAB (Floating Action Button)**: Yeni hedef ekle
 - ✅ **Add Dialog**: Hedef ekleme modalı
@@ -191,9 +212,11 @@ SMS yönlendirilecek hedef telefon numaralarını yönetir.
 - ✅ **ThreadManager**: Background database işlemleri
 
 ### Dialog: Add Target Number
+
 **Layout**: `dialog_add_target_number.xml`
 
 **Alanlar**:
+
 1. **Telefon Numarası** (zorunlu)
    - Input type: phone
    - Real-time validation
@@ -214,10 +237,11 @@ SMS yönlendirilecek hedef telefon numaralarını yönetir.
 5. **Etkin** (checkbox, default: checked)
    - Aktif/pasif durumu
 
-### RecyclerView Item Layout:
+### RecyclerView Item Layout
+
 **Layout**: `item_target_number.xml`
 
-```
+```text
 ┌─────────────────────────────────────┐
 │ [ANA] +905551234567      [SIM 1]    │
 │ Ahmet'in Telefonu                   │
@@ -226,14 +250,16 @@ SMS yönlendirilecek hedef telefon numaralarını yönetir.
 └─────────────────────────────────────┘
 ```
 
-### Item Menü Seçenekleri:
+### Item Menü Seçenekleri
+
 - 📝 **Düzenle**: Hedefi düzenle
 - 🗑️ **Sil**: Hedefi sil (onay dialog)
 - 🔄 **Ana Yap**: Primary hedef olarak ayarla
 - ✓/✗ **Etkinlik**: Aktif/pasif değiştir
 
-### UI Bileşenleri:
-```
+### UI Bileşenleri
+
+```text
 ┌─────────────────────────────────────┐
 │ ← Hedef Numaralar                   │
 ├─────────────────────────────────────┤
@@ -257,7 +283,8 @@ SMS yönlendirilecek hedef telefon numaralarını yönetir.
 └─────────────────────────────────────┘
 ```
 
-### Database İşlemleri:
+### Database İşlemleri
+
 ```java
 // Insert
 targetNumberDao.insert(targetNumber)
@@ -281,10 +308,12 @@ targetNumberDao.deleteTargetNumber(id)
 **Dosya**: `FilterRulesActivity.java` | **Layout**: `activity_filter_rules.xml`
 **Parent**: MainActivity
 
-### Amaç:
+### Amaç
+
 Hangi SMS'lerin yönlendirileceğini belirleyen filtre kurallarını yönetir.
 
-### Özellikler:
+### Özellikler
+
 - ✅ **RecyclerView**: Filtre kuralları listesi
 - ✅ **FAB**: Yeni filtre ekle
 - ✅ **Add Dialog**: Filtre ekleme modalı
@@ -297,9 +326,11 @@ Hangi SMS'lerin yönlendirileceğini belirleyen filtre kurallarını yönetir.
 - ✅ **FilterEngine**: Gerçek zamanlı filtre testi
 
 ### Dialog: Add Filter
+
 **Layout**: `dialog_add_filter.xml`
 
 **Alanlar**:
+
 1. **Filtre Adı** (zorunlu)
    - Filtreyi tanımlamak için
 
@@ -315,18 +346,21 @@ Hangi SMS'lerin yönlendirileceğini belirleyen filtre kurallarını yönetir.
 4. **Etkin** (checkbox, default: checked)
 
 ### Dialog: Test Filter
+
 **Layout**: `dialog_filter_test.xml`
 
 **Özellikler**:
+
 - Test SMS metni gir
 - Tüm filtrelere karşı test et
 - Sonuç: ✓ Yönlendirilir / ✗ Engellenir
 - Hangi filtrenin tetiklendiğini göster
 
-### RecyclerView Item Layout:
+### RecyclerView Item Layout
+
 **Layout**: `item_filter_rule.xml`
 
-```
+```text
 ┌─────────────────────────────────────┐
 │ [ETKİN] BANK SMS Filtresi           │
 │ Pattern: "BANK*"                    │
@@ -335,15 +369,17 @@ Hangi SMS'lerin yönlendirileceğini belirleyen filtre kurallarını yönetir.
 └─────────────────────────────────────┘
 ```
 
-### Item Menü Seçenekleri:
+### Item Menü Seçenekleri
+
 - 📝 **Düzenle**: Filtreyi düzenle
 - 🗑️ **Sil**: Filtreyi sil
 - 🧪 **Test**: Filtre test dialog'u aç
 - ✓/✗ **Etkinlik**: Aktif/pasif değiştir
 - ⬆️⬇️ **Öncelik**: Sırayı değiştir
 
-### UI Yapısı:
-```
+### UI Yapısı
+
+```text
 ┌─────────────────────────────────────┐
 │ ← Filtre Kuralları                  │
 ├─────────────────────────────────────┤
@@ -365,7 +401,8 @@ Hangi SMS'lerin yönlendirileceğini belirleyen filtre kurallarını yönetir.
 └─────────────────────────────────────┘
 ```
 
-### Filtre Mantığı:
+### Filtre Mantığı
+
 ```java
 FilterEngine.shouldForward(message, filterRules)
     ↓
@@ -388,10 +425,12 @@ FilterEngine.shouldForward(message, filterRules)
 **Parent**: MainActivity
 **Theme**: `Theme.HermesSmsForward.NoActionBar` (Custom toolbar)
 
-### Amaç:
+### Amaç
+
 Yönlendirilen tüm SMS'lerin geçmişini gösterir.
 
-### Özellikler:
+### Özellikler
+
 - ✅ **RecyclerView**: SMS geçmiş listesi
 - ✅ **Custom Toolbar**: Material toolbar
 - ✅ **SwipeRefreshLayout**: Pull-to-refresh
@@ -402,7 +441,8 @@ Yönlendirilen tüm SMS'lerin geçmişini gösterir.
 - ✅ **ThreadManager**: Background database sorguları
 - ✅ **Status Indicators**: Başarılı/Başarısız göstergesi
 
-### RecyclerView Item Layout:
+### RecyclerView Item Layout
+
 **Layout**: `item_sms_history.xml`
 
 ```
@@ -415,12 +455,14 @@ Yönlendirilen tüm SMS'lerin geçmişini gösterir.
 └─────────────────────────────────────┘
 ```
 
-### Toolbar Menü:
+### Toolbar Menü
+
 - 🔍 **Arama**: SearchView açılır
 - 🗑️ **Geçmişi Temizle**: Tüm kayıtları sil (onay dialog)
 - 📤 **Dışa Aktar**: CSV export
 
-### Search Fonksiyonu:
+### Search Fonksiyonu
+
 ```java
 onQueryTextChange(newText)
     ↓
@@ -434,8 +476,9 @@ filteredHistory.add(item) if:
 Update RecyclerView
 ```
 
-### UI Yapısı:
-```
+### UI Yapısı
+
+```text
 ┌─────────────────────────────────────┐
 │ ← SMS Geçmişi          [🔍] [⋮]     │
 ├─────────────────────────────────────┤
@@ -459,7 +502,8 @@ Update RecyclerView
 └─────────────────────────────────────┘
 ```
 
-### Database Query:
+### Database Query
+
 ```java
 smsHistoryDao.getAllHistory()
 // Order by timestamp DESC
@@ -475,10 +519,12 @@ smsHistoryDao.getAllHistory()
 **Dosya**: `AnalyticsActivity.java` | **Layout**: `activity_analytics.xml`
 **Parent**: MainActivity
 
-### Amaç:
+### Amaç
+
 Privacy-first local analytics - Kullanım istatistiklerini gösterir.
 
-### Özellikler:
+### Özellikler
+
 - ✅ **Privacy-First**: Hiçbir veri dışarı gönderilmez
 - ✅ **StatisticsManager**: Local analytics engine
 - ✅ **CardViews**: İstatistik kartları
@@ -489,10 +535,11 @@ Privacy-first local analytics - Kullanım istatistiklerini gösterir.
 - ✅ **Refresh**: Manuel yenileme butonu
 - ✅ **Most Common Error**: En sık hata türü
 
-### İstatistik Kartları:
+### İstatistik Kartları
 
 #### **Card 1: Genel Özet**
-```
+
+```text
 ┌─────────────────────────────────────┐
 │ GENEL İSTATİSTİKLER                 │
 ├─────────────────────────────────────┤
@@ -507,7 +554,8 @@ Privacy-first local analytics - Kullanım istatistiklerini gösterir.
 ```
 
 #### **Card 2: Bugün**
-```
+
+```text
 ┌─────────────────────────────────────┐
 │ BUGÜN                               │
 ├─────────────────────────────────────┤
@@ -519,7 +567,8 @@ Privacy-first local analytics - Kullanım istatistiklerini gösterir.
 ```
 
 #### **Card 3: Bu Hafta**
-```
+
+```text
 ┌─────────────────────────────────────┐
 │ BU HAFTA                            │
 ├─────────────────────────────────────┤
@@ -531,7 +580,8 @@ Privacy-first local analytics - Kullanım istatistiklerini gösterir.
 ```
 
 #### **Card 4: Bu Ay**
-```
+
+```text
 ┌─────────────────────────────────────┐
 │ BU AY                               │
 ├─────────────────────────────────────┤
@@ -543,7 +593,8 @@ Privacy-first local analytics - Kullanım istatistiklerini gösterir.
 ```
 
 #### **Card 5: SIM İstatistikleri** (Dual SIM only)
-```
+
+```text
 ┌─────────────────────────────────────┐
 │ SIM KART İSTATİSTİKLERİ             │
 ├─────────────────────────────────────┤
@@ -562,18 +613,21 @@ Privacy-first local analytics - Kullanım istatistiklerini gösterir.
 └─────────────────────────────────────┘
 ```
 
-### Toolbar Menü:
+### Toolbar Menü
+
 - 📤 **Export CSV**: İstatistikleri CSV olarak kaydet
 - 📤 **Export JSON**: JSON formatında export
 - 📤 **Share**: Analytics dosyasını paylaş
 - 🗑️ **Clear Analytics**: Tüm istatistikleri sil
 
-### Butonlar:
+### Butonlar
+
 - 🔄 **Refresh**: İstatistikleri yenile
 - 📤 **Export**: Export seçenekleri
 
-### UI Yapısı:
-```
+### UI Yapısı
+
+```text
 ┌─────────────────────────────────────┐
 │ ← İstatistikler          [⋮]        │
 ├─────────────────────────────────────┤
@@ -591,7 +645,8 @@ Privacy-first local analytics - Kullanım istatistiklerini gösterir.
 └─────────────────────────────────────┘
 ```
 
-### Analytics Events Tracked:
+### Analytics Events Tracked
+
 ```java
 - SMS_RECEIVED
 - SMS_FORWARDED
@@ -619,10 +674,12 @@ Privacy-first local analytics - Kullanım istatistiklerini gösterir.
 **XML**: `res/xml/preferences.xml`
 **Lines**: 926 satır
 
-### Amaç:
+### Amaç
+
 Uygulama konfigürasyonları ve gelişmiş ayarlar.
 
-### Özellikler:
+### Özellikler
+
 - ✅ **PreferenceFragmentCompat**: Modern preferences API
 - ✅ **PreferenceScreen XML**: Deklaratif ayar tanımları
 - ✅ **Kategoriler**: 4 ana kategori
@@ -633,22 +690,25 @@ Uygulama konfigürasyonları ve gelişmiş ayarlar.
 - ✅ **Dual SIM Settings**: SIM seçenekleri
 - ✅ **Format Preview**: SMS format önizleme
 
-### Ayar Kategorileri:
+### Ayar Kategorileri
 
 #### **1. Yönlendirme Ayarları** (`category_forwarding`)
 
 **SwitchPreference**:
+
 - ✅ **SMS Yönlendirmeyi Etkinleştir** (`pref_forwarding_enabled`)
   - Default: true
   - Ana anahtar
 
 **SeekBarPreference**:
+
 - ⏱️ **Yönlendirme Gecikmesi** (`pref_forwarding_delay`)
   - Range: 0-10 saniye
   - Default: 0
   - Gecikmeli gönderim
 
 **ListPreference**:
+
 - 📋 **SMS Format Stili** (`sms_format_type`)
   - Standard (Varsayılan)
   - Compact (Kısa)
@@ -656,11 +716,13 @@ Uygulama konfigürasyonları ve gelişmiş ayarlar.
   - Custom (Özel şablon)
 
 **EditTextPreference**:
+
 - 📝 **Özel Başlık** (`custom_header`)
   - Default: "Hermes SMS Forward"
   - SMS başlığı
 
 **SwitchPreference**:
+
 - 🕐 **Zaman Damgası Ekle** (`include_timestamp`)
   - Default: true
   - SMS'e tarih/saat ekle
@@ -670,6 +732,7 @@ Uygulama konfigürasyonları ve gelişmiş ayarlar.
   - Hangi SIM'den geldiğini göster
 
 **ListPreference**:
+
 - 📅 **Tarih Formatı** (`date_format`)
   - dd/MM/yyyy HH:mm:ss (Default)
   - MM/dd/yyyy HH:mm:ss
@@ -677,6 +740,7 @@ Uygulama konfigürasyonları ve gelişmiş ayarlar.
   - dd.MM.yyyy HH:mm:ss
 
 **Preference** (Custom Dialog):
+
 - 🎨 **Özel SMS Şablonu** (`custom_sms_template`)
   - Dialog açar
   - Layout: `dialog_custom_template.xml`
@@ -688,6 +752,7 @@ Uygulama konfigürasyonları ve gelişmiş ayarlar.
 #### **2. Bildirim Ayarları** (`category_notifications`)
 
 **SwitchPreference**:
+
 - 🔔 **Bildirimleri Göster** (`pref_show_notifications`)
   - Default: true
   - Master notification switch
@@ -707,6 +772,7 @@ Uygulama konfigürasyonları ve gelişmiş ayarlar.
 #### **3. Gelişmiş Ayarlar** (`category_advanced`)
 
 **ListPreference**:
+
 - 🌍 **Dil Seçimi** (`pref_app_language`)
   - Auto (Sistem)
   - Türkçe (tr)
@@ -725,6 +791,7 @@ Uygulama konfigürasyonları ve gelişmiş ayarlar.
   - Verbose
 
 **Preference** (Custom Action):
+
 - 💾 **Ayarları Yedekle** (`pref_backup_settings`)
   - BackupManager.backup()
   - JSON export
@@ -740,6 +807,7 @@ Uygulama konfigürasyonları ve gelişmiş ayarlar.
 **Visibility**: Sadece dual SIM cihazlarda görünür
 
 **ListPreference**:
+
 - 📡 **Varsayılan Yönlendirme SIM'i** (`pref_default_forwarding_sim`)
   - Auto (Sistem varsayılanı)
   - SIM 1
@@ -747,11 +815,13 @@ Uygulama konfigürasyonları ve gelişmiş ayarlar.
   - Hedef bazlı ayarları override etmez
 
 **SwitchPreference**:
+
 - 👁️ **SIM Göstergelerini Göster** (`pref_show_sim_indicators`)
   - Default: true
   - UI'da SIM badge'leri göster
 
 **Preference** (Custom Dialog):
+
 - ℹ️ **SIM Bilgileri** (`pref_sim_information`)
   - Dialog: SIM detayları
   - Layout: `dialog_sim_selection.xml`
@@ -760,17 +830,20 @@ Uygulama konfigürasyonları ve gelişmiş ayarlar.
 #### **5. Hakkında** (`category_about`)
 
 **Preference** (Non-clickable):
+
 - ℹ️ **Uygulama Sürümü** (`pref_app_version`)
   - Selectable: false
   - Summary: "2.43.0 (Build 64)"
 
 **Preference**:
+
 - 👤 **Geliştirici Bilgileri** (`pref_developer_info`)
   - Dialog: Developer info
   - GitHub, Email, Website
 
-### UI Yapısı:
-```
+### UI Yapısı
+
+```text
 ┌─────────────────────────────────────┐
 │ ← Ayarlar                           │
 ├─────────────────────────────────────┤
@@ -811,12 +884,13 @@ Uygulama konfigürasyonları ve gelişmiş ayarlar.
 └─────────────────────────────────────┘
 ```
 
-### Custom Dialogs:
+### Custom Dialogs
 
 #### **Custom Template Dialog**
+
 **Layout**: `dialog_custom_template.xml`
 
-```
+```text
 ┌─────────────────────────────────────┐
 │ Özel SMS Şablonu              [X]   │
 ├─────────────────────────────────────┤
@@ -851,10 +925,12 @@ Uygulama konfigürasyonları ve gelişmiş ayarlar.
 **Visibility**: Debug builds only (`@bool/is_debug_build`)
 **Theme**: `Theme.HermesSmsForward.NoActionBar`
 
-### Amaç:
+### Amaç
+
 Debug build'lerde SIM kartları ile ilgili detaylı bilgi gösterir.
 
-### Özellikler:
+### Özellikler
+
 - ✅ **Debug Only**: Release'de devre dışı
 - ✅ **System Info**: Android sürümü, API level, cihaz
 - ✅ **SIM Status**: Dual SIM durumu
@@ -862,8 +938,9 @@ Debug build'lerde SIM kartları ile ilgili detaylı bilgi gösterir.
 - ✅ **Test Buttons**: SIM seçim testleri
 - ✅ **Refresh**: Bilgileri yenileme
 
-### Gösterilen Bilgiler:
-```
+### Gösterilen Bilgiler
+
+```text
 === SIM DEBUG INFORMATION ===
 
 SYSTEM INFO:
@@ -879,12 +956,14 @@ Use the buttons below to test functionality.
 === END DEBUG INFO ===
 ```
 
-### Butonlar:
+### Butonlar
+
 - 🔄 **Refresh**: Bilgileri yenile
 - 🧪 **Test SIM Selection**: Test butonu
 
-### UI Yapısı:
-```
+### UI Yapısı
+
+```text
 ┌─────────────────────────────────────┐
 │ ← SIM Debug Info                    │
 ├─────────────────────────────────────┤
@@ -916,7 +995,8 @@ Use the buttons below to test functionality.
 └─────────────────────────────────────┘
 ```
 
-### Launch Conditions:
+### Launch Conditions
+
 ```java
 // Only in debug builds
 android:enabled="@bool/is_debug_build"
@@ -935,21 +1015,25 @@ android:enabled="@bool/is_debug_build"
 ## 🎨 DIALOG'LAR (Özel Modal'lar)
 
 ### 1. **Add Target Number Dialog**
+
 **Layout**: `dialog_add_target_number.xml`
 **Kullanım**: TargetNumbersActivity
 **Özellikler**: [Bölüm 3'te detaylı anlatıldı]
 
 ### 2. **Add Filter Dialog**
+
 **Layout**: `dialog_add_filter.xml`
 **Kullanım**: FilterRulesActivity
 **Özellikler**: [Bölüm 4'te detaylı anlatıldı]
 
 ### 3. **Filter Test Dialog**
+
 **Layout**: `dialog_filter_test.xml`
 **Kullanım**: FilterRulesActivity
 
 **UI**:
-```
+
+```text
 ┌─────────────────────────────────────┐
 │ Filtreyi Test Et              [X]   │
 ├─────────────────────────────────────┤
@@ -974,11 +1058,13 @@ android:enabled="@bool/is_debug_build"
 ```
 
 ### 4. **SIM Selection Dialog**
+
 **Layout**: `dialog_sim_selection.xml`
 **Kullanım**: SettingsActivity (SIM Info preference)
 
 **UI**:
-```
+
+```text
 ┌─────────────────────────────────────┐
 │ SIM Kartı Seçimi              [X]   │
 ├─────────────────────────────────────┤
@@ -1003,6 +1089,7 @@ android:enabled="@bool/is_debug_build"
 **RecyclerView Item**: `item_sim_selection.xml`
 
 ### 5. **Custom Template Dialog**
+
 **Layout**: `dialog_custom_template.xml`
 **Kullanım**: SettingsActivity
 **Özellikler**: [Bölüm 7'de detaylı anlatıldı]
@@ -1012,18 +1099,22 @@ android:enabled="@bool/is_debug_build"
 ## 📋 RECYCLERVIEW ITEM LAYOUT'LARI
 
 ### 1. **item_target_number.xml**
+
 **Kullanım**: TargetNumbersActivity
 **Özellikler**: [Bölüm 3'te detaylı anlatıldı]
 
 ### 2. **item_filter_rule.xml**
+
 **Kullanım**: FilterRulesActivity
 **Özellikler**: [Bölüm 4'te detaylı anlatıldı]
 
 ### 3. **item_sms_history.xml**
+
 **Kullanım**: HistoryActivity
 **Özellikler**: [Bölüm 5'te detaylı anlatıldı]
 
 ### 4. **item_sim_selection.xml**
+
 **Kullanım**: SIM Selection Dialog
 **Özellikler**: [Dialog 4'te detaylı anlatıldı]
 
@@ -1031,7 +1122,7 @@ android:enabled="@bool/is_debug_build"
 
 ## 🗺️ EKRAN AKIŞ DİYAGRAMI
 
-```
+```text
 ┌──────────────────────────────────────────────────────────────────┐
 │                        APP LAUNCH                                │
 └──────────────────────────────────────────────────────────────────┘
@@ -1111,6 +1202,7 @@ android:enabled="@bool/is_debug_build"
 ## 🎯 ÖZET
 
 ### **Toplam Ekran Sayısı**: **8 Ana Ekran**
+
 1. ✅ MainActivity (Dashboard)
 2. ✅ OnboardingActivity (5 Fragment)
 3. ✅ TargetNumbersActivity
@@ -1121,10 +1213,12 @@ android:enabled="@bool/is_debug_build"
 8. ✅ SimDebugActivity (Debug only)
 
 ### **Fragment Sayısı**: **6**
+
 - 5 Onboarding Fragment
 - 1 Settings Fragment
 
 ### **Dialog Sayısı**: **5**
+
 - Add Target Number
 - Add Filter
 - Filter Test
@@ -1132,12 +1226,14 @@ android:enabled="@bool/is_debug_build"
 - Custom Template
 
 ### **RecyclerView Kullanımı**: **4 Ekran**
+
 - TargetNumbersActivity
 - FilterRulesActivity
 - HistoryActivity
 - SIM Selection Dialog
 
 ### **Database Kullanımı**: **6 Ekran**
+
 - OnboardingActivity (Insert)
 - TargetNumbersActivity (CRUD)
 - FilterRulesActivity (CRUD)
@@ -1145,7 +1241,8 @@ android:enabled="@bool/is_debug_build"
 - AnalyticsActivity (Read)
 - MainActivity (indirect - permission logging)
 
-### **Özel Özellikler**:
+### **Özel Özellikler**
+
 - ✅ **ViewPager2**: Onboarding
 - ✅ **PreferenceScreen**: Settings
 - ✅ **SwipeRefreshLayout**: History
@@ -1163,7 +1260,7 @@ android:enabled="@bool/is_debug_build"
 
 ## 📁 DOSYA YAPISI
 
-```
+```bash
 app/src/main/
 ├── java/com/keremgok/sms/
 │   ├── MainActivity.java (184 lines)
@@ -1217,7 +1314,7 @@ app/src/main/
 
 ## 🔄 NAVIGATION FLOW
 
-```
+```bash
 MainActivity (Root)
     ↓ [Overflow Menu]
     ├── Target Numbers Activity
@@ -1259,7 +1356,8 @@ Onboarding Activity (First Launch Only)
 
 ## 🎨 UI/UX PATTERNS
 
-### **Material Design 3 Components Used**:
+### **Material Design 3 Components Used**
+
 - ✅ MaterialButton
 - ✅ TextInputLayout/TextInputEditText
 - ✅ CardView
@@ -1275,14 +1373,16 @@ Onboarding Activity (First Launch Only)
 - ✅ AlertDialog
 - ✅ Toolbar
 
-### **Color Scheme**:
+### **Color Scheme**
+
 - Primary: `@color/hermes_primary`
 - Accent: `@color/hermes_accent`
 - Secondary: `@color/hermes_secondary`
 - Success: `android.R.color.holo_green_dark`
 - Error: `android.R.color.holo_red_dark`
 
-### **Typography**:
+### **Typography**
+
 - Titles: 20sp, bold
 - Body: 16sp, regular
 - Captions: 12sp, regular

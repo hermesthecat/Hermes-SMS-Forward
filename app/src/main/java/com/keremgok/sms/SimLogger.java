@@ -19,7 +19,6 @@ public class SimLogger {
     public static final int LEVEL_ERROR = 3;
     
     // Enable debug mode based on build variant
-    private static final boolean DEBUG_ENABLED = false; // Production safe - no debug logs
     
     /**
      * Log SIM operation with detailed information
@@ -36,7 +35,7 @@ public class SimLogger {
         StringBuilder logMessage = new StringBuilder();
         logMessage.append("[SIM_OP] ").append(operation).append(" | ");
         
-        if (DEBUG_ENABLED) {
+        if (BuildConfig.ENABLE_DEBUG_LOGS) {
             // Debug build - show detailed SIM information
             logMessage.append("SRC_SUB:").append(sourceSubscriptionId).append(" | ");
             logMessage.append("TGT_SUB:").append(targetSubscriptionId).append(" | ");
@@ -74,7 +73,7 @@ public class SimLogger {
             simDetails.append("[SIM_").append(i + 1).append("] ");
             simDetails.append("SLOT:").append(sim.slotIndex).append(" | ");
             
-            if (DEBUG_ENABLED) {
+            if (BuildConfig.ENABLE_DEBUG_LOGS) {
                 simDetails.append("SUB_ID:").append(sim.subscriptionId).append(" | ");
                 simDetails.append("CARRIER:").append(sim.carrierName).append(" | ");
                 simDetails.append("NUMBER:").append(maskPhoneNumber(sim.phoneNumber)).append(" | ");
@@ -104,7 +103,7 @@ public class SimLogger {
         logMessage.append("[SIM_SELECT] TARGET:").append(maskPhoneNumber(targetNumber)).append(" | ");
         logMessage.append("MODE:").append(selectionMode).append(" | ");
         
-        if (DEBUG_ENABLED) {
+        if (BuildConfig.ENABLE_DEBUG_LOGS) {
             logMessage.append("SRC_SUB:").append(sourceSubscriptionId).append(" | ");
             logMessage.append("SEL_SUB:").append(selectedSubscriptionId).append(" | ");
         } else {
@@ -130,7 +129,7 @@ public class SimLogger {
         StringBuilder logMessage = new StringBuilder();
         logMessage.append("[SIM_ERROR] OP:").append(operation).append(" | ");
         
-        if (DEBUG_ENABLED) {
+        if (BuildConfig.ENABLE_DEBUG_LOGS) {
             logMessage.append("SUB_ID:").append(subscriptionId).append(" | ");
         } else {
             logMessage.append("SLOT:").append(subscriptionToSlotInfo(subscriptionId)).append(" | ");
@@ -139,7 +138,7 @@ public class SimLogger {
         logMessage.append("ERROR:").append(errorMessage);
         
         if (exception != null) {
-            if (DEBUG_ENABLED) {
+            if (BuildConfig.ENABLE_DEBUG_LOGS) {
                 Log.e(tag, logMessage.toString(), exception);
             } else {
                 logMessage.append(" | EXCEPTION:").append(exception.getClass().getSimpleName());
@@ -191,7 +190,7 @@ public class SimLogger {
         logMessage.append("SLOT:").append(slotId).append(" | ");
         logMessage.append("STATE:").append(simStateToString(newState)).append(" | ");
         
-        if (DEBUG_ENABLED) {
+        if (BuildConfig.ENABLE_DEBUG_LOGS) {
             logMessage.append("SUB_ID:").append(subscriptionId);
         } else {
             logMessage.append("SUB_MASKED:").append(subscriptionId != -1 ? "***" : "-1");
@@ -205,7 +204,7 @@ public class SimLogger {
      * @param context Application context
      */
     public static void logSystemStatus(Context context) {
-        if (!DEBUG_ENABLED) {
+        if (!BuildConfig.ENABLE_DEBUG_LOGS) {
             return; // Only log detailed system status in debug builds
         }
         
@@ -242,7 +241,7 @@ public class SimLogger {
     private static void writeLog(String tag, String message, int level) {
         switch (level) {
             case LEVEL_DEBUG:
-                if (DEBUG_ENABLED) {
+                if (BuildConfig.ENABLE_DEBUG_LOGS) {
                     Log.d(tag, message);
                 }
                 break;
@@ -268,7 +267,7 @@ public class SimLogger {
             return "***";
         }
         
-        if (DEBUG_ENABLED) {
+        if (BuildConfig.ENABLE_DEBUG_LOGS) {
             // Debug build - show first 3 and last 2 digits
             if (phoneNumber.length() > 5) {
                 return phoneNumber.substring(0, 3) + "***" + phoneNumber.substring(phoneNumber.length() - 2);
@@ -285,7 +284,7 @@ public class SimLogger {
      * @return Masked or original subscription ID based on build type
      */
     private static String maskSubscriptionId(int subscriptionId) {
-        if (DEBUG_ENABLED) {
+        if (BuildConfig.ENABLE_DEBUG_LOGS) {
             return String.valueOf(subscriptionId);
         } else {
             return subscriptionId == -1 ? "-1" : "***";

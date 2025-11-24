@@ -1,24 +1,27 @@
 # Hermes SMS Forward
 
-[![Version](https://img.shields.io/badge/version-2.35.0-blue.svg)](https://github.com/hermesthecat/sms-forward-android)
+[![Version](https://img.shields.io/badge/version-2.44.0-blue.svg)](https://github.com/hermesthecat/sms-forward-android)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Android](https://img.shields.io/badge/platform-Android%205.0%2B-brightgreen.svg)](https://android.com)
 
 **Professional SMS forwarding solution for Android with enterprise-grade reliability and privacy protection.**
 
-Automatically forwards incoming SMS messages to multiple configured phone numbers with advanced filtering, dual SIM support, and comprehensive analytics - all processed locally on your device.
+Automatically forwards incoming SMS messages to multiple configured phone numbers with advanced filtering, dual SIM support, comprehensive notifications, and local analytics - all processed locally on your device.
 
 ## Features
 
 - **Multiple Target Numbers**: Forward SMS to unlimited destination phone numbers
 - **Advanced Filtering**: Content-based SMS filtering with include/exclude patterns
 - **Dual SIM Support**: Full dual SIM compatibility with SIM selection controls
+- **Smart Notifications**: Comprehensive notification system with success/error/missed call channels (Android 13+ POST_NOTIFICATIONS support)
+- **Custom Templates**: Fully customizable SMS and missed call message formatting with placeholders
 - **Message History**: Complete audit trail of all forwarded messages
 - **Local Analytics**: Privacy-first usage statistics and insights
-- **Multi-language Support**: Native Turkish and English localization
+- **Multi-language Support**: Complete localization in 6 languages (Turkish, English, German, Italian, French, Spanish)
 - **Accessibility**: Full TalkBack and screen reader compatibility
 - **Privacy Protection**: Zero external data transmission - all processing local
 - **Background Processing**: Reliable WorkManager-based SMS forwarding with retry logic
+- **Backup/Restore**: Export and import settings, target numbers, and filter rules
 
 ## Installation
 
@@ -113,7 +116,7 @@ Incoming SMS → SmsReceiver → FilterEngine → SmsQueueManager → Multiple T
 ### Build Configuration
 
 - **Application ID**: `com.keremgok.sms`
-- **Version**: 2.35.0 (Build 46)
+- **Version**: 2.44.0 (Build 65)
 - **Min SDK**: 21 (Android 5.0+)
 - **Target SDK**: 34 (Android 14)
 - **Compile SDK**: 34

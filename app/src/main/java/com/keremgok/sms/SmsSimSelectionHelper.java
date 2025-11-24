@@ -13,7 +13,6 @@ import android.util.Log;
 public class SmsSimSelectionHelper {
     
     private static final String TAG = "SmsSimSelectionHelper";
-    private static final boolean DEBUG = false; // Production safe - no debug logs
     private static final String PREFS_NAME = "HermesPrefs";
     
     /**
@@ -239,7 +238,7 @@ public class SmsSimSelectionHelper {
      * Secure debug logging
      */
     private static void logDebug(String message) {
-        if (DEBUG) {
+        if (BuildConfig.ENABLE_DEBUG_LOGS) {
             Log.d(TAG, message);
         }
     }

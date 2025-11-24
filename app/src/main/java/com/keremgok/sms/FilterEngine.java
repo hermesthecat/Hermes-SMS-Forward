@@ -18,7 +18,6 @@ import java.util.regex.PatternSyntaxException;
 public class FilterEngine {
     
     private static final String TAG = "FilterEngine";
-    private static final boolean DEBUG = false; // Production safe - no debug logs
     
     private Context context;
     private AppDatabase database;
@@ -390,7 +389,7 @@ public class FilterEngine {
      * Secure debug logging
      */
     private void logDebug(String message) {
-        if (DEBUG) {
+        if (BuildConfig.ENABLE_DEBUG_LOGS) {
             Log.d(TAG, message);
         }
     }

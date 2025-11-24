@@ -16,7 +16,6 @@ public class SmsCallbackReceiver extends BroadcastReceiver {
     private static final String TAG = "HermesSmsCallback";
     private static final String ACTION_SMS_SENT = "SMS_SENT";
     private static final String ACTION_SMS_DELIVERED = "SMS_DELIVERED";
-    private static final boolean DEBUG = false; // Production safe - no debug logs
     
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -50,7 +49,7 @@ public class SmsCallbackReceiver extends BroadcastReceiver {
         // Determine error message based on result code
         switch (resultCode) {
             case Activity.RESULT_OK:
-                if (DEBUG) {
+                if (BuildConfig.ENABLE_DEBUG_LOGS) {
                     Log.d(TAG, "SMS sent successfully to " + maskPhoneNumber(targetNumber));
                 }
                 break;
@@ -237,7 +236,7 @@ public class SmsCallbackReceiver extends BroadcastReceiver {
 
         // Handle retry if SMS failed and retries available
         if (!success && retryCount < 3) { // MAX_RETRY_COUNT = 3
-            if (DEBUG) {
+            if (BuildConfig.ENABLE_DEBUG_LOGS) {
                 Log.d(TAG, "SMS failed, will be retried by SmsReceiver. Retry: " + (retryCount + 1) + "/3");
             }
         }
@@ -252,7 +251,7 @@ public class SmsCallbackReceiver extends BroadcastReceiver {
         String targetNumber = intent.getStringExtra("targetNumber");
         
         if (resultCode == Activity.RESULT_OK) {
-            if (DEBUG) {
+            if (BuildConfig.ENABLE_DEBUG_LOGS) {
                 Log.d(TAG, "SMS delivered successfully to " + maskPhoneNumber(targetNumber));
             }
         } else {
@@ -287,7 +286,7 @@ public class SmsCallbackReceiver extends BroadcastReceiver {
                 );
                 database.smsHistoryDao().insert(history);
                 
-                if (DEBUG) {
+                if (BuildConfig.ENABLE_DEBUG_LOGS) {
                     String status = success ? "SUCCESS" : "FAILED";
                     Log.d(TAG, "SMS history logged: " + status + " from " + maskPhoneNumber(senderNumber) + 
                             " to " + maskPhoneNumber(targetNumber) + 

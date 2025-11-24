@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.content.BroadcastReceiver.PendingResult;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
@@ -19,9 +17,7 @@ public class SmsReceiver extends BroadcastReceiver {
     private static final String TAG = "HermesSmsReceiver";
     private static final String PREFS_NAME = "HermesPrefs";
     private static final String KEY_TARGET_NUMBER = "target_number";
-    // Debug flag - set based on build variant
-    private static final boolean DEBUG = false; // Production safe - no debug logs
-    
+
     // SMS Retry Configuration
     private static final int MAX_RETRY_COUNT = 3;
     private static final long INITIAL_RETRY_DELAY_MS = 2000; // 2 seconds
@@ -46,7 +42,7 @@ public class SmsReceiver extends BroadcastReceiver {
      * Secure debug logging - only logs in debug builds
      */
     private void logDebug(String message) {
-        if (DEBUG) {
+        if (BuildConfig.ENABLE_DEBUG_LOGS) {
             Log.d(TAG, message);
         }
     }
@@ -55,7 +51,7 @@ public class SmsReceiver extends BroadcastReceiver {
      * Secure info logging - only logs in debug builds  
      */
     private void logInfo(String message) {
-        if (DEBUG) {
+        if (BuildConfig.ENABLE_DEBUG_LOGS) {
             Log.i(TAG, message);
         }
     }
@@ -370,13 +366,45 @@ public class SmsReceiver extends BroadcastReceiver {
     
     /**
      * Queue SMS for forwarding to a single target with delay
+     * Uses WorkManager to prevent memory leaks from Handler
      */
     private void queueSmsForwardingToSingleTargetWithDelay(Context context, String originalSender, String message, TargetNumber targetNumber, long timestamp, long delay, int sourceSubscriptionId, int sourceSimSlot) {
-        // For now, implement as immediate sending with fallback
-        // In a full implementation, this would use WorkManager with scheduled delays
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            queueSmsForwardingToSingleTarget(context, originalSender, message, targetNumber, timestamp, sourceSubscriptionId, sourceSimSlot);
-        }, delay);
+        try {
+            // Get SMS queue manager instance
+            SmsQueueManager queueManager = SmsQueueManager.getInstance(context);
+            
+            // Determine priority based on SMS characteristics
+            int priority = determineSmsPriority(originalSender, message);
+            
+            // Determine forwarding SIM based on SIM selection logic
+            SmsSimSelectionHelper.SimSelectionResult simSelection = 
+                SmsSimSelectionHelper.determineForwardingSim(context, targetNumber.getPhoneNumber(), sourceSubscriptionId, targetNumber);
+            
+            int forwardingSubscriptionId = simSelection.getSubscriptionId();
+            int forwardingSimSlot = simSelection.getSimSlot();
+            
+            logDebug("Scheduling delayed SMS forwarding with WorkManager (delay: " + delay + "ms)");
+            
+            // Queue with WorkManager using initial delay (prevents memory leak from Handler)
+            java.util.UUID workId = queueManager.queueDelayedSms(
+                originalSender, message, targetNumber.getPhoneNumber(), timestamp, delay,
+                priority, sourceSubscriptionId, forwardingSubscriptionId, 
+                sourceSimSlot, forwardingSimSlot
+            );
+            
+            if (workId != null) {
+                logInfo("Delayed SMS successfully queued for forwarding. Work ID: " + workId);
+            } else {
+                Log.e(TAG, "Failed to queue delayed SMS, using fallback");
+                // Fallback to direct processing if WorkManager fails
+                fallbackDirectForwardingToSingleTarget(context, originalSender, message, targetNumber, timestamp, sourceSubscriptionId, sourceSimSlot);
+            }
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error queuing delayed SMS: " + e.getMessage(), e);
+            // Fallback to direct processing if queue fails
+            fallbackDirectForwardingToSingleTarget(context, originalSender, message, targetNumber, timestamp, sourceSubscriptionId, sourceSimSlot);
+        }
     }
     
     /**
@@ -534,7 +562,7 @@ public class SmsReceiver extends BroadcastReceiver {
                 );
                 database.smsHistoryDao().insert(history);
                 
-                if (DEBUG) {
+                if (BuildConfig.ENABLE_DEBUG_LOGS) {
                     String status = success ? "SUCCESS" : "FAILED";
                     logDebug("SMS history logged: " + status + " from " + maskPhoneNumber(senderNumber) + 
                             " to " + maskPhoneNumber(targetNumber));

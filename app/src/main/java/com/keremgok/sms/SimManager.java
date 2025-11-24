@@ -19,7 +19,6 @@ import java.util.List;
 public class SimManager {
     
     private static final String TAG = "SimManager";
-    private static final boolean DEBUG = false; // Production safe - no debug logs
     
     // Cache to prevent infinite loops and improve performance
     private static List<SimInfo> cachedSimList = null;
@@ -553,7 +552,7 @@ public class SimManager {
      * @param message Message to log
      */
     private static void logDebug(String message) {
-        if (DEBUG) {
+        if (BuildConfig.ENABLE_DEBUG_LOGS) {
             Log.d(TAG, message);
         }
     }

@@ -22,7 +22,6 @@ import java.util.concurrent.TimeUnit;
 public class SmsQueueManager {
     
     private static final String TAG = "SmsQueueManager";
-    private static final boolean DEBUG = false; // Production safe - no debug logs
     
     // Work tags for different priority levels
     private static final String WORK_TAG_HIGH_PRIORITY = "sms_queue_high";
@@ -106,6 +105,66 @@ public class SmsQueueManager {
      */
     public UUID queueLowPrioritySms(String originalSender, String originalMessage, String targetNumber, long timestamp) {
         return queueLowPrioritySms(originalSender, originalMessage, targetNumber, timestamp, -1, -1, -1, -1);
+    }
+    
+    /**
+     * Queue SMS for delayed processing with WorkManager
+     * Replaces Handler.postDelayed() to prevent memory leaks
+     * 
+     * @param delay Delay in milliseconds before processing
+     * @return UUID of the queued work, or null if queueing failed
+     */
+    public UUID queueDelayedSms(String originalSender, String originalMessage, String targetNumber, 
+                               long timestamp, long delay, int priority,
+                               int sourceSubscriptionId, int forwardingSubscriptionId, 
+                               int sourceSimSlot, int forwardingSimSlot) {
+        try {
+            // Create input data with dual SIM support
+            Data inputData = SmsQueueWorker.createInputData(
+                originalSender, originalMessage, targetNumber, timestamp, 0, priority,
+                sourceSubscriptionId, forwardingSubscriptionId, sourceSimSlot, forwardingSimSlot
+            );
+            
+            // Create constraints for SMS processing
+            Constraints.Builder constraintsBuilder = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
+                .setRequiresBatteryNotLow(false)
+                .setRequiresCharging(false)
+                .setRequiresStorageNotLow(true);
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                constraintsBuilder.setRequiresDeviceIdle(false);
+            }
+
+            Constraints constraints = constraintsBuilder.build();
+            
+            // Create work request with specified delay
+            OneTimeWorkRequest workRequest = new OneTimeWorkRequest.Builder(SmsQueueWorker.class)
+                .setInputData(inputData)
+                .setConstraints(constraints)
+                .setInitialDelay(delay, TimeUnit.MILLISECONDS) // Use specified delay
+                .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 
+                                   SmsQueueWorker.calculateBackoffDelay(0), 
+                                   TimeUnit.MILLISECONDS)
+                .addTag(getWorkTag(priority))
+                .addTag(WORK_TAG_BATCH)
+                .build();
+            
+            // Enqueue work with REPLACE policy for delayed SMS
+            workManager.enqueueUniqueWork(
+                "delayed_sms_" + targetNumber + "_" + timestamp, 
+                ExistingWorkPolicy.REPLACE, 
+                workRequest
+            );
+            
+            logDebug("Delayed SMS queued: priority=" + priority + ", delay=" + delay + "ms");
+            
+            return workRequest.getId();
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to queue delayed SMS: " + e.getMessage(), e);
+            return null;
+        }
     }
     
     /**
@@ -389,7 +448,7 @@ public class SmsQueueManager {
      * Secure debug logging
      */
     private void logDebug(String message) {
-        if (DEBUG) {
+        if (BuildConfig.ENABLE_DEBUG_LOGS) {
             Log.d(TAG, message);
         }
     }
