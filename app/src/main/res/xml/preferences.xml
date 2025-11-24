@@ -203,6 +203,23 @@
 
     </PreferenceCategory>
 
+    <!-- Remote Control Category -->
+    <PreferenceCategory
+        android:title="@string/settings_category_remote_control"
+        android:key="category_remote_control">
+
+        <!-- Remote Control Settings Activity -->
+        <Preference
+            android:key="pref_remote_control_settings"
+            android:title="@string/remote_control_title"
+            android:summary="@string/remote_control_settings_summary">
+            <intent
+                android:targetPackage="com.keremgok.sms"
+                android:targetClass="com.keremgok.sms.remote.RemoteControlActivity" />
+        </Preference>
+
+    </PreferenceCategory>
+
     <!-- About Section Category -->
     <PreferenceCategory
         android:title="@string/settings_category_about"

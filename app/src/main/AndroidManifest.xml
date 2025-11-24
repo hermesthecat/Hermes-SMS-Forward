@@ -88,6 +88,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        
+        <!-- Remote Control Activity -->
+        <activity
+            android:name=".remote.RemoteControlActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/remote_control_title">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
 
         <!-- SIM Debug Activity (Debug builds only) -->
         <activity

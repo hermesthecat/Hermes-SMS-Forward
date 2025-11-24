@@ -686,5 +686,33 @@ Examples:<br/>
     <string name="notification_sms_error_body">Failed to send SMS to %1$s</string>
     <string name="notification_missed_call_title">Missed Call</string>
     <string name="notification_missed_call_body">Missed call from %1$s</string>
+    
+    <!-- Remote Control Strings -->
+    <string name="add">Add</string>
+    <string name="delete">Delete</string>
+    <string name="settings_category_remote_control">Remote SMS Control</string>
+    <string name="remote_control_title">Remote SMS Control</string>
+    <string name="remote_control_settings_summary">Configure remote SMS sending feature</string>
+    <string name="remote_control_enable">Enable Remote Control</string>
+    <string name="remote_control_description">Send SMS from this device by sending command SMS. Only authorized numbers can send commands for security.</string>
+    <string name="remote_control_enabled">Remote control enabled</string>
+    <string name="remote_control_disabled">Remote control disabled</string>
+    <string name="authorized_numbers_title">Authorized Numbers</string>
+    <string name="authorized_numbers_count">Authorized Numbers</string>
+    <string name="authorized_numbers_count_value">%d authorized numbers</string>
+    <string name="add_authorized_number">Add Authorized Number</string>
+    <string name="phone_number_required">Phone number required</string>
+    <string name="invalid_phone_number">Invalid phone number</string>
+    <string name="number_already_authorized">This number is already authorized</string>
+    <string name="authorized_number_added">Authorized number added</string>
+    <string name="authorized_number_deleted">Authorized number deleted</string>
+    <string name="delete_authorized_number">Delete Authorized Number</string>
+    <string name="delete_authorized_number_confirm">Are you sure you want to remove %s from the authorized list?</string>
+    <string name="commands_sent_count">%d commands sent</string>
+    <string name="command_history_title">Command History</string>
+    <string name="command_history_stats">Command History</string>
+    <string name="command_history_stats_value">Total: %d | Successful: %d | Failed: %d</string>
+    <string name="command_format_help_title">Command Format</string>
+    <string name="command_format_help">SMS_GONDER [SIM] [NUMBER] [MESSAGE]\n\nExamples:\nSMS_GONDER SIM1 +905551234567 Test\nSMS_GONDER AUTO +905559876543 Urgent</string>
 
 </resources>

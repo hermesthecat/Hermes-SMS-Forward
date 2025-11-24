@@ -686,5 +686,33 @@ Hangi SIM kartından gelen SMS\'lerin işleneceğini belirler.<br/>
     <string name="notification_sms_error_body">%1$s numarasına SMS gönderilemedi</string>
     <string name="notification_missed_call_title">Cevapsız Arama</string>
     <string name="notification_missed_call_body">%1$s numarasından cevapsız arama</string>
+    
+    <!-- Remote Control Strings -->
+    <string name="add">Ekle</string>
+    <string name="delete">Sil</string>
+    <string name="settings_category_remote_control">Uzaktan SMS Kontrolü</string>
+    <string name="remote_control_title">Uzaktan SMS Kontrolü</string>
+    <string name="remote_control_settings_summary">Uzaktan SMS gönderme özelliğini yapılandır</string>
+    <string name="remote_control_enable">Uzaktan Kontrolü Etkinleştir</string>
+    <string name="remote_control_description">SMS komutu göndererek bu cihazdan SMS gönderin. Güvenlik için sadece yetkili numaralar komut gönderebilir.</string>
+    <string name="remote_control_enabled">Uzaktan kontrol etkinleştirildi</string>
+    <string name="remote_control_disabled">Uzaktan kontrol devre dışı bırakıldı</string>
+    <string name="authorized_numbers_title">Yetkili Numaralar</string>
+    <string name="authorized_numbers_count">Yetkili Numaralar</string>
+    <string name="authorized_numbers_count_value">%d yetkili numara</string>
+    <string name="add_authorized_number">Yetkili Numara Ekle</string>
+    <string name="phone_number_required">Telefon numarası gerekli</string>
+    <string name="invalid_phone_number">Geçersiz telefon numarası</string>
+    <string name="number_already_authorized">Bu numara zaten yetkilendirilmiş</string>
+    <string name="authorized_number_added">Yetkili numara eklendi</string>
+    <string name="authorized_number_deleted">Yetkili numara silindi</string>
+    <string name="delete_authorized_number">Yetkili Numarayı Sil</string>
+    <string name="delete_authorized_number_confirm">%s numarasını yetkili listesinden silmek istediğinizden emin misiniz?</string>
+    <string name="commands_sent_count">%d komut gönderildi</string>
+    <string name="command_history_title">Komut Geçmişi</string>
+    <string name="command_history_stats">Komut Geçmişi</string>
+    <string name="command_history_stats_value">Toplam: %d | Başarılı: %d | Başarısız: %d</string>
+    <string name="command_format_help_title">Komut Formatı</string>
+    <string name="command_format_help">SMS_GONDER [SIM] [NUMARA] [MESAJ]\n\nÖrnekler:\nSMS_GONDER SIM1 +905551234567 Test\nSMS_GONDER AUTO +905559876543 Acil</string>
 
 </resources>
