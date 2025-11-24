@@ -174,11 +174,16 @@ public class CallStateManager {
             SmsFormatter formatter = new SmsFormatter(context);
             String missedCallMessage = formatter.formatMissedCall(phoneNumber, timestamp);
             
-            // Use existing SMS queue system to send notification
-            SmsQueueManager queueManager = SmsQueueManager.getInstance(context);
-            queueManager.queueMissedCallNotification(phoneNumber, missedCallMessage, timestamp);
-            
-            Log.i(TAG, "Queued missed call notification for: " + phoneNumber);
+            // Use existing SMS queue system to send notification with error handling
+            try {
+                SmsQueueManager queueManager = SmsQueueManager.getInstance(context);
+                queueManager.queueMissedCallNotification(phoneNumber, missedCallMessage, timestamp);
+                Log.i(TAG, "Queued missed call notification for: " + phoneNumber);
+            } catch (RuntimeException e) {
+                Log.e(TAG, "Failed to get SmsQueueManager for missed call notification: " + e.getMessage(), e);
+                // Missed call notification is not critical, just log the error
+                // User will not receive missed call SMS but the app continues working
+            }
             
         } catch (Exception e) {
             Log.e(TAG, "Error sending missed call notification: " + e.getMessage(), e);

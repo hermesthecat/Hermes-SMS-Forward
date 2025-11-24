@@ -312,8 +312,16 @@ public class SmsReceiver extends BroadcastReceiver {
         try {
             String targetPhoneNumber = targetNumber.getPhoneNumber();
             
-            // Get SMS queue manager instance
-            SmsQueueManager queueManager = SmsQueueManager.getInstance(context);
+            // Get SMS queue manager instance with error handling
+            SmsQueueManager queueManager;
+            try {
+                queueManager = SmsQueueManager.getInstance(context);
+            } catch (RuntimeException e) {
+                Log.e(TAG, "Failed to get SmsQueueManager, using fallback direct forwarding: " + e.getMessage(), e);
+                // Fallback to direct processing if WorkManager initialization fails
+                fallbackDirectForwardingToSingleTarget(context, originalSender, message, targetNumber, timestamp, sourceSubscriptionId, sourceSimSlot);
+                return;
+            }
             
             // Determine priority based on SMS characteristics
             int priority = determineSmsPriority(originalSender, message);
@@ -370,8 +378,16 @@ public class SmsReceiver extends BroadcastReceiver {
      */
     private void queueSmsForwardingToSingleTargetWithDelay(Context context, String originalSender, String message, TargetNumber targetNumber, long timestamp, long delay, int sourceSubscriptionId, int sourceSimSlot) {
         try {
-            // Get SMS queue manager instance
-            SmsQueueManager queueManager = SmsQueueManager.getInstance(context);
+            // Get SMS queue manager instance with error handling
+            SmsQueueManager queueManager;
+            try {
+                queueManager = SmsQueueManager.getInstance(context);
+            } catch (RuntimeException e) {
+                Log.e(TAG, "Failed to get SmsQueueManager for delayed SMS, using fallback: " + e.getMessage(), e);
+                // Fallback to direct processing if WorkManager initialization fails
+                fallbackDirectForwardingToSingleTarget(context, originalSender, message, targetNumber, timestamp, sourceSubscriptionId, sourceSimSlot);
+                return;
+            }
             
             // Determine priority based on SMS characteristics
             int priority = determineSmsPriority(originalSender, message);

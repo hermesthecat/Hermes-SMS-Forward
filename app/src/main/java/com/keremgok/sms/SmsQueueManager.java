@@ -46,15 +46,34 @@ public class SmsQueueManager {
     
     private SmsQueueManager(Context context) {
         this.context = context.getApplicationContext();
-        this.workManager = WorkManager.getInstance(this.context);
+        
+        // Initialize WorkManager with error handling
+        try {
+            this.workManager = WorkManager.getInstance(this.context);
+        } catch (IllegalStateException e) {
+            // WorkManager not initialized - this is a critical error
+            Log.e(TAG, "WorkManager not initialized. App requires WorkManager for SMS queue.", e);
+            throw new RuntimeException("WorkManager initialization failed. Cannot create SmsQueueManager.", e);
+        } catch (Exception e) {
+            // Catch any other unexpected exceptions
+            Log.e(TAG, "Unexpected error getting WorkManager instance: " + e.getMessage(), e);
+            throw new RuntimeException("Failed to initialize SmsQueueManager: " + e.getMessage(), e);
+        }
     }
     
     /**
      * Get singleton instance
+     * @throws RuntimeException if WorkManager initialization fails
      */
     public static synchronized SmsQueueManager getInstance(Context context) {
         if (instance == null) {
-            instance = new SmsQueueManager(context);
+            try {
+                instance = new SmsQueueManager(context);
+            } catch (RuntimeException e) {
+                Log.e(TAG, "Failed to create SmsQueueManager singleton: " + e.getMessage(), e);
+                // Re-throw to caller so they can handle the failure appropriately
+                throw e;
+            }
         }
         return instance;
     }
