@@ -244,10 +244,10 @@ public class SimSelectionDialog {
             TextView tvStatus = view.findViewById(R.id.tv_sim_status);
             if (simInfo.isActive) {
                 tvStatus.setText(R.string.sim_status_active);
-                tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_green_dark));
+                tvStatus.setTextColor(androidx.core.content.ContextCompat.getColor(context, android.R.color.holo_green_dark));
             } else {
                 tvStatus.setText(R.string.sim_status_inactive);
-                tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_red_dark));
+                tvStatus.setTextColor(androidx.core.content.ContextCompat.getColor(context, android.R.color.holo_red_dark));
             }
             
             // Slot indicator

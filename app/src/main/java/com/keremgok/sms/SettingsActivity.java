@@ -836,10 +836,10 @@ public class SettingsActivity extends AppCompatActivity {
                 if (!android.text.TextUtils.isEmpty(template)) {
                     String preview = generateTemplatePreview(template);
                     tvTemplatePreview.setText(preview);
-                    tvTemplatePreview.setTextColor(getResources().getColor(android.R.color.black));
+                    tvTemplatePreview.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), android.R.color.black));
                 } else {
                     tvTemplatePreview.setText(getString(R.string.custom_template_preview_placeholder));
-                    tvTemplatePreview.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                    tvTemplatePreview.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), android.R.color.darker_gray));
                 }
             });
             
@@ -847,14 +847,14 @@ public class SettingsActivity extends AppCompatActivity {
             btnResetTemplate.setOnClickListener(v -> {
                 etCustomTemplate.setText(getDefaultTemplate());
                 tvTemplatePreview.setText(getString(R.string.custom_template_preview_placeholder));
-                tvTemplatePreview.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                tvTemplatePreview.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), android.R.color.darker_gray));
             });
             
             // Show initial preview
             if (!android.text.TextUtils.isEmpty(currentTemplate)) {
                 String preview = generateTemplatePreview(currentTemplate);
                 tvTemplatePreview.setText(preview);
-                tvTemplatePreview.setTextColor(getResources().getColor(android.R.color.black));
+                tvTemplatePreview.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), android.R.color.black));
             }
             
             AlertDialog dialog = new AlertDialog.Builder(requireContext())
@@ -948,10 +948,10 @@ public class SettingsActivity extends AppCompatActivity {
                 if (!android.text.TextUtils.isEmpty(template)) {
                     String preview = generateMissedCallTemplatePreview(template);
                     tvTemplatePreview.setText(preview);
-                    tvTemplatePreview.setTextColor(getResources().getColor(android.R.color.black));
+                    tvTemplatePreview.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), android.R.color.black));
                 } else {
                     tvTemplatePreview.setText(getString(R.string.custom_template_preview_placeholder));
-                    tvTemplatePreview.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                    tvTemplatePreview.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), android.R.color.darker_gray));
                 }
             });
 
@@ -959,14 +959,14 @@ public class SettingsActivity extends AppCompatActivity {
             btnResetTemplate.setOnClickListener(v -> {
                 etCustomTemplate.setText(getDefaultMissedCallTemplate());
                 tvTemplatePreview.setText(getString(R.string.custom_template_preview_placeholder));
-                tvTemplatePreview.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                tvTemplatePreview.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), android.R.color.darker_gray));
             });
 
             // Show initial preview
             if (!android.text.TextUtils.isEmpty(currentTemplate)) {
                 String preview = generateMissedCallTemplatePreview(currentTemplate);
                 tvTemplatePreview.setText(preview);
-                tvTemplatePreview.setTextColor(getResources().getColor(android.R.color.black));
+                tvTemplatePreview.setTextColor(androidx.core.content.ContextCompat.getColor(requireContext(), android.R.color.black));
             }
 
             AlertDialog dialog = new AlertDialog.Builder(requireContext())
