@@ -288,6 +288,11 @@ public class SmsQueueWorker extends Worker {
                                     int sourceSubscriptionId, int forwardingSubscriptionId) {
         try {
             AppDatabase database = AppDatabase.getInstance(getApplicationContext());
+            if (database == null) {
+                Log.e(TAG, "Database is null, cannot log SMS history success");
+                return;
+            }
+            
             SmsHistory history = new SmsHistory(
                 originalSender,
                 originalMessage,
@@ -301,7 +306,13 @@ public class SmsQueueWorker extends Worker {
                 sourceSubscriptionId,
                 forwardingSubscriptionId
             );
-            database.smsHistoryDao().insert(history);
+            
+            SmsHistoryDao dao = database.smsHistoryDao();
+            if (dao != null) {
+                dao.insert(history);
+            } else {
+                Log.e(TAG, "SmsHistoryDao is null");
+            }
             
             if (BuildConfig.ENABLE_DEBUG_LOGS) {
                 logDebug("SMS history logged: SUCCESS from " + maskPhoneNumber(originalSender) + 
@@ -320,6 +331,11 @@ public class SmsQueueWorker extends Worker {
                                     int sourceSubscriptionId, int forwardingSubscriptionId) {
         try {
             AppDatabase database = AppDatabase.getInstance(getApplicationContext());
+            if (database == null) {
+                Log.e(TAG, "Database is null, cannot log SMS history failure");
+                return;
+            }
+            
             SmsHistory history = new SmsHistory(
                 originalSender,
                 originalMessage,
@@ -333,7 +349,13 @@ public class SmsQueueWorker extends Worker {
                 sourceSubscriptionId,
                 forwardingSubscriptionId
             );
-            database.smsHistoryDao().insert(history);
+            
+            SmsHistoryDao dao = database.smsHistoryDao();
+            if (dao != null) {
+                dao.insert(history);
+            } else {
+                Log.e(TAG, "SmsHistoryDao is null");
+            }
             
             if (BuildConfig.ENABLE_DEBUG_LOGS) {
                 logDebug("SMS history logged: FAILURE from " + maskPhoneNumber(originalSender) + 
