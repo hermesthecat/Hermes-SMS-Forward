@@ -1,5 +1,42 @@
 # Changelog - Hermes SMS Forward
 
+## [2.47.0] - 2025-11-24
+
+- 🚀 **NEW FEATURE: Remote SMS Control**
+  - Send SMS remotely by sending command SMS to app device
+  - Command format: `SMS_GONDER [SIM] [NUMBER] [MESSAGE]`
+  - Examples: `SMS_GONDER SIM1 +905551234567 Test message`
+  - Multi-level security: Authorized numbers, rate limiting, confirmation mode
+  - Full audit logging of all commands (authorized & unauthorized)
+  - Automatic response SMS with command status
+  - Database migration v9 → v10 (2 new tables)
+  
+- 🔐 **Security Features:**
+  - Authorized number list (only pre-approved numbers can send commands)
+  - Rate limiting (10/hour, 50/day configurable)
+  - Security modes: Immediate / Confirm / PIN
+  - Complete command history tracking
+  - Disabled by default for security
+  
+- 📊 **Statistics Integration:**
+  - Track remote command usage
+  - Count authorized/unauthorized attempts
+  - Success/failure rates
+  
+- 🏗️ **Architecture:**
+  - New `remote` package with 7 core classes
+  - RemoteCommandReceiver (BroadcastReceiver)
+  - RemoteCommandProcessor (parsing)
+  - RemoteCommandValidator (security)
+  - RemoteCommandExecutor (SMS sending)
+  - Database entities: AuthorizedNumber, RemoteCommandHistory
+  
+- 📝 **Implementation Notes:**
+  - Phase 1 complete: Core functionality working
+  - UI for managing authorized numbers: Coming in next update
+  - Notification system: Coming in next update
+  - Feature can be enabled via database/code for early testing
+
 ## [2.46.0] - 2025-11-24
 
 - 🐛 **Additional High Priority Bug Fixes:**

@@ -9,13 +9,16 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.keremgok.sms.remote.AuthorizedNumber;
+import com.keremgok.sms.remote.RemoteCommandHistory;
+
 /**
  * Main Room Database class for Hermes SMS Forward
  * Contains SMS history tracking and target numbers management
  */
 @Database(
-    entities = {SmsHistory.class, TargetNumber.class, SmsFilter.class, AnalyticsEvent.class, StatisticsSummary.class},
-    version = 9,
+    entities = {SmsHistory.class, TargetNumber.class, SmsFilter.class, AnalyticsEvent.class, StatisticsSummary.class, AuthorizedNumber.class, RemoteCommandHistory.class},
+    version = 10,
     exportSchema = false
 )
 public abstract class AppDatabase extends RoomDatabase {
@@ -52,6 +55,18 @@ public abstract class AppDatabase extends RoomDatabase {
      * @return StatisticsSummaryDao instance
      */
     public abstract StatisticsSummaryDao statisticsSummaryDao();
+    
+    /**
+     * Get the AuthorizedNumberDao for database operations
+     * @return AuthorizedNumberDao instance
+     */
+    public abstract com.keremgok.sms.remote.AuthorizedNumberDao authorizedNumberDao();
+    
+    /**
+     * Get the RemoteCommandHistoryDao for database operations
+     * @return RemoteCommandHistoryDao instance
+     */
+    public abstract com.keremgok.sms.remote.RemoteCommandHistoryDao remoteCommandHistoryDao();
     
     /**
      * Migration from version 1 to 2: Add target_numbers table and migrate SharedPreferences
@@ -357,6 +372,70 @@ public abstract class AppDatabase extends RoomDatabase {
             }
         }
     };
+    
+    /**
+     * Migration from version 9 to 10: Add remote SMS control tables
+     */
+    static final Migration MIGRATION_9_10 = new Migration(9, 10) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            try {
+                android.util.Log.i("AppDatabase", "Starting migration from version 9 to 10 (adding remote SMS control tables)");
+                
+                // Create authorized_numbers table
+                database.execSQL(
+                    "CREATE TABLE IF NOT EXISTS authorized_numbers (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    "phone_number TEXT NOT NULL, " +
+                    "display_name TEXT, " +
+                    "is_primary INTEGER NOT NULL DEFAULT 0, " +
+                    "is_enabled INTEGER NOT NULL DEFAULT 1, " +
+                    "added_timestamp INTEGER NOT NULL, " +
+                    "last_used_timestamp INTEGER, " +
+                    "total_commands_sent INTEGER NOT NULL DEFAULT 0)"
+                );
+                
+                // Create unique index on phone_number
+                database.execSQL(
+                    "CREATE UNIQUE INDEX IF NOT EXISTS index_authorized_numbers_phone_number " +
+                    "ON authorized_numbers(phone_number)"
+                );
+                
+                // Create remote_command_history table
+                database.execSQL(
+                    "CREATE TABLE IF NOT EXISTS remote_command_history (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    "sender_number TEXT NOT NULL, " +
+                    "command_text TEXT NOT NULL, " +
+                    "parsed_sim TEXT, " +
+                    "parsed_target TEXT, " +
+                    "parsed_message TEXT, " +
+                    "execution_status TEXT NOT NULL, " +
+                    "result_message TEXT, " +
+                    "received_timestamp INTEGER NOT NULL, " +
+                    "executed_timestamp INTEGER, " +
+                    "result_timestamp INTEGER)"
+                );
+                
+                // Create index on received_timestamp for fast queries
+                database.execSQL(
+                    "CREATE INDEX IF NOT EXISTS index_remote_history_timestamp " +
+                    "ON remote_command_history(received_timestamp)"
+                );
+                
+                // Create index on sender_number for fast queries
+                database.execSQL(
+                    "CREATE INDEX IF NOT EXISTS index_remote_history_sender " +
+                    "ON remote_command_history(sender_number)"
+                );
+                
+                android.util.Log.i("AppDatabase", "Successfully completed migration from version 9 to 10");
+            } catch (Exception e) {
+                android.util.Log.e("AppDatabase", "Migration 9->10 failed: " + e.getMessage(), e);
+                throw e;
+            }
+        }
+    };
 
     /**
      * Get singleton instance of the database
@@ -375,7 +454,7 @@ public abstract class AppDatabase extends RoomDatabase {
                             DATABASE_NAME
                         )
                         // Removed allowMainThreadQueries() for better performance and ANR prevention
-                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9)
+                        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10)
                         .addCallback(new RoomDatabase.Callback() {
                             @Override
                             public void onCreate(@NonNull SupportSQLiteDatabase db) {
