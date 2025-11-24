@@ -78,7 +78,17 @@ public class SmsReceiver extends BroadcastReceiver {
             try {
                 // Get enabled target numbers from database in background thread
                 AppDatabase database = AppDatabase.getInstance(context);
+                if (database == null) {
+                    Log.e(TAG, "Critical: Database instance is null, cannot process SMS");
+                    statsManager.recordSmsForwardFailure(StatisticsManager.ErrorCode.UNKNOWN_ERROR, "Database not available");
+                    return;
+                }
+                
                 TargetNumberDao targetNumberDao = database.targetNumberDao();
+                if (targetNumberDao == null) {
+                    Log.e(TAG, "Critical: TargetNumberDao is null");
+                    return;
+                }
                 
                 java.util.List<TargetNumber> targetNumbers = targetNumberDao.getEnabledTargetNumbers();
                 
@@ -430,7 +440,17 @@ public class SmsReceiver extends BroadcastReceiver {
         ThreadManager.getInstance().executeDatabase(() -> {
             try {
                 AppDatabase database = AppDatabase.getInstance(context);
-                database.targetNumberDao().updateLastUsedTimestamp(targetId, timestamp);
+                if (database == null) {
+                    Log.e(TAG, "Database is null, cannot update target last used timestamp");
+                    return;
+                }
+                
+                TargetNumberDao dao = database.targetNumberDao();
+                if (dao != null) {
+                    dao.updateLastUsedTimestamp(targetId, timestamp);
+                } else {
+                    Log.e(TAG, "TargetNumberDao is null");
+                }
             } catch (Exception e) {
                 Log.e(TAG, "Error updating target last used timestamp: " + e.getMessage());
             }
@@ -563,6 +583,11 @@ public class SmsReceiver extends BroadcastReceiver {
         ThreadManager.getInstance().executeDatabase(() -> {
             try {
                 AppDatabase database = AppDatabase.getInstance(context);
+                if (database == null) {
+                    Log.e(TAG, "Database is null, cannot log SMS history");
+                    return;
+                }
+                
                 SmsHistory history = new SmsHistory(
                     senderNumber,
                     originalMessage,
@@ -576,7 +601,13 @@ public class SmsReceiver extends BroadcastReceiver {
                     sourceSubscriptionId,
                     forwardingSubscriptionId
                 );
-                database.smsHistoryDao().insert(history);
+                
+                SmsHistoryDao dao = database.smsHistoryDao();
+                if (dao != null) {
+                    dao.insert(history);
+                } else {
+                    Log.e(TAG, "SmsHistoryDao is null");
+                }
                 
                 if (BuildConfig.ENABLE_DEBUG_LOGS) {
                     String status = success ? "SUCCESS" : "FAILED";
