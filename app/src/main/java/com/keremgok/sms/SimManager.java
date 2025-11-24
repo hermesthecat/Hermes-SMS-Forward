@@ -550,6 +550,18 @@ public class SimManager {
     }
     
     /**
+     * Clear cached SIM information
+     * Called during low memory situations or app termination
+     */
+    public static synchronized void clearCache() {
+        cachedSimList = null;
+        cachedDualSimSupported = null;
+        lastCacheTime = 0;
+        lastDualSimCheckTime = 0;
+        Log.i(TAG, "SIM cache cleared");
+    }
+    
+    /**
      * Debug logging helper
      * @param message Message to log
      */
