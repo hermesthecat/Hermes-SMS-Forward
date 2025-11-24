@@ -21,13 +21,15 @@ public class SimManager {
     private static final String TAG = "SimManager";
     
     // Cache to prevent infinite loops and improve performance
-    private static List<SimInfo> cachedSimList = null;
-    private static long lastCacheTime = 0;
+    // Volatile ensures visibility across threads and prevents race conditions
+    private static volatile List<SimInfo> cachedSimList = null;
+    private static volatile long lastCacheTime = 0;
     private static final long CACHE_DURATION_MS = 5000; // 5 seconds cache
     
     // Cache for dual SIM support check
-    private static Boolean cachedDualSimSupported = null;
-    private static long lastDualSimCheckTime = 0;
+    // Volatile ensures thread-safe access to cache variables
+    private static volatile Boolean cachedDualSimSupported = null;
+    private static volatile long lastDualSimCheckTime = 0;
     
     /**
      * SimInfo data class - Contains detailed information about a SIM card
