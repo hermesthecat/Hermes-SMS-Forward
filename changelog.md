@@ -1,5 +1,51 @@
 # Changelog - Hermes SMS Forward
 
+## [2.45.0] - 2025-11-24
+
+- 🐛 **Critical Bug Fixes (High Priority):**
+  - **B006: Handler Memory Leak Fixed** ⚠️ **CRITICAL**
+    - Replaced `Handler.postDelayed()` with WorkManager for delayed SMS processing
+    - Prevents memory leaks from BroadcastReceiver context retention
+    - Added `SmsQueueManager.queueDelayedSms()` method for proper scheduling
+    - Impact: Eliminates memory leaks that occurred on every delayed SMS
+  
+  - **B007: Database Cursor Leak Fixed** ⚠️ **CRITICAL**
+    - Implemented try-with-resources for cursor management in MIGRATION_4_5
+    - Ensures cursors are always closed even if exceptions occur
+    - Fixed both target_numbers and sms_history table migrations
+    - Impact: Prevents database lock issues during app updates
+  
+  - **B010: SIM Cache Race Condition Fixed** ⚠️ **HIGH**
+    - Added `volatile` keywords to cachedSimList, lastCacheTime variables
+    - Added `volatile` keywords to cachedDualSimSupported, lastDualSimCheckTime
+    - Ensures thread-safe visibility across concurrent SMS processing
+    - Impact: Prevents SIM selection errors when multiple SMS arrive simultaneously
+  
+  - **B008: Deprecated getColor() Fixed** ⚠️ **HIGH**
+    - Replaced 10 instances of deprecated `getResources().getColor()`
+    - Fixed 2 usages in SimSelectionDialog.java
+    - Fixed 8 usages in SettingsActivity.java (template preview colors)
+    - Now uses `ContextCompat.getColor()` for API 23+ compatibility
+    - Impact: Eliminates deprecation warnings and prevents crashes on newer Android versions
+  
+  - **B046: NullPointerException Risk Fixed** ⚠️ **HIGH**
+    - Added null checks in FilterEngine for filter objects
+    - Added null checks for filter.getFilterName() and getFilterType()
+    - Uses safe fallback values ("Unknown Filter", "UNKNOWN") for null properties
+    - Logs warnings when null filters are encountered
+    - Impact: Prevents app crashes from corrupt filter data in database
+
+- 🔧 **Code Quality Improvements:**
+  - Removed unused Handler and Looper imports from SmsReceiver
+  - Improved error handling and logging throughout SMS processing pipeline
+  - Enhanced defensive programming practices with null checks
+  - Better thread safety with volatile variable declarations
+
+- 📈 **Performance Improvements:**
+  - WorkManager-based delayed SMS processing reduces memory footprint
+  - Proper cursor resource management improves database performance
+  - Thread-safe cache access prevents race conditions
+
 ## [2.44.0] - 2025-10-02
 
 - 🌐 **Complete Multi-Language App Name Localization:**
